@@ -474,12 +474,12 @@ namespace sap {
                 /** 是否可编辑 */
                 setEditable(this: AddressArea, value: boolean): AddressArea {
                     this.setProperty("editable", value);
-                    (<RegionComboBox>this.getAggregation("_country", undefined)).setEditable(value);
-                    (<RegionComboBox>this.getAggregation("_province", undefined)).setEditable(value);
-                    (<RegionComboBox>this.getAggregation("_city", undefined)).setEditable(value);
-                    (<RegionComboBox>this.getAggregation("_district", undefined)).setEditable(value);
-                    (<RegionComboBox>this.getAggregation("_street", undefined)).setEditable(value);
-                    (<RegionComboBox>this.getAggregation("_zipcode", undefined)).setEditable(value);
+                    (<RegionComboBox>this.getAggregation("_country", undefined))?.setEditable(value);
+                    (<RegionComboBox>this.getAggregation("_province", undefined))?.setEditable(value);
+                    (<RegionComboBox>this.getAggregation("_city", undefined))?.setEditable(value);
+                    (<RegionComboBox>this.getAggregation("_district", undefined))?.setEditable(value);
+                    (<RegionComboBox>this.getAggregation("_street", undefined))?.setEditable(value);
+                    (<RegionComboBox>this.getAggregation("_zipcode", undefined))?.setEditable(value);
                     return this;
                 },
                 /** 国家 */

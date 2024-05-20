@@ -157,7 +157,7 @@ namespace sap {
                 /**
                  * 导出内容
                  */
-                toDataTable(this: Table): ibas.DataTable {
+                toDataTable(this: Table, onlySelected?: boolean): ibas.DataTable {
                     let groupColumn: string = this.getGroupBy();
                     let dataTable: ibas.DataTable = new ibas.DataTable();
                     for (let column of this.getColumns()) {
@@ -182,6 +182,9 @@ namespace sap {
                         dataTable.columns.add(dtColumn);
                     }
                     for (let row of this.getRows()) {
+                        if (onlySelected === true && this.isIndexSelected(this.indexOfRow(row)) === false) {
+                            continue;
+                        }
                         let dtRow: ibas.DataTableRow = new ibas.DataTableRow();
                         for (let i: number = 0; i < dataTable.columns.length; i++) {
                             let cell: any = row.getCells()[i];
@@ -1021,7 +1024,7 @@ namespace sap {
                 /**
                  * 导出内容
                  */
-                toDataTable(this: TreeTable): ibas.DataTable {
+                toDataTable(this: TreeTable, onlySelected?: boolean): ibas.DataTable {
                     let groupColumn: string = this.getGroupBy();
                     let dataTable: ibas.DataTable = new ibas.DataTable();
                     let dtColumn: ibas.DataTableColumn = new ibas.DataTableColumn();
@@ -1050,6 +1053,9 @@ namespace sap {
                         dataTable.columns.add(dtColumn);
                     }
                     for (let row of this.getRows()) {
+                        if (onlySelected === true && this.isIndexSelected(this.indexOfRow(row)) === false) {
+                            continue;
+                        }
                         let dtRow: ibas.DataTableRow = new ibas.DataTableRow();
                         dtRow.cells[0] = (<any>row).getLevel();
                         for (let i: number = 1; i <= dataTable.columns.length; i++) {

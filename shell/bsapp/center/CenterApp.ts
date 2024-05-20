@@ -9,6 +9,8 @@ namespace shell {
     export namespace app {
         /** 配置项目-自动激活的功能 */
         export const CONFIG_ITEM_AUTO_ACTIVETED_FUNCTION: string = "autoFunction";
+        /** 配置项目-忽略历史功能 */
+        export const CONFIG_ITEM_IGNORING_HISTORICAL_FUNCTION: string = "ignoringHistoricalFunction";
         /** 配置项目-总激活欢迎应用 */
         export const CONFIG_ITEM_ALWAYS_ACTIVETED_WELCOME: string = "alwaysWelcome";
         /** 应用-中心 */
@@ -96,7 +98,7 @@ namespace shell {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
                 // 如当前模块包含Hash指向的功能,激活
                 let hashFuncId: string = null;
-                if (window.location.hash.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS)) {
+                if (window.location.hash.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS) && ibas.config.get(CONFIG_ITEM_IGNORING_HISTORICAL_FUNCTION, false) === false) {
                     let url: string = window.location.hash.substring(ibas.URL_HASH_SIGN_FUNCTIONS.length);
                     let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                     hashFuncId = url.substring(0, index);

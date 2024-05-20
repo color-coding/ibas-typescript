@@ -59,10 +59,13 @@ namespace sap {
                 applySettings(this: ComboBox, mSettings: any, oScope?: any): ComboBox {
                     sap.m.ComboBox.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
-                        this.fireLoadItems({});
+                        this.loadItemList();
                     }
                     return this;
                 },
+                loadItemList(this: ComboBox): ComboBox {
+                    return this;
+                }
             });
             /**
              * 多选下拉框（数据分割符）

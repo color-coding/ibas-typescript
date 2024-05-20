@@ -80,8 +80,9 @@ declare namespace sap {
                 private _hasSelectionPlugin(): boolean;
                 /**
                  * 导出内容
+                 * @param onlySelected 仅选中
                  */
-                toDataTable(): ibas.DataTable;
+                toDataTable(onlySelected?: boolean): ibas.DataTable;
                 /**
                  * 监听行双击事件
                  * @param oData 数据
@@ -238,8 +239,9 @@ declare namespace sap {
                 protected fireNextDataSet(param: { data: any, }): void;
                 /**
                  * 导出内容
+                 * @param onlySelected 仅选中
                  */
-                toDataTable(): ibas.DataTable;
+                toDataTable(onlySelected?: boolean): ibas.DataTable;
             }
             /**
              * 数据表格

@@ -35,7 +35,8 @@ namespace trainingtesting {
                                     new sap.m.Page("", {
                                         content: [
                                             this.address(),
-                                            this.input()
+                                            this.input(),
+                                            this.search()
                                         ]
                                     }),
                                 ]
@@ -96,10 +97,8 @@ namespace trainingtesting {
                             ]
                         });
                     });
-
-
-
                 }
+
                 private input(): sap.m.GenericTile {
                     return this.drawTile({
                         header: "Inputs",
@@ -125,9 +124,9 @@ namespace trainingtesting {
                                 new sap.m.Label("", { text: "Date" }),
                                 sap.extension.factories.newInput("yyyy-MM-dd", onChanged),
                                 new sap.m.Label("", { text: "Choose" }),
-                                sap.extension.factories.newInput("#{${Company}_SYS_USER}.{Code}", onChanged),
+                                sap.extension.factories.newInput("#{CC_TT_MATERIALS}.{Code}", onChanged),
                                 new sap.m.Label("", { text: "Choose" }),
-                                sap.extension.factories.newInput(`{"type":"Criteria","BusinessObject":"$\{Company\}_MM_SPEC.ObjectKey","Conditions":[]}`, onChanged),
+                                sap.extension.factories.newInput(`{"type":"Criteria","BusinessObject":"CC_TT_SALESORDER.DocEntry","Conditions":[]}`, onChanged),
                                 new sap.m.Label("", { text: "Array" }),
                                 sap.extension.factories.newInput("[1,2,3]", onChanged),
                                 new sap.m.Label("", { text: "Array" }),
@@ -136,9 +135,23 @@ namespace trainingtesting {
                             ]
                         });
                     });
+                }
 
+                private search(): sap.m.GenericTile {
+                    return this.drawTile({
+                        header: "Search",
+                        headerImage: "sap-icon://search",
+                        notes: "",
+                    }, () => {
+                        return new sap.ui.layout.form.SimpleForm("", {
+                            editable: true,
+                            content: [
+                                new sap.m.Panel("", {
 
-
+                                }),
+                            ]
+                        });
+                    });
                 }
             }
         }

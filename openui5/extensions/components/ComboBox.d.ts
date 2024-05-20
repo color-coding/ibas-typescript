@@ -44,6 +44,11 @@ declare namespace sap {
                  * 销毁可选项
                  */
                 destroyItems(): this;
+                /**
+                 * 加载可选项目
+                 * loadItems，被占用
+                 */
+                loadItemList(): this;
             }
             /**
              * 多选下拉框（数据分割符）

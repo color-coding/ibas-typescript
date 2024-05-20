@@ -1216,17 +1216,25 @@ namespace ibas {
                 return true;
             }
             if (digits > 0) {
-                degree = isNaN(degree) ? Math.pow(10, digits > 1 ? digits - 1 : digits) * 0.6 : degree;
-                let nValue1: number = value1 * Math.pow(10, digits);
-                let nValue2: number = value2 * Math.pow(10, digits);
-                if (Math.abs(nValue1 - nValue2) < degree) {
-                    if (value1 === 0 && value2 !== 0) {
-                        return false;
+                if (value1 < 1 && value2 < 1) {
+                    let nValue1: number = value1 * Math.pow(10, digits);
+                    let nValue2: number = value2 * Math.pow(10, digits);
+                    if (Math.abs(nValue1 - nValue2) < 10) {
+                        return true;
                     }
-                    if (value1 !== 0 && value2 === 0) {
-                        return false;
+                } else {
+                    degree = isNaN(degree) ? Math.pow(10, digits > 1 ? digits - 1 : digits) * 0.6 : degree;
+                    let nValue1: number = value1 * Math.pow(10, digits);
+                    let nValue2: number = value2 * Math.pow(10, digits);
+                    if (Math.abs(nValue1 - nValue2) < degree) {
+                        if (value1 === 0 && value2 !== 0) {
+                            return false;
+                        }
+                        if (value1 !== 0 && value2 === 0) {
+                            return false;
+                        }
+                        return true;
                     }
-                    return true;
                 }
                 return false;
             } else {
