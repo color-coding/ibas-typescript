@@ -59,13 +59,10 @@ namespace sap {
                 applySettings(this: ComboBox, mSettings: any, oScope?: any): ComboBox {
                     sap.m.ComboBox.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
-                        this.loadItemList();
+                        this.fireLoadItems({});
                     }
                     return this;
                 },
-                loadItemList(this: ComboBox): ComboBox {
-                    return this;
-                }
             });
             /**
              * 多选下拉框（数据分割符）
@@ -116,7 +113,7 @@ namespace sap {
                     // 调用基类构造
                     (<any>sap.m.MultiComboBox.prototype).init.apply(this, arguments);
                     this.attachSelectionFinish(undefined, (event: sap.ui.base.Event) => {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof MultiComboBox) {
                             let builder: ibas.StringBuilder = new ibas.StringBuilder();
                             builder.map(null, "");

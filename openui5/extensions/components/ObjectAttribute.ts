@@ -216,7 +216,7 @@ namespace sap {
                 init(this: RepositoryObjectAttribute): void {
                     (<any>ObjectAttribute.prototype).init.apply(this, arguments);
                     this.attachValueLinkRequest(undefined, (event: sap.ui.base.Event) => {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof RepositoryObjectAttribute) {
                             let boCode: string = ibas.businessobjects.code(<any>source.getDataInfo()?.type);
                             if (!ibas.strings.isEmpty(boCode)) {

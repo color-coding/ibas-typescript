@@ -60,7 +60,7 @@ namespace sap {
                         this.addBeginIcon({
                             src: "sap-icon://shortcut",
                             press(event: sap.ui.base.Event): void {
-                                let source: any = event.getSource();
+                                let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                                 if (source instanceof sap.ui.core.Icon) {
                                     let parent: any = source.getParent();
                                     if (parent instanceof Input) {
@@ -380,7 +380,7 @@ namespace sap {
                 init(this: RepositoryInput): void {
                     (<any>Input.prototype).init.apply(this, arguments);
                     this.attachValueLinkRequest(undefined, (event: sap.ui.base.Event) => {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof RepositoryInput) {
                             let boCode: string = ibas.businessobjects.code(<any>source.getDataInfo()?.type);
                             if (!ibas.strings.isEmpty(boCode)) {
@@ -767,7 +767,7 @@ namespace sap {
                     (<any>Input.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof IconInput) {
                             let selectDialog: sap.m.SelectDialog = new sap.m.SelectDialog("", {
                                 title: ibas.i18n.prop("openui5_please_select_icon"),
@@ -783,7 +783,7 @@ namespace sap {
                                     })
                                 },
                                 search: function (event: sap.ui.base.Event): void {
-                                    let source: any = event.getSource();
+                                    let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                                     if (source instanceof sap.m.SelectDialog) {
                                         let oBinding: any = source.getBinding("items");
                                         if (oBinding instanceof sap.ui.model.json.JSONListBinding) {
@@ -863,7 +863,7 @@ namespace sap {
                     (<any>Input.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof ColorInput) {
                             let dialog: sap.m.ColorPalettePopover = new sap.m.ColorPalettePopover("", {
                                 displayMode: sap.ui.unified.ColorPickerDisplayMode.Simplified,
@@ -921,7 +921,7 @@ namespace sap {
                 init(this: DataOwnerInput): void {
                     (<any>UserInput.prototype).init.apply(this, arguments);
                     this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof UserInput) {
                             let content: any = source.getBindingContext();
                             if (content instanceof sap.ui.model.Context) {
@@ -941,7 +941,7 @@ namespace sap {
                         }
                     });
                     this.attachAfterSelection(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof DataOwnerInput) {
                             let selecteds: any = event.getParameter("selecteds");
                             if (selecteds instanceof Array) {
@@ -966,7 +966,7 @@ namespace sap {
                 init(this: DataOrganizationInput): void {
                     (<any>OrganizationInput.prototype).init.apply(this, arguments);
                     this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof OrganizationInput) {
                             let content: any = source.getBindingContext();
                             if (content instanceof sap.ui.model.Context) {
@@ -1067,7 +1067,7 @@ namespace sap {
                         }
                         if (!mSettings.valueHelpRequest) {
                             mSettings.valueHelpRequest = (event: sap.ui.base.Event) => {
-                                let source: any = event.getSource();
+                                let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                                 if (source instanceof Input) {
                                     source.showItems(null);
                                 }
@@ -1157,7 +1157,7 @@ namespace sap {
                 init(this: Input): void {
                     (<any>Input.prototype).init.apply(this, arguments);
                     this.attachModelContextChange(undefined, (event: sap.ui.base.Event) => {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof Input) {
                             if (ibas.objects.isNull(source.getBindingValue())) {
                                 for (let item of source.getSuggestionItems()) {
@@ -1245,7 +1245,7 @@ namespace sap {
                 init(this: DataBranchInput): void {
                     (<any>BranchInput.prototype).init.apply(this, arguments);
                     this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof BranchInput) {
                             let content: any = source.getBindingContext();
                             if (content instanceof sap.ui.model.Context) {

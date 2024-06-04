@@ -264,9 +264,9 @@ declare namespace sap {
                  */
                 loadCurrencyRate: (done: (result: number | Error) => void) => void;
 
-                protected _currencySelect: CurrencySelect;
+                protected getCurrencySelect(): CurrencySelect;
 
-                protected _rateInput: Input;
+                protected getRateInput(): sap.m.Input;
             }
         }
     }

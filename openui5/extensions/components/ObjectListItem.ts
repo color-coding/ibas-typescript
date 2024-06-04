@@ -94,7 +94,7 @@ namespace sap {
                 init(this: DataObjectListItem): void {
                     (<any>ObjectListItem.prototype).init.apply(this, arguments);
                     this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof ObjectListItem) {
                             let content: any = source.getBindingContext();
                             if (content instanceof sap.ui.model.Context) {

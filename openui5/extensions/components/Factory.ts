@@ -175,7 +175,7 @@ namespace sap {
                                 editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
                                 items: items,
                                 change(this: sap.m.ComboBox, event: sap.ui.base.Event): void {
-                                    let source: any = event.getSource();
+                                    let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                                     if (source instanceof sap.m.ComboBox) {
                                         let key: any = source.getSelectedKey();
                                         let value: any = source.getValue();
@@ -393,7 +393,7 @@ namespace sap {
                             || ibas.strings.isEmpty(criteria.businessObject)) {
                             return;
                         }
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         // 处理变量
                         for (let item of criteria.conditions) {
                             if (ibas.strings.isWith(item.value, "${", "}")) {

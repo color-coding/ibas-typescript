@@ -89,7 +89,7 @@ namespace sap {
                     (<any>Link.prototype).init.apply(this, arguments);
                     // 监听事件
                     this.attachPress(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = event.getSource();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof DataLink) {
                             let objectCode: string = source.getObjectCode();
                             let value: string = source.getBindingValue();
