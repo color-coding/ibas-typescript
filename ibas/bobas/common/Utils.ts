@@ -1215,31 +1215,38 @@ namespace ibas {
             if (value1 === value2) {
                 return true;
             }
-            if (digits > 0) {
-                if (value1 < 1 && value2 < 1) {
-                    let nValue1: number = value1 * Math.pow(10, digits);
-                    let nValue2: number = value2 * Math.pow(10, digits);
-                    if (Math.abs(nValue1 - nValue2) < 10) {
-                        return true;
-                    }
-                } else {
-                    degree = isNaN(degree) ? Math.pow(10, digits > 1 ? digits - 1 : digits) * 0.6 : degree;
-                    let nValue1: number = value1 * Math.pow(10, digits);
-                    let nValue2: number = value2 * Math.pow(10, digits);
-                    if (Math.abs(nValue1 - nValue2) < degree) {
-                        if (value1 === 0 && value2 !== 0) {
-                            return false;
-                        }
-                        if (value1 !== 0 && value2 === 0) {
-                            return false;
-                        }
-                        return true;
-                    }
-                }
+            if (value1 === 0 && value2 !== 0) {
                 return false;
-            } else {
+            }
+            if (value1 !== 0 && value2 === 0) {
+                return false;
+            }
+            if (!(digits > 0)) {
                 return value1 === value2;
             }
+            let nValue1: number = Math.round(value1 * Math.pow(10, digits));
+            let nValue2: number = Math.round(value2 * Math.pow(10, digits));
+            let difference: number = Math.abs(nValue1 - nValue2);
+            let tolerance: number = 0.01;
+            switch (digits) {
+                case 1:
+                    tolerance = 0.05;
+                    break;
+                case 2:
+                    tolerance = 0.04;
+                    break;
+                case 3:
+                    tolerance = 0.03;
+                    break;
+                case 4:
+                    tolerance = 0.02;
+                    break;
+            }
+            // 变化比例超
+            if ((difference / nValue1) >= tolerance || (difference / nValue2) >= tolerance) {
+                return false;
+            }
+            return true;
         }
     }
 
