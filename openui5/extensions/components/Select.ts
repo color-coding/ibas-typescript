@@ -958,7 +958,7 @@ namespace sap {
                                 source.setRate(1);
                                 source.getRateInput().setValueState(sap.ui.core.ValueState.Success);
                                 source.getRateInput().setValueStateText(ibas.i18n.prop("openui5_currency_rate",
-                                    source.getBaseCurrency(), source.getCurrency(), "1.0000"
+                                    source.getCurrency(), source.getBaseCurrency(), "1.0000"
                                 ));
                                 source.getRateInput().setTooltip(source.getRateInput().getValueStateText());
                                 return;
@@ -980,7 +980,7 @@ namespace sap {
                                         source.setRate(result);
                                         source.getRateInput().setValueState(sap.ui.core.ValueState.Success);
                                         source.getRateInput().setValueStateText(ibas.i18n.prop("openui5_currency_rate",
-                                            source.getBaseCurrency(), source.getCurrency(),
+                                            source.getCurrency(), source.getBaseCurrency(),
                                             data.formatValue(data.Rate, result, "string")
                                         ));
                                         source.getRateInput().setTooltip(source.getRateInput().getValueStateText());

@@ -291,6 +291,10 @@ namespace shell {
                                         let condition: ibas.ICondition = criteria.conditions.create();
                                         condition.alias = boProperty.name;
                                         condition.value = this.view.searchContent;
+                                        if (!ibas.strings.isEmpty(condition.value)) {
+                                            // 拆词，替换查询空格为%
+                                            condition.value = ibas.strings.replace(condition.value, " ", "%");
+                                        }
                                         condition.operation = ibas.emConditionOperation.CONTAIN;
                                         // 修正查询关系为或
                                         condition.relationship = ibas.emConditionRelationship.OR;

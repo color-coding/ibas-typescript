@@ -122,6 +122,38 @@ declare namespace sap {
                  */
                 protected loadItems(): this;
             }
+            /**
+             * 业务仓库数据-多择框
+             */
+            class RepositoryMultiComboBox extends MultiComboBox {
+                /**
+                 * 获取业务仓库实例
+                 */
+                getRepository(): ibas.BORepositoryApplication;
+                /**
+                 * 设置业务仓库
+                 * @param value 业务仓库实例；业务仓库名称
+                 */
+                setRepository(value: ibas.BORepositoryApplication | string): this;
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): repository.IDataInfo;
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(value: repository.IDataInfo | any): this;
+                /**
+                 * 获取查询条件
+                 */
+                getCriteria(): ibas.ICriteria;
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
+            }
         }
     }
 }

@@ -135,28 +135,37 @@ namespace sap {
                         (<any>sap.m.InputBase.prototype).ontap.apply(this, arguments);
                     }
                 },
+                attachBrowserEvent(this: Input): Input {
+                    // 重复注册则跳过
+                    if (ibas.arrays.create((<any>this).aBindParameters).contain(c => c.fnHandler === arguments[1])) {
+                        return this;
+                    }
+                    return sap.m.Input.prototype.attachBrowserEvent.apply(this, arguments);
+                },
                 /** 初始化 */
                 init(this: Input): void {
-                    this.attachBrowserEvent("keydown", clearSelection);
                     (<any>sap.m.Input.prototype).init.apply(this, arguments);
-                },
-                exit(this: Input): void {
-                    this.detachBrowserEvent("keydown", clearSelection);
-                    (<any>sap.m.Input.prototype).exit.apply(this, arguments);
-                }
-            });
-            // 但仅选择数据时，清除已选择值
-            function clearSelection(this: Input, event: KeyboardEvent): void {
-                if (event.keyCode === 8 || event.keyCode === 46) {
-                    // backspace key
-                    if (this instanceof Input && this.getEditable() === true) {
-                        if (this.getShowValueHelp() && this.getValueHelpOnly()) {
-                            this.setBindingValue(null);
-                            this.fireChange({});
+                    this.attachBrowserEvent("keydown", function (this: Input, event: KeyboardEvent): void {
+                        // 但仅选择数据时，清除已选择值
+                        if (event.keyCode === 8 || event.keyCode === 46) {
+                            // backspace key
+                            if (this instanceof Input && this.getEditable() === true) {
+                                if (this.getShowValueHelp() && this.getValueHelpOnly()) {
+                                    this.setBindingValue(null);
+                                    this.fireChange({});
+                                }
+                            }
                         }
-                    }
-                }
-            }
+                    });
+                    this.attachBrowserEvent("paste", function (this: Input, event: ClipboardEvent): void {
+                        // 粘贴事件，激活sugest事件
+                        setTimeout(() => {
+                            (<any>this)._triggerSuggest(this.getValue());
+                        }, 0);
+                    });
+
+                },
+            });
             /**
              * 业务仓库数据-输入框
              */
@@ -167,6 +176,10 @@ namespace sap {
                         repository: { type: "any" },
                         /** 数据信息 */
                         dataInfo: { type: "any" },
+                        /** 查询条件 */
+                        criteria: { type: "any" },
+                        /** 描述值 */
+                        describeValue: { type: "boolean", defaultValue: true },
                     },
                     events: {}
                 },
@@ -197,6 +210,19 @@ namespace sap {
                  */
                 setDataInfo(this: RepositoryInput, value: repository.IDataInfo | any): RepositoryInput {
                     return this.setProperty("dataInfo", repositories.dataInfo(value));
+                },
+                /**
+                 * 获取查询
+                 */
+                getCriteria(this: RepositoryInput): ibas.ICriteria {
+                    return this.getProperty("criteria");
+                },
+                /**
+                 * 设置查询
+                 * @param value 查询
+                 */
+                setCriteria(this: RepositoryInput, value: ibas.ICriteria | ibas.ICondition[]): RepositoryInput {
+                    return this.setProperty("criteria", repositories.criteria(value));
                 },
                 /**
                  * 设置值
@@ -231,67 +257,56 @@ namespace sap {
                     return this;
                 },
                 /**
-                 * 添加建议项目后，设置为显示建议项目
-                 * @param oItem
-                 */
-                addSuggestionItem(this: RepositoryInput, oItem: sap.ui.core.Item): RepositoryInput {
-                    Input.prototype.addSuggestionItem.apply(this, arguments);
-                    if (!this.getShowSuggestion()) {
-                        this.setShowSuggestion(true);
-                    }
-                    return this;
-                },
-                /**
                  * 设置选中值
                  * @param value 值
                  */
                 setBindingValue(this: RepositoryInput, value: string): RepositoryInput {
-                    if (this.getSelectedKey() !== value) {
-                        this.setProperty("selectedKey", value);
-                        this.setProperty("bindingValue", value);
-                        if (ibas.strings.isEmpty(value)) {
-                            this.updateDomValue("");
-                        } else {
-                            let item: sap.ui.core.Item = this.getSuggestionItemByKey(String(value));
-                            if (!ibas.objects.isNull(item)) {
-                                this.setSelectedItem(item);
-                                this.updateDomValue(item.getText());
-                            } else if (!ibas.strings.isEmpty(value)) {
-                                // 没有此建议值
-                                let dataInfo: repository.IDataInfo = this.getDataInfo();
-                                if (ibas.objects.isNull(dataInfo)) {
-                                    return this;
-                                }
-                                if (dataInfo.key === dataInfo.text) {
-                                    // 值与描述一样，不再查询
-                                    let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
-                                        key: value,
-                                        text: value,
-                                    });
-                                    this.setSelectedItem(item);
-                                } else {
-                                    this.describeValue(value);
-                                }
-                            }
-                        }
-                    }
-                    if (this.getShowValueLink() === true) {
-                        let icons: any = this.getAggregation("_beginIcon", null);
-                        if (!ibas.objects.isNull(icons)) {
-                            if (ibas.objects.isNull(value)) {
-                                for (let item of ibas.arrays.create(icons)) {
-                                    if (item instanceof sap.ui.core.Icon) {
-                                        item.setVisible(false);
-                                    }
-                                }
+                    if (this.getDescribeValue() === true) {
+                        if (this.getSelectedKey() !== value) {
+                            this.setProperty("selectedKey", value);
+                            this.setProperty("bindingValue", value);
+                            if (ibas.strings.isEmpty(value)) {
+                                this.updateDomValue("");
                             } else {
-                                for (let item of ibas.arrays.create(icons)) {
-                                    if (item instanceof sap.ui.core.Icon) {
-                                        item.setVisible(true);
+                                let item: sap.ui.core.Item = this.getSuggestionItemByKey(String(value));
+                                if (!ibas.objects.isNull(item)) {
+                                    this.setSelectedItem(item);
+                                    this.updateDomValue(item.getText());
+                                } else if (!ibas.strings.isEmpty(value)) {
+                                    // 没有此建议值
+                                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                                    if (ibas.objects.isNull(dataInfo) || dataInfo.key === dataInfo.text) {
+                                        // 值与描述一样，不再查询
+                                        this.setSelectedItem(new sap.ui.core.Item("", {
+                                            key: value,
+                                            text: value,
+                                        }));
+                                    } else {
+                                        this.describeValue(value);
                                     }
                                 }
                             }
                         }
+                        if (this.getShowValueLink() === true) {
+                            let icons: any = this.getAggregation("_beginIcon", null);
+                            if (!ibas.objects.isNull(icons)) {
+                                if (ibas.objects.isNull(value)) {
+                                    for (let item of ibas.arrays.create(icons)) {
+                                        if (item instanceof sap.ui.core.Icon) {
+                                            item.setVisible(false);
+                                        }
+                                    }
+                                } else {
+                                    for (let item of ibas.arrays.create(icons)) {
+                                        if (item instanceof sap.ui.core.Icon) {
+                                            item.setVisible(true);
+                                        }
+                                    }
+                                }
+                            }
+                        }
+                    } else {
+                        Input.prototype.setBindingValue.apply(this, arguments);
                     }
                     return this;
                 },
@@ -311,22 +326,15 @@ namespace sap {
                             condition.relationship = ibas.emConditionRelationship.OR;
                         }
                     }
-                    /*
-                    // ui5升级不再需要改变状态
-                    let editable: boolean = false, enabled: boolean = false;
-                    !this.getEditable() ? this.setEditable(true) : editable = true;
-                    !this.getEnabled() ? this.setEnabled(true) : enabled = true;
-                    */
                     repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
                         (values) => {
+                            let item: sap.ui.core.ListItem = null;
                             if (values instanceof Error) {
                                 ibas.logger.log(values);
-                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                item = new sap.ui.core.ListItem("", {
                                     key: value,
                                     text: value,
                                 });
-                                this.setSelectedItem(item);
-                                this.updateDomValue(item.getText());
                             } else {
                                 let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
                                 keyBudilder.map(null, "");
@@ -334,7 +342,7 @@ namespace sap {
                                 let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
                                 textBudilder.map(null, "");
                                 textBudilder.map(undefined, "");
-                                for (let item of values) {
+                                for (let value of values) {
                                     if (keyBudilder.length > 0) {
                                         keyBudilder.append(ibas.DATA_SEPARATOR);
                                     }
@@ -342,43 +350,77 @@ namespace sap {
                                         textBudilder.append(ibas.DATA_SEPARATOR);
                                         textBudilder.append(" ");
                                     }
-                                    keyBudilder.append(item.key);
-                                    textBudilder.append(item.text);
+                                    keyBudilder.append(value.key);
+                                    textBudilder.append(value.text);
                                 }
-                                let item: sap.ui.core.ListItem = new sap.ui.core.ListItem("", {
+                                item = new sap.ui.core.ListItem("", {
                                     key: keyBudilder.toString(),
                                     text: textBudilder.toString(),
                                 });
-                                this.setSelectedItem(item);
-                                this.updateDomValue(item.getText());
                             }
-                            /*
-                            // ui5升级不再需要改变状态
-                            if (this.getEditable() && editable === false) {
-                                this.setEditable(editable);
-                            }
-                            if (this.getEnabled() && enabled === false) {
-                                this.setEnabled(enabled);
-                            }
-                            */
+                            this.setSelectedItem(item);
+                            this.updateDomValue(item.getText());
                         }
                     );
                 },
                 applySettings(this: RepositoryInput, mSettings: any, oScope?: any): RepositoryInput {
+                    if (!mSettings) {
+                        mSettings = {};
+                    }
                     if (mSettings?.dataInfo?.type) {
                         if (ibas.objects.isNull(mSettings?.showValueLink)) {
-                            if (!mSettings) {
-                                mSettings = {};
-                            }
                             mSettings.showValueLink = repositories.hasViewService(mSettings.dataInfo.type);
                         }
                     }
+                    if (mSettings?.showSuggestion === undefined) {
+                        if (mSettings?.suggestionItems?.length > 0) {
+                            mSettings.showSuggestion = true;
+                        }
+                    }
                     (<any>Input.prototype).applySettings.apply(this, arguments);
+                    // 对象仓库建议
+                    if (this.getShowSuggestion() === true && this.getRepository() && this.getDataInfo()) {
+                        this.setValueHelpOnly(false);
+                        this.setFilterSuggests(false);
+                        // 建议框大小
+                        this.setMaxSuggestionWidth("auto");
+                        /*
+                        this.setFilterFunction(function (sTerm: any, oItem: any): void {
+                            return oItem.getText().match(new RegExp(sTerm, "i")) || oItem.getKey().match(new RegExp(sTerm, "i"));
+                        });
+                        */
+                    }
                     return this;
+                },
+                itemConditions(this: RepositoryInput, item: sap.ui.core.Item | sap.ui.core.ListItem): ibas.ICondition[] {
+                    let conditions: ibas.IList<ibas.ICondition> = new ibas.ArrayList<ibas.ICondition>();
+                    let dataInfo: repository.IDataInfo = this.getDataInfo();
+                    if (ibas.objects.isNull(dataInfo)) {
+                        throw new Error(ibas.i18n.prop("sys_invalid_parameter", "dataInfo"));
+                    }
+                    if (this.indexOfSuggestionItem(item) < 0) {
+                        throw new Error(ibas.i18n.prop("sys_invalid_parameter", "item"));
+                    }
+                    let condition: ibas.ICondition = new ibas.Condition();
+                    condition.alias = dataInfo.key;
+                    condition.value = item.getKey();
+                    conditions.add(condition);
+                    if (dataInfo.key !== dataInfo.text && item instanceof sap.ui.core.ListItem) {
+                        condition = new ibas.Condition();
+                        condition.alias = dataInfo.text;
+                        condition.value = item.getAdditionalText();
+                        conditions.add(condition);
+                    }
+                    if (conditions.length > 1) {
+                        conditions.firstOrDefault().bracketOpen++;
+                        conditions.lastOrDefault().bracketClose++;
+                    }
+                    return conditions;
                 },
                 /** 初始化 */
                 init(this: RepositoryInput): void {
                     (<any>Input.prototype).init.apply(this, arguments);
+                    // 对象链接
                     this.attachValueLinkRequest(undefined, (event: sap.ui.base.Event) => {
                         let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         if (source instanceof RepositoryInput) {
@@ -391,7 +433,64 @@ namespace sap {
                             }
                         }
                     });
-                }
+                    // 对象建议
+                    this.attachSuggest(undefined, (event: sap.ui.base.Event) => {
+                        let source: RepositoryInput = <any>sap.ui.getCore().byId(event.getParameter("id"));
+                        let value: string = event.getParameter("suggestValue");
+                        let dataInfo: repository.IDataInfo = source.getDataInfo();
+                        if (source instanceof RepositoryInput && source.getShowSuggestion() === true && dataInfo) {
+                            value = ibas.strings.replace(value, " ", "%");
+                            let criteria: ibas.ICriteria = source.getCriteria();
+                            if (ibas.objects.isNull(criteria)) {
+                                criteria = new ibas.Criteria();
+                            } else {
+                                criteria = criteria.clone();
+                            }
+                            if (ibas.objects.isNull(criteria.noChilds)) {
+                                criteria.noChilds = true;
+                            }
+                            if (!(criteria.result > 0)) {
+                                criteria.result = Math.round(ibas.config.get(ibas.CONFIG_ITEM_CRITERIA_RESULT_COUNT, 30) / 3);
+                                if (!(criteria.result > 0)) {
+                                    criteria.result = 10;
+                                }
+                            }
+                            if (criteria.conditions.length > 1) {
+                                criteria.conditions.firstOrDefault().bracketOpen++;
+                                criteria.conditions.lastOrDefault().bracketClose++;
+                            }
+                            let condition: ibas.ICondition = criteria.conditions.create();
+                            condition.alias = dataInfo.key;
+                            condition.value = value;
+                            condition.operation = ibas.emConditionOperation.CONTAIN;
+                            if (dataInfo.key !== dataInfo.text) {
+                                condition.bracketOpen++;
+                                condition = criteria.conditions.create();
+                                condition.alias = dataInfo.text;
+                                condition.value = value;
+                                condition.operation = ibas.emConditionOperation.CONTAIN;
+                                condition.relationship = ibas.emConditionRelationship.OR;
+                                condition.bracketClose++;
+                            }
+
+                            source.removeAllSuggestionItems();
+                            repository.fetch(source.getRepository(), dataInfo, criteria,
+                                (items) => {
+                                    if (!(items instanceof Error)) {
+                                        for (let item of items) {
+                                            source.addSuggestionItem(new sap.ui.core.ListItem("", {
+                                                key: item.key,
+                                                text: item.key,
+                                                // 键值名字相同，则不显示，否则值
+                                                additionalText: dataInfo.key === dataInfo.text ? undefined : item.text,
+                                            }));
+                                        }
+                                    }
+                                }
+                            );
+                        }
+                    });
+                },
             });
             /**
              * 业务仓库数据-选择输入框
@@ -401,8 +500,6 @@ namespace sap {
                     properties: {
                         /** 选择方式 */
                         chooseType: { type: "int", defaultValue: ibas.emChooseType.SINGLE },
-                        /** 查询条件 */
-                        criteria: { type: "any" },
                     },
                     events: {
                         "afterSelection": {
@@ -428,24 +525,11 @@ namespace sap {
                 setChooseType(this: SelectionInput, value: ibas.emChooseType): SelectionInput {
                     return this.setProperty("chooseType", value);
                 },
-                /**
-                 * 获取查询
-                 */
-                getCriteria(this: SelectionInput): ibas.ICriteria {
-                    return this.getProperty("criteria");
-                },
-                /**
-                 * 设置查询
-                 * @param value 查询
-                 */
-                setCriteria(this: SelectionInput, value: ibas.ICriteria | ibas.ICondition[]): SelectionInput {
-                    return this.setProperty("criteria", repositories.criteria(value));
-                },
                 applySettings(this: SelectionInput, mSettings: any, oScope?: any): SelectionInput {
+                    if (!mSettings) {
+                        mSettings = {};
+                    }
                     if (mSettings?.chooseType === ibas.emChooseType.MULTIPLE) {
-                        if (!mSettings) {
-                            mSettings = {};
-                        }
                         mSettings.showValueLink = false;
                     }
                     return (<any>RepositoryInput.prototype).applySettings.apply(this, arguments);
@@ -456,9 +540,9 @@ namespace sap {
                     (<any>RepositoryInput.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
-                        let that: any = event.getSource();
-                        if (that instanceof SelectionInput) {
-                            let boCode: string, dataInfo: any = that.getDataInfo();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
+                        if (source instanceof SelectionInput) {
+                            let boCode: string, dataInfo: any = source.getDataInfo();
                             if (typeof dataInfo.type === "function") {
                                 boCode = dataInfo.type.BUSINESS_OBJECT_CODE;
                             } else if (typeof dataInfo.type === "object") {
@@ -471,11 +555,11 @@ namespace sap {
                             }
                             ibas.servicesManager.runChooseService<any>({
                                 boCode: boCode,
-                                chooseType: that.getChooseType(),
-                                criteria: that.getCriteria(),
+                                chooseType: source.getChooseType(),
+                                criteria: source.getCriteria(),
                                 onCompleted: (selecteds: ibas.IList<any>) => {
-                                    let keyProperty: string = that.getDataInfo().key;
-                                    let textProperty: string = that.getDataInfo().text;
+                                    let keyProperty: string = source.getDataInfo().key;
+                                    let textProperty: string = source.getDataInfo().text;
                                     let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
                                     keyBudilder.map(null, "");
                                     keyBudilder.map(undefined, "");
@@ -497,9 +581,9 @@ namespace sap {
                                         key: keyBudilder.toString(),
                                         text: textBudilder.toString(),
                                     });
-                                    that.setSelectedItem(item);
-                                    that.updateDomValue(item.getText());
-                                    that.fireAfterSelection({ selecteds: selecteds, });
+                                    source.setSelectedItem(item);
+                                    source.updateDomValue(item.getText());
+                                    source.fireAfterSelection({ selecteds: selecteds, });
                                 }
                             });
                         }

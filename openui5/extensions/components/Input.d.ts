@@ -92,10 +92,34 @@ declare namespace sap {
                  */
                 setDataInfo(value: repository.IDataInfo | any): this;
                 /**
+                 * 获取查询条件
+                 */
+                getCriteria(): ibas.ICriteria;
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
+                /**
                  * 检索值描述
                  * @param value 值
                  */
                 protected describeValue(value: string): void;
+                /**
+                 * 获取描述值
+                 * @param value 数据信息
+                 */
+                getDescribeValue(): boolean;
+                /**
+                 * 设置描述值
+                 * @param value 数据信息
+                 */
+                setDescribeValue(value: boolean): this;
+                /**
+                 * 返回项目对应的查询条件
+                 * @param item 项目
+                 */
+                itemConditions(item: sap.ui.core.Item): ibas.ICondition[];
             }
             /**
              * 业务仓库数据-输入框
@@ -110,15 +134,6 @@ declare namespace sap {
                  * @param value 选择类型
                  */
                 setChooseType(value: ibas.emChooseType): this;
-                /**
-                 * 获取查询条件
-                 */
-                getCriteria(): ibas.ICriteria;
-                /**
-                 * 设置数据信息
-                 * @param value 数据信息
-                 */
-                setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
                 /**
                  * 监听选择完成事件
                  * @param oData 

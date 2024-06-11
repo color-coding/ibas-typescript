@@ -804,7 +804,7 @@ namespace sap {
                             required: readonly ? false : property.required,
                         }),
                         template: factories.newComponent(property, readonly ? "Text" : "Input", readonly ? undefined : (event) => {
-                            let source: any = event.getSource();
+                            let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                             if (source instanceof sap.m.Input && event.getId() === "changed") {
                                 let chsInfo: string = source.getTooltip_AsString();
                                 if (!ibas.strings.isEmpty(chsInfo)) {

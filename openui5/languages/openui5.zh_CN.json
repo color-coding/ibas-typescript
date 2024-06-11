@@ -24,7 +24,6 @@
     "openui5_currency_no_currency": "没有选择货币",
     "openui5_currency_no_date": "没有提供日期",
     "openui5_currency_rate": "{0}/{1} = {2}",
-    "openui5_currency_rate_full": "{0}，{1}，{2}",
     "openui5_currency_rate_settting": "正在查询汇率",
     "openui5_bo_extend_properties": "扩展属性"
 }
