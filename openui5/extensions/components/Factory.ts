@@ -113,27 +113,7 @@ namespace sap {
                         tooltip: property.dataType === "Memo" ? bindInfo : undefined,
                     }).bindProperty("bindingValue", bindInfo);
                 } else if (mode === "Input") {
-                    if (bindInfo.type instanceof sap.extension.data.Date) {
-                        return new sap.extension.m.DatePicker("", {
-                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
-                            required: property.required,
-                        }).bindProperty("bindingValue", bindInfo);
-                    } else if (bindInfo.type instanceof sap.extension.data.Time) {
-                        return new sap.extension.m.TimePicker("", {
-                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
-                            required: property.required,
-                        }).bindProperty("bindingValue", bindInfo);
-                    } else if (bindInfo.type instanceof sap.extension.data.Decimal && !(bindInfo.type instanceof sap.extension.data.Percentage)) {
-                        return new sap.extension.m.Input("", {
-                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
-                            required: property.required,
-                        }).bindProperty("bindingValue", bindInfo);
-                    } else if (bindInfo.type instanceof sap.extension.data.Numeric) {
-                        return new sap.extension.m.Input("", {
-                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
-                            required: property.required,
-                        }).bindProperty("bindingValue", bindInfo);
-                    } else if (property.values instanceof Array && property.values.length > 0) {
+                    if (property.values instanceof Array && property.values.length > 0) {
                         let force: boolean = false;
                         let items: ibas.IList<sap.ui.core.Item> = new ibas.ArrayList<sap.ui.core.Item>();
                         for (let item of property.values) {
@@ -194,6 +174,26 @@ namespace sap {
                         input.setRequired(property.required);
                         input.setEditable(property.authorised === ibas.emAuthoriseType.ALL ? true : false);
                         return input;
+                    } else if (bindInfo.type instanceof sap.extension.data.Date) {
+                        return new sap.extension.m.DatePicker("", {
+                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
+                        }).bindProperty("bindingValue", bindInfo);
+                    } else if (bindInfo.type instanceof sap.extension.data.Time) {
+                        return new sap.extension.m.TimePicker("", {
+                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
+                        }).bindProperty("bindingValue", bindInfo);
+                    } else if (bindInfo.type instanceof sap.extension.data.Decimal && !(bindInfo.type instanceof sap.extension.data.Percentage)) {
+                        return new sap.extension.m.Input("", {
+                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
+                        }).bindProperty("bindingValue", bindInfo);
+                    } else if (bindInfo.type instanceof sap.extension.data.Numeric) {
+                        return new sap.extension.m.Input("", {
+                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
+                        }).bindProperty("bindingValue", bindInfo);
                     } else {
                         return new sap.extension.m.Input("", {
                             editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,

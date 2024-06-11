@@ -262,6 +262,97 @@ namespace sap {
                     return this;
                 },
             });
+            /**
+             * 对象属性可选值-多择框
+             */
+            MultiComboBox.extend("sap.extension.m.RepositoryMultiComboBox", {
+                metadata: {
+                    properties: {
+                        /** 业务仓库 */
+                        repository: { type: "any" },
+                        /** 数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 查询条件 */
+                        criteria: { type: "any" },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /**
+                 * 获取业务仓库实例
+                 */
+                getRepository(this: RepositoryMultiComboBox): ibas.BORepositoryApplication {
+                    return this.getProperty("repository");
+                },
+                /**
+                 * 设置业务仓库
+                 * @param value 业务仓库实例；业务仓库名称
+                 */
+                setRepository(this: RepositoryMultiComboBox, value: ibas.BORepositoryApplication | string): RepositoryMultiComboBox {
+                    return this.setProperty("repository", repositories.repository(value));
+                },
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: RepositoryMultiComboBox): repository.IDataInfo {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: RepositoryMultiComboBox, value: repository.IDataInfo | any): RepositoryMultiComboBox {
+                    return this.setProperty("dataInfo", repositories.dataInfo(value));
+                },
+                /**
+                 * 获取查询
+                 */
+                getCriteria(this: RepositoryMultiComboBox): ibas.ICriteria {
+                    return this.getProperty("criteria");
+                },
+                /**
+                 * 设置查询
+                 * @param value 查询
+                 */
+                setCriteria(this: RepositoryMultiComboBox, value: ibas.ICriteria | ibas.ICondition[]): RepositoryMultiComboBox {
+                    return this.setProperty("criteria", repositories.criteria(value));
+                },
+                /**
+                 * 设置绑定值
+                 * @param value 值
+                 */
+                setBindingValue(this: RepositoryMultiComboBox, value: string): RepositoryMultiComboBox {
+                    return Select.prototype.setBindingValue.apply(this, arguments);
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: RepositoryMultiComboBox): RepositoryMultiComboBox {
+                    this.destroyItems();
+                    repository.fetch(this.getRepository(), this.getDataInfo(), this.getCriteria(),
+                        (values) => {
+                            if (values instanceof Error) {
+                                ibas.logger.log(values);
+                            } else {
+                                for (let item of values) {
+                                    let sItem: any = this.getItemByKey(item.key);
+                                    if (sItem instanceof ui.core.Item) {
+                                        sItem.setText(item.text);
+                                        sItem.setTooltip(ibas.strings.format("{0} - {1}", item.key, item.text));
+                                    } else {
+                                        this.addItem(new SelectItem("", {
+                                            key: item.key,
+                                            text: item.text,
+                                            tooltip: ibas.strings.format("{0} - {1}", item.key, item.text)
+                                        }));
+                                    }
+                                }
+                            }
+                        }
+                    );
+                    return this;
+                }
+            });
         }
     }
 }

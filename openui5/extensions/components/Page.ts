@@ -342,7 +342,7 @@ namespace sap {
                                 ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                         }));
                         splitter.addContent(factories.newComponent(property, "Input", !ibas.strings.isEmpty(property.linkedObject) ? (event) => {
-                            let source: any = event.getSource();
+                            let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                             if (source instanceof sap.m.Input && event.getId() === "changed") {
                                 let chsInfo: string = source.getTooltip_AsString();
                                 if (!ibas.strings.isEmpty(chsInfo)) {

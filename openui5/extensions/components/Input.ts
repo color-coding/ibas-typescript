@@ -456,9 +456,9 @@ namespace sap {
                     (<any>RepositoryInput.prototype).init.apply(this, arguments);
                     // 自身事件监听
                     this.attachValueHelpRequest(null, function (event: sap.ui.base.Event): void {
-                        let that: any = event.getSource();
-                        if (that instanceof SelectionInput) {
-                            let boCode: string, dataInfo: any = that.getDataInfo();
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
+                        if (source instanceof SelectionInput) {
+                            let boCode: string, dataInfo: any = source.getDataInfo();
                             if (typeof dataInfo.type === "function") {
                                 boCode = dataInfo.type.BUSINESS_OBJECT_CODE;
                             } else if (typeof dataInfo.type === "object") {
@@ -471,11 +471,11 @@ namespace sap {
                             }
                             ibas.servicesManager.runChooseService<any>({
                                 boCode: boCode,
-                                chooseType: that.getChooseType(),
-                                criteria: that.getCriteria(),
+                                chooseType: source.getChooseType(),
+                                criteria: source.getCriteria(),
                                 onCompleted: (selecteds: ibas.IList<any>) => {
-                                    let keyProperty: string = that.getDataInfo().key;
-                                    let textProperty: string = that.getDataInfo().text;
+                                    let keyProperty: string = source.getDataInfo().key;
+                                    let textProperty: string = source.getDataInfo().text;
                                     let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
                                     keyBudilder.map(null, "");
                                     keyBudilder.map(undefined, "");
@@ -497,9 +497,9 @@ namespace sap {
                                         key: keyBudilder.toString(),
                                         text: textBudilder.toString(),
                                     });
-                                    that.setSelectedItem(item);
-                                    that.updateDomValue(item.getText());
-                                    that.fireAfterSelection({ selecteds: selecteds, });
+                                    source.setSelectedItem(item);
+                                    source.updateDomValue(item.getText());
+                                    source.fireAfterSelection({ selecteds: selecteds, });
                                 }
                             });
                         }

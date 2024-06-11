@@ -13,32 +13,35 @@ namespace sap {
              * json模型
              */
             sap.ui.model.json.JSONModel.extend("sap.extension.model.JSONModel", {
-                metadata: {
-                    properties: {
-                    },
-                    events: {}
+                constructor: function (): void {
+                    sap.ui.model.json.JSONModel.apply(this, arguments);
+                    this.forcedRefresh = false;
                 },
-                renderer: {},
+                metadata: {
+                },
+                /**
+                 * 获取-强制刷新
+                 */
+                getForcedRefresh(): boolean {
+                    return this.forcedRefresh;
+                },
+                /**
+                 * 设置-强制刷新
+                 */
+                setForcedRefresh(value: boolean): JSONModel {
+                    this.forcedRefresh = value;
+                    return this;
+                },
                 /**
                  * 设置数据
                  */
                 setData(this: JSONModel, oData: any, bMerge?: boolean): void {
                     if (oData instanceof ibas.Bindable) {
-                        oData.registerListener({
-                            id: this.getId(),
-                            propertyChanged: () => {
-                                this.refresh(false);
-                            }
-                        });
+                        this.registerPropertyChanged(oData);
                     } else if (oData instanceof Array) {
                         for (let value of oData) {
                             if (value instanceof ibas.Bindable) {
-                                value.registerListener({
-                                    id: this.getId(),
-                                    propertyChanged: () => {
-                                        this.refresh(false);
-                                    }
-                                });
+                                this.registerPropertyChanged(value);
                             }
                         }
                     } else if (oData instanceof Object) {
@@ -48,21 +51,11 @@ namespace sap {
                             }
                             let values: any = oData[item];
                             if (values instanceof ibas.Bindable) {
-                                values.registerListener({
-                                    id: this.getId(),
-                                    propertyChanged: () => {
-                                        this.refresh(false);
-                                    }
-                                });
+                                this.registerPropertyChanged(values);
                             } else if (values instanceof Array) {
                                 for (let value of values) {
                                     if (value instanceof ibas.Bindable) {
-                                        value.registerListener({
-                                            id: this.getId(),
-                                            propertyChanged: () => {
-                                                this.refresh(false);
-                                            }
-                                        });
+                                        this.registerPropertyChanged(value);
                                     }
                                 }
                             }
@@ -98,37 +91,37 @@ namespace sap {
                         sData = sData[path];
                     }
                     if (sData === oData) {
-                        // 同一个集合时，强行更新
-                        this.refresh(false);
+                        this.refresh(true);
                     } else if (sData instanceof Array) {
                         if (oData instanceof Array) {
                             for (let data of oData) {
                                 if (data instanceof ibas.Bindable) {
-                                    data.registerListener({
-                                        id: this.getId(),
-                                        propertyChanged: () => {
-                                            this.refresh(false);
-                                        }
-                                    });
+                                    this.registerPropertyChanged(data);
                                 }
                                 sData.push(data);
                             }
                         } else {
                             if (oData instanceof ibas.Bindable) {
-                                oData.registerListener({
-                                    id: this.getId(),
-                                    propertyChanged: () => {
-                                        this.refresh(false);
-                                    }
-                                });
+                                this.registerPropertyChanged(oData);
                             }
                             sData.push(oData);
                         }
+                        this.refresh(false);
                     } else {
                         // 非集合
                         this.setData(oData);
+                        this.refresh(true);
                     }
-                    this.refresh(false);
+                },
+                /** 自动刷新 */
+                fireAutoRefresh(this: JSONModel): void {
+                    if (typeof this.getForcedRefresh() === "boolean") {
+                        if (this.getForcedRefresh() === true) {
+                            this.refresh(true);
+                        } else {
+                            this.refresh(false);
+                        }
+                    }
                 },
                 size(this: JSONModel): number {
                     let sData: any = this.getData();
@@ -171,6 +164,17 @@ namespace sap {
                     }
                     sap.ui.model.json.JSONModel.prototype.destroy.apply(this, arguments);
                 },
+                registerPropertyChanged(data: ibas.Bindable): void {
+                    if (ibas.objects.isNull(data)) {
+                        return;
+                    }
+                    data.registerListener({
+                        id: this.getId(),
+                        propertyChanged: () => {
+                            this.fireAutoRefresh();
+                        }
+                    });
+                }
             });
         }
     }

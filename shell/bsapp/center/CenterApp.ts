@@ -98,7 +98,9 @@ namespace shell {
                 ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: initializing user [{0} - {1}]'s modules.", user.id, user.code);
                 // 如当前模块包含Hash指向的功能,激活
                 let hashFuncId: string = null;
-                if (window.location.hash.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS) && ibas.config.get(CONFIG_ITEM_IGNORING_HISTORICAL_FUNCTION, false) === false) {
+                let ignoringHistorical: boolean = ibas.config.get(CONFIG_ITEM_IGNORING_HISTORICAL_FUNCTION, false);
+                ignoringHistorical = ibas.config.get(CONFIG_ITEM_IGNORING_HISTORICAL_FUNCTION + "|" + user.code, ignoringHistorical);
+                if (window.location.hash.startsWith(ibas.URL_HASH_SIGN_FUNCTIONS) && ignoringHistorical === false) {
                     let url: string = window.location.hash.substring(ibas.URL_HASH_SIGN_FUNCTIONS.length);
                     let index: number = url.indexOf("/") < 0 ? url.length : url.indexOf("/");
                     hashFuncId = url.substring(0, index);

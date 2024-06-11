@@ -219,6 +219,7 @@ namespace ibas {
                             || value === globalThis.navigator || value === globalThis.location || value === globalThis.console
                             || value === globalThis.crypto || value === globalThis.frames || value === globalThis.frameElement
                             || value === globalThis.history || value === globalThis.clientInformation || value === globalThis.styleMedia
+                            || value === globalThis.event
                         ) {
                             continue;
                         }

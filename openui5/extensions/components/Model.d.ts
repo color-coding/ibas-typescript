@@ -19,6 +19,12 @@ declare namespace sap {
                  */
                 constructor(oData: any | string, bObserve?: boolean);
                 /**
+                 * 构造方法
+                 * @param {any | string} oData 数组时形式：{ rows: datas }
+                 * @param {function} onPropertyChanged 数据属性变化
+                 */
+                constructor(oData: any | string, onPropertyChanged?: () => {});
+                /**
                  * 增加数据
                  * @param oData 数据
                  * @param sPath 路径
@@ -37,6 +43,22 @@ declare namespace sap {
                  * 数据大小
                  */
                 size(): number;
+                /**
+                 * 获取-强制刷新
+                 */
+                getForcedRefresh(): boolean;
+                /**
+                 * 设置-强制刷新
+                 */
+                setForcedRefresh(value: boolean): JSONModel;
+                /** 
+                 * 自动刷新
+                 */
+                protected fireAutoRefresh(): void;
+                /** 
+                 * 注册属性改变事件
+                 */
+                protected registerPropertyChanged(data: ibas.Bindable): void;
             }
         }
     }
