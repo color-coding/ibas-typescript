@@ -299,6 +299,10 @@ namespace sap {
                             property = "district";
                         } else if (metadata.hasProperty("street")) {
                             property = "street";
+                        } else if (metadata.hasProperty("height")) {
+                            property = "height";
+                        } else if (metadata.hasProperty("width")) {
+                            property = "width";
                         }
                     }
                 }

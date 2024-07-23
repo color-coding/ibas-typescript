@@ -12,7 +12,7 @@
     "fullScreen|PHONE": true,
     "queryPanelConfigurable|PHONE": true,
     "queryPanelSelectable|PHONE": false,
-    "userTokenWay": "Authorization: Bearer",
+    "disableFunctionKeys": true,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",

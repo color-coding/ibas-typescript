@@ -50,7 +50,7 @@ namespace ibas {
             return listener;
         }
         /** 注册 */
-        registerListener(listener: IBrowserEventListener): void {
+        registerListener(listener: IBrowserEventListener, options?: boolean | AddEventListenerOptions): void {
             let that: this = this;
             if (objects.isNull(listener.id)) {
                 listener.id = uuids.random();
@@ -62,7 +62,7 @@ namespace ibas {
                 let eventType: string = enums.toString(emBrowserEventType, listener.eventType).toLowerCase();
                 window.addEventListener(eventType, function (event: Event): void {
                     that.fireEvent(listener.eventType, event);
-                }, false);
+                }, options);
             }
             this.listeners().add(listener);
         }

@@ -41,6 +41,7 @@ namespace sap {
                             for (let item of ibas.arrays.create(icons)) {
                                 let element: any = document.getElementById(item.getId());
                                 if (!ibas.objects.isNull(element)) {
+                                    element.removeAttribute("tabindex");
                                     element = element.parentElement;
                                     if (!ibas.objects.isNull(element)) {
                                         element.style.cssText = "height: auto;";
@@ -382,6 +383,7 @@ namespace sap {
                     if (this.getShowSuggestion() === true && this.getRepository() && this.getDataInfo()) {
                         this.setValueHelpOnly(false);
                         this.setFilterSuggests(false);
+                        this.setAutocomplete(false);
                         // 建议框大小
                         this.setMaxSuggestionWidth("auto");
                         /*
@@ -473,18 +475,36 @@ namespace sap {
                                 condition.bracketClose++;
                             }
 
-                            source.removeAllSuggestionItems();
                             repository.fetch(source.getRepository(), dataInfo, criteria,
                                 (items) => {
                                     if (!(items instanceof Error)) {
-                                        for (let item of items) {
-                                            source.addSuggestionItem(new sap.ui.core.ListItem("", {
-                                                key: item.key,
-                                                text: item.key,
-                                                // 键值名字相同，则不显示，否则值
-                                                additionalText: dataInfo.key === dataInfo.text ? undefined : item.text,
-                                            }));
+                                        let sugItems: sap.ui.core.Item[] = source.getSuggestionItems();
+                                        if (sugItems.length > items.length) {
+                                            for (let i: number = sugItems.length - 1; i >= items.length; i--) {
+                                                source.removeSuggestionItem(sugItems[i]);
+                                            }
                                         }
+                                        for (let i: number = 0; i < items.length; i++) {
+                                            if (i >= sugItems.length) {
+                                                source.addSuggestionItem(new sap.ui.core.ListItem("", {
+                                                    key: items[i].key,
+                                                    text: items[i].key,
+                                                    // 键值名字相同，则不显示，否则值
+                                                    additionalText: dataInfo.key === dataInfo.text ? undefined : items[i].text,
+                                                }));
+                                            } else {
+                                                let sugItem: sap.ui.core.Item = sugItems[i];
+                                                if (sugItem.getKey() !== items[i].key) {
+                                                    sugItem.setKey(items[i].key);
+                                                    sugItem.setText(items[i].key);
+                                                    if (dataInfo.key !== dataInfo.text && sugItem instanceof sap.ui.core.ListItem) {
+                                                        sugItem.setAdditionalText(items[i].text);
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    } else {
+                                        source.removeAllSuggestionItems();
                                     }
                                 }
                             );

@@ -38,7 +38,7 @@ namespace shell {
                         onEventFired: (event: KeyboardEvent): void => {
                             that.onKeyDown(event);
                         }
-                    });
+                    }, true);
                     // 哈希值变化
                     ibas.browserEventManager.registerListener({
                         eventType: ibas.emBrowserEventType.HASHCHANGE,

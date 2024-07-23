@@ -309,6 +309,22 @@ namespace sap {
                     }
                     (<any>sap.ui.table.Table.prototype).exit.apply(this, arguments);
                 },
+                _findAndfireCellEvent(this: Table, fnFire: Function, oEvent: any, fnContextMenu: any): boolean {
+                    // 回车事件，跳过cellClick事件
+                    if (oEvent.type === "sapenter") {
+                        // sap/ui/table/extensions/KeyboardDelegate-dbg.js #501
+                        let bEnterActionMode: boolean = !this.hasListeners("cellClick");
+                        // 原代码不执行，改为执行
+                        if (!bEnterActionMode) {
+                            let $InteractiveElements: any = (<any>sap.ui.table).utils.TableUtils.getInteractiveElements(oEvent.target);
+                            if ($InteractiveElements) {
+                                (<any>this)._getKeyboardExtension().setActionMode(true);
+                            }
+                        }
+                        return true;
+                    }
+                    return (<any>sap.ui.table.Table.prototype)._findAndfireCellEvent.apply(this, arguments);
+                },
                 // 1.80以上兼容问题
                 setModel(this: Table, oModel: model.JSONModel, sName?: string): Table {
                     let version: any = sap.ui.getCore().getConfiguration().getVersion();

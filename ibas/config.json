@@ -10,6 +10,7 @@
     "decimalPlaces|Measurement": 2,
     "decimalPlaces|Rate": 4,
     "decimalPlaces|Percentage": 4,
+    "userTokenWay": "Authorization: Bearer",
     "defaultCurrency": "CNY",
     "language": "zh_CN",
     "i18nGroups": "bo,"
