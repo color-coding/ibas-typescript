@@ -28,25 +28,30 @@ namespace shell {
             export const CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE: string = "hideModule";
             /** 配置项目-禁用用户功能菜单 */
             export const CONFIG_ITEM_DISABLE_USER_FUNCTIONS_MENU: string = "disableUserMenu";
-            /** 配置项目-启用功能键 */
-            export const CONFIG_ITEM_DISABLE_FUNCTIONS_KEYS: string = "disableFunctionKeys";
+            /** 配置项目-快捷键映射 */
+            export const CONFIG_ITEM_SHORTCUT_KEY_MAPPING: string = "shortcutKeyMapping";
             /** 状态消息延迟时间（毫秒） */
             const _STATUS_DELAY: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
             /** 消息数量 */
             const _MESSAGE_COUNT: number = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
-            /** 启用功能键 */
-            const ENABLE_FUNCTIONS_KEYS: boolean = !ibas.config.get(CONFIG_ITEM_DISABLE_FUNCTIONS_KEYS, false);
+            /** 快捷键映射 */
+            let shortcutKeyMap: Map<number, number> = function (): Map<number, number> {
+                let keyMap: Map<number, number> = new Map<number, number>();
+                for (let item of ibas.config.get(CONFIG_ITEM_SHORTCUT_KEY_MAPPING, "")?.split(ibas.DATA_SEPARATOR)) {
+                    if (ibas.strings.count(item, ":") !== 1) {
+                        continue;
+                    }
+                    let keys: string[] = item.split(":");
+                    keyMap.set(ibas.numbers.valueOf(keys[0]), ibas.numbers.valueOf(keys[1]));
+                }
+                return keyMap;
+            }();
             /** 模块时间 */
             let _MODULE_TIME: number = undefined;
             const UI_MAIN_MENU: string = "__UI_MAIN_MENU";
             const UI_MAIN_BACK: string = "__UI_MAIN_BACK";
             const UI_MAIN_TITLE: string = "__UI_MAIN_TITLE";
             const UI_BUSY_DIALOG: string = "__UI_BUSY_DIALOG";
-            /** 功能键码: F1 ~ F12 */
-            const FUNCTION_KEYS: number[] = [
-                112, 113, 114, 115, 116, 117, 118, 119, 120, 121, 122
-                // 关闭(F12), 123
-            ];
             /**
              * 视图-中心
              */
@@ -127,7 +132,7 @@ namespace shell {
                                         placement: sap.m.PlacementType.Bottom,
                                         content: [
                                             new sap.m.Button("", {
-                                                text: ibas.i18n.prop("shell_help") + (ENABLE_FUNCTIONS_KEYS ? "(F1)" : ""),
+                                                text: ibas.i18n.prop("shell_help"),
                                                 type: sap.m.ButtonType.Transparent,
                                                 icon: "sap-icon://sys-help",
                                                 press: function (): void {
@@ -136,7 +141,7 @@ namespace shell {
                                                 }
                                             }),
                                             new sap.m.Button("", {
-                                                text: ibas.i18n.prop("shell_about") + (ENABLE_FUNCTIONS_KEYS ? "(F2)" : ""),
+                                                text: ibas.i18n.prop("shell_about"),
                                                 type: sap.m.ButtonType.Transparent,
                                                 icon: "sap-icon://world",
                                                 press: function (): void {
@@ -145,7 +150,7 @@ namespace shell {
                                                 }
                                             }),
                                             new sap.m.Button("", {
-                                                text: ibas.i18n.prop("shell_logout") + (ENABLE_FUNCTIONS_KEYS ? "(F12)" : ""),
+                                                text: ibas.i18n.prop("shell_logout"),
                                                 type: sap.m.ButtonType.Transparent,
                                                 icon: "sap-icon://system-exit",
                                                 visible: !ibas.config.get(CONFIG_ITEM_NO_LOGOUT, false),
@@ -287,9 +292,17 @@ namespace shell {
                                             }
                                             // 设置焦点到搜索框
                                             setTimeout(function (this: sap.m.Page): void {
-                                                let focusId: string = page.$().find(".sapMPageSubHeader")?.firstFocusableDomRef()?.id;
+                                                let view: any = sap.extension.customdatas.getView(page);
+                                                let focusId: string = null;
+                                                if (view instanceof ibas.BOEditView) {
+                                                    focusId = page.$().find(".sapMInputBase")?.firstFocusableDomRef()?.id?.split("-")[0];
+                                                } else if (view instanceof ibas.BOViewView) {
+                                                    focusId = page.$().find(".sapUxAPObjectPageHeaderNavigation")?.firstFocusableDomRef()?.id?.split("-")[0];
+                                                } else {
+                                                    focusId = page.$().find(".sapMPageSubHeader")?.firstFocusableDomRef()?.id?.split("-")[0];
+                                                }
                                                 if (!ibas.strings.isEmpty(focusId)) {
-                                                    let element: sap.ui.core.Element = sap.ui.getCore().byId(focusId.split("-")[0]);
+                                                    let element: sap.ui.core.Element = sap.ui.getCore().byId(focusId);
                                                     if (element) {
                                                         if (sap.ui.getCore().getCurrentFocusedControlId() !== element.getId()) {
                                                             element.focus();
@@ -418,7 +431,6 @@ namespace shell {
                                     }
                                 }
                             },
-                            text: ENABLE_FUNCTIONS_KEYS ? "(F12)" : undefined,
                         }));
                         // 接管title属性定义
                         Object.defineProperty(view, "title", {
@@ -773,24 +785,6 @@ namespace shell {
                             ]
                         }).addStyleClass("sapUiNoContentPadding");
                     }
-                    // 绑定功能键
-                    if (ENABLE_FUNCTIONS_KEYS) {
-                        let index: number = 0;
-                        let sExit: string = ibas.i18n.prop("shell_exit"), sClose: string = ibas.i18n.prop("shell_data_close");
-                        for (let item of viewContent.getButtons()) {
-                            if (index >= FUNCTION_KEYS.length) {
-                                // 功能键耗尽
-                                break;
-                            }
-                            if (item.getText() === sExit || item.getText() === sClose) {
-                                item.setText(item.getText() + "(F12)");
-                            } else {
-                                if (this.bindingKeys(item, index)) {
-                                    index++;
-                                }
-                            }
-                        }
-                    }
                     // 修改id号
                     view.id = viewContent.getId();
                     viewContent.open();
@@ -908,80 +902,6 @@ namespace shell {
                             }
                         };
                         this.showQueryPanel(view, queryView);
-                    }
-                    // 绑定功能键
-                    if (ENABLE_FUNCTIONS_KEYS) {
-                        let index: number = 0;
-                        if (viewContent instanceof sap.m.Page) {
-                            let toolbar: any = viewContent.getSubHeader();
-                            if (toolbar instanceof sap.m.Toolbar) {
-                                for (let item of toolbar.getContent()) {
-                                    if (index >= FUNCTION_KEYS.length) {
-                                        // 功能键耗尽
-                                        break;
-                                    }
-                                    if (this.bindingKeys(item, index)) {
-                                        index++;
-                                    }
-                                }
-                            }
-                            let tmpPage: sap.m.Page = viewContent;
-                            // 处理带自定义字段的
-                            if (tmpPage instanceof sap.extension.m.DataPage) {
-                                tmpPage = <any>sap.ui.getCore().byId(viewContent.getId() + "_commonSplit");
-                            }
-                            for (let item of tmpPage.getContent()) {
-                                if (item instanceof sap.ui.layout.form.SimpleForm) {
-                                    for (let sItem of item.getContent()) {
-                                        if (sItem instanceof sap.ui.table.Table) {
-                                            let toolbar: any = (<any>sItem).getToolbar();
-                                            if (toolbar instanceof sap.m.Toolbar) {
-                                                for (let tItem of toolbar.getContent()) {
-                                                    if (index >= FUNCTION_KEYS.length) {
-                                                        // 功能键耗尽
-                                                        break;
-                                                    }
-                                                    if (this.bindingKeys(tItem, index)) {
-                                                        index++;
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        } else if (viewContent instanceof sap.uxap.ObjectPageLayout) {
-                            let header: any = viewContent.getHeaderTitle();
-                            if (header instanceof sap.uxap.ObjectPageHeader) {
-                                for (let item of header.getNavigationBar().getContentLeft()) {
-                                    if (index >= FUNCTION_KEYS.length) {
-                                        // 功能键耗尽
-                                        break;
-                                    }
-                                    if (this.bindingKeys(item, index)) {
-                                        index++;
-                                    }
-                                }
-                                for (let item of header.getNavigationBar().getContentMiddle()) {
-                                    if (index >= FUNCTION_KEYS.length) {
-                                        // 功能键耗尽
-                                        break;
-                                    }
-                                    if (this.bindingKeys(item, index)) {
-                                        index++;
-                                    }
-                                }
-                                for (let item of header.getNavigationBar().getContentRight()) {
-                                    if (index >= FUNCTION_KEYS.length) {
-                                        // 功能键耗尽
-                                        break;
-                                    }
-                                    if (this.bindingKeys(item, index)) {
-                                        index++;
-                                    }
-                                }
-                            }
-                        }
                     }
                     container.addContent(viewContent);
                 }
@@ -1156,220 +1076,323 @@ namespace shell {
                     }
                     return sap.extension.customdatas.getView(page);
                 }
-                private bindingKeys(button: any, index: number): boolean {
-                    if (button instanceof sap.m.Button || button instanceof sap.m.MenuButton) {
-                        if (button.getVisible() === false) {
-                            return;
-                        }
-                        button.setText(ibas.strings.format("{0}(F{1})", button.getText(), index + 1));
-                        return true;
-                    }
-                    return false;
-                }
-                private keyingButton(button: any, eventKey: string): boolean {
-                    if (button instanceof sap.m.Button || button instanceof sap.m.MenuButton) {
-                        if (ibas.strings.isEmpty(button.getText())) {
-                            return false;
-                        }
-                        let match: RegExpMatchArray = button.getText().match(/(\w+)/);
-                        if (!match) {
-                            return false;
-                        }
-                        let key: string = match[1];
-                        if (eventKey === key) {
-                            if (button.getEnabled() && button.getVisible()) {
-                                if (button instanceof sap.m.Button) {
-                                    (<any>button).firePress();
-                                } else if (button instanceof sap.m.MenuButton) {
-                                    let focusedlId: string = sap.ui.getCore().getCurrentFocusedControlId();
-                                    button.getMenu().attachEventOnce("closed", undefined, () => {
-                                        let element: sap.ui.core.Element = sap.ui.getCore().byId(focusedlId);
-                                        if (element) {
-                                            element.focus();
-                                        }
-                                    });
-                                    (<any>button).openMenuByKeyboard();
-                                }
-                            }
-                            return true;
-                        }
-                    }
-                    return false;
-                }
                 /** 按钮按下时 */
                 protected onKeyDown(event: KeyboardEvent): void {
                     // 获取当前窗体
                     let view: ibas.View = this.currentPageView();
-                    // 功能键按下，激活功能
-                    if (ENABLE_FUNCTIONS_KEYS && (event.keyCode >= 112 && event.keyCode <= 123)) {
+                    /**
+                     * 不可用的：
+                     *    a，全选
+                     *    c，复制
+                     *    d，收藏（系统）
+                     *    h，历史记录（系统）
+                     *    j，下载栏（系统）
+                     *    k，搜索（系统）
+                     *    l，定位地址栏（系统）
+                     *    n，新窗口（系统）
+                     *    o，打开文件（系统）
+                     *    p，打印（系统）
+                     *    t，新页签（系统）
+                     *    u，查看源码（系统）
+                     *    v，粘贴
+                     *    w，关闭页签（系统）
+                     *    x，剪切
+                     *    z，回退
+                     * 可使用的：
+                     *    [b]rowse，浏览、查看
+                     *    [e]dit，编辑
+                     *    [f]unction，功能服务
+                     *    [g]oto，便捷达
+                     *    [i]nsert，插入（表格）
+                     *    [m]ake，创建新的
+                     *    [q]uit，关闭、退出
+                     *    [r]emove，移除（表格）
+                     *    [s]ave，保存
+                     *    [s]elect，选择
+                     *    [y]es delete，删除
+                     */
+                    if (event.ctrlKey && !event.altKey && !event.shiftKey && !event.metaKey
+                        && event.keyCode >= jQuery.sap.KeyCodes.A && event.keyCode <= jQuery.sap.KeyCodes.Z) {
+                        let keyMapping: (key: number) => number = function (key: number): number {
+                            if (shortcutKeyMap.has(key)) {
+                                return shortcutKeyMap.get(key);
+                            }
+                            return key;
+                        };
+                        // 对话框
                         if (sap.m.InstanceManager.hasOpenDialog()) {
                             for (let dialog of sap.m.InstanceManager.getOpenDialogs()) {
                                 if (dialog instanceof sap.m.Dialog) {
-                                    if (event.key === "F12") {
+                                    // 关闭
+                                    if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.Q)) {
                                         dialog.close();
                                         event.preventDefault();
                                         event.stopPropagation();
                                         event.returnValue = false;
                                         // 退出执行
                                         return;
-                                    }
-                                    for (let item of dialog.getButtons()) {
-                                        if (this.keyingButton(item, event.key)) {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            event.returnValue = false;
-                                            // 退出执行
-                                            return;
-                                        }
+                                    } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.M)) {
+                                        this.keyingButton(dialog.getId(), ".sapMDialogFooter", ibas.i18n.prop("shell_data_new"));
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        event.returnValue = false;
+                                        // 退出执行
+                                        return;
+                                    } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.S)) {
+                                        this.keyingButton(dialog.getId(), ".sapMDialogFooter", ibas.i18n.prop("shell_data_choose"));
+                                        event.preventDefault();
+                                        event.stopPropagation();
+                                        event.returnValue = false;
+                                        // 退出执行
+                                        return;
                                     }
                                 }
                             }
+                            // 存在对话框，不继续
+                            return;
                         }
-                        if (!ibas.objects.isNull(view)) {
-                            if (event.key === "F12") {
+                        // 一般界面
+                        if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.Q)) {
+                            // [q]uit，关闭、退出
+                            if (view instanceof ibas.BOListView) {
                                 view.application.close();
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
-                            }
-                            let viewContent: any = (<any>sap.ui.getCore().byId(view.id))?.getContent()[0];
-                            if (viewContent instanceof sap.m.Page) {
-                                let toolbar: any = viewContent.getSubHeader();
-                                if (toolbar instanceof sap.m.Toolbar) {
-                                    for (let item of toolbar.getContent()) {
-                                        if (this.keyingButton(item, event.key)) {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            event.returnValue = false;
-                                            // 退出执行
-                                            return;
-                                        }
-                                    }
-                                }
-                                let tmpPage: sap.m.Page = viewContent;
-                                // 处理带自定义字段的
-                                if (tmpPage instanceof sap.extension.m.DataPage) {
-                                    tmpPage = <any>sap.ui.getCore().byId(viewContent.getId() + "_commonSplit");
-                                }
-                                for (let item of tmpPage.getContent()) {
-                                    if (item instanceof sap.ui.layout.form.SimpleForm) {
-                                        for (let sItem of item.getContent()) {
-                                            if (sItem instanceof sap.ui.table.Table) {
-                                                let toolbar: any = (<any>sItem).getToolbar();
-                                                if (toolbar instanceof sap.m.Toolbar) {
-                                                    for (let tItem of toolbar.getContent()) {
-                                                        if (this.keyingButton(tItem, event.key)) {
-                                                            event.preventDefault();
-                                                            event.stopPropagation();
-                                                            event.returnValue = false;
-                                                            // 退出执行
-                                                            return;
-                                                        }
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                            } else if (viewContent instanceof sap.uxap.ObjectPageLayout) {
-                                let header: any = viewContent.getHeaderTitle();
-                                if (header instanceof sap.uxap.ObjectPageHeader) {
-                                    for (let item of header.getNavigationBar().getContentLeft()) {
-                                        if (this.keyingButton(item, event.key)) {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            event.returnValue = false;
-                                            // 退出执行
-                                            return;
-                                        }
-                                    }
-                                    for (let item of header.getNavigationBar().getContentMiddle()) {
-                                        if (this.keyingButton(item, event.key)) {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            event.returnValue = false;
-                                            // 退出执行
-                                            return;
-                                        }
-                                    }
-                                    for (let item of header.getNavigationBar().getContentLeft()) {
-                                        if (this.keyingButton(item, event.key)) {
-                                            event.preventDefault();
-                                            event.stopPropagation();
-                                            event.returnValue = false;
-                                            // 退出执行
-                                            return;
-                                        }
-                                    }
-                                }
-                            }
-                        } else {
-                            if (event.key === "F12") {
+                            } else if (view instanceof ibas.BOEditView) {
+                                view.application.close();
+                            } else if (view instanceof ibas.BOViewView) {
+                                view.application.close();
+                            } else if (view instanceof ibas.BOChooseView) {
+                                view.application.close();
+                            } else if (ibas.objects.isNull(view)) {
+                                // 退出系统
                                 this.fireViewEvents(this.closeEvent);
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
-                            } else if (event.key === "F1") {
-                                this.fireViewEvents(this.helpEvent);
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
-                            } else if (event.key === "F2") {
-                                this.fireViewEvents(this.aboutEvent);
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
-                            } else if (event.key === "F3") {
-                                this.mainPage.setSideExpanded(!this.mainPage.getSideExpanded());
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
-                            } else if (event.key === "F4") {
-                                let content: sap.ui.core.Control[] = this.mainHeader.getContent();
-                                for (let index: number = 5; index < content.length; index++) {
-                                    let item: sap.ui.core.Control = content[index];
-                                    if (item.getVisible() === false) {
-                                        continue;
-                                    }
-                                    item.focus();
-                                    break;
-                                }
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
-                            } else if (event.key === "F5") {
-                                let items: sap.tnt.NavigationListItem[] = this.systemNavigationList.getItems();
-                                for (let index: number = 0; index < items.length; index++) {
-                                    let item: sap.tnt.NavigationListItem = items[index];
-                                    if (item.getVisible() === false) {
-                                        continue;
-                                    }
-                                    item.focus();
-                                    break;
-                                }
-                                event.preventDefault();
-                                event.stopPropagation();
-                                event.returnValue = false;
-                                // 退出执行
-                                return;
                             }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.M)) {
+                            // [m]ake，创建新的
+                            if (view instanceof ibas.BOListView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_new"));
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.strings.format("{0}/{1}",
+                                    ibas.i18n.prop("shell_data_new"), ibas.i18n.prop("shell_data_clone")));
+                            } else if (view instanceof ibas.BOViewView) {
+
+                            } else if (view instanceof ibas.BOChooseView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_new"));
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.E)) {
+                            // [e]dit，编辑
+                            if (view instanceof ibas.BOListView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_edit"));
+                            } else if (view instanceof ibas.BOEditView) {
+
+                            } else if (view instanceof ibas.BOViewView) {
+                                this.keyingButton(view.id, ".sapUxAPObjectPageHeaderNavigation", ibas.i18n.prop("shell_data_edit"));
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.B)) {
+                            // [b]rowse，浏览、查看
+                            if (view instanceof ibas.BOListView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_view"));
+                            } else if (view instanceof ibas.BOEditView) {
+
+                            } else if (view instanceof ibas.BOViewView) {
+
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.Y)) {
+                            // [y]es delete，删除
+                            if (view instanceof ibas.BOListView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_delete"));
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_delete"));
+                            } else if (view instanceof ibas.BOViewView) {
+
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.G)) {
+                            // [g]oto，快捷到
+                            if (view instanceof ibas.BOListView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_quick_to"));
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_quick_to"));
+                            } else if (view instanceof ibas.BOViewView) {
+                                this.keyingButton(view.id, ".sapUxAPObjectPageHeaderNavigation", ibas.i18n.prop("shell_quick_to"));
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.F)) {
+                            // [f]unction，功能
+                            if (view instanceof ibas.BOListView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", "sap-icon://action");
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", "sap-icon://action");
+                            } else if (view instanceof ibas.BOViewView) {
+                                this.keyingButton(view.id, ".sapUxAPObjectPageHeaderNavigation", "sap-icon://action");
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.S)) {
+                            // [s]ave，保存; [s]elect，选择
+                            if (view instanceof ibas.BOListView) {
+
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_save"));
+                            } else if (view instanceof ibas.BOViewView) {
+
+                            } else if (view instanceof ibas.BOChooseView) {
+                                this.keyingButton(view.id, ".sapMPageSubHeader", ibas.i18n.prop("shell_data_choose"));
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        }
+                        // 以下针对Table
+                        if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.I)) {
+                            // [i]nsert，插入（表格）
+                            if (view instanceof ibas.BOListView) {
+
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapUiTableTbr", ibas.i18n.prop("shell_data_add"));
+                            } else if (view instanceof ibas.BOViewView) {
+
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
+                        } else if (event.keyCode === keyMapping(jQuery.sap.KeyCodes.R)) {
+                            // [r]emove，移除（表格）
+                            if (view instanceof ibas.BOListView) {
+
+                            } else if (view instanceof ibas.BOEditView) {
+                                this.keyingButton(view.id, ".sapUiTableTbr", ibas.i18n.prop("shell_data_remove"));
+                            } else if (view instanceof ibas.BOViewView) {
+
+                            } else if (view instanceof ibas.BOChooseView) {
+
+                            }
+                            event.preventDefault();
+                            event.stopPropagation();
+                            event.returnValue = false;
                         }
                     }
                     if (!ibas.objects.isNull(view)) {
                         ibas.views.keyDown.call(view, event);
                     }
+                }
+                private keyingButton(viewId: string, barSign: string, eventText: string): boolean {
+                    // 视图
+                    let viewContent: any = sap.ui.getCore().byId(viewId);
+                    if (!ibas.objects.isNull(viewContent)) {
+                        let toolbar: any = null;
+                        let buttons: ibas.IList<any> = null;
+                        let focusTable: Function = function (table: sap.ui.table.Table, preCount: number): void {
+                            let curCount: number = (<any>table).getBinding()?.getContexts()?.length;
+                            if (curCount > preCount) {
+                                table.setFirstVisibleRow(curCount);
+                                let rows: any = table.getRows();
+                                for (let item of rows[curCount < table.getVisibleRowCount() ? curCount - 1 : rows.length - 1]?.getCells()) {
+                                    if (item instanceof sap.m.InputBase) {
+                                        item.focus();
+                                        break;
+                                    }
+                                }
+                            } else if (curCount < preCount) {
+                                let row: any = table.getRows()[table.getFirstVisibleRow()];
+                                for (let item of row?.getCells()) {
+                                    if (item instanceof sap.m.InputBase) {
+                                        item.focus();
+                                        break;
+                                    }
+                                }
+                            }
+                        };
+                        for (let item of viewContent.$().find(barSign).children()) {
+                            buttons = new ibas.ArrayList<any>();
+                            toolbar = sap.ui.getCore().byId(item.id);
+                            if (toolbar instanceof sap.m.Toolbar) {
+                                buttons.add(toolbar.getContent());
+                            } else if (toolbar instanceof sap.m.Bar) {
+                                buttons.add(toolbar.getContentLeft());
+                                buttons.add(toolbar.getContentMiddle());
+                                buttons.add(toolbar.getContentRight());
+                            }
+                            for (let button of buttons) {
+                                if (button.getVisible() === false) {
+                                    continue;
+                                }
+                                if (button instanceof sap.m.Button && button.getEnabled() === true) {
+                                    if (ibas.strings.isEmpty(button.getText())) {
+                                        if (!ibas.strings.equals(button.getIcon(), eventText)) {
+                                            continue;
+                                        }
+                                    } else if (!ibas.strings.equals(button.getText(), eventText)) {
+                                        continue;
+                                    }
+                                    let table: any = button.getParent()?.getParent();
+                                    if (table instanceof sap.ui.table.Table) {
+                                        let preCount: number = (<any>table).getBinding()?.getContexts()?.length;
+                                        (<any>button).firePress();
+                                        setTimeout(() => {
+                                            focusTable(table, preCount);
+                                        }, 100);
+                                        return true;
+                                    } else {
+                                        (<any>button).firePress();
+                                    }
+                                    return true;
+                                } else if (button instanceof sap.m.MenuButton && button.getEnabled() === true) {
+                                    if (ibas.strings.isEmpty(button.getText())) {
+                                        if (!ibas.strings.equals(button.getIcon(), eventText)) {
+                                            continue;
+                                        }
+                                    } else if (!ibas.strings.equals(button.getText(), eventText)) {
+                                        continue;
+                                    }
+                                    // 表格的菜单钮，执行默认事件
+                                    if ((<any>button).hasListeners("defaultAction")) {
+                                        let table: any = button.getParent()?.getParent();
+                                        if (table instanceof sap.ui.table.Table) {
+                                            let preCount: number = (<any>table).getBinding()?.getContexts()?.length;
+                                            (<any>button).fireDefaultAction({});
+                                            setTimeout(() => {
+                                                focusTable(table, preCount);
+                                            }, 100);
+                                            return true;
+                                        }
+                                    }
+                                    let focusedId: string = sap.ui.getCore().getCurrentFocusedControlId();
+                                    button.getMenu().attachEventOnce("closed", undefined, () => {
+                                        let element: sap.ui.core.Element = sap.ui.getCore().byId(focusedId);
+                                        if (element) {
+                                            element.focus();
+                                        }
+                                    });
+                                    (<any>button).openMenuByKeyboard();
+                                    return true;
+                                }
+                            }
+                        }
+                    }
+                    return false;
                 }
                 /** 当手指移动时 */
                 protected onTouchMove(direction: ibas.emTouchMoveDirection, event: TouchEvent): void {

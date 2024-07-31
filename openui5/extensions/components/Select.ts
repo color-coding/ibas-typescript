@@ -114,7 +114,7 @@ namespace sap {
             });
             // 但仅选择数据时，清除已选择值
             function clearSelection(this: Select, event: KeyboardEvent): void {
-                if (event.keyCode === 8 || event.keyCode === 46) {
+                if (event.keyCode === jQuery.sap.KeyCodes.BACKSPACE || event.keyCode === jQuery.sap.KeyCodes.DELETE) {
                     // backspace key
                     if (this instanceof Select && this.getEditable() === true) {
                         if (this.getForceSelection() === false) {
@@ -839,10 +839,10 @@ namespace sap {
                     this.setAggregation("_rate", new sap.m.Input("", {
                         type: sap.m.InputType.Number,
                         textAlign: sap.ui.core.TextAlign.Right,
-                        change(this: Input, event: sap.ui.base.Event): void {
+                        change(this: sap.m.Input, event: sap.ui.base.Event): void {
                             let source: any = (<any>event.getSource())?.getParent();
                             if (source instanceof CurrencyRateSelect) {
-                                source.setRate(ibas.numbers.valueOf(this.getBindingValue()));
+                                source.setRate(ibas.numbers.valueOf(this.getValue()));
                             }
                         }
                     }));
@@ -861,7 +861,7 @@ namespace sap {
                     return (<CurrencySelect>this.getAggregation("_currency"));
                 },
                 getRateInput(): sap.m.Input {
-                    return (<Input>this.getAggregation("_rate"));
+                    return (<sap.m.Input>this.getAggregation("_rate"));
                 },
                 setEditable(this: CurrencyRateSelect, value: boolean): CurrencyRateSelect {
                     this.setProperty("editable", value);

@@ -1419,313 +1419,415 @@ declare interface JQuerySapInteraction {
 /**
  * Enumeration of key codes.
  */
-declare enum JQuerySapKeyCodes {
+declare interface JQuerySapKeyCodes {
   /**
+   * keyCode: 65
    */
-  A = "A",
+  A: number;
   /**
+   * keyCode: 18
    */
-  ALT = "ALT",
+  ALT: number;
   /**
+   * keyCode: 40
    */
-  ARROW_DOWN = "ARROW_DOWN",
+  ARROW_DOWN: number;
   /**
+   * keyCode: 37
    */
-  ARROW_LEFT = "ARROW_LEFT",
+  ARROW_LEFT: number;
   /**
+   * keyCode: 39
    */
-  ARROW_RIGHT = "ARROW_RIGHT",
+  ARROW_RIGHT: number;
   /**
+   * keyCode: 38
    */
-  ARROW_UP = "ARROW_UP",
+  ARROW_UP: number;
   /**
+   * keyCode: 66
    */
-  B = "B",
+  B: number;
   /**
+   * keyCode: 226
    */
-  BACKSLASH = "BACKSLASH",
+  BACKSLASH: number;
   /**
+   * keyCode: 8
    */
-  BACKSPACE = "BACKSPACE",
+  BACKSPACE: number;
   /**
+   * keyCode: 19
    */
-  BREAK = "BREAK",
+  BREAK: number;
   /**
+   * keyCode: 67
    */
-  C = "C",
+  C: number;
   /**
+   * keyCode: 20
    */
-  CAPS_LOCK = "CAPS_LOCK",
+  CAPS_LOCK: number;
   /**
+   * keyCode: 188
    */
-  COMMA = "COMMA",
+  COMMA: number;
   /**
+   * keyCode: 93
    */
-  CONTEXT_MENU = "CONTEXT_MENU",
+  CONTEXT_MENU: number;
   /**
+   * keyCode: 17
    */
-  CONTROL = "CONTROL",
+  CONTROL: number;
   /**
+   * keyCode: 68
    */
-  D = "D",
+  D: number;
   /**
+   * keyCode: 46
    */
-  DELETE = "DELETE",
+  DELETE: number;
   /**
+   * keyCode: 48
    */
-  DIGIT_0 = "DIGIT_0",
+  DIGIT_0: number;
   /**
+   * keyCode: 49
    */
-  DIGIT_1 = "DIGIT_1",
+  DIGIT_1: number;
   /**
+   * keyCode: 50
    */
-  DIGIT_2 = "DIGIT_2",
+  DIGIT_2: number;
   /**
+   * keyCode: 51
    */
-  DIGIT_3 = "DIGIT_3",
+  DIGIT_3: number;
   /**
+   * keyCode: 52
    */
-  DIGIT_4 = "DIGIT_4",
+  DIGIT_4: number;
   /**
+   * keyCode: 53
    */
-  DIGIT_5 = "DIGIT_5",
+  DIGIT_5: number;
   /**
+   * keyCode: 54
    */
-  DIGIT_6 = "DIGIT_6",
+  DIGIT_6: number;
   /**
+   * keyCode: 55
    */
-  DIGIT_7 = "DIGIT_7",
+  DIGIT_7: number;
   /**
+   * keyCode: 56
    */
-  DIGIT_8 = "DIGIT_8",
+  DIGIT_8: number;
   /**
+   * keyCode: 57
    */
-  DIGIT_9 = "DIGIT_9",
+  DIGIT_9: number;
   /**
+   * keyCode: 190
    */
-  DOT = "DOT",
+  DOT: number;
   /**
+   * keyCode: 69
    */
-  E = "E",
+  E: number;
   /**
+   * keyCode: 35
    */
-  END = "END",
+  END: number;
   /**
+   * keyCode: 13
    */
-  ENTER = "ENTER",
+  ENTER: number;
   /**
+   * keyCode: 221
    */
-  EQUALS = "EQUALS",
+  EQUALS: number;
   /**
+   * keyCode: 27
    */
-  ESCAPE = "ESCAPE",
+  ESCAPE: number;
   /**
+   * keyCode: 70
    */
-  F = "F",
+  F: number;
   /**
+   * keyCode: 112
    */
-  F1 = "F1",
+  F1: number;
   /**
+   * keyCode: 121
    */
-  F10 = "F10",
+  F10: number;
   /**
+   * keyCode: 122
    */
-  F11 = "F11",
+  F11: number;
   /**
+   * keyCode: 123
    */
-  F12 = "F12",
+  F12: number;
   /**
+   * keyCode: 113
    */
-  F2 = "F2",
+  F2: number;
   /**
+   * keyCode: 114
    */
-  F3 = "F3",
+  F3: number;
   /**
+   * keyCode: 115
    */
-  F4 = "F4",
+  F4: number;
   /**
+   * keyCode: 116
    */
-  F5 = "F5",
+  F5: number;
   /**
+   * keyCode: 117
    */
-  F6 = "F6",
+  F6: number;
   /**
+   * keyCode: 118
    */
-  F7 = "F7",
+  F7: number;
   /**
+   * keyCode: 119
    */
-  F8 = "F8",
+  F8: number;
   /**
+   * keyCode: 120
    */
-  F9 = "F9",
+  F9: number;
   /**
+   * keyCode: 71
    */
-  G = "G",
+  G: number;
   /**
+   * keyCode: 220
    */
-  GREAT_ACCENT = "GREAT_ACCENT",
+  GREAT_ACCENT: number;
   /**
+   * keyCode: 72
    */
-  H = "H",
+  H: number;
   /**
+   * keyCode: 36
    */
-  HOME = "HOME",
+  HOME: number;
   /**
+   * keyCode: 73
    */
-  I = "I",
+  I: number;
   /**
+   * keyCode: 45
    */
-  INSERT = "INSERT",
+  INSERT: number;
   /**
+   * keyCode: 74
    */
-  J = "J",
+  J: number;
   /**
+   * keyCode: 75
    */
-  K = "K",
+  K: number;
   /**
+   * keyCode: 76
    */
-  L = "L",
+  L: number;
   /**
+   * keyCode: 77
    */
-  M = "M",
+  M: number;
   /**
+   * keyCode: 219
    */
-  MINUS = "MINUS",
+  MINUS: number;
   /**
+   * keyCode: 78
    */
-  N = "N",
+  N: number;
   /**
+   * keyCode: 144
    */
-  NUM_LOCK = "NUM_LOCK",
+  NUM_LOCK: number;
   /**
+   * keyCode: 96
    */
-  NUMPAD_0 = "NUMPAD_0",
+  NUMPAD_0: number;
   /**
+   * keyCode: 97
    */
-  NUMPAD_1 = "NUMPAD_1",
+  NUMPAD_1: number;
   /**
+   * keyCode: 98
    */
-  NUMPAD_2 = "NUMPAD_2",
+  NUMPAD_2: number;
   /**
+   * keyCode: 99
    */
-  NUMPAD_3 = "NUMPAD_3",
+  NUMPAD_3: number;
   /**
+   * keyCode: 100
    */
-  NUMPAD_4 = "NUMPAD_4",
+  NUMPAD_4: number;
   /**
+   * keyCode: 101
    */
-  NUMPAD_5 = "NUMPAD_5",
+  NUMPAD_5: number;
   /**
+   * keyCode: 102
    */
-  NUMPAD_6 = "NUMPAD_6",
+  NUMPAD_6: number;
   /**
+   * keyCode: 103
    */
-  NUMPAD_7 = "NUMPAD_7",
+  NUMPAD_7: number;
   /**
+   * keyCode: 104
    */
-  NUMPAD_8 = "NUMPAD_8",
+  NUMPAD_8: number;
   /**
+   * keyCode: 105
    */
-  NUMPAD_9 = "NUMPAD_9",
+  NUMPAD_9: number;
   /**
+   * keyCode: 106
    */
-  NUMPAD_ASTERISK = "NUMPAD_ASTERISK",
+  NUMPAD_ASTERISK: number;
   /**
+   * keyCode: 110
    */
-  NUMPAD_COMMA = "NUMPAD_COMMA",
+  NUMPAD_COMMA: number;
   /**
+   * keyCode: 109
    */
-  NUMPAD_MINUS = "NUMPAD_MINUS",
+  NUMPAD_MINUS: number;
   /**
+   * keyCode: 107
    */
-  NUMPAD_PLUS = "NUMPAD_PLUS",
+  NUMPAD_PLUS: number;
   /**
+   * keyCode: 111
    */
-  NUMPAD_SLASH = "NUMPAD_SLASH",
+  NUMPAD_SLASH: number;
   /**
+   * keyCode: 79
    */
-  O = "O",
+  O: number;
   /**
+   * keyCode: 186
    */
-  OPEN_BRACKET = "OPEN_BRACKET",
+  OPEN_BRACKET: number;
   /**
+   * keyCode: 80
    */
-  P = "P",
+  P: number;
   /**
+   * keyCode: 34
    */
-  PAGE_DOWN = "PAGE_DOWN",
+  PAGE_DOWN: number;
   /**
+   * keyCode: 33
    */
-  PAGE_UP = "PAGE_UP",
+  PAGE_UP: number;
   /**
+   * keyCode: 191
    */
-  PIPE = "PIPE",
+  PIPE: number;
   /**
+   * keyCode: 187
    */
-  PLUS = "PLUS",
+  PLUS: number;
   /**
+   * keyCode: 44
    */
-  PRINT = "PRINT",
+  PRINT: number;
   /**
+   * keyCode: 81
    */
-  Q = "Q",
+  Q: number;
   /**
+   * keyCode: 82
    */
-  R = "R",
+  R: number;
   /**
+   * keyCode: 83
    */
-  S = "S",
+  S: number;
   /**
+   * keyCode: 145
    */
-  SCROLL_LOCK = "SCROLL_LOCK",
+  SCROLL_LOCK: number;
   /**
+   * keyCode: 192
    */
-  SEMICOLON = "SEMICOLON",
+  SEMICOLON: number;
   /**
+   * keyCode: 16
    */
-  SHIFT = "SHIFT",
+  SHIFT: number;
   /**
+   * keyCode: 222
    */
-  SINGLE_QUOTE = "SINGLE_QUOTE",
+  SINGLE_QUOTE: number;
   /**
+   * keyCode: 189
    */
-  SLASH = "SLASH",
+  SLASH: number;
   /**
+   * keyCode: 95
    */
-  SLEEP = "SLEEP",
+  SLEEP: number;
   /**
+   * keyCode: 32
    */
-  SPACE = "SPACE",
+  SPACE: number;
   /**
+   * keyCode: 84
    */
-  T = "T",
+  T: number;
   /**
+   * keyCode: 9
    */
-  TAB = "TAB",
+  TAB: number;
   /**
+   * keyCode: 94
    */
-  TURN_OFF = "TURN_OFF",
+  TURN_OFF: number;
   /**
+   * keyCode: 85
    */
-  U = "U",
+  U: number;
   /**
+   * keyCode: 86
    */
-  V = "V",
+  V: number;
   /**
+   * keyCode: 87
    */
-  W = "W",
+  W: number;
   /**
+   * keyCode: 91
    */
-  WINDOWS = "WINDOWS",
+  WINDOWS: number;
   /**
+   * keyCode: 88
    */
-  X = "X",
+  X: number;
   /**
+   * keyCode: 89
    */
-  Y = "Y",
+  Y: number;
   /**
+   * keyCode: 90
    */
-  Z = "Z",
+  Z: number;
 }
 /**
  * A Logging API for JavaScript.

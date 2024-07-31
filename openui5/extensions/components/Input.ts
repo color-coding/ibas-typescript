@@ -148,7 +148,7 @@ namespace sap {
                     (<any>sap.m.Input.prototype).init.apply(this, arguments);
                     this.attachBrowserEvent("keydown", function (this: Input, event: KeyboardEvent): void {
                         // 但仅选择数据时，清除已选择值
-                        if (event.keyCode === 8 || event.keyCode === 46) {
+                        if (event.keyCode === jQuery.sap.KeyCodes.BACKSPACE || event.keyCode === jQuery.sap.KeyCodes.DELETE) {
                             // backspace key
                             if (this instanceof Input && this.getEditable() === true) {
                                 if (this.getShowValueHelp() && this.getValueHelpOnly()) {
@@ -441,6 +441,13 @@ namespace sap {
                         let value: string = event.getParameter("suggestValue");
                         let dataInfo: repository.IDataInfo = source.getDataInfo();
                         if (source instanceof RepositoryInput && source.getShowSuggestion() === true && dataInfo) {
+                            if ((<any>source)._lastSuggestValue) {
+                                if ((<any>source)._lastSuggestValue.trim() === value.trim()) {
+                                    // 查询值一样，不在查询
+                                    return;
+                                }
+                            }
+                            (<any>source)._lastSuggestValue = value;
                             value = ibas.strings.replace(value, " ", "%");
                             let criteria: ibas.ICriteria = source.getCriteria();
                             if (ibas.objects.isNull(criteria)) {
@@ -480,13 +487,13 @@ namespace sap {
                                     if (!(items instanceof Error)) {
                                         let sugItems: sap.ui.core.Item[] = source.getSuggestionItems();
                                         if (sugItems.length > items.length) {
-                                            for (let i: number = sugItems.length - 1; i >= items.length; i--) {
-                                                source.removeSuggestionItem(sugItems[i]);
+                                            for (let i: number = sugItems.length - 1; i >= 0; i--) {
+                                                sugItems.pop();
                                             }
                                         }
                                         for (let i: number = 0; i < items.length; i++) {
                                             if (i >= sugItems.length) {
-                                                source.addSuggestionItem(new sap.ui.core.ListItem("", {
+                                                sugItems.push(new sap.ui.core.ListItem("", {
                                                     key: items[i].key,
                                                     text: items[i].key,
                                                     // 键值名字相同，则不显示，否则值
@@ -502,6 +509,10 @@ namespace sap {
                                                     }
                                                 }
                                             }
+                                        }
+                                        source.removeAllSuggestionItems();
+                                        for (let item of sugItems) {
+                                            source.addSuggestionItem(item);
                                         }
                                     } else {
                                         source.removeAllSuggestionItems();

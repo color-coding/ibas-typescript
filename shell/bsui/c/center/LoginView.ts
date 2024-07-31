@@ -171,7 +171,7 @@ namespace shell {
                     if (ibas.objects.isNull(event)) {
                         return;
                     }
-                    if (event.keyCode === 13) {
+                    if (event.keyCode === jQuery.sap.KeyCodes.ENTER) {
                         this.fireViewEvents(this.loginEvent);
                     }
                 }

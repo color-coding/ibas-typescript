@@ -12,7 +12,6 @@
     "fullScreen|PHONE": true,
     "queryPanelConfigurable|PHONE": true,
     "queryPanelSelectable|PHONE": false,
-    "disableFunctionKeys": true,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "defalutServiceIcon": "sap-icon://e-care",
