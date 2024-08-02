@@ -1,6 +1,148 @@
-{
-    "em_plantform_combination": "Desktop & Tablet",
-    "em_plantform_desktop": "Desktop",
-    "em_plantform_phone": "Phone",
-    "em_plantform_tablet": "Tablet"
-}
+[
+    {
+        "em_messagelevel_fatal": "Severe Error",
+        "em_messagelevel_error": "Error",
+        "em_messagelevel_warn": "Warning",
+        "em_messagelevel_info": "Message",
+        "em_messagelevel_debug": "Debug Information"
+    },
+    {
+        "em_conditionoperation_none": "None",
+        "em_conditionoperation_equal": "Equal to",
+        "em_conditionoperation_grater_than": "Greater than",
+        "em_conditionoperation_less_than": "Less than",
+        "em_conditionoperation_grater_equal": "Greater than or equal to",
+        "em_conditionoperation_less_equal": "Less than or equal to",
+        "em_conditionoperation_not_equal": "Not equal to",
+        "em_conditionoperation_contain": "Contains",
+        "em_conditionoperation_not_contain": "Does not contain",
+        "em_conditionoperation_start": "Starts with",
+        "em_conditionoperation_end": "Ends with",
+        "em_conditionoperation_is_null": "Is null",
+        "em_conditionoperation_not_null": "Is not null"
+    },
+    {
+        "em_conditionrelationship_none": "None",
+        "em_conditionrelationship_and": "And",
+        "em_conditionrelationship_or": "Or"
+    },
+    {
+        "em_sorttype_descending": "Descending",
+        "em_sorttype_ascending": "Ascending"
+    },
+    {
+        "em_yesno_no": "No",
+        "em_yesno_yes": "Yes"
+    },
+    {
+        "em_documentstatus_planned": "Planned",
+        "em_documentstatus_released": "Released",
+        "em_documentstatus_finished": "Finished",
+        "em_documentstatus_closed": "Closed",
+        "em_documentstatus_canceled": "Canceled"
+    },
+    {
+        "em_bostatus_open": "Unsettled",
+        "em_bostatus_closed": "Settled"
+    },
+    {
+        "em_approvalstepstatus_pending": "Pending",
+        "em_approvalstepstatus_processing": "In Approval",
+        "em_approvalstepstatus_approved": "Approved",
+        "em_approvalstepstatus_rejected": "Rejected",
+        "em_approvalstepstatus_skipped": "Skipped",
+        "em_approvalstepstatus_returned": "Returned"
+    },
+    {
+        "em_approvalstatus_unaffected": "Unaffected",
+        "em_approvalstatus_cancelled": "Cancelled",
+        "em_approvalstatus_processing": "In Approval",
+        "em_approvalstatus_approved": "Approved",
+        "em_approvalstatus_rejected": "Rejected",
+        "em_approvalstatus_returned": "Returned"
+    },
+    {
+        "em_approvalresult_processing": "In Approval",
+        "em_approvalresult_approved": "Approved",
+        "em_approvalresult_rejected": "Rejected",
+        "em_approvalresult_returned": "Returned"
+    },
+    {
+        "em_direction_in": "In",
+        "em_direction_out": "Out"
+    },
+    {
+        "em_judmentoperation_equal": "Equal to",
+        "em_judmentoperation_not_equal": "Not equal to",
+        "em_judmentoperation_grater_than": "Greater than",
+        "em_judmentoperation_less_than": "Less than",
+        "em_judmentoperation_grater_equal": "Greater than or equal to",
+        "em_judmentoperation_less_equal": "Less than or equal to",
+        "em_judmentoperation_begin_with": "Begins with",
+        "em_judmentoperation_not_begin_with": "Does not begin with",
+        "em_judmentoperation_end_with": "Ends with",
+        "em_judmentoperation_not_end_with": "Does not end with",
+        "em_judmentoperation_contain": "Contains",
+        "em_judmentoperation_not_contain": "Does not contain",
+        "em_judmentoperation_and": "And",
+        "em_judmentoperation_or": "Or"
+    },
+    {
+        "em_dbfieldtype_unknown": "Unknown",
+        "em_dbfieldtype_alphanumeric": "Alphanumeric",
+        "em_dbfieldtype_memo": "Long String",
+        "em_dbfieldtype_numeric": "Numeric",
+        "em_dbfieldtype_date": "Date",
+        "em_dbfieldtype_decimal": "Decimal",
+        "em_dbfieldtype_bytes": "Bytes"
+    },
+    {
+        "em_plantform_combination": "Tablet and Desktop",
+        "em_plantform_desktop": "Desktop",
+        "em_plantform_phone": "Phone",
+        "em_plantform_tablet": "Tablet"
+    },
+    {
+        "em_messagetype_information": "Message",
+        "em_messagetype_success": "Success",
+        "em_messagetype_warning": "Warning",
+        "em_messagetype_question": "Inquiry"
+    },
+    {
+        "em_messageaction_abort": "Abort",
+        "em_messageaction_cancel": "Cancel",
+        "em_messageaction_close": "Close",
+        "em_messageaction_delete": "Delete",
+        "em_messageaction_ignore": "Ignore",
+        "em_messageaction_no": "No",
+        "em_messageaction_ok": "OK",
+        "em_messageaction_retry": "Retry",
+        "em_messageaction_yes": "Yes"
+    },
+    {
+        "em_privilegesource_module": "Module Settings",
+        "em_privilegesource_application": "Application Settings",
+        "em_privilegesource_business_object": "Business Object Settings"
+    },
+    {
+        "em_authorisetype_all": "All",
+        "em_authorisetype_read": "Read-only/Reference",
+        "em_authorisetype_none": "None"
+    },
+    {
+        "em_choosetype_single": "Single",
+        "em_choosetype_multiple": "Multiple",
+        "em_choosetype_none": "None"
+    },
+    {
+        "em_viewmode_common": "General",
+        "em_viewmode_view": "View"
+    },
+    {
+        "em_touchmovedirection_up": "Up",
+        "em_touchmovedirection_down": "Down",
+        "em_touchmovedirection_left": "Left",
+        "em_touchmovedirection_right": "Right",
+        "em_touchmovedirection_none": "None"
+    }
+]
