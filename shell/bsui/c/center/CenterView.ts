@@ -290,26 +290,6 @@ namespace shell {
                                                     that.mainPage.setSideExpanded(!that.mainPage.getSideExpanded());
                                                 }
                                             }
-                                            // 设置焦点到搜索框
-                                            setTimeout(function (this: sap.m.Page): void {
-                                                let view: any = sap.extension.customdatas.getView(page);
-                                                let focusId: string = null;
-                                                if (view instanceof ibas.BOEditView) {
-                                                    focusId = page.$().find(".sapMInputBase")?.firstFocusableDomRef()?.id?.split("-")[0];
-                                                } else if (view instanceof ibas.BOViewView) {
-                                                    focusId = page.$().find(".sapUxAPObjectPageHeaderNavigation")?.firstFocusableDomRef()?.id?.split("-")[0];
-                                                } else {
-                                                    focusId = page.$().find(".sapMPageSubHeader")?.firstFocusableDomRef()?.id?.split("-")[0];
-                                                }
-                                                if (!ibas.strings.isEmpty(focusId)) {
-                                                    let element: sap.ui.core.Element = sap.ui.getCore().byId(focusId);
-                                                    if (element) {
-                                                        if (sap.ui.getCore().getCurrentFocusedControlId() !== element.getId()) {
-                                                            element.focus();
-                                                        }
-                                                    }
-                                                }
-                                            }, 50);
                                         } else if (page instanceof sap.m.MessagePage) {
                                             let button: any = sap.ui.getCore().byId(UI_MAIN_MENU);
                                             if (button instanceof sap.m.Button) {
@@ -703,8 +683,29 @@ namespace shell {
                                 throw new Error(ibas.i18n.prop("shell_invalid_ui"));
                             }
                             view.id = container.getId();
+                            this.pageContainer.attachEventOnce("afterNavigate", undefined, function (): void {
+                                let focusId: string = null;
+                                if (view instanceof ibas.BOEditView) {
+                                    focusId = (<any>container).$().find(".sapMInputBase")?.firstFocusableDomRef()?.id?.split("-")[0];
+                                } else if (view instanceof ibas.BOViewView) {
+                                    focusId = (<any>container).$().find(".sapUxAPObjectPageHeaderNavigation")?.firstFocusableDomRef()?.id?.split("-")[0];
+                                } else {
+                                    focusId = (<any>container).$().find(".sapMPageSubHeader")?.firstFocusableDomRef()?.id?.split("-")[0];
+                                }
+                                if (!ibas.strings.isEmpty(focusId)) {
+                                    let element: sap.ui.core.Element = sap.ui.getCore().byId(focusId);
+                                    if (element) {
+                                        if (sap.ui.getCore().getCurrentFocusedControlId() !== element.getId()) {
+                                            element.focus();
+                                        }
+                                    }
+                                }
+                            });
                             let pageContainer: sap.m.NavContainer = this.pageContainer.addPage(container);
-                            setTimeout(() => pageContainer.to(container.getId()), 100);
+                            // 设置焦点到此控件
+                            setTimeout(() => {
+                                pageContainer.to(container.getId());
+                            }, 50);
                         } else {
                             // 存在页面直接跳转
                             this.pageContainer.backToPage(container.getId());

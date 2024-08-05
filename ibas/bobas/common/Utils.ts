@@ -330,11 +330,30 @@ namespace ibas {
             return count;
         }
         /**
-         * 删除全部空格
+         * 删除空格
          * @param content 待分析字符串
+         * @param all true: 全部; false: 两边
          */
-        export function trim(content: string): string {
-            return replace(content, " ", "");
+        export function trim(content: string, all: boolean = true): string {
+            if (typeof content === "string") {
+                if (all === true) {
+                    let stringBuilder: StringBuilder = new StringBuilder();
+                    stringBuilder.map(undefined, "");
+                    stringBuilder.map(null, "");
+                    let char: number;
+                    for (let i: number = 0; i < content.length; i++) {
+                        char = content.charCodeAt(i);
+                        if (char <= 32) {
+                            continue;
+                        }
+                        stringBuilder.append(content.charAt(i));
+                    }
+                    return stringBuilder.toString();
+                } else {
+                    return content.trim();
+                }
+            }
+            return content;
         }
         /**
          * 删除指定字符

@@ -50,6 +50,7 @@
     "sys_business_rule_multiplicative_deduction": "Multiplicative deduction",
     "sys_business_rule_additive_deduction": "Additive deduction",
     "sys_business_rule_rounding_off": "Rounding off decimal places",
+    "sys_business_rule_trim": "Remove spaces",
     "sys_business_property_lineid": "Line number",
     "sys_action_new_config_item": "New configuration item [{0} - {1}]",
     "sys_action_starting": "Starting execution, time [{0}]",
