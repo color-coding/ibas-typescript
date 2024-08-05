@@ -9,6 +9,72 @@ namespace sap {
     export namespace extension {
         export namespace m {
             /**
+             * 选择框：清除已选择内容
+             * @param this 选择框
+             * @param event 事件
+             */
+            function SelectClearSelection(this: Select, event: KeyboardEvent): void {
+                if (event.keyCode === jQuery.sap.KeyCodes.BACKSPACE || event.keyCode === jQuery.sap.KeyCodes.DELETE) {
+                    // backspace key
+                    if (this instanceof Select && this.getEditable() === true) {
+                        if (this.getForceSelection() === false) {
+                            this.close();
+                            this.setBindingValue(null);
+                            this.fireChange({});
+                        } else {
+                            let item: any = this.getDefaultSelectedItem();
+                            if (item instanceof ui.core.Item) {
+                                this.close();
+                                this.setBindingValue(item.getKey());
+                                this.fireChange({});
+                            }
+                        }
+                    }
+                }
+            }
+            /**
+             * 选择框：模型变化付默认值
+             * @param event 事件
+             */
+            function DefaultValueModelContextChange(event: sap.ui.base.Event): void {
+                let source: any = sap.ui.getCore().byId(event.getParameter("id"));
+                if (source instanceof Select) {
+                    if (ibas.objects.isNull(source.getBindingValue())
+                        || ibas.strings.isEmpty(source.getBindingValue())) {
+                        if (source.getForceSelection() === true) {
+                            let deItem: any = source.getFirstItem();
+                            for (let item of source.getItems()) {
+                                if (item instanceof SelectItem) {
+                                    if (item.getDefault() === true) {
+                                        deItem = item;
+                                        break;
+                                    }
+                                }
+                            }
+                            if (!ibas.objects.isNull(deItem)) {
+                                source.setSelectedItem(deItem);
+                            }
+                        }
+                    }
+                }
+            }
+            sap.ui.core.ListItem.extend("sap.extension.m.SelectItem", {
+                metadata: {
+                    properties: {
+                        default: { type: "boolean" },
+                    },
+                    events: {}
+                },
+                /** 是否为默认值 */
+                getDefault(): boolean {
+                    return this.getProperty("default");
+                },
+                /** 设置为默认值 */
+                setDefault(value: boolean): SelectItem {
+                    return this.setProperty("default", value);
+                },
+            });
+            /**
              * 选择框
              */
             sap.m.Select.extend("sap.extension.m.Select", {
@@ -87,66 +153,23 @@ namespace sap {
                     }
                     return this;
                 },
+                attachBrowserEvent(this: Select): Select {
+                    // 重复注册则跳过
+                    if (ibas.arrays.create((<any>this).aBindParameters).contain(c => c.fnHandler === arguments[1])) {
+                        return this;
+                    }
+                    return sap.m.Select.prototype.attachBrowserEvent.apply(this, arguments);
+                },
                 init(this: Select): void {
-                    this.attachBrowserEvent("keydown", clearSelection);
+                    this.attachBrowserEvent("keydown", SelectClearSelection);
                     (<any>sap.m.Select.prototype).init.apply(this, arguments);
-                    this.attachModelContextChange(undefined, (event: sap.ui.base.Event) => {
-                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
-                        if (source instanceof Select) {
-                            if (ibas.objects.isNull(source.getBindingValue())) {
-                                if (source.getForceSelection() === true) {
-                                    for (let item of source.getItems()) {
-                                        if (item instanceof SelectItem) {
-                                            if (item.getDefault() === true) {
-                                                source.setSelectedItem(item); return;
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
+                    this.attachModelContextChange(undefined, DefaultValueModelContextChange);
                 },
                 exit(this: Select): void {
-                    this.detachBrowserEvent("keydown", clearSelection);
+                    this.detachBrowserEvent("keydown", SelectClearSelection);
+                    this.detachModelContextChange(DefaultValueModelContextChange);
                     (<any>sap.m.Select.prototype).exit.apply(this, arguments);
                 }
-            });
-            // 但仅选择数据时，清除已选择值
-            function clearSelection(this: Select, event: KeyboardEvent): void {
-                if (event.keyCode === jQuery.sap.KeyCodes.BACKSPACE || event.keyCode === jQuery.sap.KeyCodes.DELETE) {
-                    // backspace key
-                    if (this instanceof Select && this.getEditable() === true) {
-                        if (this.getForceSelection() === false) {
-                            this.close();
-                            this.setBindingValue(null);
-                            this.fireChange({});
-                        } else {
-                            let item: any = this.getDefaultSelectedItem();
-                            if (item instanceof SelectItem) {
-                                this.close();
-                                this.setBindingValue(item.getKey());
-                                this.fireChange({});
-                            }
-                        }
-                    }
-                }
-            }
-            sap.ui.core.ListItem.extend("sap.extension.m.SelectItem", {
-                metadata: {
-                    properties: {
-                        default: { type: "boolean" },
-                    },
-                    events: {}
-                },
-                /** 是否为默认值 */
-                getDefault(): boolean {
-                    return this.getProperty("default");
-                },
-                /** 设置为默认值 */
-                setDefault(value: boolean): SelectItem {
-                    return this.setProperty("default", value);
-                },
             });
             /**
              * 枚举数据-选择框
@@ -447,7 +470,7 @@ namespace sap {
                         }
                     });
                     return this;
-                }
+                },
             });
             /**
              * 对象服务系列-选择框

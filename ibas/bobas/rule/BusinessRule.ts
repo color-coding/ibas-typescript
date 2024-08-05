@@ -129,6 +129,34 @@ namespace ibas {
             }
         }
     }
+    /** 业务规则-去除空格 */
+    export class BusinessRuleTrim extends BusinessRuleCommon {
+        /**
+         *
+         * @param properties 属性
+         */
+        constructor(...properties: string[]) {
+            super();
+            this.name = i18n.prop("sys_business_rule_trim");
+            for (let item of properties) {
+                this.inputProperties.add(item);
+                this.affectedProperties.add(item);
+            }
+        }
+        /** 计算规则 */
+        protected compute(context: BusinessRuleContextCommon): void {
+            for (let item of context.inputValues.entries()) {
+                let name: string = item["0"];
+                let value: any = item["1"];
+                if (typeof value === "string") {
+                    let nValue: string = ibas.strings.trim(value, false);
+                    if (value !== nValue) {
+                        context.outputValues.set(name, nValue);
+                    }
+                }
+            }
+        }
+    }
     /** 业务规则-求和 */
     export class BusinessRuleSummation extends BusinessRuleCommon {
         /**

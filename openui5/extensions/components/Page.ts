@@ -238,6 +238,10 @@ namespace sap {
                                     }
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
                                     controls.nonEditable(control);
+                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.ALL) {
+                                    if (control.getVisible() === false) {
+                                        control.setVisible(true);
+                                    }
                                 }
                                 if (propertyInfo.required === true) {
                                     if (control instanceof sap.m.InputBase || control instanceof sap.m.Select) {

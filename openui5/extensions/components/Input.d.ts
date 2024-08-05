@@ -64,10 +64,28 @@ declare namespace sap {
                  */
                 detachValueLinkRequest(fnFunction: Function, oListener?: any): this;
                 /** 
-                 * 触发地址改变事件
+                 * 触发值链接事件
                  * @param param 
                  */
                 protected fireValueLinkRequest(param: { value: string }): this;
+                /**
+                 * 监听值粘贴事件
+                 * @param oData 
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                attachValuePaste(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 取消监听值粘贴事件
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                detachValuePaste(fnFunction: Function, oListener?: any): this;
+                /** 
+                 * 触发值粘贴事件
+                 * @param param 
+                 */
+                protected fireValuePaste(param: { data: any }): this;
             }
             /**
              * 业务仓库数据-输入框
@@ -94,12 +112,12 @@ declare namespace sap {
                 /**
                  * 获取查询条件
                  */
-                getCriteria(): ibas.ICriteria;
+                getCriteria(): ibas.ICriteria | Function;
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
+                setCriteria(value: ibas.ICriteria | ibas.ICondition[] | Function): this;
                 /**
                  * 检索值描述
                  * @param value 值

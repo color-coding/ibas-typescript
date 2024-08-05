@@ -50,6 +50,38 @@ declare namespace sap {
                 loadItems(): this;
             }
             /**
+             * 业务仓库数据-下拉框
+             */
+            class RepositoryComboBox extends ComboBox {
+                /**
+                 * 获取业务仓库实例
+                 */
+                getRepository(): ibas.BORepositoryApplication;
+                /**
+                 * 设置业务仓库
+                 * @param value 业务仓库实例；业务仓库名称
+                 */
+                setRepository(value: ibas.BORepositoryApplication | string): this;
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(): repository.IDataInfo;
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(value: repository.IDataInfo | any): this;
+                /**
+                 * 获取查询条件
+                 */
+                getCriteria(): ibas.ICriteria;
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setCriteria(value: ibas.ICriteria | ibas.ICondition[]): this;
+            }
+            /**
              * 多选下拉框（数据分割符）
              */
             class MultiComboBox extends sap.m.MultiComboBox {
@@ -91,9 +123,9 @@ declare namespace sap {
                  */
                 setDataSeparator(value: string): this;
                 /**
-                 * 销毁可选项
+                 * 加载可选项
                  */
-                destroyItems(): this;
+                protected loadItems(): this;
             }
             /**
              * 对象属性可选值-多择框
@@ -117,10 +149,6 @@ declare namespace sap {
                  * @param value 属性名称
                  */
                 setPropertyName(value: string): this;
-                /**
-                 * 加载可选项
-                 */
-                protected loadItems(): this;
             }
             /**
              * 业务仓库数据-多择框

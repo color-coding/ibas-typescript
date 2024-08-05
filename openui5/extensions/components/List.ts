@@ -123,13 +123,17 @@ namespace sap {
                     // 基类初始化
                     (<any>sap.m.List.prototype).init.apply(this, arguments);
                     // 监听行变化事件
-                    this.attachEvent("updateFinished", undefined, () => {
+                    this.attachEvent("updateFinished", undefined, (event: sap.ui.base.Event) => {
                         if (!this.hasListeners("nextDataSet")) {
                             // 没有注册事件，则退出
                             return;
                         }
                         if (this.getBusy()) {
                             // 忙状态不监听
+                            return;
+                        }
+                        if (event.getParameter("reason") !== "Growing") {
+                            // 非滚动条原因，不触发
                             return;
                         }
                         let model: any = this.getModel(undefined);

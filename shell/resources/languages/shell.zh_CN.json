@@ -50,6 +50,7 @@
     "shell_data_add_line": "添加行",
     "shell_data_clone_line": "复制行",
     "shell_data_new_line": "新增行",
+    "shell_data_referenced": "数据[{0}]已被引用",
     "shell_data_save": "保存",
     "shell_data_clone": "复制",
     "shell_data_read": "读取",

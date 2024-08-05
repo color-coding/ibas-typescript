@@ -239,13 +239,17 @@ namespace sap {
                     // 基类初始化
                     (<any>sap.ui.table.Table.prototype).init.apply(this, arguments);
                     // 监听行变化事件
-                    this.attachEvent("_rowsUpdated", undefined, () => {
+                    this.attachEvent("_rowsUpdated", undefined, (event: sap.ui.base.Event) => {
                         if (!this.hasListeners("nextDataSet")) {
                             // 没有下个数据集监听
                             return;
                         }
                         if (this.getBusy()) {
                             // 忙状态不监听
+                            return;
+                        }
+                        if (event.getParameter("reason") !== "VerticalScroll") {
+                            // 非滚动条原因，不触发
                             return;
                         }
                         let model: any = this.getModel(undefined);
@@ -747,6 +751,10 @@ namespace sap {
                                     column.setVisible(false);
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
                                     controls.nonEditable(template);
+                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.ALL) {
+                                    if (column.getVisible() === false) {
+                                        column.setVisible(true);
+                                    }
                                 }
                                 if (propertyInfo.searched === true) {
                                     column.setSortProperty(propertyInfo.name);

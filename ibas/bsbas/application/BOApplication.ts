@@ -543,7 +543,7 @@ namespace ibas {
         protected viewShowed(): void {
             super.viewShowed();
             // 更新当前hash地址
-            if (this.viewData instanceof BusinessObject) {
+            if (this.viewData instanceof BusinessObject && !(this.view instanceof ibas.DialogView)) {
                 let criteria: ICriteria = this.viewData.criteria();
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
                     let builder: StringBuilder = new StringBuilder();

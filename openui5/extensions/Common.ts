@@ -559,6 +559,116 @@ namespace sap {
                 }
                 return jsons;
             }
+            /**
+             * 填充列数据
+             * @param focus 开始单元格
+             * @param values 填充值
+             * @param onOverRows 超过数量时处理（返回：true，继续；false，退出）
+             * @param setValue 控件赋值后
+             */
+            export function fillingCellsData(focus: sap.m.InputBase, values: string | string[] | number[],
+                onOverRows?: (overCount: number) => boolean,
+                setValue?: (cell: sap.ui.core.Control, value: string | number) => void
+            ): void {
+                let row: sap.ui.table.Row = <any>focus?.getParent();
+                let table: sap.ui.table.Table = <any>row?.getParent();
+                let column: sap.ui.table.Column = <any>sap.ui.getCore().byId(focus.getAriaLabelledBy()[0]);
+                if (!(table instanceof sap.ui.table.Table)
+                    || !(row instanceof sap.ui.table.Row)
+                    || !(column instanceof sap.ui.table.Column)) {
+                    return;
+                }
+                if (typeof values === "string") {
+                    values = ibas.strings.replace(values, "\r\n", "\n");
+                    values = values.split("\n");
+                    // 移除后部空白值
+                    for (let i: number = values.length - 1; i >= 0; i--) {
+                        if (ibas.strings.isEmpty(values[i])) {
+                            values.pop();
+                        } else {
+                            break;
+                        }
+                    }
+                }
+                if (!(values instanceof Array)) {
+                    return;
+                }
+                let colIndex: number = -1;
+                for (let col of table.getColumns()) {
+                    if (col.getVisible() === false) {
+                        continue;
+                    }
+                    colIndex++;
+                    if (col === column) {
+                        break;
+                    }
+                }
+                let rowIndex: number = row.getIndex();
+                if (colIndex >= 0 && rowIndex >= 0) {
+                    if (values.length > 0) {
+                        let rowCount: number = 0;
+                        let rowStart: number = table.indexOfRow(row);
+                        for (let i: number = 0; i < values.length; i++) {
+                            let tmpRow: sap.ui.table.Row = table.getRows()[rowStart + i];
+                            if (ibas.objects.isNull(tmpRow) || tmpRow.getBindingContext() === null) {
+                                rowCount++;
+                            }
+                        }
+                        if (rowCount > 0 && onOverRows instanceof Function) {
+                            if (onOverRows(rowCount) === false) {
+                                // 退出
+                                return;
+                            }
+                        }
+                        setTimeout(() => {
+                            if (!(setValue instanceof Function)) {
+                                setValue = function (control: sap.ui.core.Control, value: any): void {
+                                    if (control instanceof sap.m.Input) {
+                                        control.setValue(value);
+                                    } else if (control instanceof sap.m.Select) {
+                                        control.setSelectedKey(value);
+                                    } else if (control instanceof sap.m.ComboBox) {
+                                        control.setSelectedKey(value);
+                                    } else if (control instanceof sap.m.InputBase) {
+                                        control.setValue(value);
+                                    }
+                                };
+                            }
+                            let fRowCount: number = 0;
+                            let vRowCount: number = table.getVisibleRowCount();
+                            rowCount = (<any>table)._getMaxFirstVisibleRowIndex();
+                            let setRowValue: Function = function (value: string, next: Function): void {
+                                for (let tmpRow of table.getRows()) {
+                                    if (tmpRow.getIndex() === rowIndex) {
+                                        let cell: any = tmpRow.getCells()[colIndex];
+                                        setValue(cell, value);
+                                        setTimeout(() => {
+                                            next();
+                                        }, 300);
+                                        rowIndex += 1;
+                                        break;
+                                    }
+                                }
+                            };
+                            ibas.queues.execute(<any>values, (value, next) => {
+                                fRowCount = table.getFirstVisibleRow();
+                                if (fRowCount !== rowCount && rowIndex > (fRowCount + vRowCount - 1)) {
+                                    if (rowIndex > rowCount) {
+                                        table.setFirstVisibleRow(rowCount);
+                                    } else {
+                                        table.setFirstVisibleRow(rowIndex);
+                                    }
+                                    setTimeout(() => {
+                                        setRowValue(value, next);
+                                    }, 10);
+                                } else {
+                                    setRowValue(value, next);
+                                }
+                            });
+                        }, 30 + (rowCount * 1.5));
+                    }
+                }
+            }
         }
         /** 数据操作集 */
         export namespace datas {

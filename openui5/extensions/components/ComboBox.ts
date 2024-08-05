@@ -32,7 +32,13 @@ namespace sap {
                  * @param value 值
                  */
                 setBindingValue(this: ComboBox, value: string): ComboBox {
-                    sap.m.ComboBox.prototype.setSelectedKey.apply(this, arguments);
+                    let item: any = this.getItemByKey(value);
+                    if (!ibas.objects.isNull(item)) {
+                        this.setSelectedItem(item);
+                    } else {
+                        (<any>this).setSelection(null);
+                        this.setValue(value);
+                    }
                     this.setProperty("bindingValue", value);
                     return this;
                 },
@@ -42,25 +48,124 @@ namespace sap {
                     this.setProperty("bindingValue", this.getSelectedKey());
                     return this;
                 },
-                /**
-                 * 销毁可选项
-                 */
-                destroyItems(this: ComboBox): ComboBox {
-                    (<any>sap.m.ComboBox.prototype).destroyItems.apply(this, arguments);
-                    this.setValue(undefined);
-                    return this;
-                },
                 /** 重写绑定 */
                 bindProperty(this: ComboBox, sName: string, oBindingInfo: any): ComboBox {
                     managedobjects.checkBinding.apply(this, arguments);
                     sap.m.ComboBox.prototype.bindProperty.apply(this, arguments);
                     return this;
                 },
+                oninput(oEvent: any): void {
+                    // 处于输入法时，不触发事件
+                    if (oEvent?.originalEvent?.isComposing === true) {
+                        return;
+                    }
+                    (<any>sap.m.ComboBox.prototype).oninput.apply(this, arguments);
+                },
                 applySettings(this: ComboBox, mSettings: any, oScope?: any): ComboBox {
                     sap.m.ComboBox.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
-                        this.fireLoadItems({});
+                        this.loadItems();
                     }
+                    return this;
+                },
+            });
+            /**
+             * 对象属性可选值-下拉框
+             */
+            ComboBox.extend("sap.extension.m.RepositoryComboBox", {
+                metadata: {
+                    properties: {
+                        /** 业务仓库 */
+                        repository: { type: "any" },
+                        /** 数据信息 */
+                        dataInfo: { type: "any" },
+                        /** 查询条件 */
+                        criteria: { type: "any" },
+                    },
+                    events: {}
+                },
+                renderer: {},
+                /**
+                 * 获取业务仓库实例
+                 */
+                getRepository(this: RepositoryComboBox): ibas.BORepositoryApplication {
+                    return this.getProperty("repository");
+                },
+                /**
+                 * 设置业务仓库
+                 * @param value 业务仓库实例；业务仓库名称
+                 */
+                setRepository(this: RepositoryComboBox, value: ibas.BORepositoryApplication | string): RepositoryComboBox {
+                    return this.setProperty("repository", repositories.repository(value));
+                },
+                /**
+                 * 获取数据信息
+                 */
+                getDataInfo(this: RepositoryComboBox): repository.IDataInfo {
+                    return this.getProperty("dataInfo");
+                },
+                /**
+                 * 设置数据信息
+                 * @param value 数据信息
+                 */
+                setDataInfo(this: RepositoryComboBox, value: repository.IDataInfo | any): RepositoryComboBox {
+                    return this.setProperty("dataInfo", repositories.dataInfo(value));
+                },
+                /**
+                 * 获取查询
+                 */
+                getCriteria(this: RepositoryComboBox): ibas.ICriteria {
+                    return this.getProperty("criteria");
+                },
+                /**
+                 * 设置查询
+                 * @param value 查询
+                 */
+                setCriteria(this: RepositoryComboBox, value: ibas.ICriteria | ibas.ICondition[]): RepositoryComboBox {
+                    return this.setProperty("criteria", repositories.criteria(value));
+                },
+                /**
+                 * 加载可选值
+                 */
+                loadItems(this: RepositoryComboBox): RepositoryComboBox {
+                    if (this.getItems().length === 0) {
+                        repository.fetch(this.getRepository(), this.getDataInfo(), this.getCriteria(),
+                            (values) => {
+                                if (values instanceof Error) {
+                                    ibas.logger.log(values);
+                                } else {
+                                    for (let item of values) {
+                                        this.addItem(new SelectItem("", {
+                                            key: item.key,
+                                            text: item.key,
+                                            additionalText: item.text,
+                                        }));
+                                    }
+                                }
+                            }
+                        );
+                    } else {
+                        ComboBox.prototype.loadItems.call(this, arguments);
+                    }
+                    return this;
+                },
+                applySettings(this: RepositoryComboBox, mSettings: any): RepositoryComboBox {
+                    if (!mSettings) {
+                        mSettings = {};
+                    }
+                    if (mSettings.showSecondaryValues === undefined) {
+                        mSettings.showSecondaryValues = true;
+                    }
+                    if (mSettings.filterSecondaryValues === undefined) {
+                        mSettings.filterSecondaryValues = true;
+                    }
+                    ComboBox.prototype.applySettings.call(this, mSettings);
+                    // 包含筛选
+                    this.setFilterFunction(function (sTerm: string, oItem: SelectItem): any {
+                        return oItem.getKey().match(new RegExp(sTerm, "i"))
+                            || oItem.getText()?.match(new RegExp(sTerm, "i"))
+                            || oItem.getAdditionalText()?.match(new RegExp(sTerm, "i"));
+                    });
                     return this;
                 },
             });
@@ -108,6 +213,13 @@ namespace sap {
                     sap.m.MultiComboBox.prototype.bindProperty.apply(this, arguments);
                     return this;
                 },
+                oninput(oEvent: any): void {
+                    // 处于输入法时，不触发事件
+                    if (oEvent?.originalEvent?.isComposing === true) {
+                        return;
+                    }
+                    (<any>sap.m.MultiComboBox.prototype).oninput.apply(this, arguments);
+                },
                 /** 初始化 */
                 init(this: MultiComboBox): void {
                     // 调用基类构造
@@ -131,7 +243,7 @@ namespace sap {
                 applySettings(this: MultiComboBox, mSettings: any, oScope?: any): MultiComboBox {
                     sap.m.MultiComboBox.prototype.applySettings.apply(this, arguments);
                     if (this.getItems().length === 0) {
-                        this.fireLoadItems({});
+                        this.loadItems();
                     }
                     return this;
                 },
@@ -181,6 +293,7 @@ namespace sap {
                  * 加载可选值
                  */
                 loadItems(this: PropertyMultiComboBox): PropertyMultiComboBox {
+                    this.destroyItems();
                     let boInfo: { code: string, name?: string } | string | Function = this.getDataInfo();
                     if (typeof boInfo === "string") {
                         boInfo = {
@@ -316,13 +429,6 @@ namespace sap {
                  */
                 setCriteria(this: RepositoryMultiComboBox, value: ibas.ICriteria | ibas.ICondition[]): RepositoryMultiComboBox {
                     return this.setProperty("criteria", repositories.criteria(value));
-                },
-                /**
-                 * 设置绑定值
-                 * @param value 值
-                 */
-                setBindingValue(this: RepositoryMultiComboBox, value: string): RepositoryMultiComboBox {
-                    return Select.prototype.setBindingValue.apply(this, arguments);
                 },
                 /**
                  * 加载可选值
