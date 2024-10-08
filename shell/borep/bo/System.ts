@@ -125,6 +125,8 @@ namespace shell {
             linkedObject?: string;
             /** 值选择方式 */
             valueChooseType?: ibas.emChooseType;
+            /** 触发属性 */
+            triggerByProperty?: string;
             /** 授权的 */
             authorised: ibas.emAuthoriseType;
             /** 属性值集合 */

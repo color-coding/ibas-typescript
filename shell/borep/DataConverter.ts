@@ -121,6 +121,7 @@ namespace shell {
                         ValueChooseType: newData.valueChooseType ? ibas.enums.toString(ibas.emChooseType, newData.valueChooseType) : undefined,
                         Authorised: newData.authorised ? ibas.enums.toString(ibas.emAuthoriseType, newData.authorised) : undefined,
                         LinkedObject: newData.linkedObject,
+                        TriggerByProperty: newData.triggerByProperty,
                         Values: values
                     };
                     return remote;
@@ -235,6 +236,7 @@ namespace shell {
                     newData.linkedObject = remote.LinkedObject;
                     newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? undefined : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
                     newData.valueChooseType = ibas.strings.isEmpty(remote.ValueChooseType) ? undefined : ibas.enums.valueOf(ibas.emChooseType, remote.ValueChooseType);
+                    newData.triggerByProperty = remote.TriggerByProperty;
                     newData.values = new Array<BizPropertyValue>();
                     if (remote.Values instanceof Array) {
                         for (let item of remote.Values) {
