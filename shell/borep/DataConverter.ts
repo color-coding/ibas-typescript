@@ -118,9 +118,12 @@ namespace shell {
                         Systemed: newData.systemed,
                         Description: newData.description,
                         Required: newData.required,
-                        ValueChooseType: newData.valueChooseType ? ibas.enums.toString(ibas.emChooseType, newData.valueChooseType) : undefined,
+                        ValueChooseType: newData.valueChooseType ? ibas.enums.toString(ibas.emChooseType, newData.valueChooseType) + (
+                            newData.valueInputable ? "+INPUT" : ""
+                        ) : undefined,
                         Authorised: newData.authorised ? ibas.enums.toString(ibas.emAuthoriseType, newData.authorised) : undefined,
                         LinkedObject: newData.linkedObject,
+                        TriggerByProperty: newData.triggerByProperty,
                         Values: values
                     };
                     return remote;
@@ -234,7 +237,13 @@ namespace shell {
                     newData.required = remote.Required;
                     newData.linkedObject = remote.LinkedObject;
                     newData.authorised = ibas.strings.isEmpty(remote.Authorised) ? undefined : ibas.enums.valueOf(ibas.emAuthoriseType, remote.Authorised);
-                    newData.valueChooseType = ibas.strings.isEmpty(remote.ValueChooseType) ? undefined : ibas.enums.valueOf(ibas.emChooseType, remote.ValueChooseType);
+                    newData.valueChooseType = ibas.strings.isEmpty(remote.ValueChooseType) ? undefined : ibas.enums.valueOf(ibas.emChooseType, remote.ValueChooseType.split("+")[0]);
+                    if (ibas.strings.isWith(remote.ValueChooseType, undefined, "+INPUT")) {
+                        newData.valueInputable = true;
+                    } else {
+                        newData.valueInputable = false;
+                    }
+                    newData.triggerByProperty = remote.TriggerByProperty;
                     newData.values = new Array<BizPropertyValue>();
                     if (remote.Values instanceof Array) {
                         for (let item of remote.Values) {

@@ -125,6 +125,8 @@ namespace shell {
             LinkedObject: string;
             /** 值选择方式 */
             ValueChooseType: string;
+            /** 触发属性 */
+            TriggerByProperty: string;
             /** 值集合 */
             Values: IBizPropertyValue[];
         }

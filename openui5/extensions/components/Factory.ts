@@ -33,7 +33,9 @@ namespace sap {
                     values: property.values,
                     required: property.required,
                     linkedObject: property.linkedObject,
-                    valueChooseType: property.valueChooseType
+                    valueChooseType: property.valueChooseType,
+                    valueInputable: property.valueInputable,
+                    triggerByProperty: property.triggerByProperty,
                 };
             }
             /**
@@ -173,6 +175,34 @@ namespace sap {
                         let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject, onChanged, property.valueChooseType).bindProperty("bindingValue", bindInfo);
                         input.setRequired(property.required);
                         input.setEditable(property.authorised === ibas.emAuthoriseType.ALL ? true : false);
+                        // 自动触发选择
+                        if (property.valueChooseType === ibas.emChooseType.SINGLE) {
+                            if (!ibas.strings.isEmpty(property.triggerByProperty)) {
+                                input.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
+                                    let source: any = event.getSource();
+                                    if (source instanceof sap.m.Input) {
+                                        let data: any = source.getBindingContext()?.getObject();
+                                        if (data instanceof ibas.Bindable) {
+                                            data.registerListener({
+                                                propertyChanged(name: string): void {
+                                                    if (ibas.strings.equalsIgnoreCase(name, property.triggerByProperty)) {
+                                                        source.fireValueHelpRequest({
+                                                            resultCount: 1,
+                                                            triggerProperty: property.triggerByProperty,
+                                                            triggerValue: data[name],
+                                                        });
+                                                    }
+                                                }
+                                            });
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                        // 是否可修改
+                        if (property.valueInputable === true && input instanceof m.Input) {
+                            input.setValueHelpOnly(false);
+                        }
                         return input;
                     } else if (bindInfo.type instanceof sap.extension.data.Date) {
                         return new sap.extension.m.DatePicker("", {
@@ -393,16 +423,26 @@ namespace sap {
                             || ibas.strings.isEmpty(criteria.businessObject)) {
                             return;
                         }
-                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         // 处理变量
                         for (let item of criteria.conditions) {
                             if (ibas.strings.isWith(item.value, "${", "}")) {
                                 item.value = ibas.variablesManager.getValue(item.value);
                             }
                         }
+                        let resultCount: number = event.getParameter("resultCount");
+                        let triggerProperty: string = event.getParameter("triggerProperty");
+                        let triggerValue: string = event.getParameter("triggerValue");
+                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                         ibas.servicesManager.runChooseService<any>({
+                            trigger: source.getBindingContext()?.getObject(),
                             boCode: criteria.businessObject,
-                            criteria: criteria,
+                            criteria: resultCount > 0 && !ibas.strings.isEmpty(triggerProperty) && !ibas.strings.isEmpty(triggerValue)
+                                ? function (): ibas.ICriteria {
+                                    // 要求返回默认结果
+                                    let nCriteria: ibas.ICriteria = criteria.clone();
+                                    nCriteria.result = resultCount;
+                                    return nCriteria;
+                                }() : criteria,
                             chooseType: chooseType >= 0 ? chooseType : ibas.emChooseType.MULTIPLE,
                             onCompleted: (selecteds) => {
                                 if (selecteds instanceof ibas.DataTable) {
@@ -424,6 +464,7 @@ namespace sap {
                                     source.setValue(builder.toString());
                                     if (onChanged instanceof Function) {
                                         onChanged(new sap.ui.base.Event("changed", source, {
+                                            id: source.getId(),
                                             selecteds: selecteds
                                         }));
                                     }
@@ -435,7 +476,9 @@ namespace sap {
                 if (onChanged instanceof Function) {
                     input.attachChange(undefined, onChanged);
                     // 初始化数据
-                    onChanged(new sap.ui.base.Event("init", input, undefined));
+                    onChanged(new sap.ui.base.Event("init", input, {
+                        id: input.getId(),
+                    }));
                 }
                 return input;
             }
