@@ -83,7 +83,15 @@ namespace sap {
                         /** 绑定值 */
                         bindingValue: { type: "string", defaultValue: null },
                     },
-                    events: {}
+                    events: {
+                        "valuePaste": {
+                            parameters: {
+                                data: {
+                                    type: "any",
+                                },
+                            }
+                        },
+                    }
                 },
                 renderer: {
                 },
@@ -169,7 +177,10 @@ namespace sap {
                     this.detachBrowserEvent("keydown", SelectClearSelection);
                     this.detachModelContextChange(DefaultValueModelContextChange);
                     (<any>sap.m.Select.prototype).exit.apply(this, arguments);
-                }
+                },
+                onpaste(this: Input, oEvent: any): void {
+                    this.fireValuePaste({ data: (typeof oEvent.originalEvent === "string") ? oEvent.originalEvent : oEvent.originalEvent.clipboardData.getData("text") });
+                },
             });
             /**
              * 枚举数据-选择框

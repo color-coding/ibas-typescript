@@ -24,7 +24,15 @@ namespace sap {
                         /** 显示模板 */
                         displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_DATE },
                     },
-                    events: {}
+                    events: {
+                        "valuePaste": {
+                            parameters: {
+                                data: {
+                                    type: "any",
+                                },
+                            }
+                        },
+                    }
                 },
                 renderer: {
                 },
@@ -74,7 +82,10 @@ namespace sap {
                     managedobjects.checkBinding.apply(this, arguments);
                     sap.m.DatePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
-                }
+                },
+                onpaste(this: Input, oEvent: any): void {
+                    this.fireValuePaste({ data: (typeof oEvent.originalEvent === "string") ? oEvent.originalEvent : oEvent.originalEvent.clipboardData.getData("text") });
+                },
             });
             /**
              * 时间选择框
@@ -89,7 +100,15 @@ namespace sap {
                         /** 显示模板 */
                         displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_TIME },
                     },
-                    events: {}
+                    events: {
+                        "valuePaste": {
+                            parameters: {
+                                data: {
+                                    type: "any",
+                                },
+                            }
+                        },
+                    }
                 },
                 renderer: {
                 },
@@ -152,6 +171,9 @@ namespace sap {
                     sap.m.TimePicker.prototype.applySettings.apply(this, arguments);
                     return this;
                 },
+                onpaste(this: Input, oEvent: any): void {
+                    this.fireValuePaste({ data: (typeof oEvent.originalEvent === "string") ? oEvent.originalEvent : oEvent.originalEvent.clipboardData.getData("text") });
+                },
             });
             /**
              * 日期时间选择框
@@ -168,7 +190,15 @@ namespace sap {
                         /** 显示模板 */
                         displayFormat: { type: "string", group: "Appearance", defaultValue: data.DEFAULT_FORMAT_DATETIME },
                     },
-                    events: {}
+                    events: {
+                        "valuePaste": {
+                            parameters: {
+                                data: {
+                                    type: "any",
+                                },
+                            }
+                        },
+                    }
                 },
                 renderer: {
                 },
@@ -234,6 +264,9 @@ namespace sap {
                     managedobjects.checkBinding.apply(this, arguments);
                     sap.m.DateTimePicker.prototype.bindProperty.apply(this, arguments);
                     return this;
+                },
+                onpaste(this: Input, oEvent: any): void {
+                    this.fireValuePaste({ data: (typeof oEvent.originalEvent === "string") ? oEvent.originalEvent : oEvent.originalEvent.clipboardData.getData("text") });
                 },
             });
         }

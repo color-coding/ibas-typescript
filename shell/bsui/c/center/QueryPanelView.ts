@@ -65,6 +65,7 @@ namespace shell {
                         design: sap.m.ToolbarDesign.Auto,
                         content: [
                             this.content = new sap.m.SearchField("", {
+                                placeholder: ibas.i18n.prop("shell_query_input_tip"),
                                 search: function (): void {
                                     that.search();
                                 }
