@@ -519,6 +519,12 @@ namespace sap {
                         }
                         this.oInputFormat = sap.ui.core.format.NumberFormat.getPercentInstance(oSourceOptions);
                     }
+                },
+                parseValue(oValue: any, sInternalType: string): any {
+                    if (typeof oValue === "string" && !ibas.strings.isWith(oValue, undefined, "%")) {
+                        oValue += "%";
+                    }
+                    return Decimal.prototype.parseValue.call(this, oValue, sInternalType);
                 }
             });
             /**
@@ -1015,9 +1021,13 @@ namespace sap {
             /**
              * 数据状态
              */
-            export function status(documentStatus: ibas.emDocumentStatus, approvalStatus?: ibas.emApprovalStatus, canceled?: ibas.emYesNo): sap.ui.core.ValueState {
+            export function status(documentStatus: ibas.emDocumentStatus, approvalStatus?: ibas.emApprovalStatus, canceled?: ibas.emYesNo, deleted?: ibas.emYesNo): sap.ui.core.ValueState {
                 // tslint:disable-next-line: triple-equals
                 if (canceled == ibas.emYesNo.YES) {
+                    return sap.ui.core.ValueState.Error;
+                }
+                // tslint:disable-next-line: triple-equals
+                if (deleted == ibas.emYesNo.YES) {
                     return sap.ui.core.ValueState.Error;
                 }
                 // tslint:disable-next-line: triple-equals

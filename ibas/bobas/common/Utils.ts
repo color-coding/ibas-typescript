@@ -1223,9 +1223,9 @@ namespace ibas {
          * @param value1 值1
          * @param value2 值2
          * @param digits 小数位
-         * @param degree 精确度（默认10小数位次方）
+         * @param degree 精确度（默认增加1位）
          */
-        export function isApproximated(value1: number, value2: number, digits: number = 6, degree: number = undefined): boolean {
+        export function isApproximated(value1: number, value2: number, digits: number = 6, degree: number = 1): boolean {
             if (isNaN(value1)) {
                 return false;
             }
@@ -1244,26 +1244,10 @@ namespace ibas {
             if (!(digits > 0)) {
                 return value1 === value2;
             }
-            let nValue1: number = Math.round(value1 * Math.pow(10, digits));
-            let nValue2: number = Math.round(value2 * Math.pow(10, digits));
+            let nValue1: number = Math.round(value1 * Math.pow(10, digits + degree));
+            let nValue2: number = Math.round(value2 * Math.pow(10, digits + degree));
             let difference: number = Math.abs(nValue1 - nValue2);
-            let tolerance: number = 0.01;
-            switch (digits) {
-                case 1:
-                    tolerance = 0.05;
-                    break;
-                case 2:
-                    tolerance = 0.04;
-                    break;
-                case 3:
-                    tolerance = 0.03;
-                    break;
-                case 4:
-                    tolerance = 0.02;
-                    break;
-            }
-            // 变化比例超
-            if ((difference / nValue1) >= tolerance || (difference / nValue2) >= tolerance) {
+            if (difference > 5) {
                 return false;
             }
             return true;

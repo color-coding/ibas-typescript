@@ -230,8 +230,16 @@ namespace sap {
                 if (source instanceof RepositoryInput && source.getShowSuggestion() === true && dataInfo) {
                     if ((<any>source)._lastSuggestValue) {
                         if ((<any>source)._lastSuggestValue.trim() === value.trim()) {
-                            // 查询值一样，不在查询
-                            return;
+                            // 查询结果与上次一致，则使用优先使用已有的
+                            for (let item of source.getSuggestionItems()) {
+                                if (item.getKey() === value) {
+                                    source.setSelectedItem(item);
+                                    (<any>source).fireSuggestionItemSelected({
+                                        selectedItem: item
+                                    });
+                                    return;
+                                }
+                            }
                         }
                     }
                     (<any>source)._lastSuggestValue = value;
@@ -311,6 +319,17 @@ namespace sap {
                                         (<any>source).fireSuggestionItemSelected({
                                             selectedItem: item
                                         });
+                                    } else if (source.getSuggestionItems().length > 1) {
+                                        // 多个可选值时，尝试选择完全一样的
+                                        for (let item of source.getSuggestionItems()) {
+                                            if (item.getKey() === value) {
+                                                source.setSelectedItem(item);
+                                                (<any>source).fireSuggestionItemSelected({
+                                                    selectedItem: item
+                                                });
+                                                break;
+                                            }
+                                        }
                                     }
                                 }
                             } else {

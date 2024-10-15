@@ -183,13 +183,29 @@ namespace sap {
                                     if (source instanceof sap.m.Input) {
                                         let data: any = source.getBindingContext()?.getObject();
                                         if (data instanceof ibas.Bindable) {
+                                            data.removeListener(data.toString());
                                             data.registerListener({
+                                                id: data.toString(),
                                                 propertyChanged(name: string): void {
+                                                    let value: any = data[name];
+                                                    if (ibas.strings.isWith(name, "userFields/", undefined)) {
+                                                        let index: string = name.substring(name.indexOf("/") + 1);
+                                                        if (ibas.numbers.isNumber(index)) {
+                                                            let userFields: ibas.IUserFields = data.userFields;
+                                                            if (userFields instanceof ibas.UserFields) {
+                                                                let userField: ibas.IUserField = userFields.get(ibas.numbers.valueOf(index));
+                                                                if (userField instanceof ibas.UserField) {
+                                                                    name = userField.name;
+                                                                    value = userField.value;
+                                                                }
+                                                            }
+                                                        }
+                                                    }
                                                     if (ibas.strings.equalsIgnoreCase(name, property.triggerByProperty)) {
                                                         source.fireValueHelpRequest({
                                                             resultCount: 1,
                                                             triggerProperty: property.triggerByProperty,
-                                                            triggerValue: data[name],
+                                                            triggerValue: value,
                                                         });
                                                     }
                                                 }

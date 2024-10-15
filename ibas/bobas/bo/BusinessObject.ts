@@ -1008,7 +1008,7 @@ namespace ibas {
             let userField: IUserField = userFieldManager.create(info);
             userField.name = name;
             userField.valueType = valueType;
-            let index: number = this.push(userField);
+            let index: number = this.push(userField) - 1;
             if (userField instanceof UserField) {
                 userField.registerListener({
                     propertyChanged: (name) => {

@@ -350,6 +350,8 @@ namespace sap {
         }
         /** 页面操作集 */
         export namespace pages {
+            /** 配置项目-完成的单据不可编辑 */
+            export const CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE: string = "nonEditable|FinishedDocument";
             /**
              * 改变页面控件状态（异步）
              */
@@ -383,14 +385,24 @@ namespace sap {
                             }
                         }
                     } else if (model instanceof ibas.BODocument) {
-                        if (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.CLOSED) {
+                        if (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.CLOSED
+                            || (model.getProperty("DocumentStatus") === ibas.emDocumentStatus.FINISHED
+                                && ibas.config.get<boolean>(CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE, false) === true)
+                            || model.getProperty("Deleted") === ibas.emYesNo.YES
+                            || model.getProperty("Canceled") === ibas.emYesNo.YES
+                            || model.getProperty("Status") === ibas.emBOStatus.CLOSED) {
                             nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);
                             }
                         }
                     } else if (model instanceof ibas.BODocumentLine) {
-                        if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED) {
+                        if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED
+                            || (model.getProperty("LineStatus") === ibas.emDocumentStatus.FINISHED
+                                && ibas.config.get<boolean>(CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE, false) === true)
+                            || model.getProperty("Deleted") === ibas.emYesNo.YES
+                            || model.getProperty("Canceled") === ibas.emYesNo.YES
+                            || model.getProperty("Status") === ibas.emBOStatus.CLOSED) {
                             nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);
@@ -606,20 +618,16 @@ namespace sap {
                 let rowIndex: number = row.getIndex();
                 if (colIndex >= 0 && rowIndex >= 0) {
                     if (values.length > 0) {
-                        let rowCount: number = 0;
-                        let rowStart: number = table.indexOfRow(row);
-                        for (let i: number = 0; i < values.length; i++) {
-                            let tmpRow: sap.ui.table.Row = table.getRows()[rowStart + i];
-                            if (ibas.objects.isNull(tmpRow) || tmpRow.getBindingContext() === null) {
-                                rowCount++;
-                            }
-                        }
+                        let rowCount: number = table.hasModel() ?
+                            values.length - (ibas.numbers.valueOf((<any>table)._getTotalRowCount()) - rowIndex) :
+                            values.length;
                         if (rowCount > 0 && onOverRows instanceof Function) {
                             if (onOverRows(rowCount) === false) {
                                 // 退出
                                 return;
                             }
                         }
+                        table.setBusy(true);
                         setTimeout(() => {
                             if (!(setValue instanceof Function)) {
                                 setValue = function (control: sap.ui.core.Control, value: any): void {
@@ -646,26 +654,32 @@ namespace sap {
                                             next();
                                         }, 300);
                                         rowIndex += 1;
-                                        break;
+                                        return;
                                     }
                                 }
+                                // 没处理则下一个
+                                next();
                             };
                             ibas.queues.execute(<any>values, (value, next) => {
                                 fRowCount = table.getFirstVisibleRow();
                                 if (fRowCount !== rowCount && rowIndex > (fRowCount + vRowCount - 1)) {
-                                    if (rowIndex > rowCount) {
-                                        table.setFirstVisibleRow(rowCount);
-                                    } else {
-                                        table.setFirstVisibleRow(rowIndex);
-                                    }
                                     setTimeout(() => {
-                                        setRowValue(value, next);
-                                    }, 10);
+                                        if (rowIndex > rowCount) {
+                                            table.setFirstVisibleRow(rowCount);
+                                        } else {
+                                            table.setFirstVisibleRow(rowIndex);
+                                        }
+                                        setTimeout(() => {
+                                            setRowValue(value, next);
+                                        }, 15);
+                                    }, table.getBusyIndicatorDelay() + (table.getVisibleRowCount() * 3));
                                 } else {
                                     setRowValue(value, next);
                                 }
+                            }, () => {
+                                table.setBusy(false);
                             });
-                        }, 30 + (rowCount * 1.5));
+                        }, table.getBusyIndicatorDelay() + (table.getVisibleRowCount() * 5));
                     }
                 }
             }

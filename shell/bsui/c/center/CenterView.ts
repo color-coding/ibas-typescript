@@ -28,6 +28,8 @@ namespace shell {
             export const CONFIG_ITEM_HIDE_NO_FUNCTION_MODULE: string = "hideModule";
             /** 配置项目-禁用用户功能菜单 */
             export const CONFIG_ITEM_DISABLE_USER_FUNCTIONS_MENU: string = "disableUserMenu";
+            /** 配置项目-禁用功能菜单切换 */
+            export const CONFIG_ITEM_DISABLE_FUNCTIONS_MENU_SWITCH: string = "disableMenuSwitch";
             /** 配置项目-快捷键映射 */
             export const CONFIG_ITEM_SHORTCUT_KEY_MAPPING: string = "shortcutKeyMapping";
             /** 状态消息延迟时间（毫秒） */
@@ -1449,6 +1451,9 @@ namespace shell {
                 }
                 /** 显示用户功能 */
                 showUserFunctions(funcs: bo.IUserFunction[]): void {
+                    if (ibas.config.get<boolean>(CONFIG_ITEM_DISABLE_USER_FUNCTIONS_MENU, false) === true) {
+                        return;
+                    }
                     let nvItem: sap.tnt.NavigationListItem = null;
                     let nvList: sap.tnt.NavigationList = this.userNavigationList;
                     for (let func of funcs) {
@@ -1472,7 +1477,11 @@ namespace shell {
                         }
                         nvList.addItem(nvItem);
                     }
-                    this.switchNavigationItem.setShowSwitch(true);
+                    if (ibas.config.get(CONFIG_ITEM_DISABLE_FUNCTIONS_MENU_SWITCH, false) === false) {
+                        this.switchNavigationItem.setShowSwitch(true);
+                    } else {
+                        this.switchNavigationItem.setShowSwitch(false);
+                    }
                     this.switchNavigationItem.chanageStatus("sap-icon://switch-classes");
                 }
             }

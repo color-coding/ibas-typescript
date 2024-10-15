@@ -68,6 +68,8 @@
     "shell_data_not_saved_continue": "Data not saved, continue?",
     "shell_data_status": "Status",
     "shell_data_services": "Data services",
+    "shell_data_export": "Export",
+    "shell_data_import": "Import",
     "shell_upload": "Upload",
     "shell_uploading_file": "Uploading file, please wait",
     "shell_download": "Download",

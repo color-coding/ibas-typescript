@@ -53,6 +53,24 @@ declare namespace sap {
                  * 加载可选值
                  */
                 loadItems(): this;
+                /**
+                 * 监听值粘贴事件
+                 * @param oData 
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                attachValuePaste(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 取消监听值粘贴事件
+                 * @param fnFunction 
+                 * @param oListener 
+                 */
+                detachValuePaste(fnFunction: Function, oListener?: any): this;
+                /** 
+                 * 触发值粘贴事件
+                 * @param param 
+                 */
+                protected fireValuePaste(param: { data: any }): this;
             }
             /** 选择框项目 */
             class SelectItem extends sap.ui.core.ListItem {

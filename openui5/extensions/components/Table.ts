@@ -472,7 +472,7 @@ namespace sap {
                                     mSettings.width = "8rem";
                                 } else if (path === ibas.BO_PROPERTY_NAME_CANCELED
                                     || path === ibas.BO_PROPERTY_NAME_DELETED) {
-                                    mSettings.width = "6rem";
+                                    mSettings.width = "7rem";
                                 }
                             }
                         }
@@ -483,6 +483,59 @@ namespace sap {
             (<any>Column).ofCell = function (oCell: any): any {
                 return (<any>sap.ui.table.Column).ofCell.apply(this, arguments);
             };
+
+            function createRowSettings(type: "Document" | "DocumentLine"): sap.ui.table.RowSettings {
+                if (type === "Document") {
+                    return new sap.ui.table.RowSettings("", {
+                        highlight: {
+                            parts: [
+                                {
+                                    path: "documentStatus",
+                                    type: new data.DocumentStatus()
+                                },
+                                {
+                                    path: "approvalStatus",
+                                    type: new data.ApprovalStatus(),
+                                },
+                                {
+                                    path: "canceled",
+                                    type: new data.YesNo(),
+                                },
+                                {
+                                    path: "deleted",
+                                    type: new data.YesNo(),
+                                }
+                            ],
+                            formatter(documentStatus: ibas.emDocumentStatus, approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo, deleted: ibas.emYesNo): sap.ui.core.ValueState {
+                                return data.status(documentStatus, approvalStatus, canceled, deleted);
+                            }
+                        }
+                    });
+                } else if (type === "DocumentLine") {
+                    return new sap.ui.table.RowSettings("", {
+                        highlight: {
+                            parts: [
+                                {
+                                    path: "lineStatus",
+                                    type: new data.DocumentStatus()
+                                },
+                                {
+                                    path: "canceled",
+                                    type: new data.YesNo(),
+                                },
+                                {
+                                    path: "deleted",
+                                    type: new data.YesNo(),
+                                }
+                            ],
+                            formatter(lineStatus: ibas.emDocumentStatus, canceled: ibas.emYesNo, deleted: ibas.emYesNo): sap.ui.core.ValueState {
+                                return data.status(lineStatus, undefined, canceled, deleted);
+                            }
+                        }
+                    });
+                }
+                return undefined;
+            }
             /**
              * 数据表格
              */
@@ -532,45 +585,9 @@ namespace sap {
                     if (typeof mSettings?.dataInfo === "function") {
                         if (mSettings.rowSettingsTemplate === undefined) {
                             if (mSettings.dataInfo.prototype instanceof ibas.BODocument) {
-                                mSettings.rowSettingsTemplate = new sap.ui.table.RowSettings("", {
-                                    highlight: {
-                                        parts: [
-                                            {
-                                                path: "documentStatus",
-                                                type: new data.DocumentStatus()
-                                            },
-                                            {
-                                                path: "approvalStatus",
-                                                type: new data.ApprovalStatus(),
-                                            },
-                                            {
-                                                path: "canceled",
-                                                type: new data.YesNo(),
-                                            }
-                                        ],
-                                        formatter(documentStatus: ibas.emDocumentStatus, approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo): sap.ui.core.ValueState {
-                                            return data.status(documentStatus, approvalStatus, canceled);
-                                        }
-                                    }
-                                });
+                                mSettings.rowSettingsTemplate = createRowSettings("Document");
                             } else if (mSettings.dataInfo.prototype instanceof ibas.BODocumentLine) {
-                                mSettings.rowSettingsTemplate = new sap.ui.table.RowSettings("", {
-                                    highlight: {
-                                        parts: [
-                                            {
-                                                path: "lineStatus",
-                                                type: new data.DocumentStatus()
-                                            },
-                                            {
-                                                path: "canceled",
-                                                type: new data.YesNo(),
-                                            },
-                                        ],
-                                        formatter(lineStatus: ibas.emDocumentStatus, canceled: ibas.emYesNo): sap.ui.core.ValueState {
-                                            return data.status(lineStatus, undefined, canceled);
-                                        }
-                                    }
-                                });
+                                mSettings.rowSettingsTemplate = createRowSettings("DocumentLine");
                             }
                         }
                     }
@@ -670,12 +687,24 @@ namespace sap {
                                     if (opRslt.resultCode !== 0) {
                                         ibas.logger.log(new Error(opRslt.message));
                                     } else {
-                                        propertyColumns.call(this, opRslt.resultObjects.firstOrDefault());
-                                        // 已加载数据，则重置
-                                        let model: any = this.getModel();
-                                        if (model !== undefined) {
-                                            this.setModel(undefined);
-                                            this.setModel(model);
+                                        let boInfo: shell.bo.IBizObjectInfo = opRslt.resultObjects.firstOrDefault();
+                                        if (!ibas.objects.isNull(boInfo)) {
+                                            if (typeof mSettings?.dataInfo === "object") {
+                                                if (ibas.objects.isNull(this.getRowSettingsTemplate())) {
+                                                    if (boInfo.type === "Document") {
+                                                        this.setRowSettingsTemplate(createRowSettings("Document"));
+                                                    } else if (boInfo.type === "DocumentLine") {
+                                                        this.setRowSettingsTemplate(createRowSettings("DocumentLine"));
+                                                    }
+                                                }
+                                            }
+                                            propertyColumns.call(this, boInfo);
+                                            // 已加载数据，则重置
+                                            let model: any = this.getModel();
+                                            if (model !== undefined) {
+                                                this.setModel(undefined);
+                                                this.setModel(model);
+                                            }
                                         }
                                     }
                                 }
@@ -939,6 +968,28 @@ namespace sap {
                  */
                 setPropertyInfo(this: Column, value: shell.bo.IBizPropertyInfo): Column {
                     return this.setProperty("propertyInfo", value);
+                },
+                /** 重构设置 */
+                applySettings(this: DataColumn, mSettings: any): DataColumn {
+                    if (mSettings.template instanceof m.Input
+                        || mSettings.template instanceof m.Select
+                        || mSettings.template instanceof m.DatePicker
+                        || mSettings.template instanceof m.DateTimePicker) {
+                        if (mSettings.template.hasListeners("valuePaste") === false) {
+                            mSettings.template.attachValuePaste(undefined, function (event: sap.ui.base.Event): void {
+                                let source: any = <any>event.getSource();
+                                let data: any = event.getParameter("data");
+                                if (typeof data === "string" && data?.indexOf("\n") > 0) {
+                                    sap.extension.tables.fillingCellsData(source, data);
+                                    // 不执行后续事件
+                                    event.preventDefault();
+                                    event.cancelBubble();
+                                }
+                            });
+                        }
+                    }
+                    Column.prototype.applySettings.apply(this, arguments);
+                    return this;
                 }
             });
             (<any>DataColumn).ofCell = function (oCell: any): any {
