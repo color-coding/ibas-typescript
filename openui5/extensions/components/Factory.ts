@@ -36,6 +36,7 @@ namespace sap {
                     valueChooseType: property.valueChooseType,
                     valueInputable: property.valueInputable,
                     triggerByProperty: property.triggerByProperty,
+                    width: property.width,
                 };
             }
             /**

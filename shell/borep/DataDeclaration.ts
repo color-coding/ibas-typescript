@@ -129,6 +129,8 @@ namespace shell {
             TriggerByProperty: string;
             /** 值集合 */
             Values: IBizPropertyValue[];
+            /** 宽度 */
+            Width: string;
         }
         /** 业务对象属性值 */
         export interface IBizPropertyValue extends IDataDeclaration {

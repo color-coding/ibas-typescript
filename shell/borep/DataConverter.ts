@@ -124,7 +124,8 @@ namespace shell {
                         Authorised: newData.authorised ? ibas.enums.toString(ibas.emAuthoriseType, newData.authorised) : undefined,
                         LinkedObject: newData.linkedObject,
                         TriggerByProperty: newData.triggerByProperty,
-                        Values: values
+                        Values: values,
+                        Width: newData.width,
                     };
                     return remote;
                 } else if (ibas.objects.instanceOf(data, BizPropertyValue)) {
@@ -251,6 +252,7 @@ namespace shell {
                             newData.values.push(this.parsing(item, null));
                         }
                     }
+                    newData.width = remote.Width;
                     return newData;
                 } else if (data.type === BizPropertyValue.name) {
                     let remote: bo4j.IBizPropertyValue = data;

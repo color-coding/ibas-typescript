@@ -780,6 +780,10 @@ namespace sap {
                                     column.setVisible(false);
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
                                     controls.nonEditable(template);
+                                    // 已被应用，则重新设置
+                                    if (this.hasModel()) {
+                                        column.setTemplate(template);
+                                    }
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.ALL) {
                                     if (column.getVisible() === false) {
                                         column.setVisible(true);
@@ -824,6 +828,13 @@ namespace sap {
                                             label.setRequired(true);
                                         }
                                     }
+                                }
+                                if (!ibas.strings.isEmpty(propertyInfo.width)) {
+                                    let value: string = propertyInfo.width;
+                                    if (!(value.endsWith("px") || value.endsWith("rem"))) {
+                                        value += "rem";
+                                    }
+                                    column.setWidth(value);
                                 }
                                 properties[index] = null;
                             }
@@ -918,6 +929,13 @@ namespace sap {
                                     ibas.strings.equalsIgnoreCase(property.editType, "TIME") ? new sap.ui.model.type.Integer() : new sap.ui.model.type.Date()
                                     : new sap.ui.model.type.String()
                     });
+                    if (!ibas.strings.isEmpty(property.width)) {
+                        let value: string = property.width;
+                        if (!(value.endsWith("px") || value.endsWith("rem"))) {
+                            value += "rem";
+                        }
+                        column.setWidth(value);
+                    }
                     this.addColumn(column);
                 }
                 // 位置修正

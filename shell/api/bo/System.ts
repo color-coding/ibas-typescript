@@ -121,6 +121,8 @@ namespace shell {
             authorised: ibas.emAuthoriseType;
             /** 属性值集合 */
             values: Array<IBizPropertyValue>;
+            /** 宽度 */
+            width: string;
         }
         /** 业务对象属性值 */
         export interface IBizPropertyValue {
