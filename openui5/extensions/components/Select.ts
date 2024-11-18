@@ -885,7 +885,9 @@ namespace sap {
                         change(this: CurrencySelect, event: sap.ui.base.Event): void {
                             let source: any = (<any>event.getSource())?.getParent();
                             if (source instanceof CurrencyRateSelect) {
-                                source.setCurrency(this.getBindingValue());
+                                if (!ibas.strings.equals(this.getBindingValue(), source.getCurrency())) {
+                                    source.setCurrency(this.getBindingValue());
+                                }
                             }
                         }
                     }).addStyleClass("sapUiTinyMarginBegin"));
@@ -903,14 +905,9 @@ namespace sap {
                     this.getCurrencySelect().setEditable(value);
                     return this;
                 },
-                setRate(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
+                setRate(this: CurrencyRateSelect, value: any): CurrencyRateSelect {
                     this.setProperty("rate", value);
                     this.getRateInput().setValue(data.formatValue(data.Rate, value, "string"));
-                    if (onlyValue === false) {
-                        this.fireCurrencyChanged({
-                            rate: value,
-                        });
-                    }
                     return this;
                 },
                 setDate(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
@@ -923,15 +920,16 @@ namespace sap {
                     return this;
                 },
                 setCurrency(this: CurrencyRateSelect, value: any, onlyValue: boolean = false): CurrencyRateSelect {
-                    if (!ibas.strings.equals(this.getProperty("currency"), value)) {
+                    let oldValue: any = this.getProperty("currency");
+                    if (oldValue !== value) {
                         this.setProperty("rate", 0);
-                    }
-                    this.setProperty("currency", value);
-                    this.getCurrencySelect().setSelectedKey(value);
-                    if (onlyValue === false) {
-                        this.fireCurrencyChanged({
-                            currency: value,
-                        });
+                        this.setProperty("currency", value, true);
+                        this.getCurrencySelect().setSelectedKey(value);
+                        if (onlyValue === false) {
+                            this.fireCurrencyChanged({
+                                currency: value,
+                            });
+                        }
                     }
                     return this;
                 },

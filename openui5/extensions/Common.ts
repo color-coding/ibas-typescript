@@ -352,6 +352,8 @@ namespace sap {
         export namespace pages {
             /** 配置项目-完成的单据不可编辑 */
             export const CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE: string = "nonEditable|FinishedDocument";
+            /** 配置项目-关闭的单据不可编辑（BOStatus） */
+            export const CONFIG_ITEM_CLOSED_DOCUMENT_NON_EDITABLE: string = "nonEditable|ClosedDocument";
             /**
              * 改变页面控件状态（异步）
              */
@@ -390,7 +392,8 @@ namespace sap {
                                 && ibas.config.get<boolean>(CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE, false) === true)
                             || model.getProperty("Deleted") === ibas.emYesNo.YES
                             || model.getProperty("Canceled") === ibas.emYesNo.YES
-                            || model.getProperty("Status") === ibas.emBOStatus.CLOSED) {
+                            || (model.getProperty("Status") === ibas.emBOStatus.CLOSED
+                                && ibas.config.get<boolean>(CONFIG_ITEM_CLOSED_DOCUMENT_NON_EDITABLE, false) === true)) {
                             nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);
@@ -402,7 +405,8 @@ namespace sap {
                                 && ibas.config.get<boolean>(CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE, false) === true)
                             || model.getProperty("Deleted") === ibas.emYesNo.YES
                             || model.getProperty("Canceled") === ibas.emYesNo.YES
-                            || model.getProperty("Status") === ibas.emBOStatus.CLOSED) {
+                            || (model.getProperty("Status") === ibas.emBOStatus.CLOSED
+                                && ibas.config.get<boolean>(CONFIG_ITEM_CLOSED_DOCUMENT_NON_EDITABLE, false) === true)) {
                             nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);

@@ -1126,28 +1126,38 @@ namespace ibas {
                 if (values.length === 2) {
                     let vFields: string[] = values[1].split("&");
                     if (vFields.length > 0) {
-                        let boName: string = name(values[0]);
-                        let builder: StringBuilder = new StringBuilder();
-                        builder.append(resource(boName));
-                        builder.append(": ");
-                        for (let field of vFields) {
-                            field = field.trim();
-                            if (strings.isEmpty(field)) {
-                                continue;
-                            }
-                            if (builder.length > 2) {
-                                builder.append(", ");
-                            }
-                            let tValues: string[] = field.split("=");
-                            if (tValues.length !== 2) {
-                                builder.append(field);
+                        try {
+                            let boClass: any = boFactory.classOf(values[0]);
+                            let boName: string = objects.nameOf(boClass);
+                            let builder: StringBuilder = new StringBuilder();
+                            /** 资源后缀 */
+                            if (boClass.resource_suffix) {
+                                builder.append(resource(boName + "_" + boClass.resource_suffix));
                             } else {
-                                builder.append(resource(boName, tValues[0]));
-                                builder.append("-");
-                                builder.append(tValues[1]);
+                                builder.append(resource(boName));
                             }
+                            builder.append(": ");
+                            for (let field of vFields) {
+                                field = field.trim();
+                                if (strings.isEmpty(field)) {
+                                    continue;
+                                }
+                                if (builder.length > 2) {
+                                    builder.append(", ");
+                                }
+                                let tValues: string[] = field.split("=");
+                                if (tValues.length !== 2) {
+                                    builder.append(field);
+                                } else {
+                                    builder.append(resource(boName, tValues[0]));
+                                    builder.append("-");
+                                    builder.append(tValues[1]);
+                                }
+                            }
+                            return builder.toString();
+                        } catch (error) {
+                            return boKeys;
                         }
-                        return builder.toString();
                     }
                 }
             } else {

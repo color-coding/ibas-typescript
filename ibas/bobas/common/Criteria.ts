@@ -494,14 +494,17 @@ namespace ibas {
                         continue;
                     }
                     let isNew: boolean = true;
-                    for (let myChildCriteria of nCriteria.childCriterias) {
+                    for (let i: number = 0; i < nCriteria.childCriterias.length; i++) {
+                        let myChildCriteria: IChildCriteria = nCriteria.childCriterias[i];
                         if (objects.isNull(myChildCriteria.propertyPath)) {
                             continue;
                         }
-                        if (myChildCriteria.propertyPath === tmpChildCriteria.propertyPath) {
-                            isNew = false;
-                            break;
+                        if (myChildCriteria.propertyPath !== tmpChildCriteria.propertyPath) {
+                            continue;
                         }
+                        isNew = false;
+                        nCriteria.childCriterias[i] = <IChildCriteria>myChildCriteria.copyFrom(tmpChildCriteria);
+                        break;
                     }
                     if (isNew) {
                         nCriteria.childCriterias.add(tmpChildCriteria);
