@@ -38,4 +38,6 @@ namespace ibas {
     export const CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT: string = "decimalPlaces|Measurement";
     /** 配置项目-小数位-百分比 */
     export const CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE: string = "decimalPlaces|Percentage";
+    /** 配置项目-截断小数 */
+    export const CONFIG_ITEM_TRUNCATE_DECIMALS: string = "truncateDecimals";
 }

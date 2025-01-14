@@ -404,13 +404,33 @@ namespace sap {
                 /** 小数位 */
                 decimalPlaces?: number;
             }
-            const DECIMAL_PLACES: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
-            const DECIMAL_PLACES_PRICE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE, DECIMAL_PLACES);
-            const DECIMAL_PLACES_PERCENTAGE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE, DECIMAL_PLACES);
-            const DECIMAL_PLACES_MEASUREMENT: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT, DECIMAL_PLACES);
-            const DECIMAL_PLACES_QUANTITY: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY, DECIMAL_PLACES);
-            const DECIMAL_PLACES_RATE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE, DECIMAL_PLACES);
-            const DECIMAL_PLACES_SUM: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM, DECIMAL_PLACES);
+            let DECIMAL_PLACES: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES, 6);
+            let DECIMAL_PLACES_PRICE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE, DECIMAL_PLACES);
+            let DECIMAL_PLACES_PERCENTAGE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE, DECIMAL_PLACES);
+            let DECIMAL_PLACES_MEASUREMENT: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT, DECIMAL_PLACES);
+            let DECIMAL_PLACES_QUANTITY: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY, DECIMAL_PLACES);
+            let DECIMAL_PLACES_RATE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE, DECIMAL_PLACES);
+            let DECIMAL_PLACES_SUM: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM, DECIMAL_PLACES);
+            ibas.config.registerListener({
+                /** 配置变化 */
+                onConfigurationChanged(name: string, value: any): void {
+                    if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES)) {
+                        DECIMAL_PLACES = ibas.numbers.valueOf(value);
+                    } else if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES_PRICE)) {
+                        DECIMAL_PLACES_PRICE = ibas.numbers.valueOf(value);
+                    } else if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE)) {
+                        DECIMAL_PLACES_PERCENTAGE = ibas.numbers.valueOf(value);
+                    } else if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES_MEASUREMENT)) {
+                        DECIMAL_PLACES_MEASUREMENT = ibas.numbers.valueOf(value);
+                    } else if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY)) {
+                        DECIMAL_PLACES_QUANTITY = ibas.numbers.valueOf(value);
+                    } else if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE)) {
+                        DECIMAL_PLACES_RATE = ibas.numbers.valueOf(value);
+                    } else if (ibas.strings.equals(name, ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM)) {
+                        DECIMAL_PLACES_SUM = ibas.numbers.valueOf(value);
+                    }
+                }
+            });
 
             sap.ui.model.type.Float.extend("sap.extension.data.Decimal", {
                 constructor: function (setting?: IDecimalSetting): void {

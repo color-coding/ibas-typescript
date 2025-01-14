@@ -1241,6 +1241,12 @@ namespace ibas {
             if (value1 !== 0 && value2 === 0) {
                 return false;
             }
+            if (typeof (digits) === "string") {
+                digits = numbers.valueOf(digits);
+            }
+            if (typeof (degree) === "string") {
+                degree = numbers.valueOf(degree);
+            }
             if (!(digits > 0)) {
                 return value1 === value2;
             }

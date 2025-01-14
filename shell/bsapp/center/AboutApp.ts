@@ -33,7 +33,7 @@ namespace shell {
                 let libraries: ibas.IList<Component> = new ibas.ArrayList<Component>();
                 let copyright: string = ibas.i18n.prop("shell_license");
                 libraries.add(new Component("ibas", ibas.about.version, copyright, ibas.i18n.prop("shell_icon")));
-                libraries.add(new Component(shell.CONSOLE_NAME, shell.CONSOLE_VERSION, copyright, ibas.i18n.prop("shell_icon")));
+                libraries.add(new Component(shell.CONSOLE_NAME.toLowerCase(), shell.CONSOLE_VERSION, copyright, ibas.i18n.prop("shell_icon")));
                 libraries.add(new Component("requirejs", "2.3.6", "© jQuery foundation and other contributors, released under the MIT license."));
                 libraries.add(new Component("require-css", "0.1.10", "© Guy Bedford, released under the MIT license."));
                 libraries.add(new Component("cryptojs", "3.1.9", "© Evan Vosberg, released under the MIT license."));

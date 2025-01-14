@@ -136,6 +136,18 @@ namespace shell {
                                 for (let item of opRslt.resultObjects) {
                                     if (ibas.strings.isEmpty(item.group)) {
                                         ibas.config.set(item.key, item.value);
+                                    } else if (ibas.strings.equals(item.group, shell.CONSOLE_ID)) {
+                                        let value: any = ibas.config.get(item.key);
+                                        // 全局变量替换，转换类型
+                                        if (typeof (value) === "number") {
+                                            ibas.config.set(item.key, Number(item.value));
+                                        } else if (typeof (value) === "boolean") {
+                                            ibas.config.set(item.key, Boolean(item.value));
+                                        } else if (typeof (value) === "string") {
+                                            ibas.config.set(item.key, String(item.value));
+                                        } else {
+                                            ibas.config.set(item.key, item.value);
+                                        }
                                     } else {
                                         ibas.config.set(ibas.strings.format("{0}|{1}", item.group, item.key), item.value);
                                     }
