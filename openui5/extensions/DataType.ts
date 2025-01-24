@@ -411,6 +411,8 @@ namespace sap {
             let DECIMAL_PLACES_QUANTITY: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_QUANTITY, DECIMAL_PLACES);
             let DECIMAL_PLACES_RATE: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_RATE, DECIMAL_PLACES);
             let DECIMAL_PLACES_SUM: number = ibas.config.get(ibas.CONFIG_ITEM_DECIMAL_PLACES_SUM, DECIMAL_PLACES);
+            let ALIGN_DECIMAL_PLACES: boolean = ibas.config.get(ibas.ALIGN_DECIMAL_PLACES, true);
+
             ibas.config.registerListener({
                 /** 配置变化 */
                 onConfigurationChanged(name: string, value: any): void {
@@ -434,15 +436,19 @@ namespace sap {
 
             sap.ui.model.type.Float.extend("sap.extension.data.Decimal", {
                 constructor: function (setting?: IDecimalSetting): void {
-                    sap.ui.model.type.Float.call(this, {
-                        decimals: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES,
-                        preserveDecimals: false,
-                        // emptyString: 0,
-                    }, setting ?
-                        {
-                            minimum: setting.minValue,
-                            maximum: setting.maxValue,
-                        } : undefined
+                    sap.ui.model.type.Float.call(this,
+                        ALIGN_DECIMAL_PLACES ? {
+                            decimals: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES,
+                            preserveDecimals: false,
+                        } : {
+                                maxFractionDigits: setting?.decimalPlaces > 0 ? setting?.decimalPlaces : DECIMAL_PLACES,
+                                preserveDecimals: false,
+                            },
+                        setting ?
+                            {
+                                minimum: setting.minValue,
+                                maximum: setting.maxValue,
+                            } : undefined
                     );
                 },
                 formatValue(oValue: any, sInternalType: string): any {

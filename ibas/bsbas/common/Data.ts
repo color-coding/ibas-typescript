@@ -40,4 +40,6 @@ namespace ibas {
     export const CONFIG_ITEM_DECIMAL_PLACES_PERCENTAGE: string = "decimalPlaces|Percentage";
     /** 配置项目-截断小数 */
     export const CONFIG_ITEM_TRUNCATE_DECIMALS: string = "truncateDecimals";
+    /** 配置项目-对齐小数位 */
+    export const ALIGN_DECIMAL_PLACES: string = "alignDecimalPlaces";
 }
