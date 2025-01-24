@@ -251,6 +251,12 @@ namespace sap {
                             }
                         }
                     }
+                    if (ibas.objects.isNull(mSettings.growing)) {
+                        mSettings.growing = true;
+                    }
+                    if (ibas.objects.isNull(mSettings.growingThreshold)) {
+                        mSettings.growingThreshold = table.visibleRowCount(15) * 4;
+                    }
                     Table.prototype.applySettings.apply(this, arguments);
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {
