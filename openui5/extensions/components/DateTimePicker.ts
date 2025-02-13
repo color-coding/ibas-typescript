@@ -66,14 +66,21 @@ namespace sap {
                 init(this: DatePicker): void {
                     (<any>sap.m.DatePicker.prototype).init.apply(this, arguments);
                     this.attachChange(undefined, function (event: sap.ui.base.Event): void {
-                        let that: any = event.getSource();
-                        if (that instanceof DatePicker) {
-                            let oldValue: any = that.getBindingValue();
-                            let newValue: any = that.getDateValue();
-                            if (oldValue !== newValue) {
-                                (<any>that).setProperty("bindingValue", newValue);
+                        let source: any = event.getSource();
+                        if (source instanceof DatePicker) {
+                            // 改变值不是有效日期
+                            if (event.getParameter("valid") === false) {
+                                let value: any = event.getParameter("value");
+                                setTimeout(() => {
+                                    source.setDateValue(autoCompleteDate(value));
+                                }, 3); return;
                             }
-                            that = null;
+                            let oldValue: any = source.getBindingValue();
+                            let newValue: any = source.getDateValue();
+                            if (!ibas.dates.equals(oldValue, newValue)) {
+                                (<any>source).setProperty("bindingValue", newValue);
+                            }
+                            source = null;
                         }
                     });
                 },
@@ -87,6 +94,44 @@ namespace sap {
                     this.fireValuePaste({ data: (typeof oEvent.originalEvent === "string") ? oEvent.originalEvent : oEvent.originalEvent.clipboardData.getData("text") });
                 },
             });
+            /**
+             * 补齐日期
+             * @param value 日期字符串
+             * @returns 补全后日期
+             */
+            function autoCompleteDate(value: string): any {
+                const today: any = new Date();
+                const year: any = today.getFullYear(); // 获取当前年份
+                // 补全为两位数
+                function pad(num: number): string {
+                    return num < 10 ? "0" + num : num.toString();
+                }
+                // 检查日期是否有效
+                function isValidDate(year: number, month: number, day: number): boolean {
+                    const date: any = new Date(year, month - 1, day);
+                    return (
+                        date.getFullYear() === year &&
+                        date.getMonth() + 1 === month &&
+                        date.getDate() === day
+                    );
+                }
+                // 4位数字 月日
+                if (/^\d{4}$/.test(value)) {
+                    // 提取月份和日期
+                    const month: any = parseInt(value.slice(0, 2), 10); // 前两位是月份
+                    const day: any = parseInt(value.slice(2), 10); // 后两位是日期
+                    if (isValidDate(year, month, day)) {
+                        return ibas.dates.valueOf(`${year}-${pad(month)}-${pad(day)}`);
+                    }
+                } else if (/^\d{2}$/.test(value)) { // 2位数字为日
+                    const day: any = parseInt(value, 10); // 日
+                    const month: any = today.getMonth() + 1;
+                    if (isValidDate(year, month, day)) {
+                        return ibas.dates.valueOf(`${year}-${pad(month)}-${pad(day)}`);
+                    }
+                }
+                return ibas.dates.valueOf(value);
+            }
             /**
              * 时间选择框
              */
