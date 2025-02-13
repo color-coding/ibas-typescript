@@ -66,14 +66,21 @@ namespace sap {
                 init(this: DatePicker): void {
                     (<any>sap.m.DatePicker.prototype).init.apply(this, arguments);
                     this.attachChange(undefined, function (event: sap.ui.base.Event): void {
-                        let that: any = event.getSource();
-                        if (that instanceof DatePicker) {
-                            let oldValue: any = that.getBindingValue();
-                            let newValue: any = that.getDateValue();
-                            if (oldValue !== newValue) {
-                                (<any>that).setProperty("bindingValue", newValue);
+                        let source: any = event.getSource();
+                        if (source instanceof DatePicker) {
+                            // 改变值不是有效日期
+                            if (event.getParameter("valid") === false) {
+                                let value: any = event.getParameter("value");
+                                setTimeout(() => {
+                                    source.setDateValue(autoCompleteDate(value));
+                                }, 3); return;
                             }
-                            that = null;
+                            let oldValue: any = source.getBindingValue();
+                            let newValue: any = source.getDateValue();
+                            if (!ibas.dates.equals(oldValue, newValue)) {
+                                (<any>source).setProperty("bindingValue", newValue);
+                            }
+                            source = null;
                         }
                     });
                 },
@@ -87,6 +94,57 @@ namespace sap {
                     this.fireValuePaste({ data: (typeof oEvent.originalEvent === "string") ? oEvent.originalEvent : oEvent.originalEvent.clipboardData.getData("text") });
                 },
             });
+            /**
+             * 补齐日期
+             * @param value 日期字符串
+             * @returns 补全后日期
+             */
+            /**
+             * 补齐日期
+             * @param value 日期字符串
+             * @returns 补全后日期
+             */
+            function autoCompleteDate(value: any): Date {
+                if (!(typeof value === "string")) {
+                    return ibas.dates.today();
+                }
+                // 2000 01 01
+                let dateValue: string;
+                if (value.length < 8) {
+                    let tmpValue: string;
+                    let dayValue: string = "", monthValue: string = "", yearValue: string = "";
+                    for (let i: number = 0; i < value.length; i++) {
+                        tmpValue = value[value.length - 1 - i];
+                        if (i < 2) {
+                            dayValue = tmpValue + dayValue;
+                        }
+                        if (i > 1 && i < 4) {
+                            monthValue = tmpValue + monthValue;
+                        }
+                        if (i > 3) {
+                            yearValue = tmpValue + yearValue;
+                        }
+                    }
+                    // 日
+                    if (ibas.strings.isEmpty(dayValue)) {
+                        dayValue = String(ibas.dates.today().getDay());
+                    }
+                    dayValue = ibas.strings.fill(dayValue, 2, "0");
+                    // 月
+                    if (ibas.strings.isEmpty(monthValue)) {
+                        monthValue = String(ibas.dates.today().getMonth() + 1);
+                    }
+                    monthValue = ibas.strings.fill(monthValue, 2, "0");
+                    // 年
+                    let year: string = String(ibas.dates.today().getFullYear());
+                    if (yearValue.length < year.length) {
+                        yearValue = year.substring(0, year.length - yearValue.length) + yearValue;
+                    }
+                    // 完整日期
+                    dateValue = ibas.strings.format("{0}-{1}-{2}", yearValue, monthValue, dayValue);
+                }
+                return ibas.dates.valueOf(dateValue);
+            }
             /**
              * 时间选择框
              */

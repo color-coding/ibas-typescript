@@ -1253,8 +1253,14 @@ namespace ibas {
             let nValue1: number = Math.round(value1 * Math.pow(10, digits + degree));
             let nValue2: number = Math.round(value2 * Math.pow(10, digits + degree));
             let difference: number = Math.abs(nValue1 - nValue2);
-            if (difference > 5) {
-                return false;
+            if (degree > 0) {
+                if (difference >= 5) {
+                    return false;
+                }
+            } else {
+                if (difference > 1) {
+                    return false;
+                }
             }
             return true;
         }

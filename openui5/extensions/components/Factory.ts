@@ -184,9 +184,9 @@ namespace sap {
                                     if (source instanceof sap.m.Input) {
                                         let data: any = source.getBindingContext()?.getObject();
                                         if (data instanceof ibas.Bindable) {
-                                            data.removeListener(data.toString());
+                                            data.removeListener(ibas.strings.format("{0}_{1}", data.toString(), property.name));
                                             data.registerListener({
-                                                id: data.toString(),
+                                                id: ibas.strings.format("{0}_{1}", data.toString(), property.name),
                                                 propertyChanged(name: string): void {
                                                     let value: any = data[name];
                                                     if (ibas.strings.isWith(name, "userFields/", undefined)) {
