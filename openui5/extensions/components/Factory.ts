@@ -463,22 +463,32 @@ namespace sap {
                             chooseType: chooseType >= 0 ? chooseType : ibas.emChooseType.MULTIPLE,
                             onCompleted: (selecteds) => {
                                 if (selecteds instanceof ibas.DataTable) {
-                                    selecteds = <any>selecteds.convert({ format: false, nameAs: "index" });
+                                    selecteds = <any>selecteds.convert({ format: true, nameAs: "index" });
                                     property = "0";
                                 }
-                                let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                for (let item of selecteds) {
-                                    if (builder.length > 0) {
-                                        builder.append(ibas.DATA_SEPARATOR);
-                                    }
-                                    if (ibas.strings.isEmpty(property)) {
-                                        builder.append(item);
+                                if (source instanceof sap.m.InputBase && selecteds instanceof Array) {
+                                    if (selecteds.length === 1) {
+                                        for (let item of selecteds) {
+                                            if (ibas.strings.isEmpty(property)) {
+                                                source.setValue(item);
+                                            } else {
+                                                source.setValue(item[property]);
+                                            }
+                                        }
                                     } else {
-                                        builder.append(item[property]);
+                                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                        for (let item of selecteds) {
+                                            if (builder.length > 0) {
+                                                builder.append(ibas.DATA_SEPARATOR);
+                                            }
+                                            if (ibas.strings.isEmpty(property)) {
+                                                builder.append(item);
+                                            } else {
+                                                builder.append(item[property]);
+                                            }
+                                        }
+                                        source.setValue(builder.toString());
                                     }
-                                }
-                                if (source instanceof sap.m.InputBase) {
-                                    source.setValue(builder.toString());
                                     if (onChanged instanceof Function) {
                                         onChanged(new sap.ui.base.Event("changed", source, {
                                             id: source.getId(),

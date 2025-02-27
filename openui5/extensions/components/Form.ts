@@ -261,7 +261,80 @@ namespace sap {
                                 ? ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                                 : property.description
                         }));
-                        this.addContent(factories.newComponent(property, "Input"));
+                        this.addContent(factories.newComponent(property, "Input", !ibas.strings.isEmpty(property.linkedObject) ? (event) => {
+                            let source: any = sap.ui.getCore().byId(event.getParameter("id"));
+                            if (source instanceof sap.m.Input && event.getId() === "changed") {
+                                let chsInfo: string = source.getTooltip_AsString();
+                                if (ibas.strings.isEmpty(chsInfo)) {
+                                    return;
+                                }
+                                let criteria: ibas.ICriteria = ibas.criterias.valueOf(chsInfo);
+                                if (ibas.strings.isEmpty(criteria.remarks)) {
+                                    return;
+                                }
+                                let selecteds: any[] = event.getParameter("selecteds");
+                                if (!(selecteds instanceof Array)) {
+                                    return;
+                                }
+                                let boData: any = this.getBindingContext()?.getObject();
+                                if (!(boData instanceof ibas.BusinessObject)) {
+                                    return;
+                                }
+                                for (let pItem of criteria.remarks.split(";")) {
+                                    if (pItem.indexOf("=") <= 0) {
+                                        continue;
+                                    }
+                                    let value: any;
+                                    let tarName: string = ibas.strings.trim(pItem.split("=")[0]);
+                                    let surName: string = ibas.strings.trim(pItem.split("=")[1]);
+                                    if (selecteds.length === 1) {
+                                        for (let item of selecteds) {
+                                            if (item instanceof ibas.BusinessObject
+                                                && ibas.strings.isWith(surName, "U_", undefined)) {
+                                                let userField: ibas.IUserField = item?.userFields?.get(surName);
+                                                if (!ibas.objects.isNull(userField)) {
+                                                    value = userField.value;
+                                                }
+                                            } else if (item instanceof Object) {
+                                                value = item[surName];
+                                            } else {
+                                                value = item;
+                                            }
+                                        }
+                                    } else {
+                                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                        builder.map(null, "");
+                                        builder.map(undefined, "");
+                                        for (let item of selecteds) {
+                                            if (builder.length > 0) {
+                                                builder.append(ibas.DATA_SEPARATOR);
+                                            }
+                                            if (item instanceof ibas.BusinessObject
+                                                && ibas.strings.isWith(surName, "U_", undefined)) {
+                                                let userField: ibas.IUserField = item?.userFields?.get(surName);
+                                                if (!ibas.objects.isNull(userField)) {
+                                                    builder.append(userField.value);
+                                                }
+                                            } else if (item instanceof Object) {
+                                                builder.append(item[surName]);
+                                            } else {
+                                                builder.append(item);
+                                            }
+                                        }
+                                        value = builder.toString();
+                                    }
+                                    // 通过主对象赋值
+                                    if (ibas.strings.isWith(tarName, "U_", undefined)) {
+                                        let userField: ibas.IUserField = boData?.userFields.get(tarName);
+                                        if (!ibas.objects.isNull(userField)) {
+                                            userField.value = value;
+                                        }
+                                    } else {
+                                        boData[tarName] = value;
+                                    }
+                                }
+                            }
+                        } : undefined));
                     }
                 } else if (this.getUserFieldsMode() === "text") {
                     for (let property of properties) {
