@@ -57,19 +57,20 @@ namespace shell {
                 }
             }
             /** 登录系统 */
-            private login(): void {
-                if (ibas.strings.isEmpty(this.view.user) || ibas.strings.isEmpty(this.view.password)) {
+            private login(logInfo: { user: string, password: string, verification?: string }): void {
+                if (ibas.strings.isEmpty(logInfo?.user) || ibas.strings.isEmpty(logInfo?.password)) {
                     throw new Error(ibas.i18n.prop("shell_please_input_user_and_password"));
                 }
                 this.busy(true, ibas.i18n.prop("shell_logging_system"));
                 let boRepository: bo.IBORepositoryShell = bo.repository.create();
                 boRepository.userConnect({
                     caller: this, // 设置调用者，则onCompleted修正this
-                    user: this.view.user,
-                    password: this.view.password,
+                    user: logInfo?.user,
+                    password: logInfo?.password,
+                    verification: logInfo?.verification,
                     onCompleted: this.onConnectCompleted,
                 });
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", this.view.user);
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: user [{0}] login system.", logInfo?.user);
             }
 
             private onConnectCompleted(opRslt: ibas.IOperationResult<bo.IUser>): void {
@@ -187,11 +188,7 @@ namespace shell {
         }
         /** 登陆-视图 */
         export interface ILoginView extends ibas.IView {
-            /** 用户 */
-            user: string;
-            /** 密码 */
-            password: string;
-            /** 登陆 */
+            /** 登陆事件，参数：用户、密码 */
             loginEvent: Function;
         }
         interface IUserPrivilegeLoader {
