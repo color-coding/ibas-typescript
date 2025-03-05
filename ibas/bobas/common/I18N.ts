@@ -176,7 +176,9 @@ namespace ibas {
                 xhr.onreadystatechange = function (this: XMLHttpRequest, event: Event): void {
                     if (this.readyState === 4) {
                         if ((this.status >= 200 && this.status < 300) || this.status === 304) {
-                            that.add(JSON.parse(this.response));
+                            if (!strings.isEmpty(this.response)) {
+                                that.add(JSON.parse(this.response));
+                            }
                         } else {
                             logger.log(emMessageLevel.ERROR, "i18n: load language [{0}] faild.", address);
                         }

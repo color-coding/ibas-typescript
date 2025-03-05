@@ -20,6 +20,8 @@ namespace shell {
             user: string;
             /** 密码 */
             password: string;
+            /** 验证 */
+            verification?: string;
         }
         /**
          * 用户口令登录调用者
