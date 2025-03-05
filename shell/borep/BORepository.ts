@@ -75,6 +75,12 @@ namespace shell {
                 builder.append("password");
                 builder.append("=");
                 builder.append(btoa(encodeURIComponent(caller.password)));
+                if (!ibas.strings.isEmpty(caller.verification)) {
+                    builder.append("&");
+                    builder.append("verification");
+                    builder.append("=");
+                    builder.append(btoa(encodeURIComponent(caller.verification)));
+                }
                 let remoteRepository: ibas.IRemoteRepository = new ConnectRemoteRepositoryAjax();
                 remoteRepository.address = this.address;
                 remoteRepository.converter = this.createConverter();
