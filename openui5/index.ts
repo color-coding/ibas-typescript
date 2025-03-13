@@ -5,6 +5,7 @@
  * Use of this source code is governed by an Apache License, Version 2.0
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
+/// <reference path="./3rdparty/chartjs/index.d.ts" />
 /// <reference path="./types/index.d.ts" />
 /// <reference path="./utils.ts" />
 /// <reference path="./extensions/BORepository.ts" />
@@ -75,6 +76,8 @@
 /// <reference path="./extensions/components/Title.ts" />
 /// <reference path="./extensions/components/Tooltip.d.ts" />
 /// <reference path="./extensions/components/Tooltip.ts" />
+/// <reference path="./extensions/components/Chart.d.ts" />
+/// <reference path="./extensions/components/Chart.ts" />
 /// <reference path="./extensions/components/Factory.ts" />
 
 namespace openui5 {

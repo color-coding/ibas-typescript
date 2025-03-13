@@ -285,6 +285,9 @@ namespace shell {
                 /** 绘制视图 */
                 draw(): any {
                     let form: sap.ui.core.Control = super.draw();
+                    if (form instanceof sap.ui.layout.form.SimpleForm) {
+                        form.setWidth("460px");
+                    }
                     let splitter: sap.ui.layout.Splitter = new sap.ui.layout.Splitter("", {
                         orientation: sap.ui.core.Orientation.Vertical,
                         contentAreas: [
@@ -301,35 +304,23 @@ namespace shell {
                                     size: "80%",
                                 }),
                                 contentAreas: [
-                                    new sap.ui.layout.Splitter("", {
-                                        layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                            resizable: false,
-                                            size: "auto",
-                                        }),
-                                    }),
-                                    new sap.ui.layout.Splitter("", {
-                                        layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                            resizable: false,
-                                            size: "460px",
-                                        }),
-                                        contentAreas: [
-                                            new sap.ui.layout.Splitter("", {
-                                                layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                                    resizable: false,
-                                                    size: "auto",
-                                                }),
-                                                orientation: sap.ui.core.Orientation.Vertical,
-                                                contentAreas: [
+                                    new sap.m.Page("", {
+                                        showHeader: false,
+                                        content: [
+                                            new sap.m.FlexBox("", {
+                                                width: "100%",
+                                                height: "100%",
+                                                fitContainer: true,
+                                                renderType: sap.m.FlexRendertype.Div,
+                                                alignItems: sap.m.FlexAlignItems.Stretch,
+                                                alignContent: sap.m.FlexAlignContent.Stretch,
+                                                justifyContent: sap.m.FlexJustifyContent.Center,
+                                                direction: sap.m.FlexDirection.Row,
+                                                items: [
                                                     form
                                                 ]
                                             }),
                                         ]
-                                    }),
-                                    new sap.ui.layout.Splitter("", {
-                                        layoutData: new sap.ui.layout.SplitterLayoutData("", {
-                                            resizable: false,
-                                            size: "auto",
-                                        }),
                                     }),
                                 ]
                             }),

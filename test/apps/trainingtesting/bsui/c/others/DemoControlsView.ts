@@ -36,7 +36,7 @@ namespace trainingtesting {
                                         content: [
                                             this.address(),
                                             this.input(),
-                                            this.search()
+                                            this.chart()
                                         ]
                                     }),
                                 ]
@@ -137,18 +137,296 @@ namespace trainingtesting {
                     });
                 }
 
-                private search(): sap.m.GenericTile {
+                private chart(): sap.m.GenericTile {
                     return this.drawTile({
-                        header: "Search",
-                        headerImage: "sap-icon://search",
+                        header: "Chart",
+                        headerImage: "sap-icon://line-charts",
                         notes: "",
                     }, () => {
-                        return new sap.ui.layout.form.SimpleForm("", {
-                            editable: true,
+                        return new sap.m.Page("", {
+                            showHeader: false,
                             content: [
-                                new sap.m.Panel("", {
-
-                                }),
+                                new sap.extension.f.GridList("", {
+                                    customLayout: new sap.ui.layout.cssgrid.GridBasicLayout("", {
+                                        gridTemplateColumns: "repeat(auto-fill, minmax(16rem,auto))",
+                                        gridGap: "0.5rem 0.5rem",
+                                    }),
+                                    items: [
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Active,
+                                            content: [
+                                                new sap.extension.chart.BarChart("", {
+                                                    data: {
+                                                        labels: ["January", "February", "March", "April", "May", "June", "July"],
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                            ],
+                                                            backgroundColor: [
+                                                                "rgba(255, 99, 132, 0.2)",
+                                                                "rgba(255, 159, 64, 0.2)",
+                                                                "rgba(255, 205, 86, 0.2)",
+                                                                "rgba(75, 192, 192, 0.2)",
+                                                                "rgba(54, 162, 235, 0.2)",
+                                                                "rgba(153, 102, 255, 0.2)",
+                                                                "rgba(201, 203, 207, 0.2)"
+                                                            ],
+                                                            borderColor: [
+                                                                "rgb(255, 99, 132)",
+                                                                "rgb(255, 159, 64)",
+                                                                "rgb(255, 205, 86)",
+                                                                "rgb(75, 192, 192)",
+                                                                "rgb(54, 162, 235)",
+                                                                "rgb(153, 102, 255)",
+                                                                "rgb(201, 203, 207)"
+                                                            ],
+                                                            borderWidth: 1
+                                                        }]
+                                                    }
+                                                }),
+                                            ],
+                                            press(this: sap.f.GridListItem): void {
+                                                let chart: any = this.getContent()[0];
+                                                if (chart instanceof sap.extension.chart.BarChart) {
+                                                    let data: any = chart.getData();
+                                                    data.datasets[0].data = [
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                    ];
+                                                    chart.draw();
+                                                }
+                                            }
+                                        }),
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Active,
+                                            content: [
+                                                new sap.extension.chart.LineChart("", {
+                                                    data: {
+                                                        labels: ["January", "February", "March", "April", "May", "June", "July"],
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                            ],
+                                                            fill: false,
+                                                            borderColor: "rgb(75, 192, 192)",
+                                                            tension: 0.1
+                                                        }]
+                                                    }
+                                                }),
+                                            ],
+                                            press(this: sap.f.GridListItem): void {
+                                                let chart: any = this.getContent()[0];
+                                                if (chart instanceof sap.extension.chart.LineChart) {
+                                                    let data: any = chart.getData();
+                                                    data.datasets[0].data = [
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                        Math.random() * 100,
+                                                    ];
+                                                    chart.update();
+                                                }
+                                            }
+                                        }),
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Inactive,
+                                            content: [
+                                                new sap.extension.chart.PieChart("", {
+                                                    data: {
+                                                        labels: [
+                                                            "Red",
+                                                            "Blue",
+                                                            "Yellow"
+                                                        ],
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                            ],
+                                                            backgroundColor: [
+                                                                "rgb(255, 99, 132)",
+                                                                "rgb(54, 162, 235)",
+                                                                "rgb(255, 205, 86)"
+                                                            ],
+                                                            hoverOffset: 4
+                                                        }]
+                                                    }
+                                                }),
+                                            ]
+                                        }),
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Inactive,
+                                            content: [
+                                                new sap.extension.chart.BubbleChart("", {
+                                                    data: {
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [{
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }, {
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }, {
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }, {
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }, {
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }, {
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }, {
+                                                                x: Math.random() * 100,
+                                                                y: Math.random() * 100,
+                                                                r: Math.random() * 10,
+                                                            }],
+                                                            backgroundColor: "rgb(255, 99, 132)"
+                                                        }]
+                                                    }
+                                                }),
+                                            ]
+                                        }),
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Inactive,
+                                            content: [
+                                                new sap.extension.chart.RadarChart("", {
+                                                    data: {
+                                                        labels: [
+                                                            "Eating",
+                                                            "Drinking",
+                                                            "Sleeping",
+                                                            "Designing",
+                                                            "Coding",
+                                                            "Cycling",
+                                                            "Running"
+                                                        ],
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                            ],
+                                                            fill: true,
+                                                            backgroundColor: "rgba(255, 99, 132, 0.2)",
+                                                            borderColor: "rgb(255, 99, 132)",
+                                                            pointBackgroundColor: "rgb(255, 99, 132)",
+                                                            pointBorderColor: "#fff",
+                                                            pointHoverBackgroundColor: "#fff",
+                                                            pointHoverBorderColor: "rgb(255, 99, 132)"
+                                                        }, {
+                                                            label: "My Second Dataset",
+                                                            data: [
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                                Math.random() * 100,
+                                                            ],
+                                                            fill: true,
+                                                            backgroundColor: "rgba(54, 162, 235, 0.2)",
+                                                            borderColor: "rgb(54, 162, 235)",
+                                                            pointBackgroundColor: "rgb(54, 162, 235)",
+                                                            pointBorderColor: "#fff",
+                                                            pointHoverBackgroundColor: "#fff",
+                                                            pointHoverBorderColor: "rgb(54, 162, 235)"
+                                                        }]
+                                                    }
+                                                }),
+                                            ]
+                                        }),
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Inactive,
+                                            content: [
+                                                new sap.extension.chart.ScatterChart("", {
+                                                    data: {
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [{
+                                                                x: Math.random() * 10,
+                                                                y: Math.random() * 10
+                                                            }, {
+                                                                x: Math.random() * 10,
+                                                                y: Math.random() * 10
+                                                            }, {
+                                                                x: Math.random() * 10,
+                                                                y: Math.random() * 10
+                                                            }, {
+                                                                x: Math.random() * 10,
+                                                                y: Math.random() * 10
+                                                            }],
+                                                            backgroundColor: "rgb(255, 99, 132)"
+                                                        }],
+                                                    }
+                                                }),
+                                            ]
+                                        }),
+                                        new sap.f.GridListItem("", {
+                                            type: sap.m.ListType.Inactive,
+                                            content: [
+                                                new sap.extension.chart.DonutChart("", {
+                                                    data: {
+                                                        labels: [
+                                                            "Red",
+                                                            "Blue",
+                                                            "Yellow"
+                                                        ],
+                                                        datasets: [{
+                                                            label: "My First Dataset",
+                                                            data: [Math.random() * 10, Math.random() * 10, Math.random() * 10],
+                                                            backgroundColor: [
+                                                                "rgb(255, 99, 132)",
+                                                                "rgb(54, 162, 235)",
+                                                                "rgb(255, 205, 86)"
+                                                            ],
+                                                            // hoverOffset: 4
+                                                        }]
+                                                    }
+                                                }),
+                                            ]
+                                        }),
+                                    ]
+                                }).addStyleClass("sapUiTinyMargin"),
                             ]
                         });
                     });

@@ -38,6 +38,7 @@ namespace shell {
                 libraries.add(new Component("require-css", "0.1.10", "© Guy Bedford, released under the MIT license."));
                 libraries.add(new Component("cryptojs", "3.1.9", "© Evan Vosberg, released under the MIT license."));
                 libraries.add(new Component("spin.js", "2.3.2", "© Felix Gnass, released under the MIT license."));
+                libraries.add(new Component("chart.js", "4.4.8", "© Chart.js Contributors, released under the MIT license."));
                 this.view.showLibraries(libraries);
                 let applications: ibas.IList<Component> = new ibas.ArrayList<Component>();
                 modules.forEach((module) => {

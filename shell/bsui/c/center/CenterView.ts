@@ -1027,9 +1027,8 @@ namespace shell {
                         let parent: sap.ui.base.ManagedObject = viewContent.getParent();
                         if (parent instanceof sap.m.NavContainer) {
                             parent.back(null);
-                            viewContent.destroy();
                         }
-                        viewContent.destroy(true);
+                        viewContent.destroy();
                     }
                     if (view instanceof ibas.View) {
                         ibas.views.closed.call(view);
