@@ -10,7 +10,8 @@
     },
     "include": [
         "../ibas/index.d.ts",
-        "../shell/index.d.ts"
+        "../shell/index.d.ts",
+        "./3rdparty/chartjs/index.d.ts"
     ],
     "files": [
         "./index.ts"
