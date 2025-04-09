@@ -1084,6 +1084,56 @@ namespace ibas {
             second = second - (minute * 60);
             return i18n.prop("sys_date_time_span", hour, minute, second);
         }
+
+        /**
+         * 补齐日期
+         * @param value 日期字符串
+         * @returns 补全后日期
+         */
+        export function complete(value: any): Date {
+            if (!(typeof value === "string")) {
+                return ibas.dates.today();
+            }
+            // 20000101, 移除分隔符
+            let newValue = strings.remove(value, " ", "-", "/");
+            let dateValue: string;
+            if (newValue.length < 8) {
+                let tmpValue: string;
+                let dayValue: string = "", monthValue: string = "", yearValue: string = "";
+                for (let i: number = 0; i < newValue.length; i++) {
+                    tmpValue = newValue[newValue.length - 1 - i];
+                    if (i < 2) {
+                        dayValue = tmpValue + dayValue;
+                    }
+                    if (i > 1 && i < 4) {
+                        monthValue = tmpValue + monthValue;
+                    }
+                    if (i > 3) {
+                        yearValue = tmpValue + yearValue;
+                    }
+                }
+                // 日
+                if (ibas.strings.isEmpty(dayValue)) {
+                    dayValue = String(ibas.dates.today().getDay());
+                }
+                dayValue = ibas.strings.fill(dayValue, 2, "0");
+                // 月
+                if (ibas.strings.isEmpty(monthValue)) {
+                    monthValue = String(ibas.dates.today().getMonth() + 1);
+                }
+                monthValue = ibas.strings.fill(monthValue, 2, "0");
+                // 年
+                let year: string = String(ibas.dates.today().getFullYear());
+                if (yearValue.length < year.length) {
+                    yearValue = year.substring(0, year.length - yearValue.length) + yearValue;
+                }
+                // 完整日期
+                dateValue = ibas.strings.format("{0}-{1}-{2}", yearValue, monthValue, dayValue);
+            } else {
+                dateValue = value;
+            }
+            return ibas.dates.valueOf(dateValue);
+        }
     }
     /**
      * 数字

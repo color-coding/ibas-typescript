@@ -70,7 +70,7 @@ namespace loader {
     }
     export namespace openui5 {
         // 官方地址
-        export const URL_OFFICIAL: string = "https://openui5.hana.ondemand.com/resources/sap-ui-core.js";
+        export const URL_OFFICIAL: string = "https://sdk.openui5.org/1.108.40/resources/sap-ui-core.js";
         // 本地路径
         export const URL_LOCAL: string = "openui5/resources/sap-ui-core.js";
         // index路径

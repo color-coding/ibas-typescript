@@ -49,23 +49,19 @@ globalThis.onmessage = function (message: MessageEvent): void {
                     }
                     try {
                         globalThis.importScripts(item);
+                        // 基础加载后，即赋值配置，避免时效问题
+                        if (item.indexOf("/shell/index") > 0) {
+                            if (data?.configs instanceof Array) {
+                                for (let item of data?.configs) {
+                                    ibas.config.set(item.key, item.value);
+                                }
+                            }
+                        }
                     } catch (error) {
                         // 脚本加载出错，不退出
                         if (console?.error instanceof Function) {
                             console.error("scripts: " + item + "\n" + (error instanceof Error && error.stack ? error.stack : error.message));
                         }
-                    }
-                }
-            } catch (error) {
-                // 致命错误，结束任务
-                globalThis.postMessage({ type: "stop", data: error }, undefined);
-            }
-        }
-        if (data?.configs instanceof Array) {
-            try {
-                for (let item of data?.configs) {
-                    if (!ibas.strings.isEmpty(item.key)) {
-                        ibas.config.set(item.key, item.value);
                     }
                 }
             } catch (error) {
