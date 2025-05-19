@@ -120,7 +120,7 @@ namespace shell {
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_NAME, user.name);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_SUPER, user.super);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_BELONG, user.belong);
-                    ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_TOKEN, user.token);
+                    // ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_TOKEN, user.token);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_IDENTITIES, user.identities);
                     ibas.variablesManager.register("${TODAY}", ibas.dates.toString(ibas.dates.today(), "yyyy-MM-dd"));
                     // 加载用户配置
