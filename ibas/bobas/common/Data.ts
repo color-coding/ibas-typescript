@@ -330,6 +330,19 @@ namespace ibas {
             this.OriginalName = value;
         }
     }
+    /** 文件项目 */
+    export class FileItem {
+        /** 文件名 */
+        name: string;
+        /** 文件路径 */
+        path: string;
+        /** 是文件夹 */
+        isFolder: boolean;
+        /** 是文件 */
+        isFile: boolean;
+        /** 修改时间 */
+        modifyTime: Date;
+    }
     /**
      * 消息
      */

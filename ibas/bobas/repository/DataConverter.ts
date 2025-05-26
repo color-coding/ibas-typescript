@@ -157,6 +157,17 @@ namespace ibas {
                     OriginalName: newData.originalName
                 };
                 return remote;
+            } else if (objects.instanceOf(data, FileItem)) {
+                let newData: FileItem = data;
+                let remote: ibas4j.IFileItem = {
+                    type: data.constructor.name,
+                    Name: newData.name,
+                    Path: newData.path,
+                    IsFolder: newData.isFolder,
+                    IsFile: newData.isFile,
+                    ModifyTime: dates.toString(newData.modifyTime)
+                };
+                return remote;
             } else if (objects.instanceOf(data, KeyText)) {
                 let newData: KeyText = data;
                 let remote: ibas4j.IKeyText = {
@@ -317,6 +328,15 @@ namespace ibas {
                 newData.fileName = remote.FileName;
                 newData.location = remote.Location;
                 newData.originalName = remote.OriginalName;
+                return newData;
+            } else if (data.type === FileItem.name) {
+                let remote: ibas4j.IFileItem = data;
+                let newData: FileItem = new FileItem();
+                newData.name = remote.Name;
+                newData.path = remote.Path;
+                newData.isFolder = remote.IsFolder;
+                newData.isFile = remote.IsFile;
+                newData.modifyTime = dates.valueOf(remote.ModifyTime);
                 return newData;
             } else if (data.type === DataTable.name) {
                 let remote: ibas4j.IDataTable = data;

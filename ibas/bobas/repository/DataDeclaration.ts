@@ -107,6 +107,19 @@ declare namespace ibas4j {
         /** 原始名称 */
         OriginalName: string;
     }
+    /** 文件项目 */
+    export interface IFileItem extends IDataDeclaration {
+        /** 文件名 */
+        Name: string;
+        /** 文件路径 */
+        Path: string;
+        /** 是文件夹 */
+        IsFolder: boolean;
+        /** 是文件 */
+        IsFile: boolean;
+        /** 修改时间 */
+        ModifyTime: string;
+    }
     /** 数据表 */
     export interface IDataTable extends IDataDeclaration {
         /** 名称 */
