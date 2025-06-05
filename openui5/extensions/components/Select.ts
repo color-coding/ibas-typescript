@@ -320,7 +320,7 @@ namespace sap {
                  */
                 loadItems(this: RepositorySelect): RepositorySelect {
                     this.destroyItems();
-                    repository.fetch(this.getRepository(), this.getDataInfo(), this.getCriteria(),
+                    repository.batchFetch(this.getRepository(), this.getDataInfo(), this.getCriteria(),
                         (values) => {
                             if (values instanceof Error) {
                                 ibas.logger.log(values);
@@ -536,8 +536,8 @@ namespace sap {
                     if (ibas.strings.isEmpty(objectCode)) {
                         return this;
                     }
-                    let boRepository: ibas.BORepositoryApplication = ibas.boFactory.create("BORepositoryInitialFantasy");
-                    let dataInfo: repository.IDataInfo = {
+                    let seriesRepository: any = ibas.boFactory.create("BORepositoryInitialFantasy");
+                    let seriesDataInfo: any = {
                         type: "BOSeriesNumbering",
                         key: "Series",
                         text: "SeriesName",
@@ -552,7 +552,7 @@ namespace sap {
                     let sort: ibas.ISort = criteria.sorts.create();
                     sort.alias = "Series";
                     sort.sortType = ibas.emSortType.DESCENDING;
-                    repository.fetch(boRepository, dataInfo, criteria,
+                    repository.fetch(seriesRepository, seriesDataInfo, criteria,
                         (values) => {
                             this.addItem(new SelectItem("", {
                                 key: 0,
@@ -720,6 +720,8 @@ namespace sap {
                     return this;
                 },
             });
+            let currencyRepository: any = null;
+            let currencyDataInfo: any = null;
             /**
              * 货币-选择框
              */
@@ -756,18 +758,22 @@ namespace sap {
                  */
                 loadItems(this: CurrencySelect): CurrencySelect {
                     this.destroyItems();
-                    let boRepository: ibas.BORepositoryApplication = ibas.boFactory.create("BORepositoryAccounting");
-                    let dataInfo: repository.IDataInfo = {
-                        type: "Currency",
-                        key: "Code",
-                        text: "Name",
-                        note: "ISO"
-                    };
+                    if (ibas.objects.isNull(currencyRepository)) {
+                        currencyRepository = ibas.boFactory.create("BORepositoryAccounting");
+                    }
+                    if (ibas.objects.isNull(currencyDataInfo)) {
+                        currencyDataInfo = {
+                            type: "Currency",
+                            key: "Code",
+                            text: "Name",
+                            note: "ISO"
+                        };
+                    }
                     let criteria: ibas.ICriteria = new ibas.Criteria();
                     let condition: ibas.ICondition = criteria.conditions.create();
                     condition.alias = "Activated";
                     condition.value = "YES";
-                    repository.fetch(boRepository, dataInfo, criteria,
+                    repository.batchFetch(currencyRepository, currencyDataInfo, criteria,
                         (values) => {
                             if (values instanceof Error) {
                                 ibas.logger.log(values);

@@ -14,6 +14,8 @@ namespace shell {
             export const CONFIG_ITEM_DEFAULT_PASSWORD: string = "defaultPassword";
             /** 配置项目-覆盖的版权声明 */
             export const CONFIG_ITEM_COVERED_COPYRIGHT: string = "copyright";
+            /** 配置项目-使用条款 */
+            export const CONFIG_ITEM_USAGE_TERMS: string = "usageTerms";
             /** 配置项目-副标题 */
             export const CONFIG_ITEM_SUBHEADING: string = "subheading";
             /** 配置项目-启用验证码 */
@@ -34,6 +36,10 @@ namespace shell {
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
                     let subheading: string = ibas.config.get(CONFIG_ITEM_SUBHEADING);
+                    let usageTerms: string = ibas.i18n.prop("shell_app_usageterms");
+                    if (ibas.strings.isWith(usageTerms, "[", "]")) {
+                        usageTerms = undefined;
+                    }
                     let that: this = this;
                     return new sap.ui.layout.form.SimpleForm("", {
                         content: [
@@ -141,55 +147,72 @@ namespace shell {
                             new sap.m.Label("", {
                                 text: ibas.i18n.prop("shell_plantform")
                             }),
-                            new sap.m.HBox("", {
-                                width: "100%",
-                                height: "100%",
-                                alignContent: sap.m.FlexAlignContent.Start,
-                                alignItems: sap.m.FlexAlignItems.Center,
+                            new sap.m.VBox("", {
+                                fitContainer: true,
                                 justifyContent: sap.m.FlexJustifyContent.Start,
-                                renderType: sap.m.FlexRendertype.Bare,
+                                renderType: sap.m.FlexRendertype.Div,
                                 items: [
-                                    new sap.m.Select("", {
+                                    new sap.m.HBox("", {
+                                        fitContainer: true,
+                                        justifyContent: sap.m.FlexJustifyContent.Start,
+                                        alignItems: sap.m.FlexAlignItems.Center,
+                                        renderType: sap.m.FlexRendertype.Bare,
                                         items: [
-                                            new sap.ui.core.ListItem("", {
-                                                key: ibas.emPlantform.DESKTOP,
-                                                text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.DESKTOP),
+                                            new sap.m.Select("", {
+                                                items: [
+                                                    new sap.ui.core.ListItem("", {
+                                                        key: ibas.emPlantform.DESKTOP,
+                                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.DESKTOP),
+                                                    }),
+                                                    new sap.ui.core.ListItem("", {
+                                                        key: ibas.emPlantform.PHONE,
+                                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.PHONE),
+                                                    }),
+                                                    new sap.ui.core.ListItem("", {
+                                                        key: ibas.emPlantform.TABLET,
+                                                        text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.TABLET),
+                                                    }),
+                                                ],
+                                                selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
+                                                change: function (): void {
+                                                    ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
+                                                        parseInt(this.getSelectedKey(), 0)
+                                                    );
+                                                    that.fireViewEvents(that.closeEvent);
+                                                    that.application.show();
+                                                },
+                                                width: "60%",
                                             }),
-                                            new sap.ui.core.ListItem("", {
-                                                key: ibas.emPlantform.PHONE,
-                                                text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.PHONE),
-                                            }),
-                                            new sap.ui.core.ListItem("", {
-                                                key: ibas.emPlantform.TABLET,
-                                                text: ibas.enums.describe(ibas.emPlantform, ibas.emPlantform.TABLET),
+                                            new sap.m.Button("", {
+                                                text: ibas.i18n.prop("shell_login"),
+                                                type: sap.m.ButtonType.Accept,
+                                                press: function (): void {
+                                                    let user: any = {
+                                                        user: that.txtUser.getValue(),
+                                                        password: that.txtPassword.getValue()
+                                                    };
+                                                    if ((<sap.ui.core.Control>that.imgVerification.getParent()).getVisible()) {
+                                                        user.verification
+                                                            = ibas.strings.format("{0}={1}", that.imgVerification.getAlt(), that.txtVerification.getValue());
+                                                    }
+                                                    that.fireViewEvents(that.loginEvent, user);
+                                                },
+                                                width: "40%",
+                                            }).addStyleClass("sapUiTinyMarginBegin"),
+                                        ]
+                                    }),
+                                    new sap.m.HBox("", {
+                                        fitContainer: true,
+                                        justifyContent: sap.m.FlexJustifyContent.End,
+                                        alignItems: sap.m.FlexAlignItems.Center,
+                                        renderType: sap.m.FlexRendertype.Div,
+                                        items: [
+                                            new sap.m.FormattedText("", {
+                                                htmlText: usageTerms,
                                             }),
                                         ],
-                                        selectedKey: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM),
-                                        change: function (): void {
-                                            ibas.config.set(ibas.CONFIG_ITEM_PLANTFORM,
-                                                parseInt(this.getSelectedKey(), 0)
-                                            );
-                                            that.fireViewEvents(that.closeEvent);
-                                            that.application.show();
-                                        },
-                                        width: "60%",
+                                        visible: !ibas.strings.isEmpty(usageTerms),
                                     }),
-                                    new sap.m.Button("", {
-                                        text: ibas.i18n.prop("shell_login"),
-                                        type: sap.m.ButtonType.Accept,
-                                        press: function (): void {
-                                            let user: any = {
-                                                user: that.txtUser.getValue(),
-                                                password: that.txtPassword.getValue()
-                                            };
-                                            if ((<sap.ui.core.Control>that.imgVerification.getParent()).getVisible()) {
-                                                user.verification
-                                                    = ibas.strings.format("{0}={1}", that.imgVerification.getAlt(), that.txtVerification.getValue());
-                                            }
-                                            that.fireViewEvents(that.loginEvent, user);
-                                        },
-                                        width: "40%",
-                                    }).addStyleClass("sapUiTinyMarginBegin"),
                                 ]
                             }),
                             new sap.m.Label("", {}),

@@ -299,6 +299,8 @@ namespace sap {
                             property = "district";
                         } else if (metadata.hasProperty("street")) {
                             property = "street";
+                        } else if (metadata.hasProperty("src")) {
+                            property = "src";
                         } else if (metadata.hasProperty("height")) {
                             property = "height";
                         } else if (metadata.hasProperty("width")) {
@@ -346,6 +348,11 @@ namespace sap {
                 } else if (control instanceof sap.ui.table.Table) {
                     control.setEditable(editable);
                 }
+                if (control.getVisible() === false) {
+                    if (ibas.objects.isNull(control.getBinding("visible"))) {
+                        control.setVisible(true);
+                    }
+                }
             }
         }
         /** 页面操作集 */
@@ -354,6 +361,8 @@ namespace sap {
             export const CONFIG_ITEM_FINISHED_DOCUMENT_NON_EDITABLE: string = "nonEditable|FinishedDocument";
             /** 配置项目-关闭的单据不可编辑（BOStatus） */
             export const CONFIG_ITEM_CLOSED_DOCUMENT_NON_EDITABLE: string = "nonEditable|ClosedDocument";
+            /** 配置项目-不能撤销单据非计划状态 */
+            export const CONFIG_ITEM_NOT_REVOKE_UNPLANNED_DOCUMENT: string = "notRevokeUnplannedDocument";
             /**
              * 改变页面控件状态（异步）
              */
@@ -399,6 +408,38 @@ namespace sap {
                                 nonEditable(item, []);
                             }
                         }
+                        if (ibas.config.get<boolean>(CONFIG_ITEM_NOT_REVOKE_UNPLANNED_DOCUMENT, false) === true) {
+                            let ePage: HTMLElement = (<any>page).getDomRef();
+                            if (ePage instanceof HTMLElement) {
+                                let divs: any = ePage.querySelectorAll("div[id*=\"select\"]");
+                                if (divs instanceof NodeList) {
+                                    for (let div of divs) {
+                                        if (div instanceof HTMLDivElement) {
+                                            if (ibas.strings.count(ibas.strings.replace(div.id, "-__", ""), "-") > 0) {
+                                                continue;
+                                            }
+                                            let select: any = sap.ui.getCore().byId(div.id);
+                                            if (select instanceof sap.m.Select) {
+                                                if (!ibas.strings.equalsIgnoreCase(managedobjects.bindingPath(select), "DocumentStatus")
+                                                    && !ibas.strings.equalsIgnoreCase(managedobjects.bindingPath(select), "LineStatus")) {
+                                                    continue;
+                                                }
+                                                for (let item of select.getItems()) {
+                                                    if (item.getKey() === <any>ibas.emDocumentStatus.PLANNED ||
+                                                        item.getKey() === <any>ibas.emDocumentStatus.PLANNED.toString()) {
+                                                        if (model.isNew !== true && model.getProperty("DocumentStatus") > ibas.emDocumentStatus.PLANNED) {
+                                                            item.setEnabled(false);
+                                                        } else {
+                                                            item.setEnabled(true);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     } else if (model instanceof ibas.BODocumentLine) {
                         if (model.getProperty("LineStatus") === ibas.emDocumentStatus.CLOSED
                             || (model.getProperty("LineStatus") === ibas.emDocumentStatus.FINISHED
@@ -410,6 +451,38 @@ namespace sap {
                             nonEditable(page.getSubHeader(), ["sap-icon://save", "sap-icon://delete", "sap-icon://create", "sap-icon://duplicate"]);
                             for (let item of page.getContent()) {
                                 nonEditable(item, []);
+                            }
+                        }
+                        if (ibas.config.get<boolean>(CONFIG_ITEM_NOT_REVOKE_UNPLANNED_DOCUMENT, false) === true) {
+                            let ePage: HTMLElement = (<any>page).getDomRef();
+                            if (ePage instanceof HTMLElement) {
+                                let divs: any = ePage.querySelectorAll("div[id*=\"select\"]");
+                                if (divs instanceof NodeList) {
+                                    for (let div of divs) {
+                                        if (div instanceof HTMLDivElement) {
+                                            if (ibas.strings.count(ibas.strings.replace(div.id, "-__", ""), "-") > 0) {
+                                                continue;
+                                            }
+                                            let select: any = sap.ui.getCore().byId(div.id);
+                                            if (select instanceof sap.m.Select) {
+                                                if (!ibas.strings.equalsIgnoreCase(managedobjects.bindingPath(select), "DocumentStatus")
+                                                    && !ibas.strings.equalsIgnoreCase(managedobjects.bindingPath(select), "LineStatus")) {
+                                                    continue;
+                                                }
+                                                for (let item of select.getItems()) {
+                                                    if (item.getKey() === <any>ibas.emDocumentStatus.PLANNED ||
+                                                        item.getKey() === <any>ibas.emDocumentStatus.PLANNED.toString()) {
+                                                        if (model.isNew !== true && model.getProperty("LineStatus") > ibas.emDocumentStatus.PLANNED) {
+                                                            item.setEnabled(false);
+                                                        } else {
+                                                            item.setEnabled(true);
+                                                        }
+                                                    }
+                                                }
+                                            }
+                                        }
+                                    }
+                                }
                             }
                         }
                     }
