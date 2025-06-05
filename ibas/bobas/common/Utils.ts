@@ -1095,7 +1095,7 @@ namespace ibas {
                 return ibas.dates.today();
             }
             // 20000101, 移除分隔符
-            let newValue = strings.remove(value, " ", "-", "/");
+            let newValue: string = strings.remove(value, " ", "-", "/");
             let dateValue: string;
             if (newValue.length < 8) {
                 let tmpValue: string;
@@ -1324,6 +1324,12 @@ namespace ibas {
         export function valueOf(data: any): boolean {
             if (typeof data === "boolean") {
                 return <boolean>data;
+            } else if (typeof data === "string") {
+                if (strings.equalsIgnoreCase("false", data)) {
+                    return false;
+                } else if (strings.equalsIgnoreCase("true", data)) {
+                    return true;
+                }
             }
             return Boolean(data);
         }
