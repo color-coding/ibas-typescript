@@ -137,7 +137,7 @@ namespace sap {
              * @param onCompleted 完成事件
              */
             export function batchFetch(boRepository: ibas.BORepositoryApplication,
-                dataInfo: IDataInfo, criteria: ibas.ICriteria, onCompleted: (values: ibas.IList<ibas.KeyText> | Error) => void): void {
+                dataInfo: IDataInfo, criteria: ibas.ICriteria, onCompleted: (values: ibas.IList<KeyText> | Error) => void): void {
                 let batchTask: BatchTask = batchTaskManager.create(boRepository, dataInfo);
                 batchTask.addTask(criteria, onCompleted);
                 if (!batchTask.isRunning()) {
@@ -215,7 +215,7 @@ namespace sap {
                         this.tasks = new ibas.ArrayList<Task>();
                         // 没有需要查询
                         if (criteria.conditions.length === 0) {
-                            return;
+                            // return;
                         }
                         fetch(this.boRepository, this.dataInfo, criteria, (values: ibas.IList<ibas.KeyText> | Error) => {
                             if (values instanceof Error) {
@@ -231,15 +231,21 @@ namespace sap {
                                 for (let task of tasks) {
                                     if (task && task.criteria) {
                                         let rValues: ibas.IList<ibas.KeyText> = new ibas.ArrayList<ibas.KeyText>();
-                                        for (let item of task.criteria.conditions) {
-                                            if (item.alias === task.dataInfo.key) {
-                                                let value: ibas.KeyText = this.cachedDatas.get(item.value);
-                                                if (!ibas.objects.isNull(value)) {
-                                                    rValues.add(value);
-                                                } else {
-                                                    // 没有查到数据，则原始值
-                                                    rValues.add(new ibas.KeyText(item.value, item.value));
+                                        if (task.criteria.conditions.contain(c => c.alias === task.dataInfo.key)) {
+                                            for (let item of task.criteria.conditions) {
+                                                if (item.alias === task.dataInfo.key) {
+                                                    let value: ibas.KeyText = this.cachedDatas.get(item.value);
+                                                    if (!ibas.objects.isNull(value)) {
+                                                        rValues.add(value);
+                                                    } else {
+                                                        // 没有查到数据，则原始值
+                                                        rValues.add(new ibas.KeyText(item.value, item.value));
+                                                    }
                                                 }
+                                            }
+                                        } else {
+                                            for (let item of this.cachedDatas.values()) {
+                                                rValues.add(item);
                                             }
                                         }
                                         if (rValues.length === 0) {
