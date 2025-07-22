@@ -132,5 +132,5 @@
     "shell_multiple_data_save_continue": "共[{0}]个数据是否保存？",
     "shell_delete_continue": "请确认是否删除？",
     "shell_switched_user_functions": "切换至用户功能",
-    "shell_exit_continue": "请确认是退出？"
+    "shell_exit_continue": "请确认是否退出？"
 }

@@ -1012,6 +1012,7 @@ namespace shell {
                     }
                     if (view instanceof CenterView) {
                         // 自身销毁，从浏览器缓存刷新页面
+                        ibas.browserEventManager.removeEventListener(ibas.emBrowserEventType.BEFOREUNLOAD);
                         document.location.replace(document.location.origin + document.location.pathname);
                         view.isDisplayed = false;
                         view.onClosed();

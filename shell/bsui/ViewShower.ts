@@ -108,6 +108,13 @@ namespace shell {
                         app.addPage(viewContent);
                         app.to(viewContent);
                     }
+                    ibas.browserEventManager.registerListener({
+                        eventType: ibas.emBrowserEventType.BEFOREUNLOAD,
+                        onEventFired: (event: any) => {
+                            event.preventDefault();
+                            event.returnValue = ibas.i18n.prop("shell_exit_continue");
+                        }
+                    });
                 }
                 view.id = viewContent.getId();
                 ibas.views.displayed.call(view);
