@@ -16,6 +16,8 @@ namespace ibas {
         eventType: emBrowserEventType;
         /** 事件被触发 */
         onEventFired(event: Event): void;
+        /** 调用方法 */
+        caller?: (this: Window, ev: Event) => void;
     }
     const PROPERTY_LISTENER: symbol = Symbol("listener");
     export class BrowserEventManager {
@@ -60,11 +62,21 @@ namespace ibas {
             }
             if (this.listeners(listener.eventType).length === 0) {
                 let eventType: string = enums.toString(emBrowserEventType, listener.eventType).toLowerCase();
-                window.addEventListener(eventType, function (event: Event): void {
+                listener.caller = function (event: Event): void {
                     that.fireEvent(listener.eventType, event);
-                }, options);
+                };
+                window.addEventListener(eventType, listener.caller, options);
             }
             this.listeners().add(listener);
+        }
+        /** 移除 */
+        removeEventListener(type: emBrowserEventType): void {
+            for (let item of this.listeners()) {
+                if (item.eventType === type) {
+                    let eventType: string = enums.toString(emBrowserEventType, item.eventType).toLowerCase();
+                    window.removeEventListener(eventType, item.caller);
+                }
+            }
         }
         /** 触发浏览器事件 */
         fireEvent(type: emBrowserEventType): void;

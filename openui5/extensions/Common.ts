@@ -348,7 +348,7 @@ namespace sap {
                 } else if (control instanceof sap.ui.table.Table) {
                     control.setEditable(editable);
                 }
-                if (control.getVisible() === false) {
+                if (control?.getVisible() === false) {
                     if (ibas.objects.isNull(control.getBinding("visible"))) {
                         control.setVisible(true);
                     }
