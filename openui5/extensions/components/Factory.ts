@@ -310,6 +310,8 @@ namespace sap {
                     return null;
                 }
             }
+            /** 对象的业务仓库 */
+            const BO_REPOSITORIES: Map<any, any> = new Map<any, any>();
             /**
              * 创建输入框
              * 1. #{CC_SYS_USER}.{Code} => Input
@@ -324,6 +326,9 @@ namespace sap {
                 let property: string;
                 let input: sap.m.InputBase;
                 let criteria: ibas.ICriteria;
+                let boRepository: any;
+                let dataInfo: { type: any, key: string, text: string };
+
                 if (!ibas.strings.isEmpty(value) && (
                     (value.length === 5 && value.indexOf(":") === 2) ||
                     (value.length === 8 && value.indexOf(":") === 2 && value.lastIndexOf(":") === 5)
@@ -371,6 +376,34 @@ namespace sap {
                         if (criteria.businessObject.indexOf(".") > 0) {
                             property = criteria.businessObject.split(".")[1];
                             criteria.businessObject = criteria.businessObject.split(".")[0];
+                        }
+                        // 对象描述：Code:Name方式，表示Code显示为Name
+                        if (ibas.strings.count(property, ":") > 0) {
+                            try {
+                                let boType: any = ibas.boFactory.classOf(criteria.businessObject);
+                                if (boType instanceof Function) {
+                                    dataInfo = {
+                                        type: boType,
+                                        key: property.split(":")[0],
+                                        text: property.split(":")[1],
+                                    };
+                                }
+                                if (!ibas.objects.isNull(dataInfo)) {
+                                    if (BO_REPOSITORIES.has(dataInfo)) {
+                                        boRepository = BO_REPOSITORIES.get(dataInfo);
+                                    } else {
+                                        boRepository = ibas.businessobjects.repositories.of(dataInfo.type);
+                                        if (ibas.objects.isNull(boRepository)) {
+                                            throw new Error(ibas.strings.format("not found {0}'s repository.", ibas.objects.nameOf(dataInfo.type)));
+                                        }
+                                        BO_REPOSITORIES.set(dataInfo.type, boRepository);
+                                    }
+                                }
+                            } catch (error) {
+                                boRepository = null;
+                                dataInfo = null;
+                            }
+                            property = property.split(":")[0];
                         }
                     } catch (error) {
                         criteria = null;
@@ -426,9 +459,28 @@ namespace sap {
                     }
                 }
                 if (ibas.objects.isNull(input)) {
-                    input = new sap.extension.m.Input("", {
-                    });
-                    input.setPlaceholder(ibas.config.applyVariables(value));
+                    if (!ibas.objects.isNull(boRepository) && !ibas.objects.isNull(dataInfo)) {
+                        input = new sap.extension.m.SelectionInput("", {
+                            showValueHelp: true,
+                            showValueLink: true,
+                            valueLinkRequest: function (event: sap.ui.base.Event): void {
+                                ibas.servicesManager.runLinkService({
+                                    boCode: ibas.businessobjects.code(dataInfo.type),
+                                    linkValue: event.getParameter("value")
+                                });
+                            },
+                            repository: boRepository,
+                            dataInfo: dataInfo,
+                            criteria: criteria,
+                        });
+                        // 通过本身事件处理
+                        criteria = null;
+                    }
+                    if (ibas.objects.isNull(input)) {
+                        input = new sap.extension.m.Input("", {
+                        });
+                        input.setPlaceholder(ibas.config.applyVariables(value));
+                    }
                 }
                 // 对象选择
                 if (input instanceof sap.m.Input && criteria instanceof ibas.Criteria) {

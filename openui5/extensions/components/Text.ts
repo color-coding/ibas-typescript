@@ -147,8 +147,10 @@ namespace sap {
                                     keyBudilder.append(item.key);
                                     textBudilder.append(item.text);
                                 }
-                                this.setText(textBudilder.toString());
-                                this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                                if (value === this.getProperty("bindingValue")) {
+                                    this.setText(textBudilder.toString());
+                                    this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                                }
                             }
                         }
                     );
@@ -285,8 +287,10 @@ namespace sap {
                                                         continue;
                                                     }
                                                 }
-                                                this.setText(textBudilder.toString());
-                                                this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                                                if (value === this.getProperty("bindingValue")) {
+                                                    this.setText(textBudilder.toString());
+                                                    this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                                                }
                                             }
                                         }
                                     }

@@ -1055,6 +1055,77 @@ namespace ibas {
     }
     /** 业务对象工具 */
     export namespace businessobjects {
+        /** 配置项目-枚举最大级数 */
+        const CONFIG_ITEM_OBJECT_MAX_LEVEL: string = "objectMaxLevel";
+        /**
+         * 获取类型全名
+         * @param type 类型
+         */
+        export function fullName(boClass: Function): string {
+            if (objects.isNull(boClass)) {
+                return undefined;
+            }
+            if (typeof boClass === "object") {
+                return fullName(objects.typeOf(boClass));
+            }
+            if (typeof boClass === "function") {
+                let name: string = FULL_NAMES.get(boClass);
+                if (!objects.isNull(name)) {
+                    return name;
+                }
+                let maxLevel: number = config.get(CONFIG_ITEM_OBJECT_MAX_LEVEL, 3);
+                let getName: Function = function (data: any, parent: string): string {
+                    let level: number = parent ? parent.split(".").length : 1;
+                    for (let item in data) {
+                        if (strings.isWith(item, "webkit", undefined)) {
+                            continue;
+                        }
+                        let value: any = data[item];
+                        if (value === data || (level > 0 && value === globalThis)) {
+                            continue;
+                        }
+                        if (value === globalThis.document || value === globalThis.indexedDB || value === globalThis.caches
+                            || value === globalThis.applicationCache || value === globalThis.localStorage
+                            || value === globalThis.navigator || value === globalThis.location || value === globalThis.console
+                            || value === globalThis.crypto || value === globalThis.frames || value === globalThis.frameElement
+                            || value === globalThis.history || value === globalThis.clientInformation || value === globalThis.styleMedia
+                            || value === globalThis.event
+                        ) {
+                            continue;
+                        }
+                        if (value === boClass) {
+                            return parent ? parent + "." + item : item;
+                        }
+                        if (level >= maxLevel) {
+                            continue;
+                        }
+                        let name: string = getName(value, parent ? parent + "." + item : item);
+                        if (!objects.isNull(name)) {
+                            return name;
+                        }
+                    }
+                    return undefined;
+                };
+                name = getName(globalThis);
+                if (!objects.isNull(name)) {
+                    FULL_NAMES.set(boClass, name);
+                    return name;
+                }
+            }
+            return typeof boClass;
+        }
+        const FULL_NAMES: Map<any, string> = new Map<any, string>();
+        /**
+         * 获取类的命名空间
+         * @param type 类型
+         */
+        export function namespace(boClass: Function): string {
+            let name: string = fullName(boClass);
+            if (!strings.isEmpty(name) && name.indexOf(".") > 0) {
+                return name.substring(0, name.lastIndexOf("."));
+            }
+            return name;
+        }
         /**
          * 业务对象名称
          * @param boCode 对象编码
@@ -1334,6 +1405,42 @@ namespace ibas {
                     }
                     myItem.value = item.value;
                 }
+            }
+        }
+        /** 业务对象仓库 */
+        export namespace repositories {
+            /**
+             * 获取业务对象的仓库
+             * @param boClass 业务对象类型
+             */
+            export function of(boClass: Function): any {
+                let name: string = objects.nameOf(boClass);
+                let namespace: string = businessobjects.namespace(boClass);
+                if (!ibas.strings.isEmpty(namespace)) {
+                    let instance: any;
+                    for (let item of namespace.split(".")) {
+                        if (ibas.objects.isNull(instance)) {
+                            instance = globalThis[item];
+                        } else {
+                            instance = instance[item];
+                        }
+                    }
+                    if (!ibas.objects.isNull(instance)) {
+                        for (let item in instance) {
+                            if (typeof item === "string") {
+                                let itemIns: Function = objects.propertyValue(instance, item);
+                                if (!objects.isAssignableFrom(itemIns, BORepositoryApplication)) {
+                                    continue;
+                                }
+                                if (typeof itemIns.prototype["fetch" + name] !== "function") {
+                                    continue;
+                                }
+                                return itemIns;
+                            }
+                        }
+                    }
+                }
+                throw new Error(strings.format("not found {0}'s repository.", objects.nameOf(boClass)));
             }
         }
     }

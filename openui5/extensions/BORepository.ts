@@ -214,8 +214,8 @@ namespace sap {
                         }
                         this.tasks = new ibas.ArrayList<Task>();
                         // 没有需要查询
-                        if (criteria.conditions.length === 0) {
-                            // return;
+                        if (tasks.length === 0) {
+                            return;
                         }
                         fetch(this.boRepository, this.dataInfo, criteria, (values: ibas.IList<ibas.KeyText> | Error) => {
                             if (values instanceof Error) {
