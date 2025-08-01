@@ -194,6 +194,16 @@ namespace sap {
                                 dtRow.cells[i] = cell.getText(true);
                             } else if (cell instanceof sap.m.Link) {
                                 dtRow.cells[i] = cell.getText();
+                            } else if (cell instanceof sap.m.Avatar) {
+                                dtRow.cells[i] = cell.getSrc();
+                                if (ibas.strings.isEmpty(dataTable.columns[i].dataType)) {
+                                    dataTable.columns[i].dataType = "Image";
+                                }
+                            } else if (cell instanceof sap.ui.core.Icon) {
+                                dtRow.cells[i] = cell.getSrc();
+                                if (ibas.strings.isEmpty(dataTable.columns[i].dataType)) {
+                                    dataTable.columns[i].dataType = "Image";
+                                }
                             } else if (cell instanceof sap.m.Select) {
                                 dtRow.cells[i] = cell.getSelectedItem()?.getText();
                                 if (ibas.objects.isNull(dtRow.cells[i])) {
@@ -340,9 +350,17 @@ namespace sap {
                     return sap.ui.table.Table.prototype.setModel.apply(this, arguments);
                 },
                 // 1.70以上兼容问题
+                _hasSelectionPlugin(): boolean {
+                    if ((<any>sap.ui.table.Table.prototype)._hasSelectionPlugin) {
+                        return (<any>sap.ui.table.Table.prototype)._hasSelectionPlugin.apply(this, arguments);
+                    } else if ((<any>sap.ui.table.plugins.SelectionPlugin).findOn) {
+                        return (<any>sap.ui.table.plugins.SelectionPlugin).findOn(this) ? true : false;
+                    }
+                    return undefined;
+                },
                 setSelectionMode(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                    if ((this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true)) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectionMode.apply(plugin, arguments);

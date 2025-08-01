@@ -18,6 +18,13 @@ namespace sap {
                         chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE },
                     },
                     events: {
+                        "nextDataSet": {
+                            parameters: {
+                                data: {
+                                    type: "any",
+                                }
+                            }
+                        }
                     }
                 },
                 renderer: {},
@@ -81,25 +88,65 @@ namespace sap {
                 },
                 /** 重构设置 */
                 applySettings(this: Table, mSettings: any, oScope?: any): Table {
-                    if (mSettings) {
-                        if (ibas.objects.isNull(mSettings.sticky)) {
-                            mSettings.sticky = [
-                                sap.m.Sticky.ColumnHeaders
-                            ];
-                        }
-                        if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
-                            mSettings.includeItemInSelection = true;
-                        }
-                        /* false默认全加载
+                    if (ibas.objects.isNull(mSettings)) {
+                        mSettings = {};
+                    }
+                    if (ibas.objects.isNull(mSettings.sticky)) {
+                        mSettings.sticky = [
+                            sap.m.Sticky.ColumnHeaders
+                        ];
+                    }
+                    if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
+                        mSettings.includeItemInSelection = true;
+                    }
+                    if (mSettings.nextDataSet instanceof Function) {
+                        // 启用数据分页加载
                         if (ibas.objects.isNull(mSettings.growing)) {
                             mSettings.growing = true;
                         }
                         if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
                             mSettings.growingScrollToLoad = true;
                         }
-                        */
                     }
                     return sap.m.Table.prototype.applySettings.apply(this, arguments);
+                },
+                init(this: Table): void {
+                    // 基类初始化
+                    (<any>sap.m.Table.prototype).init.apply(this, arguments);
+                    // 监听行变化事件
+                    this.attachEvent("updateFinished", undefined, (event: sap.ui.base.Event) => {
+                        if (!this.hasListeners("nextDataSet")) {
+                            // 没有注册事件，则退出
+                            return;
+                        }
+                        if (this.getBusy()) {
+                            // 忙状态不监听
+                            return;
+                        }
+                        if (event.getParameter("reason") !== "Growing") {
+                            // 非滚动条原因，不触发
+                            return;
+                        }
+                        let model: any = this.getModel(undefined);
+                        if (!ibas.objects.isNull(model)) {
+                            let data: any = model.getData();
+                            if (!ibas.objects.isNull(data) && !ibas.objects.isNull(this.getGrowingInfo())) {
+                                if (this.getGrowingInfo().total === this.getGrowingInfo().actual) {
+                                    if (!ibas.objects.isNull(data)) {
+                                        let modelData: any = data.rows; // 与绑定对象的路径有关
+                                        let dataCount: number = modelData instanceof Array ? modelData.length : 0;
+                                        let visibleRow: number = this.getGrowingThreshold(); // 当前显示条数
+                                        if (dataCount <= 0 || dataCount < visibleRow) {
+                                            return;
+                                        }
+                                        // 调用事件
+                                        this.setBusy(true);
+                                        this.fireNextDataSet({ data: modelData[modelData.length - 1] });
+                                    }
+                                }
+                            }
+                        }
+                    });
                 },
                 /** 退出 */
                 exit(this: Table): void {
