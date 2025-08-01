@@ -107,17 +107,22 @@ namespace sap {
                 },
                 /** 重构设置 */
                 applySettings(this: List, mSettings: any, oScope?: any): List {
+                    if (ibas.objects.isNull(mSettings)) {
+                        mSettings = {};
+                    }
                     if (ibas.objects.isNull(mSettings.includeItemInSelection)) {
                         mSettings.includeItemInSelection = true;
                     }
-                    if (ibas.objects.isNull(mSettings.growing)) {
-                        mSettings.growing = true;
+                    if (mSettings.nextDataSet instanceof Function) {
+                        // 启用数据分页加载
+                        if (ibas.objects.isNull(mSettings.growing)) {
+                            mSettings.growing = true;
+                        }
+                        if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
+                            mSettings.growingScrollToLoad = true;
+                        }
                     }
-                    if (ibas.objects.isNull(mSettings.growingScrollToLoad)) {
-                        mSettings.growingScrollToLoad = true;
-                    }
-                    sap.m.List.prototype.applySettings.apply(this, arguments);
-                    return this;
+                    return sap.m.List.prototype.applySettings.apply(this, arguments);
                 },
                 init(this: List): void {
                     // 基类初始化

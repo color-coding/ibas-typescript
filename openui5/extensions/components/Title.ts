@@ -145,7 +145,8 @@ namespace sap {
                                     keyBudilder.append(item.key);
                                     textBudilder.append(item.text);
                                 }
-                                if (value === this.getProperty("bindingValue")) {
+                                // tslint:disable-next-line: triple-equals
+                                if (value === this.getProperty("bindingValue") || value == this.getProperty("bindingValue")) {
                                     this.setText(textBudilder.toString());
                                     this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
                                 }
