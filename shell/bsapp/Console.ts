@@ -41,15 +41,13 @@ namespace shell {
             }
             /** 运行 */
             run(): void {
-                // 获取壳根地址
-                let rootUrl: string = ibas.urls.rootUrl(Console.ROOT_FILE_NAME);
                 // 加载语言-壳
-                ibas.i18n.load([
-                    ibas.strings.format("{0}/resources/languages/shell.json", rootUrl)
+                this.loadResources([
+                    "resources/languages/shell.json"
                 ], () => {
                     // 设置资源属性
                     this.description = ibas.i18n.prop(this.name);
-                    this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", rootUrl);
+                    this.icon = ibas.strings.format("{0}/resources/images/logo_small.png", this.rootUrl);
                     // 加载视图显示者
                     let uiModules: string[] = [];
                     if (!ibas.config.get(ibas.CONFIG_ITEM_DISABLE_PLATFORM_VIEW, false)) {

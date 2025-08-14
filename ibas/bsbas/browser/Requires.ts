@@ -32,12 +32,15 @@ namespace ibas {
             }
             // 运行时版本
             let rtVersion: string = config.get(CONFIG_ITEM_RUNTIME_VERSION);
-            if (!objects.isNull(rtVersion) && !objects.isNull(requireConfig.runtime)) {
-                rtVersion = requireConfig.runtime;
-            }
-            if (!objects.isNull(rtVersion) && requireConfig.urlArgs === undefined) {
+            if (requireConfig.urlArgs === undefined) {
                 requireConfig.urlArgs = function (id: string, url: string): string {
-                    return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
+                    if (!strings.isEmpty(rtVersion)) {
+                        if (!strings.isEmpty(this.runtime)) {
+                            rtVersion = this.runtime;
+                        }
+                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + rtVersion;
+                    }
+                    return "";
                 };
             }
             return (<any>globalThis).require.config(requireConfig);

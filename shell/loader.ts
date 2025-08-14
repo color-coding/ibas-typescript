@@ -41,8 +41,10 @@ namespace loader {
     // ibas 诊断页面路径
     export const URL_IBAS_DIAGNOSIS: string = "ibas/diagnosis/index.html";
     export namespace requires {
+        /** 编译时标记 */
+        export const buildtime: string = "process.env.TS_BUILD_TIME";
         /** 运行时标记 */
-        export const runtime: string = (new Date()).getTime().toString();
+        export const runtime: string = Number(buildtime) > 0 ? buildtime : String(Math.floor(new Date().getTime() / 1000));
         /** 创建require方法 */
         export function create(name: string, baseUrl: string): Require;
         /** 创建require方法 */
@@ -52,12 +54,11 @@ namespace loader {
             let name: string = arguments[0], baseUrl: string = arguments[1], noCache: boolean = arguments[2];
             if (noCache) {
                 // 不使用缓存
-                let runtime: string = requires.runtime;
                 return (<any>window).requirejs.config({
                     context: name,
                     baseUrl: baseUrl,
                     urlArgs: function (id: string, url: string): string {
-                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + runtime;
+                        return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + requires.runtime;
                     }
                 });
             } else {
@@ -231,7 +232,8 @@ namespace loader {
             let require: Require = ibas.requires.create({
                 context: ibas.requires.naming(this.name),
                 baseUrl: this.root + this.name,
-                waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30)
+                waitSeconds: ibas.config.get(ibas.requires.CONFIG_ITEM_WAIT_SECONDS, 30),
+                runtime: requires.runtime,
             });
             require([
                 Application.URL_INDEX + (this.minLibrary ? SIGN_MIN_LIBRARY : "")
@@ -255,7 +257,12 @@ namespace loader {
                         ibas.i18n.reload(() => {
                             try {
                                 let console: ibas.ModuleConsole = new shell.app.Console();
+                                console.rootUrl = ibas.urls.rootUrl(shell.app.Console.ROOT_FILE_NAME);
+                                if (!ibas.strings.isWith(console.rootUrl, undefined, "/")) {
+                                    console.rootUrl += "/";
+                                }
                                 console.module = this.name;
+                                console.runtime = requires.runtime;
                                 console.run();
                             } catch (error) {
                                 this.diagnose();

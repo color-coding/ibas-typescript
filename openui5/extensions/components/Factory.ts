@@ -173,7 +173,8 @@ namespace sap {
 
                         }
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
-                        let input: sap.m.InputBase = <sap.m.InputBase>newInput(property.linkedObject, onChanged, property.valueChooseType).bindProperty("bindingValue", bindInfo);
+                        let input: sap.m.InputBase = newInput(property.linkedObject, onChanged, property.valueChooseType);
+                        input.bindProperty("bindingValue", bindInfo);
                         input.setRequired(property.required);
                         input.setEditable(property.authorised === ibas.emAuthoriseType.ALL ? true : false);
                         // 自动触发选择

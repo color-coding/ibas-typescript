@@ -3,10 +3,10 @@ echo '**************************************************************************
 echo '              build_all.sh                                                  '
 echo '                      by niuren.zhu                                         '
 echo '                           2016.06.17                                       '
-echo '  说明：                                                                    '
-echo '    1. 此脚本需要在Node.js下运行。                                          '
-echo '    2. 遍历当前目录下所有子目录，存在tsconfig.json则编译。                  '
-echo '    3. 参数1，tsc命令的其他参数，如：-w，表示监听文件变化。                 '
+echo '  说明：                                                                     '
+echo '    1. 此脚本需要在Node.js下运行。                                             '
+echo '    2. 遍历当前目录下所有子目录，存在tsconfig.json则编译。                        '
+echo '    3. 参数1，tsc命令的其他参数，如：-w，表示监听文件变化。                         '
 echo '****************************************************************************'
 # 设置参数变量
 # 工作目录
@@ -43,3 +43,13 @@ for TS_CONFIG in $(echo ${TS_CONFIGS}); do
     ${COMMOND} -p ${TS_CONFIG}
   fi
 done
+
+# 替换编译后文件中变量
+TS_BUILD_TIME=$(date +%s)
+if [ -e "${WORK_FOLDER}/shell/loader.js" ]; then
+  if [ "$(uname)" = "Darwin" ]; then
+    sed -i '' "s/process.env.TS_BUILD_TIME/${TS_BUILD_TIME}/g" "${WORK_FOLDER}/shell/loader.js"
+  else
+    sed -i "s/process.env.TS_BUILD_TIME/${TS_BUILD_TIME}/g" "${WORK_FOLDER}/shell/loader.js"
+  fi
+fi
