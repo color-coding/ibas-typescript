@@ -6,7 +6,15 @@
     "preserveConstEnums": true,
     "outFile": "./loader.js",
     "declaration": false,
-    "sourceMap": false
+    "sourceMap": false,
+    "plugins": [
+      {
+        "transform": "ts-transform-inline-environment-variables",
+        "vars": [
+          "TS_BUILD_TIME"
+        ]
+      }
+    ]
   },
   "include": [
     "../ibas/3rdparty/require.d.ts",

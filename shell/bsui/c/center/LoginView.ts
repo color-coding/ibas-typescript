@@ -251,8 +251,13 @@ namespace shell {
                 private txtVerification: sap.m.Input;
                 private imgVerification: sap.m.Image;
                 private getLanguageItems(select: sap.m.Select): sap.m.Select {
+                    let url: string = ibas.urls.rootUrl("shell/index") + "/languages.json";
+                    let rtVersion: string = ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION);
+                    if (!ibas.strings.isEmpty(rtVersion)) {
+                        url = url + (url.indexOf("?") < 0 ? "?" : "&") + "_=" + rtVersion;
+                    }
                     jQuery.ajax({
-                        url: ibas.urls.rootUrl("shell/index") + "/languages.json",
+                        url: url,
                         type: "GET",
                         contentType: "application/json; charset=utf-8",
                         dataType: "json",

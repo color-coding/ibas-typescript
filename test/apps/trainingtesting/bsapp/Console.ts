@@ -47,8 +47,9 @@ namespace trainingtesting {
             /** 运行 */
             run(): void {
                 // 加载语言-框架默认
-                ibas.i18n.load([this.rootUrl + "resources/languages/trainingtesting.json",
-                this.rootUrl + "resources/languages/bos.json"
+                this.loadResources([
+                    "resources/languages/trainingtesting.json",
+                    "resources/languages/bos.json"
                 ], () => {
                     // 设置资源属性
                     this.description = ibas.i18n.prop(this.name.toLowerCase());
@@ -116,7 +117,7 @@ namespace trainingtesting {
             /** 运行 */
             run(): void {
                 // 加载语言-框架默认
-                ibas.i18n.load(this.rootUrl + "resources/languages/trainingtestingothers.json");
+                this.loadResources("resources/languages/trainingtestingothers.json");
                 // 设置资源属性
                 this.description = ibas.i18n.prop(this.name.toLowerCase());
                 // 先加载ui导航

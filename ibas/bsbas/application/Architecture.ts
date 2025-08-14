@@ -338,6 +338,8 @@ namespace ibas {
         module: string;
         /** 根地址 */
         rootUrl: string;
+        /** 运行时 */
+        runtime: string;
         /** 当前平台 */
         get plantform(): emPlantform {
             return config.get(CONFIG_ITEM_PLANTFORM, emPlantform.COMBINATION, emPlantform);
@@ -472,7 +474,8 @@ namespace ibas {
                 modules.push(ui + (minLibrary ? SIGN_MIN_LIBRARY : ""));
             }
             let require: Require = requires.create({
-                context: requires.naming(this.module)
+                context: requires.naming(this.module),
+                runtime: this.runtime,
             });
             require(modules, () => {
                 if (typeof ready === "function") {
@@ -485,6 +488,24 @@ namespace ibas {
             }, (error: Error) => {
                 logger.log(emMessageLevel.ERROR, error.message);
             });
+        }
+        /** 加载资源 */
+        protected loadResources(resources: string | string[], ready?: () => void): void {
+            let rtVersion: string = config.get(CONFIG_ITEM_RUNTIME_VERSION);
+            if (!strings.isEmpty(rtVersion) && !objects.isNull(this.runtime)) {
+                rtVersion = this.runtime;
+            }
+            let files: string[] = [];
+            for (let item of arrays.create(resources)) {
+                if (!strings.isWith(item, "http", undefined)) {
+                    item = this.rootUrl + item;
+                }
+                if (!strings.isEmpty(rtVersion) && item.indexOf("_=") < 0) {
+                    item = item + (item.indexOf("?") < 0 ? "?" : "&") + "_=" + rtVersion;
+                }
+                files.push(item);
+            }
+            i18n.load(files, ready);
         }
     }
     /** 模块控制台 */
