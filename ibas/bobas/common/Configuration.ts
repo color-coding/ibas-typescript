@@ -163,6 +163,9 @@ namespace ibas {
         all(): IList<KeyValue> {
             let items: IList<KeyValue> = new ArrayList();
             for (let item of CONFIG_VALUES.keys()) {
+                if (strings.isWith(item, CONFIG_ITEM_USER_TOKEN, undefined)) {
+                    continue;
+                }
                 items.add(new KeyValue(item, CONFIG_VALUES.get(item)));
             }
             return items;

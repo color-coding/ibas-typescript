@@ -17,6 +17,7 @@
     "defalutServiceIcon": "sap-icon://e-care",
     "defalutModuleIcon": "sap-icon://nutrition-activity",
     "enableLoginVerification": false,
+    "enableRefreshLogout": false,
     "repositoryAddress|BORepositoryShell": "http://localhost:8080/initialfantasy/services/rest/data",
     "repositoryAddress|BORepositoryShellOffline": ".../../test/repository",
     "repositoryAddress|BORepositoryTrainingTestingOffline": ".../../test/repository"

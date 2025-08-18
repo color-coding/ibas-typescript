@@ -414,8 +414,8 @@ namespace ibas {
         export function equalsIgnoreCase(value1: string, value2: string): boolean {
             if (value1 === undefined || value1 === null) { return false; }
             if (value2 === undefined || value2 === null) { return false; }
-            let tmp1: string = value1.toLowerCase();
-            let tmp2: string = value2.toLowerCase();
+            let tmp1: string = String(value1).toLowerCase();
+            let tmp2: string = String(value2).toLowerCase();
             return equals(tmp1, tmp2);
         }
         /**
@@ -497,7 +497,7 @@ namespace ibas {
         export function utf8To16(value: string): string {
             let char1: number, char2: number, char3: number;
             let i: number = 0, len: number = value.length;
-            let builder: StringBuilder = new StringBuilder;
+            let builder: StringBuilder = new StringBuilder();
             builder.map(null, "");
             builder.map(undefined, "");
             while (i < len) {
@@ -532,7 +532,7 @@ namespace ibas {
         export function utf16To8(value: string): string {
             let char1: number;
             let i: number = 0, len: number = value.length;
-            let builder: StringBuilder = new StringBuilder;
+            let builder: StringBuilder = new StringBuilder();
             builder.map(null, "");
             builder.map(undefined, "");
             for (i = 0; i < len; i++) {
@@ -590,6 +590,27 @@ namespace ibas {
                 return true;
             }
             return false;
+        }
+
+        export function toHex(value: string): string {
+            let builder: StringBuilder = new StringBuilder();
+            builder.map(null, "");
+            builder.map(undefined, "");
+            for (let i: number = 0; i < value.length; i++) {
+                builder.append(fill(value.charCodeAt(i).toString(16), 2, "0"));
+            }
+            return builder.toString();
+        }
+
+        export function hexTo(hex: string): string {
+            let builder: StringBuilder = new StringBuilder();
+            builder.map(null, "");
+            builder.map(undefined, "");
+            for (let i: number = 0; i < hex.length; i += 2) {
+                let charCode: number = parseInt(hex.substr(i, 2), 16);
+                builder.append(String.fromCharCode(charCode));
+            }
+            return builder.toString();
         }
     }
     /**

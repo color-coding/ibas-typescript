@@ -35,7 +35,17 @@ namespace shell {
                     // 设置应用名称
                     let user: string = ibas.config.get(CONFIG_ITEM_DEFAULT_USER);
                     let password: string = ibas.config.get(CONFIG_ITEM_DEFAULT_PASSWORD);
+                    let heading: string = ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME);
+                    if (ibas.strings.isEmpty(heading)) {
+                        heading = ibas.i18n.prop("shell_name");
+                    }
                     let subheading: string = ibas.config.get(CONFIG_ITEM_SUBHEADING);
+                    if (ibas.strings.isEmpty(subheading)) {
+                        subheading = ibas.i18n.prop("shell_secondary_name");
+                        if (ibas.strings.isWith(subheading, "[", "]")) {
+                            subheading = undefined;
+                        }
+                    }
                     let usageTerms: string = ibas.i18n.prop("shell_app_usageterms");
                     if (ibas.strings.isWith(usageTerms, "[", "]")) {
                         usageTerms = undefined;
@@ -44,33 +54,30 @@ namespace shell {
                     return new sap.ui.layout.form.SimpleForm("", {
                         content: [
                             new sap.m.VBox("", {
+                                renderType: sap.m.FlexRendertype.Bare,
                                 items: [
-                                    new sap.m.Toolbar("", {
-                                        content: [
-                                            new sap.m.ToolbarSpacer(),
-                                            new sap.m.Title("", {
-                                                text: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
-                                                level: sap.ui.core.TitleLevel.H1,
-                                                titleStyle: sap.ui.core.TitleLevel.H1,
-                                                textAlign: sap.ui.core.TextAlign.Center,
-                                            }),
-                                            new sap.m.ToolbarSpacer(),
-                                        ],
-                                        style: sap.m.ToolbarStyle.Clear,
-                                    }).addStyleClass("sapUiTinyMarginBottom"),
-                                    new sap.m.Toolbar("", {
-                                        content: [
-                                            new sap.m.ToolbarSpacer(),
-                                            new sap.m.Title("", {
-                                                text: subheading,
-                                                level: sap.ui.core.TitleLevel.H4,
-                                                titleStyle: sap.ui.core.TitleLevel.H4,
-                                                textAlign: sap.ui.core.TextAlign.Right
-                                            }).addStyleClass("sapUiLargeMarginEnd"),
-                                        ],
-                                        visible: ibas.strings.isEmpty(subheading) ? false : true,
-                                        style: sap.m.ToolbarStyle.Clear,
+                                    new sap.m.Title("", {
+                                        width: "100%",
+                                        text: ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name")),
+                                        level: sap.ui.core.TitleLevel.H1,
+                                        titleStyle: sap.ui.core.TitleLevel.H1,
+                                        textAlign: sap.ui.core.TextAlign.Center,
                                     }),
+                                    new sap.m.HBox("", {
+                                        renderType: sap.m.FlexRendertype.Bare,
+                                        items: [
+                                            new sap.m.Title("", {
+                                                width: "95%",
+                                                text: subheading,
+                                                level: sap.ui.core.TitleLevel.H3,
+                                                titleStyle: sap.ui.core.TitleLevel.H3,
+                                                textAlign: sap.ui.core.TextAlign.Right
+                                            }),
+                                            new sap.m.Title("", {
+                                                width: "5%",
+                                            }),
+                                        ]
+                                    })
                                 ]
                             }),
                             new sap.m.Label("", {

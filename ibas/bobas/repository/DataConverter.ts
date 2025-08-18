@@ -653,7 +653,8 @@ namespace ibas {
                 } else if (property === "DocumentStatus" || property === "LineStatus") {
                     return enums.valueOf(emDocumentStatus, value);
                 } else if (property === "Canceled" || property === "Referenced" || property === "Locked"
-                    || property === "Transfered" || property === "Activated" || property === "Deleted") {
+                    || property === "Transfered" || property === "Activated" || property === "Deleted"
+                    || property === "Printed") {
                     return enums.valueOf(emYesNo, value);
                 } else if (property === "Status") {
                     return enums.valueOf(emBOStatus, value);
@@ -681,7 +682,8 @@ namespace ibas {
                 if (property === "DocumentStatus" || property === "LineStatus") {
                     return enums.toString(emDocumentStatus, value);
                 } else if (property === "Canceled" || property === "Referenced" || property === "Locked"
-                    || property === "Transfered" || property === "Activated" || property === "Deleted") {
+                    || property === "Transfered" || property === "Activated" || property === "Deleted"
+                    || property === "Printed") {
                     return enums.toString(emYesNo, value);
                 } else if (property === "Status") {
                     return enums.toString(emBOStatus, value);

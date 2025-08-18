@@ -13,7 +13,7 @@
     "fullScreen|PHONE": true,
     "queryPanelConfigurable|PHONE": false,
     "queryPanelSelectable|PHONE": false,
-    "disableReportFunctions": true,
+    "enableRefreshLogout": false,
     "defaultUser": "admin",
     "defaultPassword": "1q2w3e",
     "repositoryAddress|BORepositoryShell": ".../initialfantasy/services/rest/data"
