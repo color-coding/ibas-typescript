@@ -414,8 +414,8 @@ namespace ibas {
         export function equalsIgnoreCase(value1: string, value2: string): boolean {
             if (value1 === undefined || value1 === null) { return false; }
             if (value2 === undefined || value2 === null) { return false; }
-            let tmp1: string = value1.toLowerCase();
-            let tmp2: string = value2.toLowerCase();
+            let tmp1: string = String(value1).toLowerCase();
+            let tmp2: string = String(value2).toLowerCase();
             return equals(tmp1, tmp2);
         }
         /**

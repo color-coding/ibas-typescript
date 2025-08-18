@@ -9,6 +9,88 @@ namespace sap {
     export namespace extension {
         /** 组件工厂 */
         export namespace factories {
+
+            export namespace properties {
+                export function linkedObject(linkedObject: string): { property: string, criteria: ibas.ICriteria } {
+                    let property: string;
+                    let criteria: ibas.ICriteria;
+
+                    if (ibas.strings.isWith(linkedObject, "#{", "}")) {
+                        // 对象选择：#{CC_SYS_USER}.{Code}
+                        try {
+                            let values: string[] = ibas.config.applyVariables(linkedObject).split(".");
+                            if (values.length > 1) {
+                                criteria = new ibas.Criteria();
+                                if (!ibas.strings.isEmpty(values[0])) {
+                                    criteria.businessObject = ibas.strings.remove(values[0], "#", "{", "}");
+                                }
+                                if (!ibas.strings.isEmpty(values[1])) {
+                                    property = ibas.strings.remove(values[1], "#", "{", "}");
+                                }
+                            }
+                        } catch (error) {
+                            criteria = null;
+                            property = null;
+                        }
+                    } else if (ibas.strings.isWith(linkedObject, "{", "}")) {
+                        // 对象选择：Criteria对象{"businessObject":"CC_SYS_USER", "conditions":[]}
+                        try {
+                            criteria = ibas.criterias.valueOf(ibas.config.applyVariables(linkedObject));
+                            if (ibas.strings.isEmpty(criteria.businessObject)) {
+                                criteria = null;
+                            }
+                            if (criteria.businessObject.indexOf(".") > 0) {
+                                property = criteria.businessObject.split(".")[1];
+                                criteria.businessObject = criteria.businessObject.split(".")[0];
+                            }
+                        } catch (error) {
+                            criteria = null;
+                            property = null;
+                        }
+                    }
+                    if (ibas.objects.isNull(criteria)) {
+                        throw new Error(ibas.i18n.prop("sys_unrecognized_data"));
+                    }
+                    return {
+                        property: ibas.objects.isNull(property) ? "" : property,
+                        criteria: criteria,
+                    };
+                }
+                export function fetchLinkedObjects(linked: { property: string, criteria: ibas.ICriteria },
+                    sKeyValue: string, onCompleted: (results: ibas.ArrayList<ibas.KeyText> | Error) => void): void {
+
+                    let boType: any = ibas.boFactory.classOf(linked.criteria.businessObject);
+                    if (boType instanceof Function) {
+                        let dataInfo: any = {
+                            type: boType,
+                            key: linked.property.split(":")[0],
+                            text: linked.property.split(":")[1],
+                        };
+                        let boRepository: any;
+                        if (!BO_REPOSITORIES.has(dataInfo)) {
+                            boRepository = ibas.businessobjects.repositories.of(dataInfo.type);
+                            if (ibas.objects.isNull(boRepository)) {
+                                onCompleted(new Error("repository not found."));
+                                return;
+                            }
+                            BO_REPOSITORIES.set(dataInfo.type, boRepository);
+                        }
+                        let criteria: ibas.ICriteria = new ibas.Criteria();
+                        criteria.result = -1;
+                        criteria.noChilds = true;
+                        let condition: ibas.ICondition = criteria.conditions.create();
+                        condition.alias = dataInfo.text ? dataInfo.text : dataInfo.key;
+                        condition.value = sKeyValue;
+                        condition.operation = ibas.emConditionOperation.CONTAIN;
+
+                        repository.fetch(repositories.repository(boRepository), dataInfo, criteria,
+                            (values) => {
+                                onCompleted(values);
+                            }
+                        );
+                    }
+                }
+            }
             /**
              * 创建对象属性
              * @param property 属性
@@ -57,7 +139,8 @@ namespace sap {
                     bindInfo.type = new sap.extension.data.Direction(mode === "Text" ? true : false);
                 } else if (property.name === "Canceled" || property.name === "Referenced"
                     || property.name === "Locked" || property.name === "Transfered"
-                    || property.name === "Activated" || property.name === "Deleted") {
+                    || property.name === "Activated" || property.name === "Deleted"
+                    || property.name === "Printed") {
                     bindInfo.type = new sap.extension.data.YesNo(mode === "Text" ? true : false);
                 } else if (ibas.strings.equalsIgnoreCase(property.dataType, "Numeric")) {
                     bindInfo.type = new sap.extension.data.Numeric();
@@ -111,6 +194,43 @@ namespace sap {
                                 return oValue;
                             }
                         });
+                    } else if (
+                        // 对象选择：#{CC_SYS_USER}.{Code}
+                        ibas.strings.isWith(property.linkedObject, "#{", "}")
+                        // 对象选择：Criteria对象{"businessObject":"CC_SYS_USER", "conditions":[]}
+                        || ibas.strings.isWith(property.linkedObject, "{", "}")
+                    ) {
+                        try {
+                            let linked: {
+                                property: string;
+                                criteria: ibas.ICriteria;
+                            } = properties.linkedObject(property.linkedObject);
+                            // 对象描述：Code:Name方式，表示Code显示为Name
+                            if (ibas.strings.count(linked.property, ":") > 0) {
+                                let boType: any = ibas.boFactory.classOf(linked.criteria.businessObject);
+                                if (boType instanceof Function) {
+                                    let dataInfo: any = {
+                                        type: boType,
+                                        key: linked.property.split(":")[0],
+                                        text: linked.property.split(":")[1],
+                                    };
+                                    let boRepository: any;
+                                    if (!BO_REPOSITORIES.has(dataInfo)) {
+                                        boRepository = ibas.businessobjects.repositories.of(dataInfo.type);
+                                        if (ibas.objects.isNull(boRepository)) {
+                                            throw new Error(ibas.strings.format("not found {0}'s repository.", ibas.objects.nameOf(dataInfo.type)));
+                                        }
+                                        BO_REPOSITORIES.set(dataInfo.type, boRepository);
+                                    }
+                                    return new sap.extension.m.RepositoryText("", {
+                                        repository: BO_REPOSITORIES.get(dataInfo.type),
+                                        dataInfo: dataInfo
+                                    }).bindProperty("bindingValue", bindInfo);
+                                }
+                            }
+                        } catch (error) {
+                            ibas.logger.log(error);
+                        }
                     }
                     return new sap.extension.m.Text("", {
                         tooltip: property.dataType === "Memo" ? bindInfo : undefined,
@@ -248,7 +368,7 @@ namespace sap {
                             required: property.required,
                         }).bindProperty("bindingValue", bindInfo);
                     }
-                } else if (mode === "Object") {
+                } else if (mode === "Object" || mode === "Object.2") {
                     if (property.values instanceof Array && property.values.length > 0) {
                         // 可选值
                         bindInfo.type = new sap.extension.data.Unknown({
@@ -273,43 +393,52 @@ namespace sap {
                                 return oValue;
                             }
                         });
-                    }
-                    return new sap.extension.m.ObjectAttribute("", {
-                        title: property.description,
-                        bindingValue: bindInfo,
-                    });
-                } else if (mode === "Object.2") {
-                    if (property.values instanceof Array && property.values.length > 0) {
-                        // 可选值
-                        bindInfo.type = new sap.extension.data.Unknown({
-                            formatValue(oValue: any, sInternalType: string): any {
-                                if (sInternalType === "string") {
-                                    for (let item of property.values) {
-                                        if (item.value === oValue) {
-                                            return item.description;
+                    } else if (
+                        // 对象选择：#{CC_SYS_USER}.{Code}
+                        ibas.strings.isWith(property.linkedObject, "#{", "}")
+                        // 对象选择：Criteria对象{"businessObject":"CC_SYS_USER", "conditions":[]}
+                        || ibas.strings.isWith(property.linkedObject, "{", "}")
+                    ) {
+                        try {
+                            let linked: {
+                                property: string;
+                                criteria: ibas.ICriteria;
+                            } = properties.linkedObject(property.linkedObject);
+                            // 对象描述：Code:Name方式，表示Code显示为Name
+                            if (ibas.strings.count(linked.property, ":") > 0) {
+                                let boType: any = ibas.boFactory.classOf(linked.criteria.businessObject);
+                                if (boType instanceof Function) {
+                                    let dataInfo: any = {
+                                        type: boType,
+                                        key: linked.property.split(":")[0],
+                                        text: linked.property.split(":")[1],
+                                    };
+                                    let boRepository: any;
+                                    if (!BO_REPOSITORIES.has(dataInfo)) {
+                                        boRepository = ibas.businessobjects.repositories.of(dataInfo.type);
+                                        if (ibas.objects.isNull(boRepository)) {
+                                            throw new Error(ibas.strings.format("not found {0}'s repository.", ibas.objects.nameOf(dataInfo.type)));
                                         }
+                                        BO_REPOSITORIES.set(dataInfo.type, boRepository);
                                     }
+                                    return new sap.extension.m.RepositoryObjectAttribute("", {
+                                        repository: BO_REPOSITORIES.get(dataInfo.type),
+                                        dataInfo: dataInfo,
+                                        title: property.description,
+                                        bindingValue: bindInfo,
+                                    });
                                 }
-                                return oValue;
-                            },
-                            parseValue(oValue: any, sInternalType: string): any {
-                                if (sInternalType === "string") {
-                                    for (let item of property.values) {
-                                        if (item.description === oValue) {
-                                            return item.value;
-                                        }
-                                    }
-                                }
-                                return oValue;
                             }
-                        });
+                        } catch (error) {
+                            ibas.logger.log(error);
+                        }
                     }
                     return new sap.extension.m.ObjectAttribute("", {
+                        title: mode === "Object" ? property.description : undefined,
                         bindingValue: bindInfo,
                     });
-                } else {
-                    return null;
                 }
+                return null;
             }
             /** 对象的业务仓库 */
             const BO_REPOSITORIES: Map<any, any> = new Map<any, any>();
@@ -350,34 +479,19 @@ namespace sap {
                         displayFormat: value,
                         tooltip: value,
                     });
-                } else if (ibas.strings.isWith(value, "#{", "}")) {
+                } else if (
                     // 对象选择：#{CC_SYS_USER}.{Code}
-                    try {
-                        let values: string[] = ibas.config.applyVariables(value).split(".");
-                        if (values.length > 1) {
-                            criteria = new ibas.Criteria();
-                            if (!ibas.strings.isEmpty(values[0])) {
-                                criteria.businessObject = ibas.strings.remove(values[0], "#", "{", "}");
-                            }
-                            if (!ibas.strings.isEmpty(values[1])) {
-                                property = ibas.strings.remove(values[1], "#", "{", "}");
-                            }
-                        }
-                    } catch (error) {
-                        criteria = null;
-                        property = null;
-                    }
-                } else if (ibas.strings.isWith(value, "{", "}")) {
+                    ibas.strings.isWith(value, "#{", "}")
                     // 对象选择：Criteria对象{"businessObject":"CC_SYS_USER", "conditions":[]}
+                    || ibas.strings.isWith(value, "{", "}")
+                ) {
                     try {
-                        criteria = ibas.criterias.valueOf(ibas.config.applyVariables(value));
-                        if (ibas.strings.isEmpty(criteria.businessObject)) {
-                            criteria = null;
-                        }
-                        if (criteria.businessObject.indexOf(".") > 0) {
-                            property = criteria.businessObject.split(".")[1];
-                            criteria.businessObject = criteria.businessObject.split(".")[0];
-                        }
+                        let linked: {
+                            property: string;
+                            criteria: ibas.ICriteria;
+                        } = properties.linkedObject(value);
+                        criteria = linked.criteria;
+                        property = linked.property;
                         // 对象描述：Code:Name方式，表示Code显示为Name
                         if (ibas.strings.count(property, ":") > 0) {
                             try {
