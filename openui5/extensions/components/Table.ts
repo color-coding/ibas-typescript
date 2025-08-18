@@ -345,6 +345,11 @@ namespace sap {
                     if (version && version.getMajor() >= 1 && version.getMinor() >= 80) {
                         if (!ibas.objects.isNull(this.getModel(sName))) {
                             this.clearSelection();
+                            // 清除过滤值
+                            this.getColumns().forEach(c => {
+                                c.setFilterValue();
+                                c.setFiltered(false);
+                            });
                         }
                     }
                     return sap.ui.table.Table.prototype.setModel.apply(this, arguments);
@@ -489,7 +494,9 @@ namespace sap {
                                     || path === ibas.BO_PROPERTY_NAME_STATUS) {
                                     mSettings.width = "8rem";
                                 } else if (path === ibas.BO_PROPERTY_NAME_CANCELED
-                                    || path === ibas.BO_PROPERTY_NAME_DELETED) {
+                                    || path === ibas.BO_PROPERTY_NAME_DELETED
+                                    || path === "printed"
+                                    || path === "activated") {
                                     mSettings.width = "7rem";
                                 }
                             }
@@ -567,7 +574,7 @@ namespace sap {
                         /** 排序属性 */
                         sortProperty: { type: "string" },
                         /** 排序间隔步长，0:不支持调整 */
-                        sortIntervalStep: { type: "int", defaultValue: 1 },
+                        sortIntervalStep: { type: "int", defaultValue: 0 },
                     },
                     events: {}
                 },
@@ -600,6 +607,9 @@ namespace sap {
                 },
                 /** 重构设置 */
                 applySettings(this: DataTable, mSettings: any): DataTable {
+                    if (!mSettings) {
+                        mSettings = {};
+                    }
                     if (typeof mSettings?.dataInfo === "function") {
                         if (mSettings.rowSettingsTemplate === undefined) {
                             if (mSettings.dataInfo.prototype instanceof ibas.BODocument) {
@@ -624,7 +634,7 @@ namespace sap {
                             mSettings.rows.sorter = [
                                 new sap.ui.model.Sorter(mSettings.sortProperty, false)
                             ];
-                            if (!(mSettings.sortIntervalStep <= 0)) {
+                            if (mSettings.sortIntervalStep > 0) {
                                 // 步长为0，不支持拖动
                                 if (ibas.objects.isNull(mSettings.dragDropConfig)) {
                                     mSettings.dragDropConfig = [];
@@ -678,6 +688,9 @@ namespace sap {
                                 }
                             }
                         }
+                    }
+                    if (ibas.objects.isNull(mSettings?.enableColumnFreeze)) {
+                        mSettings.enableColumnFreeze = true;
                     }
                     Table.prototype.applySettings.apply(this, arguments);
                     let dataInfo: any = this.getDataInfo();
@@ -811,7 +824,11 @@ namespace sap {
                                     column.setSortProperty(propertyInfo.name);
                                     column.setFilterProperty(propertyInfo.name);
                                     if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC")) {
-                                        column.setFilterType(new sap.ui.model.type.Integer());
+                                        if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
+                                            column.setFilterType(new sap.extension.data.Alphanumeric());
+                                        } else {
+                                            column.setFilterType(new sap.ui.model.type.Integer());
+                                        }
                                     } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DECIMAL")) {
                                         column.setFilterType(new sap.ui.model.type.Float());
                                     } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DATE")) {
@@ -969,6 +986,20 @@ namespace sap {
                                     ibas.strings.equalsIgnoreCase(property.editType, "TIME") ? new sap.ui.model.type.Integer() : new sap.ui.model.type.Date()
                                     : new sap.ui.model.type.String()
                     });
+                    if (column.getTemplate() instanceof sap.ui.core.Control) {
+                        let type: any = (<any>column.getTemplate()).getBindingInfo("bindingValue").type;
+                        if (type instanceof sap.extension.data.Enum) {
+                            column.setFilterType(function (value: any): any {
+                                for (let key in type.enumType) {
+                                    if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
+                                        return key.toString();
+                                    }
+                                }
+                            });
+                        } else if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
+                            column.setFilterType(new sap.ui.model.type.String());
+                        }
+                    }
                     if (!ibas.strings.isEmpty(property.width)) {
                         let value: string = property.width;
                         if (!(value.endsWith("px") || value.endsWith("rem"))) {
@@ -999,6 +1030,168 @@ namespace sap {
                     let bInfo: shell.bo.IBizPropertyInfo = b.getPropertyInfo();
                     return aInfo.position - bInfo.position;
                 });
+                // 增强列过滤
+                (<any>DataColumn).prototype.filter = function (sValue: any): Promise<any> {
+                    let oTable: any = this.getParent();
+                    if (oTable && oTable.isBound("rows")) {
+                        // notify the event listeners
+                        let bExecuteDefault: boolean = oTable.fireFilter({
+                            column: this,
+                            value: sValue
+                        });
+                        if (bExecuteDefault) {
+                            this.setProperty("filtered", !!sValue, true);
+                            this.setProperty("filterValue", sValue, true);
+
+                            let oMenu: any = this.getMenu();
+                            if (this._bMenuIsColumnMenu) {
+                                // update column menu input field
+                                oMenu._setFilterValue(sValue);
+                            }
+
+                            let aFilters: any[] = [];
+                            let aCols: any[] = oTable.getColumns();
+                            // 异步的过滤器
+                            let asyncFilters: Map<sap.ui.model.Filter, shell.bo.IBizPropertyInfo> = new Map<any, any>();
+
+                            for (let i: number = 0, l: number = aCols.length; i < l; i++) {
+                                let oCol: any = aCols[i],
+                                    oFilter: sap.ui.model.Filter;
+                                oMenu = oCol.getMenu();
+                                try {
+                                    oFilter = oCol._getFilter();
+                                    if (oCol._bMenuIsColumnMenu) {
+                                        oMenu._setFilterState(sap.ui.core.ValueState.None);
+                                    }
+                                } catch (e) {
+                                    if (oCol._bMenuIsColumnMenu) {
+                                        oMenu._setFilterState(sap.ui.core.ValueState.Error);
+                                    }
+                                    continue;
+                                }
+                                if (oFilter) {
+                                    let propertyInfo: shell.bo.IBizPropertyInfo = aCols[i].getPropertyInfo();
+                                    if (!ibas.objects.isNull(propertyInfo)) {
+                                        if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains
+                                            || oFilter.getOperator() === sap.ui.model.FilterOperator.EQ) {
+                                            if (propertyInfo.values.length > 0) {
+                                                asyncFilters.set(oFilter, ibas.objects.clone(propertyInfo));
+                                            } else if (!ibas.strings.isEmpty(propertyInfo.linkedObject)) {
+                                                asyncFilters.set(oFilter, ibas.objects.clone(propertyInfo));
+                                            } else if ((<any>oCol.getTemplate()).getDataInfo instanceof Function && (<any>oCol.getTemplate()).getDataInfo()) {
+                                                let dataInfo: repository.IDataInfo = (<any>oCol.getTemplate()).getDataInfo();
+                                                if (dataInfo && dataInfo?.key && dataInfo?.text && !ibas.strings.equalsIgnoreCase(dataInfo.key, dataInfo.text)) {
+                                                    // {"type":"Criteria","BusinessObject":"CC_AC_ACCOUNT.Code:Name"}
+                                                    let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                    builder.append("{");
+                                                    builder.append("\"type\": ");
+                                                    builder.append("\"");
+                                                    builder.append("Criteria");
+                                                    builder.append("\"");
+                                                    builder.append(",");
+                                                    builder.append("\"BusinessObject\": ");
+                                                    builder.append("\"");
+                                                    builder.append(ibas.businessobjects.code(<any>dataInfo.type));
+                                                    builder.append(".");
+                                                    builder.append(dataInfo.key);
+                                                    builder.append(":");
+                                                    builder.append(dataInfo.text);
+                                                    builder.append("\"");
+                                                    builder.append("}");
+                                                    propertyInfo = ibas.objects.clone(propertyInfo);
+                                                    propertyInfo.linkedObject = builder.toString();
+                                                    asyncFilters.set(oFilter, propertyInfo);
+                                                }
+                                            }
+                                        }
+                                    }
+                                    aFilters.push(oFilter);
+                                }
+                            }
+                            if (asyncFilters.size > 0) {
+                                // 查询对象的可选值
+                                ibas.queues.execute(ibas.arrays.create(asyncFilters.keys()),
+                                    (oFilter, next) => {
+                                        let propertyInfo: shell.bo.IBizPropertyInfo = asyncFilters.get(oFilter);
+                                        try {
+                                            let linkedInfo: { property: string, criteria: ibas.ICriteria } = factories.properties.linkedObject(propertyInfo.linkedObject);
+                                            if (linkedInfo && !ibas.strings.isWith(linkedInfo.criteria?.businessObject, undefined, "_RA_RPTRESULT")
+                                                && linkedInfo.property?.indexOf(":") > 0) {
+                                                let filterValue: string = oFilter.getValue1();
+                                                factories.properties.fetchLinkedObjects(linkedInfo, filterValue,
+                                                    (results) => {
+                                                        if (results instanceof Array) {
+                                                            for (let item of results) {
+                                                                propertyInfo.values.push({
+                                                                    value: String(item.key),
+                                                                    description: String(item.text),
+                                                                    default: undefined,
+                                                                });
+                                                            }
+                                                        }
+                                                        next();
+                                                    }
+                                                );
+                                            } else {
+                                                next();
+                                            }
+                                        } catch (error) {
+                                            next();
+                                        }
+                                    },
+                                    (error) => {
+                                        if (!(error instanceof Error)) {
+                                            for (let i: number = 0; i < aFilters.length; i++) {
+                                                let oFilter: sap.ui.model.Filter = aFilters[i];
+                                                let filterValue: string = oFilter.getValue1();
+                                                let propertyInfo: shell.bo.IBizPropertyInfo = asyncFilters.get(oFilter);
+                                                if (!ibas.objects.isNull(propertyInfo)) {
+                                                    if (propertyInfo.values.length > 0) {
+                                                        oFilter = new sap.ui.model.Filter({
+                                                            path: oFilter.getPath(),
+                                                            operator: oFilter.getOperator(),
+                                                            value1: filterValue,
+                                                            test: (sKeyValue: any) => {
+                                                                let ptyValue: shell.bo.IBizPropertyValue = propertyInfo.values.find(c =>
+                                                                    (oFilter.isCaseSensitive() !== false && ibas.strings.equalsIgnoreCase(c.value, sKeyValue))
+                                                                    || (oFilter.isCaseSensitive() === false && ibas.strings.equals(c.value, sKeyValue))
+                                                                );
+                                                                if (!ibas.strings.isEmpty(ptyValue?.description)) {
+                                                                    if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains) {
+                                                                        return ptyValue.description.includes(filterValue);
+                                                                    } else if (oFilter.getOperator() === sap.ui.model.FilterOperator.EQ) {
+                                                                        return ptyValue.description === filterValue;
+                                                                    }
+                                                                }
+                                                                return false;
+                                                            }
+                                                        });
+                                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC") && !ibas.strings.isEmpty(propertyInfo.linkedObject)) {
+                                                        if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains) {
+                                                            oFilter = new sap.ui.model.Filter({
+                                                                path: oFilter.getPath(),
+                                                                operator: sap.ui.model.FilterOperator.EQ,
+                                                                value1: filterValue,
+                                                            });
+                                                        }
+                                                    }
+                                                    // 替换原过滤器
+                                                    aFilters[i] = oFilter;
+                                                }
+                                            }
+                                        }
+                                        oTable.getBinding().filter(aFilters, sap.ui.model.FilterType.Control);
+                                        this._updateIcons();
+                                    }
+                                );
+                            } else {
+                                oTable.getBinding().filter(aFilters, sap.ui.model.FilterType.Control);
+                                this._updateIcons();
+                            }
+                        }
+                    }
+                    return this;
+                };
                 for (let column of sortedColumns) {
                     this.insertColumn(column, column.getPropertyInfo().position);
                 }

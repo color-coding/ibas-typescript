@@ -488,6 +488,9 @@ namespace ibas {
                 if (objects.instanceOf(arguments[0].proxy, BOLinkServiceProxy)) {
                     // 判断是否为选择契约
                     let caller: IBOLinkServiceCaller = arguments[0];
+                    if (!objects.isNull(caller.changeHashUrl)) {
+                        this.changeHashUrl = caller.changeHashUrl;
+                    }
                     // 链接服务代理或其子类
                     if (caller.boCode === this.boCode
                         || config.applyVariables(caller.boCode) === config.applyVariables(this.boCode)) {
@@ -537,13 +540,15 @@ namespace ibas {
             // 保持参数原样传递
             super.run.apply(this, arguments);
         }
+        // 是否更新地址hash值
+        protected changeHashUrl: boolean = true;
         /** 查询数据 */
         protected abstract fetchData(criteria: ICriteria | string): void;
         /** 视图显示后 */
         protected viewShowed(): void {
             super.viewShowed();
             // 更新当前hash地址
-            if (this.viewData instanceof BusinessObject && !(this.view instanceof ibas.DialogView)) {
+            if (this.changeHashUrl === true && this.viewData instanceof BusinessObject && !(this.view instanceof ibas.DialogView)) {
                 let criteria: ICriteria = this.viewData.criteria();
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
                     let builder: StringBuilder = new StringBuilder();

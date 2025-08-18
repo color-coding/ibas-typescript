@@ -240,26 +240,26 @@ namespace sap {
                                     controls.nonEditable(control);
                                     if (control.getVisible() === false) {
                                         control.setVisible(true);
-                                        if ((<any>control.getParent())?.getLabel() instanceof sap.m.Label) {
-                                            (<any>control.getParent())?.getLabel().setVisible(true);
-                                        } else if (!ibas.strings.isEmpty(control.getIdForLabel())) {
-                                            let label: any = sap.ui.getCore().byId(control.getIdForLabel());
-                                            if (label instanceof sap.m.Label) {
-                                                label.setVisible(true);
-                                            }
+                                    }
+                                    if ((<any>control.getParent())?.getLabel() instanceof sap.m.Label) {
+                                        (<any>control.getParent())?.getLabel().setVisible(true);
+                                    } else if (!ibas.strings.isEmpty(control.getIdForLabel())) {
+                                        let label: any = sap.ui.getCore().byId(control.getIdForLabel());
+                                        if (label instanceof sap.m.Label) {
+                                            label.setVisible(true);
                                         }
                                     }
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.ALL) {
                                     controls.editable(control, true);
                                     if (control.getVisible() === false) {
                                         control.setVisible(true);
-                                        if ((<any>control.getParent())?.getLabel() instanceof sap.m.Label) {
-                                            (<any>control.getParent())?.getLabel().setVisible(true);
-                                        } else if (!ibas.strings.isEmpty(control.getIdForLabel())) {
-                                            let label: any = sap.ui.getCore().byId(control.getIdForLabel());
-                                            if (label instanceof sap.m.Label) {
-                                                label.setVisible(true);
-                                            }
+                                    }
+                                    if ((<any>control.getParent())?.getLabel() instanceof sap.m.Label) {
+                                        (<any>control.getParent())?.getLabel().setVisible(true);
+                                    } else if (!ibas.strings.isEmpty(control.getIdForLabel())) {
+                                        let label: any = sap.ui.getCore().byId(control.getIdForLabel());
+                                        if (label instanceof sap.m.Label) {
+                                            label.setVisible(true);
                                         }
                                     }
                                 }

@@ -86,6 +86,8 @@ namespace ibas {
         boCode: string;
         /** 连接的值 */
         linkValue: string | ICriteria | ICondition[];
+        /** 是否更新地址hash值 */
+        changeHashUrl?: boolean;
     }
     /** 业务对象选择服务的契约 */
     export interface IBOChooseServiceContract extends IServiceContract {

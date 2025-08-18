@@ -7,6 +7,8 @@
  */
 namespace shell {
     export namespace app {
+        /** 配置项目-开启刷新登出 */
+        export const CONFIG_ITEM_ENABLE_REFRESH_LOGOUT: string = "enableRefreshLogout";
         /** 应用-登陆 */
         export class LoginApp extends ibas.Application<ILoginView> {
             /** 应用标识 */
@@ -34,11 +36,34 @@ namespace shell {
                 let userTokenParam: ibas.KeyText = ibas.urls.param(ibas.CONFIG_ITEM_USER_TOKEN);
                 if (!ibas.objects.isNull(userTokenParam)) {
                     userToken = userTokenParam.text;
-                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from urls.");
+                    // ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from urls.");
                 }
                 if (ibas.strings.isEmpty(userToken)) {
                     userToken = ibas.cookies.get(ibas.CONFIG_ITEM_USER_TOKEN);
-                    ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from cookies.");
+                    if (!ibas.objects.isNull(userToken)) {
+                        // ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from cookies.");
+                    }
+                }
+                if (ibas.strings.isEmpty(userToken)) {
+                    if (ibas.config.get(CONFIG_ITEM_ENABLE_REFRESH_LOGOUT) !== false) {
+                        sessionStorage.removeItem(ibas.CONFIG_ITEM_USER_TOKEN);
+                        sessionStorage.removeItem(btoa(ibas.strings.valueOf([ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION), ibas.strings.toHex(ibas.CONFIG_ITEM_USER_TOKEN)])));
+                    }
+                    userToken = sessionStorage.getItem(btoa(ibas.strings.valueOf([ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION), ibas.strings.toHex(ibas.CONFIG_ITEM_USER_TOKEN)])));
+                    if (!ibas.objects.isNull(userToken)) {
+                        try {
+                            // ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: got token from session storage.");
+                            userToken = ibas.strings.hexTo(userToken);
+                            let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                            for (let i: number = userToken.length - 1; i >= 0; i--) {
+                                builder.append(userToken[i]);
+                            }
+                            builder.append("=");
+                            userToken = decodeURIComponent(atob(builder.toString()));
+                        } catch (error) {
+                            userToken = undefined;
+                        }
+                    }
                 }
                 if (!ibas.strings.isEmpty(userToken)) {
                     ibas.logger.log(ibas.emMessageLevel.DEBUG, "app: use token login system.");
@@ -52,6 +77,9 @@ namespace shell {
                     window.history.replaceState(null, null, window.location.pathname + window.location.hash);
                     // 发送登录连接请求后，清理Cookies
                     ibas.cookies.remove(ibas.CONFIG_ITEM_USER_TOKEN);
+                    // 发送登录连接请求后，清理存储
+                    sessionStorage.removeItem(ibas.CONFIG_ITEM_USER_TOKEN);
+                    sessionStorage.removeItem(btoa(ibas.strings.valueOf([ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION), ibas.strings.toHex(ibas.CONFIG_ITEM_USER_TOKEN)])));
                 } else {
                     super.run.apply(this, arguments);
                 }
@@ -113,6 +141,14 @@ namespace shell {
                             ibas.strings.format("{0} {1}", ibas.config.get(ibas.CONFIG_ITEM_USER_TOKEN_WAY), user.token));
                     } else {
                         ibas.config.set(ibas.CONFIG_ITEM_USER_TOKEN, user.token);
+                    }
+                    if (ibas.config.get(CONFIG_ITEM_ENABLE_REFRESH_LOGOUT) === false) {
+                        let value: string = btoa(encodeURIComponent(user.token));
+                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                        for (let i: number = value.length - 2; i >= 0; i--) {
+                            builder.append(value[i]);
+                        }
+                        sessionStorage.setItem(btoa(ibas.strings.valueOf([ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION), ibas.strings.toHex(ibas.CONFIG_ITEM_USER_TOKEN)])), ibas.strings.toHex(builder.toString()));
                     }
                     // 注册运行变量
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_ID, user.id);
@@ -177,12 +213,20 @@ namespace shell {
                                     }
                                 });
                             } catch (error) {
-                                this.messages(error);
+                                if (this.isViewShowed()) {
+                                    this.messages(error);
+                                } else {
+                                    this.show();
+                                }
                             }
                         }
                     });
                 } catch (error) {
-                    this.messages(error);
+                    if (this.isViewShowed()) {
+                        this.messages(error);
+                    } else {
+                        this.show();
+                    }
                 }
             }
         }

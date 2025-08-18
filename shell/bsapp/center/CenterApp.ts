@@ -251,6 +251,9 @@ namespace shell {
                     onCompleted: (action: ibas.emMessageAction) => {
                         if (action === ibas.emMessageAction.YES) {
                             this.view.destroyView(this.view);
+                            ibas.cookies.remove(ibas.CONFIG_ITEM_USER_TOKEN);
+                            sessionStorage.removeItem(ibas.CONFIG_ITEM_USER_TOKEN);
+                            sessionStorage.removeItem(btoa(ibas.strings.valueOf([ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION), ibas.strings.toHex(ibas.CONFIG_ITEM_USER_TOKEN)])));
                             window.location.hash = "";
                         }
                     }

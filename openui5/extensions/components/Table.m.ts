@@ -191,7 +191,7 @@ namespace sap {
                         /** 排序属性 */
                         sortProperty: { type: "string" },
                         /** 排序间隔步长，0:不支持调整 */
-                        sortIntervalStep: { type: "int", defaultValue: 1 },
+                        sortIntervalStep: { type: "int", defaultValue: 0 },
                     },
                     events: {}
                 },
@@ -239,7 +239,7 @@ namespace sap {
                             mSettings.items.sorter = [
                                 new sap.ui.model.Sorter(mSettings.sortProperty, false)
                             ];
-                            if (!(mSettings.sortIntervalStep <= 0)) {
+                            if (mSettings.sortIntervalStep > 0) {
                                 // 步长为0，不支持拖动
                                 if (ibas.objects.isNull(mSettings.dragDropConfig)) {
                                     mSettings.dragDropConfig = [];

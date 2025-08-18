@@ -96,12 +96,16 @@ namespace shell {
              * @param caller 用户口令登录调用者
              */
             tokenConnect(caller: ITokenConnectCaller): void {
-                let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
-                if (ibas.objects.isNull(remoteRepository)) {
-                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
-                }
-                let method: string = ibas.strings.format("tokenConnect?token={0}", caller.token);
-                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                builder.map(undefined, "");
+                builder.map(null, "");
+                builder.append("token");
+                builder.append("=");
+                builder.append(caller.token);
+                let remoteRepository: ibas.IRemoteRepository = new ConnectRemoteRepositoryAjax();
+                remoteRepository.address = this.address;
+                remoteRepository.converter = this.createConverter();
+                remoteRepository.callRemoteMethod("tokenConnect", builder.toString(), (opRslt) => {
                     if (opRslt.resultCode === 0) {
                         ibas.config.set(CONFIG_ITEM_CONNECTION_WAY, CONNECTION_WAY_USER_TOKEN);
                     }
