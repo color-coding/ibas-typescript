@@ -84,6 +84,7 @@ namespace ibas {
                     } else {
                         throw new Error(i18n.prop("sys_invalid_view", this.name));
                     }
+                    this.beforeViewShow();
                     this.viewShower.show(this.view);
                     logger.log(emMessageLevel.DEBUG, "app: [{0} - {1}]'s view displayed.", this.id, this.name);
                     this.viewShowed();
@@ -101,6 +102,9 @@ namespace ibas {
         /** 注册视图 */
         protected registerView(): void {
             this.view.closeEvent = this.close;
+        }
+        /** 视图显示前 */
+        protected beforeViewShow(): void {
         }
         /** 视图显示后 */
         protected abstract viewShowed(): void;

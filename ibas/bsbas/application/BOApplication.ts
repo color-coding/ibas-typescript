@@ -544,11 +544,12 @@ namespace ibas {
         protected changeHashUrl: boolean = true;
         /** 查询数据 */
         protected abstract fetchData(criteria: ICriteria | string): void;
-        /** 视图显示后 */
-        protected viewShowed(): void {
-            super.viewShowed();
+        /** 视图显示前 */
+        protected beforeViewShow(): void {
             // 更新当前hash地址
-            if (this.changeHashUrl === true && this.viewData instanceof BusinessObject && !(this.view instanceof ibas.DialogView)) {
+            if (this.changeHashUrl === true
+                && this.viewData instanceof BusinessObject && this.viewData.isNew === false
+                && !(this.view instanceof ibas.DialogView)) {
                 let criteria: ICriteria = this.viewData.criteria();
                 if (!objects.isNull(criteria) && criteria.conditions.length > 0) {
                     let builder: StringBuilder = new StringBuilder();
@@ -569,7 +570,10 @@ namespace ibas {
                     window.history.replaceState(null, null, encodeURI(builder.toString()));
                 }
             }
-
+        }
+        /** 视图显示后 */
+        protected viewShowed(): void {
+            super.viewShowed();
         }
     }
 }
