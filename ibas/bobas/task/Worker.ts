@@ -246,7 +246,7 @@ namespace ibas {
         }
         const WORKER_NAMES: Map<any, string> = new Map<any, string>();
         export function init<T extends Worker>(worker: T, extraConfigs?: { key: string, value: any }[]): T {
-            let configs: IList<{ key: string, value: any }> = config.all();
+            let configs: IList<{ key: string, value: any }> = config.all(new ArrayList<any>());
             if (extraConfigs instanceof Array) {
                 for (let item of extraConfigs) {
                     configs.add(item);
