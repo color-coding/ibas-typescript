@@ -801,6 +801,11 @@ namespace sap {
                         if (template instanceof sap.ui.core.Control) {
                             let bindingPath: string = managedobjects.bindingPath(template);
                             let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                            if (index < 0 && ibas.strings.isWith(bindingPath, "userFields/", undefined)) {
+                                if (column.getPropertyInfo instanceof Function) {
+                                    index = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, (<any>column).getPropertyInfo()?.name));
+                                }
+                            }
                             if (index < 0) {
                                 continue;
                             }
