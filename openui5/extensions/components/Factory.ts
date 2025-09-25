@@ -292,6 +292,12 @@ namespace sap {
                             }).bindProperty("bindingValue", bindInfo);
 
                         }
+                    } else if (ibas.strings.equalsIgnoreCase(property.dataType, "Memo")) {
+                        return new sap.extension.m.TextArea("", {
+                            rows: 1,
+                            editable: property.authorised === ibas.emAuthoriseType.ALL ? true : false,
+                            required: property.required,
+                        }).bindProperty("bindingValue", bindInfo);
                     } else if (!ibas.strings.isEmpty(property.linkedObject)) {
                         let input: sap.m.InputBase = newInput(property.linkedObject, onChanged, property.valueChooseType);
                         input.bindProperty("bindingValue", bindInfo);

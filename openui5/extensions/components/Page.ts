@@ -315,6 +315,7 @@ namespace sap {
                     checkFormContent(layout, properties);
                 }
                 let splitter: any;
+                let control: any;
                 for (let property of properties) {
                     if (ibas.objects.isNull(property)) {
                         continue;
@@ -369,7 +370,7 @@ namespace sap {
                             text: property.systemed !== true ? property.description :
                                 ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
                         }));
-                        splitter.addContent(factories.newComponent(property, "Input", !ibas.strings.isEmpty(property.linkedObject) ? (event) => {
+                        control = factories.newComponent(property, "Input", !ibas.strings.isEmpty(property.linkedObject) ? (event) => {
                             let source: any = sap.ui.getCore().byId(event.getParameter("id"));
                             if (source instanceof sap.m.Input && event.getId() === "changed") {
                                 let chsInfo: string = source.getTooltip_AsString();
@@ -442,7 +443,11 @@ namespace sap {
                                     }
                                 }
                             }
-                        } : undefined));
+                        } : undefined);
+                        if (control instanceof sap.m.TextArea) {
+                            control.setRows(3);
+                        }
+                        splitter.addContent(control);
                     }
                     // 默认是否显示自定义字段界面
                     if (splitter.getContent().length > 0) {
