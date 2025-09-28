@@ -353,6 +353,8 @@ namespace sap {
                         criteria: { type: "any" },
                         /** 描述值 */
                         describeValue: { type: "boolean", defaultValue: true },
+                        /** 值描述条件 */
+                        describeCriteria: { type: "any" },
                     },
                     events: {}
                 },
@@ -488,19 +490,24 @@ namespace sap {
                     return this;
                 },
                 describeValue(this: RepositoryInput, value: string): void {
-                    let condition: ibas.ICondition;
-                    let criteria: ibas.ICriteria = new ibas.Criteria();
+                    let criteria: ibas.ICriteria;
                     let dataInfo: repository.IDataInfo = this.getDataInfo();
-                    criteria.noChilds = true;
-                    for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
-                        if (ibas.strings.isEmpty(item)) {
-                            continue;
-                        }
-                        condition = criteria.conditions.create();
-                        condition.alias = dataInfo.key;
-                        condition.value = item;
-                        if (criteria.conditions.length > 0) {
-                            condition.relationship = ibas.emConditionRelationship.OR;
+                    if (this.getDescribeCriteria() instanceof Function) {
+                        criteria = this.getDescribeCriteria()(value);
+                    }
+                    if (!(criteria instanceof ibas.Criteria)) {
+                        criteria = new ibas.Criteria();
+                        criteria.noChilds = true;
+                        for (let item of String(value).split(ibas.DATA_SEPARATOR)) {
+                            if (ibas.strings.isEmpty(item)) {
+                                continue;
+                            }
+                            let condition: ibas.ICondition = criteria.conditions.create();
+                            condition.alias = dataInfo.key;
+                            condition.value = item;
+                            if (criteria.conditions.length > 0) {
+                                condition.relationship = ibas.emConditionRelationship.OR;
+                            }
                         }
                     }
                     repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,

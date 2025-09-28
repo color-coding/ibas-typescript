@@ -1586,7 +1586,12 @@ namespace ibas {
          * @param data 数据
          * @param datas 数据组
          */
-        export function create<T>(data: T | T[] | Iterable<T>, ...datas: T[] | T[][] | Iterable<T>[] | Iterable<T>[][]): IList<T>;
+        export function create<T>(data: T | T[] | Iterable<T>, ...datas: any[]): IList<T>;
+        /**
+         * 创建数组
+         * @param data 数据
+         */
+        export function create<T>(): IList<T>;
         /**
          * 创建数组
          */

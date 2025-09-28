@@ -156,7 +156,7 @@ namespace ibas {
          * 返回符合条件的数组
          */
         where(lambda: (value: T) => boolean): T[] {
-            let values: Array<T> = new Array<T>();
+            let values: ArrayList<T> = new ArrayList<T>();
             if (lambda instanceof Function) {
                 for (let item of this) {
                     if (lambda(item)) {

@@ -134,6 +134,16 @@ declare namespace sap {
                  */
                 setDescribeValue(value: boolean): this;
                 /**
+                 * 获取值描述条件方法
+                 * @param value 方法
+                 */
+                getDescribeCriteria(): (value: string) => ibas.ICriteria;
+                /**
+                 * 设置值描述条件方法
+                 * @param value 方法
+                 */
+                setDescribeCriteria(value: (value: string) => ibas.ICriteria): this;
+                /**
                  * 返回项目对应的查询条件
                  * @param item 项目
                  */

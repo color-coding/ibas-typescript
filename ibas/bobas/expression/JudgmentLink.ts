@@ -350,10 +350,10 @@ namespace ibas {
      */
     export class BOJudgmentLinkCondition extends BOJudgmentLink {
         /** 解析查询条件 */
-        parsingConditions(conditions: ICondition[]): void {
+        parsingConditions(conditions: ICondition[]): this {
             // 判断无条件
             if (objects.isNull(conditions) || conditions.length === 0) {
-                return;
+                return this;
             }
             let jLinkItems: ArrayList<IJudgmentLinkItem> = new ArrayList<IJudgmentLinkItem>();
             for (let item of conditions) {
@@ -388,6 +388,7 @@ namespace ibas {
                 throw new Error(i18n.prop("sys_invaild_judgment_link_conditions"));
             }
             super.judgmentItems = jLinkItems;
+            return this;
         }
     }
 }

@@ -68,6 +68,16 @@ declare namespace sap {
                  * @param value 值
                  */
                 protected describeValue(value: string): void;
+                /**
+                 * 获取值描述条件方法
+                 * @param value 方法
+                 */
+                getDescribeCriteria(): (value: string) => ibas.ICriteria;
+                /**
+                 * 设置值描述条件方法
+                 * @param value 方法
+                 */
+                setDescribeCriteria(value: (value: string) => ibas.ICriteria): this;
             }
             /**
              * 对象属性可选值-文本框
