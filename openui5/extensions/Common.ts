@@ -511,10 +511,10 @@ namespace sap {
                 }
                 return false;
             }
-            function nonEditable(control: any, properties?: string[]): void {
+            export function nonEditable(control: any, properties?: string[]): void {
                 editable(control, false, properties);
             }
-            function editable(control: any, status: boolean, properties?: string[]): void {
+            export function editable(control: any, status: boolean, properties?: string[]): void {
                 if (!(properties instanceof Array)) {
                     properties = [];
                 }

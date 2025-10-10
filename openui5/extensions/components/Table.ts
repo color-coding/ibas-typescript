@@ -1506,9 +1506,17 @@ namespace sap {
                     (<any>sap.ui.table.TreeTable.prototype).exit.apply(this, arguments);
                 },
                 // 1.70以上兼容问题
+                _hasSelectionPlugin(): boolean {
+                    if ((<any>sap.ui.table.TreeTable.prototype)._hasSelectionPlugin) {
+                        return (<any>sap.ui.table.TreeTable.prototype)._hasSelectionPlugin.apply(this, arguments);
+                    } else if ((<any>sap.ui.table.plugins.SelectionPlugin).findOn) {
+                        return (<any>sap.ui.table.plugins.SelectionPlugin).findOn(this) ? true : false;
+                    }
+                    return undefined;
+                },
                 setSelectionMode(this: TreeTable): TreeTable {
                     // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
+                    if ((this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true)) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectionMode.apply(plugin, arguments);
@@ -1526,7 +1534,7 @@ namespace sap {
                     }
                     return sap.ui.table.TreeTable.prototype.setSelectedIndex.apply(this, arguments);
                 },
-                clearSelection(this: Table): TreeTable {
+                clearSelection(this: TreeTable): TreeTable {
                     // tslint:disable-next-line: no-string-literal
                     if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
@@ -1545,21 +1553,6 @@ namespace sap {
                         }
                     }
                     return sap.ui.table.TreeTable.prototype.selectAll.apply(this, arguments);
-                },
-                /**
-                 * 选中索引（兼容方法），-1 表示未选中
-                 * @returns number
-                 */
-                getSelectedIndex(this: TreeTable): number {
-                    // tslint:disable-next-line: no-string-literal
-                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
-                        let selecteds: number[] = this.getSelectedIndices();
-                        if (selecteds && selecteds.length > 0) {
-                            return selecteds[0];
-                        }
-                        return -1;
-                    }
-                    return (<any>sap.ui.table.TreeTable).prototype.getSelectedIndex.apply(this, arguments);
                 },
                 getSelectedIndices(this: TreeTable): TreeTable {
                     // tslint:disable-next-line: no-string-literal

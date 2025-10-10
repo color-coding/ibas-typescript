@@ -18,7 +18,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "Date", defaultValue: null },
+                        bindingValue: { type: "object", defaultValue: null },
                         /** 值模板 */
                         valueFormat: { type: "string", group: "Data", defaultValue: DEFAULT_FORMAT_DATE },
                         /** 显示模板 */
@@ -101,7 +101,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "Date", defaultValue: null },
+                        bindingValue: { type: "object", defaultValue: null },
                         /** 值模板 */
                         valueFormat: { type: "string", group: "Data", defaultValue: DEFAULT_FORMAT_TIME },
                         /** 显示模板 */
@@ -191,7 +191,7 @@ namespace sap {
                         /** 时间 */
                         timePart: { type: "int", defaultValue: 0 },
                         /** 日期 */
-                        datePart: { type: "Date", defaultValue: null },
+                        datePart: { type: "object", defaultValue: null },
                         /** 值模板 */
                         valueFormat: { type: "string", group: "Data", defaultValue: DEFAULT_FORMAT_DATETIME },
                         /** 显示模板 */

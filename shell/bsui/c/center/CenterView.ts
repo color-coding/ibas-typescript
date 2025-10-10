@@ -759,7 +759,9 @@ namespace shell {
                         title = view.id;
                     }
                     let viewContent: sap.m.Dialog = view.draw();
-                    if (!(viewContent instanceof sap.m.Dialog)) {
+                    if (viewContent instanceof sap.m.BusyDialog) {
+                        // 忙对话框
+                    } else if (!(viewContent instanceof sap.m.Dialog)) {
                         viewContent = new sap.m.Dialog("", {
                             title: title,
                             type: sap.m.DialogType.Standard,

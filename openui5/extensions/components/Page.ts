@@ -220,20 +220,25 @@ namespace sap {
                                     control.setVisible(false);
                                     // 设置此行其他控件不可见，如：label
                                     let fmParent: any = control.getParent();
+                                    if (fmParent instanceof sap.m.FlexBox) {
+                                        if (!ibas.objects.isNull(fmParent.getItems().find(c => c.getVisible()))) {
+                                            return;
+                                        }
+                                    }
                                     if (!(fmParent instanceof sap.ui.layout.form.FormElement)) {
                                         fmParent = fmParent.getParent();
                                     }
                                     if (fmParent instanceof sap.ui.layout.form.FormElement) {
                                         let label: any = fmParent.getLabel();
-                                        if (label instanceof sap.ui.core.Control) {
-                                            label.setVisible(false);
-                                        }
                                         if (fmParent.getFields() instanceof Array) {
                                             for (let pItem of fmParent.getFields()) {
                                                 if (pItem instanceof sap.ui.core.Control) {
                                                     pItem.setVisible(false);
                                                 }
                                             }
+                                        }
+                                        if (label instanceof sap.ui.core.Control) {
+                                            label.setVisible(false);
                                         }
                                     }
                                 } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
