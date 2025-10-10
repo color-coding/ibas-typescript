@@ -455,7 +455,7 @@ namespace sap {
              * 3. [1,2,3] => Input
              * 4. [{"key1","value1"},{"key2","value2"}] => Input
              * 5. yyyy-MM-dd => DatePicker
-             * 5. hh:mm or hh:mm:ss => TimePicker
+             * 6. hh:mm or hh:mm:ss => TimePicker
              * @param value 值模板
              */
             export function newInput(value: string, onChanged?: (event: sap.ui.base.Event) => void, chooseType?: ibas.emChooseType): sap.m.InputBase {

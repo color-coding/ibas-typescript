@@ -572,6 +572,9 @@ namespace sap {
                     sap.ui.model.type.Date.call(this, { pattern: setting?.format });
                 },
                 formatValue(oValue: any, sInternalType: string): any {
+                    if (oValue === undefined) {
+                        return oValue;
+                    }
                     if (typeof oValue === sInternalType) {
                         return oValue;
                     }
@@ -701,13 +704,27 @@ namespace sap {
                     sap.ui.model.type.DateTime.call(this, { pattern: setting?.format });
                 },
                 formatValue(oValue: any, sInternalType: string): any {
+                    if (oValue === undefined) {
+                        return oValue;
+                    }
                     if (typeof oValue === sInternalType) {
                         return oValue;
+                    }
+                    if (oValue instanceof globalThis.Date) {
+                        if (sInternalType === "Date") {
+                            return oValue;
+                        }
+                        if (sInternalType === "object") {
+                            return oValue;
+                        }
                     }
                     return sap.ui.model.type.DateTime.prototype.formatValue.apply(this, arguments);
                 },
                 parseValue(oValue: any, sInternalType: string): any {
                     if (sInternalType === "Date") {
+                        return oValue;
+                    }
+                    if (sInternalType === "object" && oValue instanceof globalThis.Date) {
                         return oValue;
                     }
                     return sap.ui.model.type.DateTime.prototype.parseValue.apply(this, arguments);
