@@ -22,7 +22,7 @@ namespace shell {
                         fixed = false;
                         if (sap.ui.Device.system.phone === true && sap.ui.Device.os.android === true) {
                             fixed = true;
-                            let userAgent = navigator.userAgent.toLowerCase();
+                            let userAgent: any = navigator.userAgent.toLowerCase();
                             if (userAgent) {
                                 if (String(userAgent.match(/MicroMessenger/i)) === "micromessenger") {
                                     fixed = false;
@@ -34,7 +34,7 @@ namespace shell {
                     }
                     if (fixed === true) {
                         if (document.documentElement.clientHeight < screen.availHeight) {
-                            app.setHeight(document.documentElement.clientWidth / screen.availWidth * screen.availHeight - 26 + 'px');
+                            app.setHeight(document.documentElement.clientWidth / screen.availWidth * screen.availHeight - 26 + "px");
                         }
                     }
                     return app;

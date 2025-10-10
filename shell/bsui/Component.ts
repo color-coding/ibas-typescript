@@ -8,6 +8,11 @@
 namespace shell {
     export namespace ui {
         export namespace component {
+            const NavigationListItemDesign: any = (<any>sap.tnt).NavigationListItemDesign;
+            const AriaHasPopup: any = sap.ui.core.aria.HasPopup;
+            const EXPAND_ICON_SRC: string = "sap-icon://navigation-right-arrow";
+            const COLLAPSE_ICON_SRC: string = "sap-icon://navigation-down-arrow";
+
             sap.tnt.NavigationListItem.extend("shell.ui.component.NavigationListSearchItem", {
                 metadata: {
                     properties: {
@@ -41,7 +46,7 @@ namespace shell {
                         search: (oEvent: sap.ui.base.Event) => {
                             this.fireSearch({ searchValue: oEvent.getParameter("query") });
                         },
-                    }));
+                    }).addStyleClass("sapMText sapTntNLIText sapMTextNoWrap"));
                     this.setAggregation("_switchButton", new sap.m.Button("", {
                         icon: "sap-icon://switch-views",
                         tooltip: ibas.i18n.prop(["shell_all", "shell_apply"]),
@@ -70,6 +75,7 @@ namespace shell {
                     this.setProperty("showSwitch", value);
                     return this;
                 },
+                /** 1.108 */
                 renderGroupItem(rm: any, control: any): void {
                     let isListExpanded: any = this._isListExpanded(),
                         isNavListItemExpanded: any = this.getExpanded(),
@@ -139,9 +145,8 @@ namespace shell {
                         rm.attr("rel", (<any>sap.ui).util.defaultLinkTypes("", target));
                     }
                     rm.openEnd();
-                    if (!control.getExpanded()) {
-                        this._renderIcon(rm);
-                    }
+                    this._renderIcon(rm);
+
                     if (control.getExpanded()) {
                         let expandIconControl: any = this._getExpandIconControl();
                         expandIconControl.setVisible(this.getItems().length > 0 && this.getHasExpander());
@@ -159,6 +164,150 @@ namespace shell {
                     rm.close("a");
 
                     rm.close("div");
+                },
+                /** 1.120 */
+                onkeydown(): void { },
+                onkeyup(): void { },
+                renderMainElement(oRM: any, oNavigationList: any, sSubtreeId: any): void {
+                    const bListExpanded: any = this._isListExpanded(),
+                        aItems: any = this._getVisibleItems(this),
+                        bDisabled: any = !this.getEnabled() || !this.getAllParentsEnabled(),
+                        bExpanded: any = this.getExpanded(),
+                        bSelectable: any = this.getSelectable(),
+                        sDesign: any = this.getDesign(),
+                        bExpanderVisible: any = !!aItems.length && this.getHasExpander(),
+                        bExternalLink: any = this.getHref() && this.getTarget() === "_blank";
+
+                    oRM.openStart("div")
+                        .class("sapTntNLI")
+                        .class("sapTntNLIFirstLevel");
+
+                    if (bDisabled) {
+                        oRM.class("sapTntNLIDisabled");
+                    }
+
+                    if (bExternalLink) {
+                        oRM.class("sapTntNLIExternalLink");
+                    }
+
+                    let bSelected: boolean = false;
+                    if (bSelectable && oNavigationList._selectedItem === this) {
+                        oRM.class("sapTntNLISelected");
+                        bSelected = true;
+                    }
+
+                    if ((!bListExpanded || !bExpanded) && aItems.includes(oNavigationList._selectedItem)) {
+                        oRM.class("sapTntNLISelected");
+                        bSelected = true;
+                    }
+
+                    if (bExpanderVisible) {
+                        oRM.class("sapTntNLIWithExpander");
+                    }
+
+                    if (bSelectable && aItems.length) {
+                        oRM.class("sapTntNLITwoClickAreas");
+                    }
+
+                    const oLinkAriaProps: any = {};
+
+                    if (this.getAriaHasPopup() !== AriaHasPopup.None) {
+                        oLinkAriaProps.haspopup = this.getAriaHasPopup();
+                    }
+
+                    if (sDesign === NavigationListItemDesign.Action) {
+                        oRM.class("sapTntNLIAction");
+                    }
+
+                    if (!bSelectable) {
+                        oRM.class("sapTntNLIUnselectable");
+                    }
+
+                    if (this._isInsidePopover()) {
+                        oRM.class("sapTntNLIInPopover");
+                    }
+
+                    if (!bListExpanded) {
+                        oLinkAriaProps.role = bSelectable ? "menuitemradio" : "menuitem";
+
+                        if (aItems.length) {
+                            oLinkAriaProps.haspopup = "tree";
+                        }
+
+                        if (this._isOverflow) {
+                            oLinkAriaProps.haspopup = "menu";
+                            oLinkAriaProps.label = this._resourceBundleTnt.getText("NAVIGATION_LIST_OVERFLOW_ITEM_LABEL");
+                        }
+
+                        if (bSelectable) {
+                            oLinkAriaProps.checked = oNavigationList._selectedItem === this;
+                            oLinkAriaProps.selected = bSelected;
+                        } else {
+                            oLinkAriaProps.selected = false;
+                        }
+
+                        oLinkAriaProps.roledescription = this._resourceBundleTnt.getText("NAVIGATION_LIST_ITEM_ROLE_DESCRIPTION_MENUITEM");
+                    } else {
+                        if (this.getSelectable() && this.getItems().length) {
+                            oLinkAriaProps.description = this._resourceBundleTnt.getText("NAVIGATION_LIST_KEYBOARD_NAVIGATION") + " " + this.getText();
+                        }
+
+                        oLinkAriaProps.role = "treeitem";
+
+                        if (bSelectable) {
+                            oLinkAriaProps.selected = bSelected;
+                        } else {
+                            oLinkAriaProps.selected = false;
+                        }
+
+                        if (bSelected) {
+                            oLinkAriaProps.current = "page";
+                        }
+
+                        if (aItems.length) {
+                            oLinkAriaProps.owns = sSubtreeId;
+                            oLinkAriaProps.expanded = bExpanded;
+                        }
+                    }
+
+                    oRM.openEnd();
+
+                    this._renderStartLink(oRM, oLinkAriaProps, bDisabled);
+
+                    this._renderIcon(oRM);
+
+                    // 不输出文字
+                    if (!bListExpanded) {
+                        this._renderText(oRM);
+                    }
+
+                    if (bExternalLink) {
+                        this._renderExternalLinkIcon(oRM);
+                    }
+
+                    if (bListExpanded) {
+                        const oIcon: any = this._getExpandIconControl();
+                        oIcon.setVisible(bExpanderVisible)
+                            .setSrc(bExpanded ? COLLAPSE_ICON_SRC : EXPAND_ICON_SRC)
+                            .setTooltip(this._getExpandIconTooltip(!bExpanded));
+
+                        // 输出查询控件
+                        oRM.renderControl(this.getAggregation("_searchField", null));
+                        if (this.getShowSwitch()) {
+                            oRM.renderControl(this.getAggregation("_switchButton", null));
+                        }
+
+                        oRM.renderControl(oIcon);
+                    }
+
+                    if (!bListExpanded && this.getItems().length) {
+                        const oIcon: any = this._getExpandIconControl().setSrc(EXPAND_ICON_SRC);
+                        oRM.renderControl(oIcon);
+                    }
+
+                    this._renderCloseLink(oRM);
+
+                    oRM.close("div");
                 },
                 /** 改变状态 */
                 chanageStatus(this: NavigationListSearchItem, status: "sap-icon://switch-views" | "sap-icon://switch-classes"): NavigationListSearchItem {

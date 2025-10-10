@@ -22,6 +22,7 @@ declare var __magic__: any;
     __magic__.globalThis = __magic__;
     delete (<any>Object.prototype).__magic__;
 }());
+
 namespace loader {
     // 解决方法缺失
     if (typeof String.prototype.startsWith === undefined) {
@@ -46,38 +47,42 @@ namespace loader {
         /** 运行时标记 */
         export const runtime: string = Number(buildtime) > 0 ? buildtime : String(Math.floor(new Date().getTime() / 1000));
         /** 创建require方法 */
-        export function create(name: string, baseUrl: string): Require;
+        export function create(name: string, baseUrl: string, map?: { [id: string]: { [id: string]: string } }): Require;
         /** 创建require方法 */
-        export function create(name: string, baseUrl: string, noCache: boolean): Require;
+        export function create(name: string, baseUrl: string, noCache: boolean, map?: { [id: string]: { [id: string]: string } }): Require;
         /** 创建require方法 */
         export function create(): Require {
-            let name: string = arguments[0], baseUrl: string = arguments[1], noCache: boolean = arguments[2];
+            let name: string = arguments[0], baseUrl: string = arguments[1], noCache: boolean = arguments[2], map: any = arguments[3];
             if (noCache) {
                 // 不使用缓存
                 return (<any>window).requirejs.config({
                     context: name,
                     baseUrl: baseUrl,
+                    map: map,
                     urlArgs: function (id: string, url: string): string {
                         return (url.indexOf("?") === -1 ? "?" : "&") + "_=" + requires.runtime;
-                    }
+                    },
                 });
             } else {
                 return (<any>window).requirejs.config({
                     context: name,
-                    baseUrl: baseUrl
+                    baseUrl: baseUrl,
+                    map: map,
                 });
             }
         }
     }
     export namespace openui5 {
         // 官方地址
-        export const URL_OFFICIAL: string = "https://sdk.openui5.org/1.108.40/resources/sap-ui-core.js";
+        export const URL_OFFICIAL: string = "https://sdk.openui5.org/1.108.46/resources/sap-ui-core.js";
         // 本地路径
         export const URL_LOCAL: string = "openui5/resources/sap-ui-core.js";
         // index路径
         export const URL_INDEX: string = "openui5/index";
         // element标记
         export const URL_SCRIPT_ELEMENT_ID: string = "sap-ui-bootstrap";
+        /** 配置项目-扩展的css库 */
+        export const CONFIG_ITEM_EXTEND_CSS_LIBRARY: string = "extendStyles";
 
         /** 加载调用者 */
         export interface ILoaderCaller {
@@ -134,9 +139,33 @@ namespace loader {
         }
         /** 扩展 */
         export function extend(caller: ILoaderCaller): void {
-            requires.create("_", caller.url, caller.noCache)([
+            let css: string = ibas.config.get(CONFIG_ITEM_EXTEND_CSS_LIBRARY, "");
+            let libs: string[] = [
                 URL_INDEX + (caller.minLibrary ? SIGN_MIN_LIBRARY : "")
-            ], caller.onSuccess, caller.onError);
+            ];
+            if (!ibas.strings.isEmpty(css)) {
+                for (let item of css.split(",")) {
+                    libs.push(ibas.strings.format("css!{0}", item));
+                }
+                requires.create("_", caller.url, caller.noCache, {
+                    "*": {
+                        "css": ibas.strings.format("{0}/3rdparty/require-css{1}.js",
+                            ibas.urls.rootUrl("/ibas/index"),
+                            (this.minLibrary ? ibas.SIGN_MIN_LIBRARY : "")
+                        )
+                    }
+                })(
+                    libs,
+                    caller.onSuccess,
+                    caller.onError,
+                );
+            } else {
+                requires.create("_", caller.url, caller.noCache)(
+                    libs,
+                    caller.onSuccess,
+                    caller.onError,
+                );
+            }
         }
         /** 创建脚本元素 */
         function createScriptElement(): HTMLScriptElement {

@@ -819,7 +819,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 日期 */
-                        date: { type: "Date" },
+                        date: { type: "object" },
                         /** 汇率 */
                         rate: { type: "float" },
                         /** 币种 */
@@ -838,7 +838,7 @@ namespace sap {
                                     type: "string"
                                 },
                                 date: {
-                                    type: "Date"
+                                    type: "object"
                                 },
                                 currency: {
                                     type: "string"

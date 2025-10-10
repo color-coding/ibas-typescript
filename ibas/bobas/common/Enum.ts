@@ -132,10 +132,10 @@ namespace ibas {
         APPROVED,
         /** 已拒绝 */
         REJECTED,
+        /** 已退回 */
+        RETURNED,
         /** 已取消 */
         CANCELLED,
-        /** 已退回 */
-        RETURNED
     }
     /**
      * 审批结果

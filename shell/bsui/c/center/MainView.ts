@@ -9,10 +9,15 @@ namespace shell {
     export namespace ui {
         /** 配置项目-界面背景 */
         export const CONFIG_ITEM_BACKGROUND_IMAGE: string = "backgroundImage";
-        /** 配置项目-界面透明度 */
+        /** 配置项目-界面背景透明度 */
         export const CONFIG_ITEM_BACKGROUND_OPACITY: string = "backgroundOpacity";
+        /** 配置项目-界面背景重复 */
+        export const CONFIG_ITEM_BACKGROUND_REPEAT: string = "backgroundRepeat";
+        /** 配置项目-界面背景优先 */
+        export const CONFIG_ITEM_BACKGROUND_FIRST: string = "backgroundFirst";
         /** 配置项目-图标 */
         export const CONFIG_ITEM_HOME_ICON: string = "homeIcon";
+
         export namespace c {
             /**
              * 视图-入口
@@ -110,6 +115,7 @@ namespace shell {
                     return new sap.m.App(UI_APP, {
                         autoFocus: false,
                         homeIcon: ibas.config.get(CONFIG_ITEM_HOME_ICON, undefined),
+                        backgroundRepeat: ibas.config.get(CONFIG_ITEM_BACKGROUND_REPEAT, false),
                         backgroundImage: ibas.config.get(CONFIG_ITEM_BACKGROUND_IMAGE, undefined),
                         backgroundOpacity: ibas.config.get(CONFIG_ITEM_BACKGROUND_OPACITY, undefined),
                         afterNavigate(event: sap.ui.base.Event): void {

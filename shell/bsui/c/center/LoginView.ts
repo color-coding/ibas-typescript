@@ -22,6 +22,8 @@ namespace shell {
             export const CONFIG_ITEM_ENABLE_LOGIN_VERIFICATION: string = "enableLoginVerification";
             /** 配置项目-空验证码地址 */
             export const CONFIG_ITEM_EMPTY_VERIFICATION_CODE_URL: string = "emptyVerificationCodeUrl";
+            /** 配置项目-样式-登录视图 */
+            export const CONFIG_ITEM_STYLE_CLASS_LOGIN_VIEW: string = "styleClass|LoginView";
             /**
              * 视图-登陆
              */
@@ -51,7 +53,9 @@ namespace shell {
                         usageTerms = undefined;
                     }
                     let that: this = this;
-                    return new sap.ui.layout.form.SimpleForm("", {
+                    let page: sap.ui.core.Control = new sap.ui.layout.form.SimpleForm("", {
+                        backgroundDesign: ibas.config.get<boolean>(CONFIG_ITEM_BACKGROUND_FIRST, false) === true ?
+                            sap.ui.layout.BackgroundDesign.Transparent : sap.ui.layout.BackgroundDesign.Solid,
                         content: [
                             new sap.m.VBox("", {
                                 renderType: sap.m.FlexRendertype.Bare,
@@ -231,6 +235,11 @@ namespace shell {
                             })
                         ]
                     });
+                    let styleClass: string = ibas.config.get(CONFIG_ITEM_STYLE_CLASS_LOGIN_VIEW, "");
+                    if (!ibas.strings.isEmpty(styleClass)) {
+                        page.addStyleClass(styleClass);
+                    }
+                    return page;
                 }
                 /** 按钮按下时 */
                 protected onKeyDown(event: KeyboardEvent): void {
@@ -340,6 +349,7 @@ namespace shell {
                                 }),
                                 contentAreas: [
                                     new sap.m.Page("", {
+                                        backgroundDesign: sap.m.PageBackgroundDesign.Transparent,
                                         showHeader: false,
                                         content: [
                                             new sap.m.FlexBox("", {

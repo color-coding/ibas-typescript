@@ -30,14 +30,13 @@
 /node_modules/
 /openui5/resources
 /openui5/resources/**
-/openui5/index.html
-/openui5/LICENSE.txt
-/openui5/NOTICE.txt
-/openui5/README.txt
+/openui5/*.html
+/openui5/*.txt
+/shell/resources/images/
 
 # local commands
-startup.sh
-shutdown.sh
+*.sh
+*.bat
 
 # exceptions
 !ibas/3rdparty/*.js
