@@ -10,7 +10,13 @@
 /// <reference path="./Component.ts" />
 namespace shell {
     export namespace ui {
+
         export const UI_APP: string = "__UI_APP";
+        /** 配置项目-扩展的css库 */
+        export const CONFIG_ITEM_EXTEND_CSS_LIBRARY: string = "extendStyles";
+        /** 配置项目-视图样式-模板 */
+        export const CONFIG_ITEM_VIEW_STYLE_CLASS_TEMPLATE: string = "styleClass|{0}";
+
         // 语言变化监听
         ibas.i18n.registerListener({
             onLanguageChanged(language: string): void {
@@ -57,6 +63,15 @@ namespace shell {
                 if (ibas.objects.isNull(viewContent)) {
                     ibas.logger.log(ibas.emMessageLevel.WARN, "shower: empty view.");
                     return;
+                }
+                // 给页面加额外样式
+                if (viewContent instanceof sap.ui.core.Control) {
+                    let viewClass: string = ibas.objects.nameOf(view);
+                    let value: string = ibas.config.get(ibas.strings.format(CONFIG_ITEM_VIEW_STYLE_CLASS_TEMPLATE, viewClass));
+                    if (!ibas.strings.isEmpty(value)) {
+                        viewContent.addStyleClass(value);
+                        ibas.logger.log(ibas.emMessageLevel.DEBUG, "shower: view [{0}] add style class [{1}].", viewClass, value);
+                    }
                 }
                 if (viewContent instanceof sap.ui.core.Element) {
                     sap.extension.customdatas.setView(viewContent, view);

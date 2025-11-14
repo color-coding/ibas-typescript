@@ -896,6 +896,15 @@ namespace shell {
                 /** 显示一般视图 */
                 protected showCommonView(view: ibas.View, container: sap.m.Page): void {
                     let viewContent: any = view.draw();
+                    // 给页面加额外样式
+                    if (viewContent instanceof sap.ui.core.Control) {
+                        let viewClass: string = ibas.objects.nameOf(view);
+                        let value: string = ibas.config.get(ibas.strings.format(CONFIG_ITEM_VIEW_STYLE_CLASS_TEMPLATE, viewClass));
+                        if (!ibas.strings.isEmpty(value)) {
+                            viewContent.addStyleClass(value);
+                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: view [{0}] add style class [{1}].", viewClass, value);
+                        }
+                    }
                     if (view instanceof ibas.BOQueryView) {
                         // 添加查询面板
                         let queryView: ibas.IEmbeddedQueryPanel = {

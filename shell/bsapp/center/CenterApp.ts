@@ -392,7 +392,7 @@ namespace shell {
                                     module.console = ibas.strings.format("{0}.app.{1}", module.name.toLowerCase(), module.console);
                                 }
                                 ibas.logger.log(ibas.emMessageLevel.DEBUG,
-                                    "center: module: [{0}], root: [{1}], console: [{2}].", module.name, module.address, module.console);
+                                    "center: module [{0}], root [{1}], console [{2}].", module.name, module.address, module.console);
                                 that.modules.add(module);
                             }
                             let onUncaughtError: EventListener = function (event: ErrorEvent): void {
@@ -421,7 +421,7 @@ namespace shell {
                                                 continue;
                                             }
                                             that.faildModules.add(item);
-                                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] will be reload.", item.name, item.console);
+                                            ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module [{0}|{1}] will be reload.", item.name, item.console);
                                         }
                                         // 移出失败模块
                                         for (let item of that.faildModules) {
@@ -481,7 +481,7 @@ namespace shell {
                                         loader.onStatusMessage(ibas.emMessageType.ERROR, error.message);
                                     } finally {
                                         that.modules.remove(module);
-                                        ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] was loaded.", module.name, module.console);
+                                        ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module [{0}|{1}] was loaded.", module.name, module.console);
                                         if (that.modules.length === 0) {
                                             if (that.faildModules.length === 0) {
                                                 that.modules.clear();
@@ -520,7 +520,7 @@ namespace shell {
              * @param fail 失败时
              */
             protected require(module: bo.IUserModule, success?: Function, fail?: Function): void {
-                ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module: [{0}|{1}] begin to reload.", module.name, module.console);
+                ibas.logger.log(ibas.emMessageLevel.DEBUG, "center: module [{0}|{1}] begin to reload.", module.name, module.console);
                 ibas.requires.require({
                     context: ibas.requires.naming(module.name),
                     baseUrl: module.address,
