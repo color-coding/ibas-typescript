@@ -32,6 +32,8 @@ namespace shell {
             export const CONFIG_ITEM_DISABLE_FUNCTIONS_MENU_SWITCH: string = "disableMenuSwitch";
             /** 配置项目-快捷键映射 */
             export const CONFIG_ITEM_SHORTCUT_KEY_MAPPING: string = "shortcutKeyMapping";
+            /** 配置项目-登录页 */
+            const CONFIG_ITEM_LOGIN_PAGE: string = "loginPage";
             /** 状态消息延迟时间（毫秒） */
             const _STATUS_DELAY: number = ibas.config.get(CONFIG_ITEM_STATUS_MESSAGES_DELAY, 2) * 1000;
             /** 消息数量 */
@@ -1024,7 +1026,20 @@ namespace shell {
                     if (view instanceof CenterView) {
                         // 自身销毁，从浏览器缓存刷新页面
                         ibas.browserEventManager.removeEventListener(ibas.emBrowserEventType.BEFOREUNLOAD);
-                        document.location.replace(document.location.origin + document.location.pathname);
+                        let page: string = ibas.config.get(CONFIG_ITEM_LOGIN_PAGE);
+                        if (!ibas.strings.isEmpty(page)) {
+                            if (!ibas.strings.isWith(page, "/", undefined)) {
+                                page = "/" + page;
+                            }
+                        }
+                        let url: string = document.location.pathname;
+                        if (!ibas.strings.isEmpty(page)) {
+                            if (ibas.strings.isWith(url, undefined, ".html")) {
+                                url = url.substring(0, url.lastIndexOf("/"));
+                            }
+                            url = url + page;
+                        }
+                        document.location.replace(document.location.origin + url);
                         view.isDisplayed = false;
                         view.onClosed();
                         return;

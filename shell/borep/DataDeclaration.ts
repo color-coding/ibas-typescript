@@ -31,6 +31,8 @@ namespace shell {
             Password?: string;
             /* 身份 */
             Identities: string;
+            /* 特征 */
+            Specifics: { Key: string, Text: string }[];
         }
         /** 用户应用模块 */
         export interface IUserModule extends IDataDeclaration {

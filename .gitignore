@@ -2,8 +2,6 @@
 ~*
 *.js
 *.map
-*.bat
-*.sh
 *.tmp
 *.publishproj
 *.sln
@@ -13,26 +11,24 @@
 *.d.ts
 *.config
 .DS_Store
-/.vs/
-/.vscode/
-/.metadata/
-/.recommenders/
-/.settings/
-/RemoteSystemsTempFiles/
-/Servers/
-/tomcat/
-/others/
-/upload/
-/release/
-/target/
-/out/
-/test/apps/
-/node_modules/
+/.vs
+/.vscode
+/.metadata
+/.recommenders
+/.settings
+/RemoteSystemsTempFiles
+/Servers
+/tomcat
+/others
+/upload
+/release
+/target
+/out
+/test/apps
+/node_modules
 /openui5/resources
-/openui5/resources/**
 /openui5/*.html
 /openui5/*.txt
-/shell/resources/images/
 
 # local commands
 *.sh
@@ -42,4 +38,9 @@
 !ibas/3rdparty/*.js
 !openui5/types/*.d.ts
 !openui5/extensions/components/*.d.ts
-!test/apps/trainingtesting/
+!test/apps/trainingtesting
+
+# other pages
+/shell/resources
+/resources
+*.html

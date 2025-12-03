@@ -26,6 +26,12 @@ namespace shell {
             convert(data: any, sign: string): any {
                 if (ibas.objects.instanceOf(data, User)) {
                     let newData: User = data;
+                    let specifics: { Key: string, Text: string }[] = [];
+                    if (data.specifics instanceof Array) {
+                        for (let item of data.specifics) {
+                            specifics.map(this.convert(item, sign));
+                        }
+                    }
                     let remote: bo4j.IUser = {
                         type: User.name,
                         Id: newData.id,
@@ -34,7 +40,8 @@ namespace shell {
                         Super: newData.super,
                         Token: newData.token,
                         Belong: newData.belong,
-                        Identities: ibas.strings.valueOf(newData.identities)
+                        Identities: ibas.strings.valueOf(newData.identities),
+                        Specifics: specifics,
                     };
                     return remote;
                 } else if (ibas.objects.instanceOf(data, UserModule)) {
@@ -164,6 +171,12 @@ namespace shell {
                                 continue;
                             }
                             newData.identities.add(item);
+                        }
+                    }
+                    if (remote.Specifics instanceof Array) {
+                        newData.specifics = new ibas.ArrayList<ibas.KeyText>();
+                        for (let item of remote.Specifics) {
+                            newData.specifics.add(new ibas.KeyText(item.Key, item.Text));
                         }
                     }
                     return newData;

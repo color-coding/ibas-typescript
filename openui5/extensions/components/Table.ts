@@ -194,7 +194,7 @@ namespace sap {
                                 dtRow.cells[i] = cell.getText(true);
                             } else if (cell instanceof sap.m.Link) {
                                 dtRow.cells[i] = cell.getText();
-                            } else if (cell instanceof sap.m.Avatar) {
+                            } else if (cell instanceof sap.m.Avatar || cell instanceof sap.m.Image) {
                                 dtRow.cells[i] = cell.getSrc();
                                 if (ibas.strings.isEmpty(dataTable.columns[i].dataType)) {
                                     dataTable.columns[i].dataType = "Image";

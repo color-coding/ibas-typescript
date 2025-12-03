@@ -19,7 +19,9 @@
     "em_conditionoperation_start": "开始为",
     "em_conditionoperation_end": "结束为",
     "em_conditionoperation_is_null": "是空",
-    "em_conditionoperation_not_null": "非空"
+    "em_conditionoperation_not_null": "非空",
+    "em_conditionoperation_in": "在",
+    "em_conditionoperation_not_in": "不在"
   },
   {
     "em_conditionrelationship_none": "无",

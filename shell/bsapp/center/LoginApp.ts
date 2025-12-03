@@ -151,6 +151,17 @@ namespace shell {
                         sessionStorage.setItem(btoa(ibas.strings.valueOf([ibas.config.get(ibas.CONFIG_ITEM_RUNTIME_VERSION), ibas.strings.toHex(ibas.CONFIG_ITEM_USER_TOKEN)])), ibas.strings.toHex(builder.toString()));
                     }
                     // 注册运行变量
+                    if (user.specifics instanceof Array) {
+                        // 用户特性识别为用户变量
+                        for (let item of user.specifics) {
+                            if (!ibas.strings.isWith(item.key, "USER_", undefined)) {
+                                // 识别为用户变量
+                                continue;
+                            }
+                            ibas.variablesManager.register("${" + item.key + "}", item.text);
+                        }
+                    }
+                    // 系统用户变量（覆盖上）
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_ID, user.id);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_CODE, user.code);
                     ibas.variablesManager.register(ibas.VARIABLE_NAME_USER_NAME, user.name);
