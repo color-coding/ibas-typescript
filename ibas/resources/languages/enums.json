@@ -19,7 +19,9 @@
         "em_conditionoperation_start": "Starts with",
         "em_conditionoperation_end": "Ends with",
         "em_conditionoperation_is_null": "Is null",
-        "em_conditionoperation_not_null": "Is not null"
+        "em_conditionoperation_not_null": "Is not null",
+        "em_conditionoperation_in": "In",
+        "em_conditionoperation_not_in": "Not in"
     },
     {
         "em_conditionrelationship_none": "None",

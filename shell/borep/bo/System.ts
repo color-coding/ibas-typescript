@@ -25,6 +25,8 @@ namespace shell {
             belong: string;
             /* 身份 */
             identities: ibas.IList<string>;
+            /* 特征 */
+            specifics: ibas.IList<ibas.KeyText>;
         }
         /**
          * 用户模块
