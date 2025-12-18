@@ -18,6 +18,8 @@ namespace shell {
             export const CONFIG_ITEM_NO_LOGOUT: string = "noLogOut";
             /** 配置项目-欢迎页面图片 */
             export const CONFIG_ITEM_WELCOME_PAGE_IMAGE: string = "welcomeImage";
+            /** 配置项目-欢迎页面描述 */
+            export const CONFIG_ITEM_WELCOME_PAGE_DESCRIPTION: string = "welcomeDescription";
             /** 配置项目-欢迎页面地址 */
             export const CONFIG_ITEM_WELCOME_PAGE_URL: string = "welcomeUrl";
             /** 配置项目-收缩功能列表 */
@@ -448,15 +450,18 @@ namespace shell {
                         // 补全地址，shell目录内
                         welcomeImage = ibas.urls.rootUrl(shell.app.Console.ROOT_FILE_NAME) + "/" + welcomeImage;
                     }
+                    let welcomeDescription: string = ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_DESCRIPTION);
+
                     let viewContent: any = new sap.m.MessagePage("", {
                         text: ibas.i18n.prop("shell_welcome_page",
                             name, ibas.config.get(app.CONFIG_ITEM_APPLICATION_NAME, ibas.i18n.prop("shell_name"))),
-                        customDescription: new sap.m.Link("", {
+                        customDescription: !ibas.strings.isEmpty(welcomeDescription) ? undefined : new sap.m.Link("", {
                             target: "_blank",
                             text: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL),
                             href: ibas.config.get(CONFIG_ITEM_WELCOME_PAGE_URL)
                         }),
-                        description: "",
+                        enableFormattedText: true,
+                        description: welcomeDescription,
                         showHeader: false,
                         showNavButton: false,
                         icon: welcomeImage,
