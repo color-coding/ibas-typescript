@@ -124,6 +124,7 @@
     "shell_query_condition_alias": "Field",
     "shell_query_condition_operation": "Comparison method",
     "shell_query_condition_value": "Value",
+    "shell_query_condition_comparedalias": "Compared Alias",
     "shell_query_condition_bracketclose": "Close bracket",
     "shell_please_chooose_data": "Please choose {0} data",
     "shell_multiple_data_delete_continue": "Delete [{0}] data in total?",

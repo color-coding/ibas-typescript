@@ -126,6 +126,7 @@
     "shell_query_condition_alias": "字段",
     "shell_query_condition_operation": "比较方式",
     "shell_query_condition_value": "值",
+    "shell_query_condition_comparedalias": "比较字段",
     "shell_query_condition_bracketclose": "闭括号",
     "shell_please_chooose_data": "请选择{0}数据",
     "shell_multiple_data_delete_continue": "共[{0}]个数据是否删除？",

@@ -103,6 +103,11 @@ declare namespace sap {
                 protected fireRowDoubleClick(param: {
                     row: sap.ui.table.Row,
                 }): void;
+
+                /** 
+                 * 获取工具条
+                 */
+                getToolbar(): sap.ui.core.Toolbar;
             }
             /**
              * 表格列

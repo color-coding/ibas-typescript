@@ -149,6 +149,18 @@ namespace shell {
                     } else {
                         this.table.setModel(new sap.extension.model.JSONModel({ rows: datas }));
                     }
+                    setTimeout(() => {
+                        if (datas?.findIndex(c => !ibas.strings.isEmpty(c.comparedAlias)) >= 0) {
+                            let toolbar: any = this.table.getToolbar();
+                            if (toolbar instanceof sap.m.Toolbar) {
+                                let check: any = toolbar.getContent()[toolbar.getContent().length - 1];
+                                if (check instanceof sap.m.CheckBox) {
+                                    check.setSelected(true);
+                                    (<any>check).fireSelect();
+                                }
+                            }
+                        }
+                    }, 150);
                 }
                 private table: sap.extension.table.Table;
                 protected getPropertyListItem(properies: bo.IBizPropertyInfo[]): sap.ui.core.ListItem[] {
@@ -190,7 +202,24 @@ namespace shell {
                                     press: function (): void {
                                         that.fireViewEvents(that.removeQueryConditionEvent, that.table.getSelecteds());
                                     }
-                                })
+                                }),
+                                new sap.m.ToolbarSpacer(),
+                                new sap.m.CheckBox("", {
+                                    text: ibas.i18n.prop(["shell_show", "shell_query_condition_comparedalias"]),
+                                    select(this: sap.m.CheckBox): void {
+                                        if (this.getSelected()) {
+                                            let column: any = table.getColumns()[5];
+                                            if (column instanceof sap.ui.table.Column) {
+                                                column.setVisible(true);
+                                            }
+                                        } else {
+                                            let column: any = table.getColumns()[5];
+                                            if (column instanceof sap.ui.table.Column) {
+                                                column.setVisible(false);
+                                            }
+                                        }
+                                    }
+                                }),
                             ]
                         }),
                         visibleRowCount: 5,
@@ -256,6 +285,17 @@ namespace shell {
                                     path: "value"
                                 }),
                             }),
+                            new sap.extension.table.DataColumn("", {
+                                label: ibas.i18n.prop("shell_query_condition_comparedalias"),
+                                template: new sap.extension.m.Select("", {
+                                    items: this.getPropertyListItem(properies)
+                                }).bindProperty("bindingValue", {
+                                    path: "comparedAlias",
+                                    type: new sap.extension.data.Alphanumeric()
+                                }),
+                                visible: false,
+                                width: "12rem",
+                            }),
                             new sap.extension.table.Column("", {
                                 label: ibas.i18n.prop("shell_query_condition_bracketclose"),
                                 width: "8rem",
@@ -293,6 +333,10 @@ namespace shell {
                         type: sap.m.DialogType.Standard,
                         state: sap.ui.core.ValueState.None,
                         stretch: ibas.config.get(ibas.CONFIG_ITEM_PLANTFORM) === ibas.emPlantform.PHONE ? true : false,
+                        horizontalScrolling: false,
+                        verticalScrolling: false,
+                        contentHeight: "auto",
+                        contentWidth: "65%",
                         subHeader: new sap.m.Toolbar("", {
                             content: [
                                 new sap.m.Title("", {
