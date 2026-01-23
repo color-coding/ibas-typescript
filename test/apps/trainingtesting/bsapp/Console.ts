@@ -103,7 +103,6 @@ namespace trainingtesting {
             protected registers(): void {
                 // 注册功能
                 this.register(new DemoUrlFunc());
-                this.register(new DemoTabFunc());
                 this.register(new DemoMapFunc());
                 this.register(new DemoShellFunc());
                 this.register(new DemoDataFunc());

@@ -325,6 +325,125 @@ namespace shell {
                 }
 
             });
+
+            sap.m.NavContainer.extend("shell.ui.component.NavContainer", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {
+                    },
+                    aggregations: {
+                    },
+                },
+                renderer: {
+                },
+            });
+
+            sap.m.TabContainer.extend("shell.ui.component.TabContainer", {
+                metadata: {
+                    properties: {
+                    },
+                    events: {
+                        "afterNavigate": {
+                            parameters: {
+                                from: {
+                                    type: sap.ui.core.Control
+                                },
+                                to: {
+                                    type: sap.ui.core.Control
+                                },
+                            }
+                        },
+                    },
+                    aggregations: {
+                    },
+                },
+                renderer: {
+                },
+                onBeforeRendering(this: TabContainer): void {
+                    let button: any = (<any>this).getAddButton();
+                    if (button instanceof sap.m.Button) {
+                        if (button.getIcon() !== "sap-icon://inspect-down") {
+                            button.setIcon("sap-icon://inspect-down");
+                            button.setTooltip(ibas.i18n.prop("shell_close_all_views"));
+                        }
+                    }
+                },
+                onAfterRendering(this: TabContainer): void {
+                },
+                addPage(this: TabContainer, container: any): TabContainer {
+                    return this.addItem(container);
+                },
+                getPage(this: TabContainer, id: string): sap.ui.core.Control {
+                    let items: sap.m.TabContainerItem[] = this.getItems();
+                    for (let item of items) {
+                        if (item.getId() === id) {
+                            return item.getContent()[0];
+                        }
+                    }
+                    return null;
+                },
+                getPages(this: TabContainer): sap.ui.core.Control[] {
+                    let items: sap.m.TabContainerItem[] = this.getItems();
+                    let pages: sap.ui.core.Control[] = [];
+                    for (let item of items) {
+                        for (let pItem of item.getContent()) {
+                            if (pItem instanceof sap.ui.core.Control) {
+                                pages.push(pItem);
+                            }
+                        }
+                    }
+                    return pages;
+                },
+                getCurrentPage(this: TabContainer): sap.ui.core.Control {
+                    let items: sap.m.TabContainerItem[] = this.getItems();
+                    for (let item of items) {
+                        if (item.getId() !== this.getSelectedItem()) {
+                            continue;
+                        }
+                        for (let pItem of item.getContent()) {
+                            if (pItem instanceof sap.ui.core.Control) {
+                                return pItem;
+                            }
+                        }
+                    }
+                    return null;
+                },
+                to(this: TabContainer, id: string): TabContainer {
+                    let items: sap.m.TabContainerItem[] = this.getItems();
+                    if (ibas.objects.isNull(id)) {
+                        if (items.length > 0) {
+                            this.setSelectedItem(items[0]);
+                            return this;
+                        }
+                    }
+                    for (let item of items) {
+                        for (let pItem of item.getContent()) {
+                            if (pItem.getId() === id) {
+                                this.setSelectedItem(item);
+                            }
+                        }
+                    }
+                    return this;
+                },
+                back(this: TabContainer, id: string): TabContainer {
+                    return this.to(id);
+                },
+                init(this: TabContainer): void {
+                    // 基类初始化
+                    (<any>sap.m.TabContainer.prototype).init.apply(this, arguments);
+                    // 监听选择事件
+                    this.attachItemSelect(undefined, (event: sap.ui.base.Event) => {
+                        let source: any = event.getSource();
+                        if (source instanceof TabContainer) {
+                            setTimeout(() => {
+                                // 延迟触发事件（等绘制完成）
+                                source.fireAfterNavigate({ toId: source.getSelectedItem() });
+                            }, 100);
+                        }
+                    });
+                }
+            });
         }
     }
 }

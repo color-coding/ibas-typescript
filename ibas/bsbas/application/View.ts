@@ -212,9 +212,6 @@ namespace ibas {
     export abstract class ShortcutView extends BarView implements IShortcutView {
 
     }
-    /** 页签视图 */
-    export abstract class TabView extends View implements IView {
-    }
     export namespace views {
         export function closed(this: View): void {
             this.onClosed();

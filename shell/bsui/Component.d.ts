@@ -8,6 +8,42 @@
 declare namespace shell {
     export namespace ui {
         namespace component {
+            interface ViewContainer extends sap.ui.core.Control {
+
+                addPage(view: any): this;
+
+                getPage(id: string): sap.ui.core.Control;
+
+                getPages(): sap.ui.core.Control[];
+
+                getCurrentPage(): sap.ui.core.Control;
+
+                to(id: string): this;
+
+                back(id: string): this;
+            }
+
+            class NavContainer extends sap.m.NavContainer implements ViewContainer {
+
+            }
+
+            class TabContainer extends sap.m.TabContainer implements ViewContainer {
+
+                addPage(view: any): this;
+
+                getPage(id: string): sap.m.Page;
+
+                getPages(): sap.m.Page[];
+
+                getCurrentPage(): sap.m.Page;
+
+                to(id: string): this;
+
+                back(id: string): this;
+
+                protected fireAfterNavigate(param: { toId: string }): void;
+            }
+
             class NavigationListSearchItem extends sap.tnt.NavigationListItem {
                 /** 设置监听查询事件 */
                 attachSearch(oData: any, fnFunction: Function, oListener?: any): NavigationListSearchItem;
