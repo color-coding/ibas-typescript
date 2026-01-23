@@ -40,20 +40,5 @@ namespace trainingtesting {
         /** 视图-演示 */
         export interface IDemoUrlView extends ibas.IUrlView {
         }
-        /** 应用-演示 */
-        export class DemoTabUrlApp extends DemoUrlApp {
-
-            /** 应用标识 */
-            static APPLICATION_ID: string = "c4be3c42-4b4c-45dc-8d38-d47e2ab2b35d";
-            /** 应用名称 */
-            static APPLICATION_NAME: string = "trainingtestingothers_app_tab";
-
-            constructor() {
-                super();
-                this.id = DemoTabUrlApp.APPLICATION_ID;
-                this.name = DemoTabUrlApp.APPLICATION_NAME;
-                this.description = ibas.i18n.prop(this.name);
-            }
-        }
     }
 }

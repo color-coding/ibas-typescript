@@ -63,9 +63,6 @@ namespace trainingtesting {
                     case app.DemoResidentApp.APPLICATION_ID:
                         view = new c.DemoResidentView();
                         break;
-                    case app.DemoTabUrlApp.APPLICATION_ID:
-                        view = new c.DemoTabUrlView();
-                        break;
                     case app.DemoUrlApp.APPLICATION_ID:
                         view = new c.DemoUrlView();
                         break;

@@ -31,15 +31,6 @@ namespace trainingtesting {
              * 视图-demo
              */
             export class DemoUrlView extends ibas.UrlView implements app.IDemoUrlView {
-                /** 绘制视图 */
-                draw(): any {
-                    return null;
-                }
-            }
-            /**
-             * 视图-demo
-             */
-            export class DemoTabUrlView extends ibas.TabView implements app.IDemoUrlView {
                 /** 内部打开 */
                 isInside: boolean;
                 /** 地址 */

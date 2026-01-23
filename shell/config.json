@@ -9,6 +9,8 @@
     "welcomeContent": "",
     "compactScreen": false,
     "disablePlatformView": false,
+    "viewContainer": "tab",
+    "viewContainer|PHONE": "nav",
     "fullScreen|PHONE": true,
     "queryPanelConfigurable|PHONE": true,
     "queryPanelSelectable|PHONE": false,

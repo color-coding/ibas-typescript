@@ -25,23 +25,6 @@ namespace trainingtesting {
             }
         }
         /** 功能-演示 */
-        export class DemoTabFunc extends ibas.ModuleFunction {
-            static FUNCTION_ID = "a4f404c1-559d-4099-89f5-fab4a6d5fa23";
-            static FUNCTION_NAME = "trainingtestingothers_func_tab";
-            constructor() {
-                super();
-                this.id = DemoTabFunc.FUNCTION_ID;
-                this.name = DemoTabFunc.FUNCTION_NAME;
-                this.description = ibas.i18n.prop(this.name);
-            }
-            /** 默认功能 */
-            default(): ibas.IApplication<ibas.IView> {
-                let app: DemoTabUrlApp = new DemoTabUrlApp();
-                app.navigation = this.navigation;
-                return app;
-            }
-        }
-        /** 功能-演示 */
         export class DemoMapFunc extends ibas.ModuleFunction {
             static FUNCTION_ID = "23e12ad0-167d-4f49-9eeb-dfc746f572d6";
             static FUNCTION_NAME = "trainingtestingothers_func_map";
