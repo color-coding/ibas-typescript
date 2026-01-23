@@ -129,7 +129,11 @@ namespace sap {
                     if (value instanceof Date) {
                         sap.m.TimePicker.prototype.setDateValue.apply(this, arguments);
                     } else {
-                        sap.m.TimePicker.prototype.setValue.apply(this, arguments);
+                        if (!ibas.objects.isNull(value)) {
+                            sap.m.TimePicker.prototype.setValue.call(this, ibas.strings.fill(value, 4, "0"));
+                        } else {
+                            sap.m.TimePicker.prototype.setValue.apply(this, arguments);
+                        }
                     }
                     let time: number = value;
                     if (value instanceof Date) {
