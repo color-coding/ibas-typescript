@@ -11,8 +11,6 @@
 
 namespace shell {
     export namespace app {
-        /** 属性-导航 */
-        const PROPERTY_NAVIGATION: symbol = Symbol("navigation");
         /** 模块控制台 */
         export class Console extends ibas.ModuleConsole {
             /** 根文件名称 */
@@ -30,10 +28,6 @@ namespace shell {
             }
             /** 视图显示者 */
             viewShower: ibas.IViewShower;
-            /** 视图导航 */
-            navigation(): ibas.IViewNavigation {
-                return this[PROPERTY_NAVIGATION];
-            }
             /** 初始化 */
             protected registers(): void {
                 // 注册功能
@@ -65,7 +59,7 @@ namespace shell {
                         // 设置视图显示者
                         this.viewShower = new ui.ViewShower();
                         // 设置导航
-                        this[PROPERTY_NAVIGATION] = new ui.Navigation();
+                        this.setNavigation(new ui.Navigation());
                         // 调用初始化
                         this.initialize();
                         // 调用入口应用

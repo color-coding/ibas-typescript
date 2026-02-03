@@ -12,3 +12,4 @@
 /// <reference path="./DemoShellView.ts" />
 /// <reference path="./DemoDataView.ts" />
 /// <reference path="./DemoControlsView.ts" />
+/// <reference path="./HelpView.ts" />

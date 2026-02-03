@@ -16,7 +16,7 @@ namespace trainingtesting {
         /**
          * 视图导航
          */
-        export class Navigation extends ibas.ViewNavigation {
+        export class Navigation extends ibas.ViewExtendedNavigation {
             /**
              * 创建实例
              * @param id 应用id
@@ -83,6 +83,9 @@ namespace trainingtesting {
                         break;
                     case app.DemoControlsApp.APPLICATION_ID:
                         view = new c.DemoControlsView();
+                        break;
+                    case shell.app.HelpApp.APPLICATION_ID:
+                        view = new c.HelpView();
                         break;
                     default:
                         break;
