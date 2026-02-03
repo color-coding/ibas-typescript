@@ -114,7 +114,7 @@ namespace ibas {
         /** 延迟选择时间 */
         latencyTime?: number;
         /** 默认项 */
-        initialFocus?: ibas.emMessageAction;
+        initialFocus?: emMessageAction;
     }
     /**
      * 视图-显示者
@@ -264,18 +264,34 @@ namespace ibas {
                 if (objects.isNull(this.navigation)) {
                     throw new Error(i18n.prop("sys_invalid_view_navigation", this.name));
                 }
-                this[PROPERTY_VIEW] = <T>this.navigation.create(this);
-                if (this[PROPERTY_VIEW] instanceof View) {
-                    this[PROPERTY_VIEW][PROPERTY_APPLICATION] = this;
-                    if (!strings.isEmpty(this.description)) {
-                        this[PROPERTY_VIEW].title = this.description;
-                    } else {
-                        this[PROPERTY_VIEW].title = this.name;
-                    }
-                    this.registerView();
-                } else {
+                let view: T = <T>this.navigation.create(this);
+                if (!(view instanceof View)) {
                     throw new Error(i18n.prop("sys_invalid_view", this.name));
                 }
+                view[PROPERTY_APPLICATION] = this;
+                // 尝试加载扩展页
+                if (extendedNavigations?.length > 0) {
+                    let extView: any;
+                    for (let navigation of extendedNavigations) {
+                        if (objects.typeOf(navigation) === objects.typeOf(this.navigation)) {
+                            continue;
+                        }
+                        extView = navigation.create(view);
+                        if (objects.isNull(extView)) {
+                            continue;
+                        }
+                        view = extView;
+                        view[PROPERTY_APPLICATION] = this;
+                    }
+                    extView = undefined;
+                }
+                this[PROPERTY_VIEW] = view;
+                if (!strings.isEmpty(this.description)) {
+                    this[PROPERTY_VIEW].title = this.description;
+                } else {
+                    this[PROPERTY_VIEW].title = this.name;
+                }
+                this.registerView();
             }
             return this[PROPERTY_VIEW];
         }
@@ -426,7 +442,7 @@ namespace ibas {
                     continue;
                 }
                 let description: string = i18n.prop(item.name);
-                if (!ibas.strings.isWith(description, "[", "]")) {
+                if (!strings.isWith(description, "[", "]")) {
                     item.description = description;
                 }
             }
@@ -456,8 +472,23 @@ namespace ibas {
                 this.icon = config.get(CONFIG_ITEM_DEFALUT_MODULE_ICON);
             }
         }
-        /** 创建视图导航 */
-        abstract navigation(): IViewNavigation;
+        /** 视图导航 */
+        navigation(): IViewNavigation {
+            return this[PROPERTY_NAVIGATION];
+        }
+        /** 设置视图导航 */
+        setNavigation(navigation: IViewNavigation): void {
+            this[PROPERTY_NAVIGATION] = navigation;
+            if (navigation instanceof ViewExtendedNavigation) {
+                // 注册扩展导航
+                for (let item of extendedNavigations) {
+                    if (typeof (item) === typeof (navigation)) {
+                        return;
+                    }
+                }
+                extendedNavigations.add(navigation);
+            }
+        }
         /** 设置仓库地址，返回值是否执行默认设置 */
         setRepository(address: string): boolean {
             return true;
@@ -508,6 +539,7 @@ namespace ibas {
             i18n.load(files, ready);
         }
     }
+    const PROPERTY_NAVIGATION: symbol = Symbol("navigation");
     /** 模块控制台 */
     export abstract class ModuleFunction extends AbstractFunction implements IModuleFunction {
         /** 图标 */
@@ -567,5 +599,24 @@ namespace ibas {
          * @param id 应用id
          */
         protected abstract newView(id: string): IView;
+    }
+    /** 视图-扩展导航列表 */
+    const extendedNavigations: IList<ViewExtendedNavigation> = new ArrayList<any>();
+    /** 视图-扩展导航 */
+    export abstract class ViewExtendedNavigation extends ViewNavigation {
+        /**
+         * 创建视图
+         */
+        create(data: any): IView {
+            if (data instanceof View) {
+                let id: string = data.application?.id;
+                if (strings.isEmpty(id)) {
+                    throw new Error(i18n.prop("sys_invalid_parameter", "view id"));
+                }
+                return this.newView(id);
+            } else {
+                return super.create(data);
+            }
+        }
     }
 }
