@@ -634,64 +634,15 @@ namespace sap {
                             mSettings.rows.sorter = [
                                 new sap.ui.model.Sorter(mSettings.sortProperty, false)
                             ];
-                            if (mSettings.sortIntervalStep > 0) {
-                                // 步长为0，不支持拖动
-                                if (ibas.objects.isNull(mSettings.dragDropConfig)) {
-                                    mSettings.dragDropConfig = [];
-                                }
-                                if (mSettings.dragDropConfig instanceof Array) {
-                                    mSettings.dragDropConfig.push(new sap.ui.core.dnd.DragDropInfo("", {
-                                        sourceAggregation: "rows",
-                                        targetAggregation: "rows",
-                                        dropPosition: sap.ui.core.dnd.DropPosition.Between,
-                                        dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
-                                        drop(event: sap.ui.base.Event): void {
-                                            let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
-                                            let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
-                                            let dropPosition: string = event.getParameter("dropPosition");
-                                            let table: any = (<any>event.getSource())?.getDropTarget();
-                                            if (table instanceof DataTable) {
-                                                let index: number = 1;
-                                                let step: number = table.getSortIntervalStep();
-                                                if (step <= 0) {
-                                                    step = 1;
-                                                }
-                                                for (let row of (<any>table).getBinding().getContexts()) {
-                                                    if (ibas.objects.isNull(row)) {
-                                                        continue;
-                                                    }
-                                                    if (dragged === row) {
-                                                        continue;
-                                                    } else if (dropped === row) {
-                                                        if (dropPosition === "Before") {
-                                                            dragged.getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                            dropped.getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                        } else if (dropPosition === "After") {
-                                                            dropped.getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                            dragged.getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                        }
-                                                    } else {
-                                                        row.getObject()[mSettings.sortProperty] = index * step;
-                                                        index++;
-                                                    }
-                                                }
-                                                if (index > 1) {
-                                                    table.getModel().refresh(true);
-                                                }
-                                            }
-                                        },
-                                    }));
-                                }
-                            }
+                            // 拖动排序，当排序列显示时才激活
                         }
                     }
+                    /*
+                    // 不自动开启冻结列，通过魔法棒开启
                     if (ibas.objects.isNull(mSettings?.enableColumnFreeze)) {
                         mSettings.enableColumnFreeze = true;
                     }
+                    */
                     Table.prototype.applySettings.apply(this, arguments);
                     let dataInfo: any = this.getDataInfo();
                     if (typeof dataInfo === "string") {
@@ -1014,6 +965,9 @@ namespace sap {
                     }
                     this.addColumn(column);
                 }
+                // 可拖拽排序（仅当排序列显示时）
+                let dragable: boolean = false;
+                let sortProperty: string = this.getSortProperty();
                 // 位置修正
                 let showedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = new ibas.ArrayList<sap.extension.table.DataColumn>();
                 for (let column of this.getColumns()) {
@@ -1026,6 +980,10 @@ namespace sap {
                         if (!ibas.objects.isNull(info.position)) {
                             showedColumns.add(column);
                             this.removeColumn(column);
+                        }
+                        // 排序列显示
+                        if (ibas.strings.equalsIgnoreCase(info.name, sortProperty)) {
+                            dragable = true;
                         }
                     }
                 }
@@ -1199,6 +1157,57 @@ namespace sap {
                 };
                 for (let column of sortedColumns) {
                     this.insertColumn(column, column.getPropertyInfo().position);
+                }
+                // 拖动排序
+                if (this.getSortIntervalStep() > 0
+                    && !(this.getDragDropConfig()?.length > 0) && dragable === true) {
+                    // 步长为0，不支持拖动
+                    this.addDragDropConfig(new sap.ui.core.dnd.DragDropInfo("", {
+                        sourceAggregation: "rows",
+                        targetAggregation: "rows",
+                        dropPosition: sap.ui.core.dnd.DropPosition.Between,
+                        dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
+                        drop(event: sap.ui.base.Event): void {
+                            let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
+                            let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
+                            let dropPosition: string = event.getParameter("dropPosition");
+                            let table: any = (<any>event.getSource())?.getDropTarget();
+                            let sortProperty: string = table.getSortProperty();
+                            if (table instanceof DataTable) {
+                                let index: number = 1;
+                                let step: number = table.getSortIntervalStep();
+                                if (step <= 0) {
+                                    step = 1;
+                                }
+                                for (let row of (<any>table).getBinding().getContexts()) {
+                                    if (ibas.objects.isNull(row)) {
+                                        continue;
+                                    }
+                                    if (dragged === row) {
+                                        continue;
+                                    } else if (dropped === row) {
+                                        if (dropPosition === "Before") {
+                                            dragged.getObject()[sortProperty] = index * step;
+                                            index++;
+                                            dropped.getObject()[sortProperty] = index * step;
+                                            index++;
+                                        } else if (dropPosition === "After") {
+                                            dropped.getObject()[sortProperty] = index * step;
+                                            index++;
+                                            dragged.getObject()[sortProperty] = index * step;
+                                            index++;
+                                        }
+                                    } else {
+                                        row.getObject()[sortProperty] = index * step;
+                                        index++;
+                                    }
+                                }
+                                if (index > 1) {
+                                    table.getModel().refresh(true);
+                                }
+                            }
+                        },
+                    }));
                 }
             }
             /**
