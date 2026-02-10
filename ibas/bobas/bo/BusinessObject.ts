@@ -981,6 +981,10 @@ namespace ibas {
             } else {
                 userField = new UserField<String>();
             }
+            if (userField !== null) {
+                userField.name = info.name;
+                userField.valueType = info.valueType;
+            }
             return userField;
         }
     }
@@ -1004,12 +1008,20 @@ namespace ibas {
                     return item;
                 }
             }
-            let info: UserFieldInfo = userFieldManager.register(objects.typeOf(this[PROPERTY_PARENT]), name, valueType);
-            let userField: IUserField = userFieldManager.create(info);
-            userField.name = name;
-            userField.valueType = valueType;
-            let index: number = this.push(userField) - 1;
+            let fieldInfo: UserFieldInfo = userFieldManager.register(objects.typeOf(this[PROPERTY_PARENT]), name, valueType);
+            let userField: IUserField = userFieldManager.create(fieldInfo);
             if (userField instanceof UserField) {
+                let index: number = this.push(userField) - 1;
+                Object.defineProperty(this[PROPERTY_PARENT], businessobjects.properties.naming.lowerCamelCase(userField.name), {
+                    get(): any {
+                        return userField.value;
+                    },
+                    set(value: any): void {
+                        userField.value = value;
+                    },
+                    enumerable: false,
+                    configurable: true
+                });
                 userField.registerListener({
                     propertyChanged: (name) => {
                         if (strings.equalsIgnoreCase(name, "Value")) {
@@ -1405,6 +1417,16 @@ namespace ibas {
                     }
                     myItem.value = item.value;
                 }
+            }
+
+            /**
+             * 注册用户字段
+             * @param type 对象类型
+             * @param name 字段名称
+             * @param valueType 字段类型
+             */
+            export function register(type: any, property: string, valueType: emDbFieldType): void {
+                userFieldManager.register(type, property, valueType);
             }
         }
         /** 业务对象仓库 */

@@ -126,6 +126,12 @@ namespace shell {
              * @param caller 调用者
              */
             fetchUserFunctions(caller: IUserMethodCaller<IUserFunction>): void;
+
+            /**
+             * 获取用户对象
+             * @param caller 调用者
+             */
+            fetchUserObjects(caller: IUserMethodCaller<IBizObjectInfo>): void;
         }
     }
 }

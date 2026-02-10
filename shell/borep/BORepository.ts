@@ -280,6 +280,22 @@ namespace shell {
                     caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
                 });
             }
+            /**
+             * 获取用户对象
+             * @param caller 调用者
+             */
+            fetchUserObjects(caller: IUserMethodCaller<IBizObjectInfo>): void {
+                let remoteRepository: ibas.IRemoteRepository = this.createRemoteRepository();
+                if (ibas.objects.isNull(remoteRepository)) {
+                    throw new Error(ibas.i18n.prop("sys_invalid_parameter", "remoteRepository"));
+                }
+                let method: string =
+                    ibas.strings.format("fetchUserObjects?user={0}&token={1}",
+                        caller.user, ibas.tokens.content(this.token));
+                remoteRepository.callRemoteMethod(method, undefined, (opRslt) => {
+                    caller.onCompleted.call(ibas.objects.isNull(caller.caller) ? caller : caller.caller, opRslt);
+                });
+            }
         }
         /** 空数据 */
         const EMPTY_BOINFO: IBizObjectInfo = {
