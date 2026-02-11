@@ -132,39 +132,6 @@ namespace sap {
                     }
                     return this;
                 },
-                /**
-                 * 设置模型
-                 * @param oModel 数据模型
-                 * @param sName 名称
-                 */
-                setModel(this: DataPage, oModel: model.JSONModel, sName?: string): DataPage {
-                    let model: model.JSONModel = this.getModel();
-                    // 没有设置过模型，则更新控件绑定信息
-                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
-                        // 获取对象信息
-                        let data: any = oModel.getData();
-                        if (data instanceof Array) {
-                            data = data[0];
-                        } else if (data.rows instanceof Array) {
-                            data = data.rows[0];
-                        }
-                        if (!ibas.objects.isNull(data)) {
-                            let userFields: ibas.IUserFields = data.userFields;
-                            if (!ibas.objects.isNull(userFields)) {
-                                let splitter: any = sap.ui.getCore().byId(this.getId() + "_extendSplit");
-                                if (splitter instanceof sap.ui.layout.form.SimpleForm) {
-                                    for (let item of splitter.getContent()) {
-                                        let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
-                                        if (!ibas.objects.isNull(bindingInfo)) {
-                                            userfields.check(userFields, bindingInfo);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return Page.prototype.setModel.apply(this, arguments);
-                },
             });
             function checkFormContent(control: sap.ui.core.Control, properties: shell.bo.IBizPropertyInfo[]): void {
                 if (control instanceof sap.ui.layout.VerticalLayout) {
@@ -321,7 +288,7 @@ namespace sap {
                 }
                 let splitter: any;
                 let control: any;
-                for (let property of properties) {
+                for (let property of properties.filter(c => !ibas.objects.isNull(c)).sort((a, b) => a.position - b.position)) {
                     if (ibas.objects.isNull(property)) {
                         continue;
                     }

@@ -239,63 +239,6 @@ namespace sap {
                             mSettings.items.sorter = [
                                 new sap.ui.model.Sorter(mSettings.sortProperty, false)
                             ];
-                            if (mSettings.sortIntervalStep > 0) {
-                                // 步长为0，不支持拖动
-                                if (ibas.objects.isNull(mSettings.dragDropConfig)) {
-                                    mSettings.dragDropConfig = [];
-                                }
-                                if (mSettings.dragDropConfig instanceof Array) {
-                                    mSettings.dragDropConfig.push(new sap.ui.core.dnd.DragDropInfo("", {
-                                        sourceAggregation: "items",
-                                        targetAggregation: "items",
-                                        dropPosition: sap.ui.core.dnd.DropPosition.Between,
-                                        dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
-                                        drop(event: sap.ui.base.Event): void {
-                                            let dragged: any = event.getParameter("draggedControl");
-                                            let dropped: any = event.getParameter("droppedControl");
-                                            let dropPosition: string = event.getParameter("dropPosition");
-                                            let table: any = (<any>event.getSource())?.getDropTarget();
-                                            if (table instanceof DataTable) {
-                                                let index: number = 1;
-                                                let step: number = table.getSortIntervalStep();
-                                                if (step <= 0) {
-                                                    step = 1;
-                                                }
-                                                for (let row of table.getItems()) {
-                                                    if (ibas.objects.isNull(row.getBindingContext())) {
-                                                        continue;
-                                                    }
-                                                    if (dragged === row) {
-                                                        continue;
-                                                    } else if (dropped === row) {
-                                                        if (dropPosition === "Before") {
-                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                        } else if (dropPosition === "After") {
-                                                            dropped.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                            dragged.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
-                                                            index++;
-                                                        }
-                                                    } else {
-                                                        row.getBindingContext().getObject()[mSettings.sortProperty] = index * step;
-                                                        index++;
-                                                    }
-                                                }
-                                                if (index > 1) {
-                                                    // table.getModel().refresh(true);
-                                                    // 刷新不好使，需要重新绑定
-                                                    let model: any = table.getModel();
-                                                    table.setModel(undefined);
-                                                    table.setModel(model);
-                                                }
-                                            }
-                                        },
-                                    }));
-                                }
-                            }
                         }
                     }
                     if (ibas.objects.isNull(mSettings.growing)) {
@@ -344,148 +287,161 @@ namespace sap {
                     }
                     return this;
                 },
-                /**
-                 * 设置模型
-                 * @param oModel 数据模型
-                 * @param sName 名称
-                 */
-                setModel(this: DataTable, oModel: model.JSONModel, sName?: string): DataTable {
-                    let model: model.JSONModel = this.getModel();
-                    // 判断是否有有效模型
-                    if (model && model.getData()) {
-                        let data: any = model.getData();
-                        if (!(data?.rows instanceof Array && data.rows.length > 0)) {
-                            model = undefined;
-                        }
-                    }
-                    // 没有设置过模型，则更新控件绑定信息
-                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
-                        // 获取对象信息
-                        let data: any = oModel.getData();
-                        if (data instanceof Array) {
-                            data = data[0];
-                        } else if (data.rows instanceof Array) {
-                            data = data.rows[0];
-                        }
-                        if (!ibas.objects.isNull(data)) {
-                            let userFields: ibas.IUserFields = data.userFields;
-                            if (!ibas.objects.isNull(userFields)) {
-                                let bindingInfo: any = this.getBindingInfo("items");
-                                if (bindingInfo && bindingInfo.template instanceof sap.m.ColumnListItem) {
-                                    let template: sap.m.ColumnListItem = bindingInfo.template;
-                                    for (let item of template.getCells()) {
-                                        let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
-                                        if (!ibas.objects.isNull(bindingInfo)) {
-                                            userfields.check(userFields, bindingInfo);
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return Table.prototype.setModel.apply(this, arguments);
-                }
             });
             function propertyColumns(this: DataTable, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
-                // 查询未存在的属性
-                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
-                // 创建未存在的列
-                let bindingInfo: any = this.getBindingInfo("items");
-                if (bindingInfo && bindingInfo.template instanceof sap.m.ColumnListItem) {
-                    let template: sap.m.ColumnListItem = bindingInfo.template;
-                    for (let item of template.getCells()) {
-                        let bindingPath: string = managedobjects.bindingPath(item);
-                        let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
-                        if (index < 0) {
-                            continue;
-                        }
-                        let column: sap.m.Column;
-                        let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
-                        if (!ibas.objects.isNull(propertyInfo)) {
-                            column = null;
-                            properties[index] = null;
-                            index = template.indexOfCell(item);
-                            if (index > 0 && index < this.getColumns().length) {
-                                column = this.getColumns()[index];
-                            }
-                            if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
-                                item.setVisible(false);
-                                if (!ibas.objects.isNull(column)) {
-                                    column.setVisible(false);
-                                }
-                            }
-                            // 修正位置
-                            if (propertyInfo.position > 0) {
-                                let position: number = propertyInfo.position - 1;
-                                if (position < index) {
-                                    this.removeColumn(column);
-                                    this.insertColumn(column, position);
-                                    template.removeCell(item);
-                                    template.insertCell(item, position);
-                                } else if (position > index) {
-                                    this.removeColumn(column);
-                                    this.insertColumn(column, position - 1);
-                                    template.removeCell(item);
-                                    template.insertCell(item, position - 1);
-                                }
-                            }
-                        }
+                let itemsBindingInfo: any = this.getBindingInfo("items");
+                if (!(itemsBindingInfo?.template instanceof sap.m.ColumnListItem)) {
+                    return;
+                }
+                // 补充列绑定属性信息
+                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo, { column: sap.m.Column, cell: any }> = new Map<any, any>();
+                let template: sap.m.ColumnListItem = itemsBindingInfo.template;
+                for (let item of template.getCells()) {
+                    let bindingPath: string = managedobjects.bindingPath(item);
+                    let index: number = boInfo.properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                    if (index < 0) {
+                        continue;
                     }
-                    for (let property of properties) {
-                        if (ibas.objects.isNull(property)) {
-                            continue;
-                        }
-                        if (ibas.objects.isNull(property.authorised)) {
-                            continue;
-                        }
+                    let property: shell.bo.IBizPropertyInfo = boInfo.properties[index];
+                    if (!ibas.objects.isNull(property)) {
                         if (property.authorised === ibas.emAuthoriseType.NONE) {
                             continue;
                         }
-                        property = factories.newProperty(property, boInfo);
-                        let column: any = new Column("", {
-                            header: property.systemed !== true ? property.description :
-                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
-                        });
-                        let component: any = factories.newComponent(property, "Object.2");
-                        if (property.position > 0) {
-                            this.insertColumn(column, property.position);
-                            template.insertCell(component, property.position);
+                        index = template.indexOfCell(item);
+                        if (index >= 0 && index < this.getColumns().length) {
+                            ptyColumnMap.set(property, { column: this.getColumns()[index], cell: item });
                         } else {
-                            this.addColumn(column);
-                            template.addCell(component);
+                            ptyColumnMap.set(property, { column: undefined, cell: item });
+                        }
+                    } else {
+                        index = template.indexOfCell(item);
+                        if (index >= 0 && index < this.getColumns().length) {
+                            property = <any>{ position: index };
+                            ptyColumnMap.set(property, { column: this.getColumns()[index], cell: item });
+                        } else {
+                            property = <any>{ position: 999 };
+                            ptyColumnMap.set(property, { column: undefined, cell: item });
                         }
                     }
-                    properties = Object.assign([], boInfo.properties);
-                    let sortedInfos: shell.bo.IBizPropertyInfo[] = properties.filter(c => !ibas.objects.isNull(c))
-                        .filter(c => !ibas.objects.isNull(c.position)).sort((a: any, b: any) => {
-                            return a.position - b.position;
-                        });
-
-                    for (let info of sortedInfos) {
-                        for (let item of template.getCells()) {
-                            let bindingPath: string = managedobjects.bindingPath(item);
-                            if (ibas.strings.equalsIgnoreCase(info.name, bindingPath)) {
-                                let column: sap.m.Column = null;
-                                let index: number = template.indexOfCell(item);
-                                if (index > 0 && index < this.getColumns().length) {
-                                    column = this.getColumns()[index];
-                                }
-                                // 修正位置
-                                if (info.position > 0) {
-                                    let position: number = info.position;
-                                    this.removeColumn(column);
-                                    this.insertColumn(column, position - 1);
-                                    template.removeCell(item);
-                                    template.insertCell(item, position - 1);
-                                }
+                }
+                // 创建不存在的列
+                for (let property of boInfo.properties) {
+                    if (ibas.objects.isNull(property)) {
+                        continue;
+                    }
+                    if (ibas.objects.isNull(property.authorised)) {
+                        continue;
+                    }
+                    if (property.authorised === ibas.emAuthoriseType.NONE) {
+                        continue;
+                    }
+                    if (ptyColumnMap.has(property)) {
+                        continue;
+                    }
+                    ptyColumnMap.set(property, {
+                        column: new Column("", {
+                            header: property.systemed !== true ? property.description :
+                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase())
+                        }),
+                        cell: factories.newComponent(property, "Object.2")
+                    });
+                }
+                // 列排序并添加
+                for (let item of ibas.arrays.create(this.getColumns()).reverse()) {
+                    this.removeColumn(item);
+                }
+                for (let item of ibas.arrays.create(template.getCells()).reverse()) {
+                    template.removeCell(item);
+                }
+                for (let property of ibas.arrays.create(ptyColumnMap.keys()).sort((a, b) => a.position - b.position)) {
+                    let column: any = ptyColumnMap.get(property).column;
+                    let cell: any = ptyColumnMap.get(property).cell;
+                    if (property.position > 0) {
+                        if (!ibas.objects.isNull(column)) {
+                            this.insertColumn(column, property.position);
+                        }
+                        if (!ibas.objects.isNull(cell)) {
+                            template.insertCell(cell, property.position);
+                        }
+                    } else {
+                        if (!ibas.objects.isNull(column)) {
+                            this.addColumn(column);
+                        }
+                        if (!ibas.objects.isNull(cell)) {
+                            template.addCell(cell);
+                        }
+                    }
+                }
+                // 拖动排序，步长为0，不支持拖动
+                if (this.getSortIntervalStep() > 0
+                    && !(this.getDragDropConfig()?.length > 0)) {
+                    // 可拖拽排序（仅当排序列显示时）
+                    let dragable: boolean = false;
+                    let sortProperty: string = this.getSortProperty();
+                    if (!ibas.strings.isEmpty(sortProperty)) {
+                        for (let property of ptyColumnMap.keys()) {
+                            if (ibas.strings.equalsIgnoreCase(sortProperty, property.name)) {
+                                dragable = true;
                                 break;
                             }
                         }
                     }
+                    if (dragable === true) {
+                        this.addDragDropConfig(new sap.ui.core.dnd.DragDropInfo("", {
+                            sourceAggregation: "items",
+                            targetAggregation: "items",
+                            dropPosition: sap.ui.core.dnd.DropPosition.Between,
+                            dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
+                            drop(event: sap.ui.base.Event): void {
+                                let dragged: any = event.getParameter("draggedControl");
+                                let dropped: any = event.getParameter("droppedControl");
+                                let dropPosition: string = event.getParameter("dropPosition");
+                                let table: any = (<any>event.getSource())?.getDropTarget();
+                                if (table instanceof DataTable) {
+                                    let index: number = 1;
+                                    let step: number = table.getSortIntervalStep();
+                                    if (step <= 0) {
+                                        step = 1;
+                                    }
+                                    for (let row of table.getItems()) {
+                                        if (ibas.objects.isNull(row.getBindingContext())) {
+                                            continue;
+                                        }
+                                        if (dragged === row) {
+                                            continue;
+                                        } else if (dropped === row) {
+                                            if (dropPosition === "Before") {
+                                                dragged.getBindingContext().getObject()[sortProperty] = index * step;
+                                                index++;
+                                                dropped.getBindingContext().getObject()[sortProperty] = index * step;
+                                                index++;
+                                            } else if (dropPosition === "After") {
+                                                dropped.getBindingContext().getObject()[sortProperty] = index * step;
+                                                index++;
+                                                dragged.getBindingContext().getObject()[sortProperty] = index * step;
+                                                index++;
+                                            }
+                                        } else {
+                                            row.getBindingContext().getObject()[sortProperty] = index * step;
+                                            index++;
+                                        }
+                                    }
+                                    if (index > 1) {
+                                        // table.getModel().refresh(true);
+                                        // 刷新不好使，需要重新绑定
+                                        let model: any = table.getModel();
+                                        table.setModel(undefined);
+                                        table.setModel(model);
+                                    }
+                                }
+                            },
+                        }));
+                    }
                 }
+
             }
         }
     }

@@ -147,52 +147,6 @@ namespace sap {
                     }
                     return this;
                 },
-                /**
-                 * 设置模型
-                 * @param oModel 数据模型
-                 * @param sName 名称
-                 */
-                setModel(this: DataObjectPageLayout, oModel: model.JSONModel, sName?: string): DataObjectPageLayout {
-                    let model: model.JSONModel = this.getModel();
-                    // 没有设置过模型，则更新控件绑定信息
-                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
-                        // 获取对象信息
-                        let data: any = oModel.getData();
-                        if (data instanceof Array) {
-                            data = data[0];
-                        } else if (data.rows instanceof Array) {
-                            data = data.rows[0];
-                        }
-                        if (!ibas.objects.isNull(data)) {
-                            let userFields: ibas.IUserFields = data.userFields;
-                            if (!ibas.objects.isNull(userFields)) {
-                                let section: any = sap.ui.getCore().byId(this.getId() + "_extendSection");
-                                if (section instanceof sap.uxap.ObjectPageSubSection) {
-                                    if (this.getUserFieldsMode() === "input" || this.getUserFieldsMode() === "text") {
-                                        for (let item of section.getBlocks()) {
-                                            if (item instanceof sap.ui.layout.form.SimpleForm) {
-                                                for (let sItem of item.getContent()) {
-                                                    let bindingInfo: any = managedobjects.bindingInfo(sItem, "bindingValue");
-                                                    if (!ibas.objects.isNull(bindingInfo)) {
-                                                        userfields.check(userFields, bindingInfo);
-                                                    }
-                                                }
-                                            }
-                                        }
-                                    } else {
-                                        for (let item of section.getBlocks()) {
-                                            let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
-                                            if (!ibas.objects.isNull(bindingInfo)) {
-                                                userfields.check(userFields, bindingInfo);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return ObjectPageLayout.prototype.setModel.apply(this, arguments);
-                },
             });
             function propertyControls(this: DataObjectPageLayout, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
@@ -298,7 +252,7 @@ namespace sap {
                         editable: true,
                         width: "auto",
                     }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent");
-                    for (let property of properties) {
+                    for (let property of properties.filter(c => !ibas.objects.isNull(c)).sort((a, b) => a.position - b.position)) {
                         if (ibas.objects.isNull(property)) {
                             continue;
                         }
@@ -326,7 +280,7 @@ namespace sap {
                         editable: false,
                         width: "auto",
                     }).addStyleClass("sapUxAPObjectPageSubSectionAlignContent");
-                    for (let property of properties) {
+                    for (let property of properties.filter(c => !ibas.objects.isNull(c)).sort((a, b) => a.position - b.position)) {
                         if (ibas.objects.isNull(property)) {
                             continue;
                         }
@@ -350,7 +304,7 @@ namespace sap {
                         form.addContent(factories.newComponent(property, "Text"));
                     }
                 } else {
-                    for (let property of properties) {
+                    for (let property of properties.filter(c => !ibas.objects.isNull(c)).sort((a, b) => a.position - b.position)) {
                         if (ibas.objects.isNull(property)) {
                             continue;
                         }

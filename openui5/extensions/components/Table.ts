@@ -503,11 +503,11 @@ namespace sap {
                         }
                     }
                     return sap.ui.table.Column.prototype.applySettings.apply(this, arguments);
+                },
+                ofCell(oCell: any): any {
+                    return (<any>sap.ui.table.Column).ofCell.apply(this, arguments);
                 }
             });
-            (<any>Column).ofCell = function (oCell: any): any {
-                return (<any>sap.ui.table.Column).ofCell.apply(this, arguments);
-            };
 
             function createRowSettings(type: "Document" | "DocumentLine"): sap.ui.table.RowSettings {
                 if (type === "Document") {
@@ -695,147 +695,46 @@ namespace sap {
                     }
                     return this;
                 },
-                /**
-                 * 设置模型
-                 * @param oModel 数据模型
-                 * @param sName 名称
-                 */
-                setModel(this: DataTable, oModel: model.JSONModel, sName?: string): DataTable {
-                    let model: model.JSONModel = this.getModel();
-                    // 判断是否有有效模型
-                    if (model && model.getData()) {
-                        let data: any = model.getData();
-                        if (!(data?.rows instanceof Array && data.rows.length > 0)) {
-                            model = undefined;
-                        }
-                    }
-                    // 没有设置过模型，则更新控件绑定信息
-                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
-                        // 获取对象信息
-                        let data: any = oModel.getData();
-                        if (data instanceof Array) {
-                            data = data[0];
-                        } else if (data.rows instanceof Array) {
-                            data = data.rows[0];
-                        }
-                        if (!ibas.objects.isNull(data)) {
-                            let userFields: ibas.IUserFields = data.userFields;
-                            if (!ibas.objects.isNull(userFields)) {
-                                for (let column of this.getColumns()) {
-                                    if (column instanceof DataColumn) {
-                                        let template: sap.ui.core.Control | string = column.getTemplate();
-                                        if (template instanceof sap.ui.core.Control) {
-                                            let bindingInfo: any = managedobjects.bindingInfo(template, "bindingValue");
-                                            if (!ibas.objects.isNull(bindingInfo)) {
-                                                userfields.check(userFields, bindingInfo);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return Table.prototype.setModel.apply(this, arguments);
-                },
             });
             function propertyColumns(this: DataTable, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
-                // 查询未存在的属性
-                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
                 // 只读列表（遍历列，存在输入框则非只读）
                 let readonly: boolean = true;
+                // 补充列绑定属性信息
+                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo, ui.table.Column> = new Map<any, any>();
                 for (let column of this.getColumns()) {
-                    if (column instanceof DataColumn) {
-                        let template: sap.ui.core.Control | string = column.getTemplate();
-                        if (template instanceof sap.ui.core.Control) {
-                            let bindingPath: string = managedobjects.bindingPath(template);
-                            let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
-                            if (index < 0 && ibas.strings.isWith(bindingPath, "userFields/", undefined)) {
-                                if (column.getPropertyInfo instanceof Function) {
-                                    index = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, (<any>column).getPropertyInfo()?.name));
-                                }
-                            }
-                            if (index < 0) {
-                                continue;
-                            }
-                            let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
-                            if (!ibas.objects.isNull(propertyInfo)) {
-                                column.setPropertyInfo(propertyInfo);
-                                if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
-                                    column.setVisible(false);
-                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.READ) {
-                                    controls.nonEditable(template);
-                                    // 已被应用，则重新设置
-                                    if (this.hasModel()) {
-                                        column.setTemplate(template);
-                                    }
-                                } else if (propertyInfo.authorised === ibas.emAuthoriseType.ALL) {
-                                    if (column.getVisible() === false) {
-                                        column.setVisible(true);
-                                    }
-                                }
-                                if (propertyInfo.searched === true) {
-                                    column.setSortProperty(propertyInfo.name);
-                                    column.setFilterProperty(propertyInfo.name);
-                                    if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC")) {
-                                        if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
-                                            column.setFilterType(new sap.extension.data.Alphanumeric());
-                                        } else {
-                                            column.setFilterType(new sap.ui.model.type.Integer());
-                                        }
-                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DECIMAL")) {
-                                        column.setFilterType(new sap.ui.model.type.Float());
-                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "DATE")) {
-                                        if (ibas.strings.equalsIgnoreCase(propertyInfo.editType, "TIME")) {
-                                            column.setFilterType(new sap.ui.model.type.Integer());
-                                        } else {
-                                            column.setFilterType(new sap.ui.model.type.Date());
-                                        }
-                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "ALPHANUMERIC")) {
-                                        if (column.getTemplate() instanceof sap.ui.core.Control) {
-                                            let bind: any = (<any>column.getTemplate()).getBindingInfo("bindingValue");
-                                            if (!ibas.objects.isNull(bind) && bind.parts instanceof Array && bind.parts.length === 1) {
-                                                let type: any = bind.parts[0].type;
-                                                if (type instanceof sap.extension.data.Enum && !ibas.objects.isNull(type.enumType)) {
-                                                    column.setFilterType(function (value: any): any {
-                                                        for (let key in type.enumType) {
-                                                            if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
-                                                                return key.toString();
-                                                            }
-                                                        }
-                                                    });
-                                                }
-                                            }
-                                        }
-                                    }
-                                }
-                                if (template instanceof sap.m.InputBase) {
-                                    readonly = false;
-                                    if (propertyInfo.required === true) {
-                                        let label: any = column.getLabel();
-                                        if (label instanceof sap.m.Label) {
-                                            label.setRequired(true);
-                                        }
-                                    }
-                                }
-                                if (!ibas.strings.isEmpty(propertyInfo.width)) {
-                                    let value: string = propertyInfo.width;
-                                    if (!(value.endsWith("px") || value.endsWith("rem"))) {
-                                        value += "rem";
-                                    }
-                                    column.setWidth(value);
-                                }
-                                properties[index] = null;
+                    let template: sap.ui.core.Control | string = column.getTemplate();
+                    if (readonly && template instanceof sap.m.InputBase) {
+                        readonly = false;
+                    }
+                    if (template instanceof sap.ui.core.Control) {
+                        let bindingPath: string = managedobjects.bindingPath(template);
+                        let index: number = boInfo.properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                        if (index < 0 && ibas.strings.isWith(bindingPath, "userFields/", undefined)) {
+                            if ((<any>column).getPropertyInfo instanceof Function) {
+                                index = boInfo.properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, (<any>column).getPropertyInfo()?.name));
                             }
                         }
+                        if (index < 0) {
+                            continue;
+                        }
+                        let property: shell.bo.IBizPropertyInfo = boInfo.properties[index];
+                        if (ibas.objects.isNull(property)) {
+                            continue;
+                        }
+                        if (column instanceof DataColumn) {
+                            column.setPropertyInfo(property);
+                        }
+                        if (property.authorised === ibas.emAuthoriseType.NONE) {
+                            continue;
+                        }
+                        ptyColumnMap.set(property, column);
                     }
                 }
-                // 自定义字段排序集合
-                let boUserFields: any = boInfo.properties.filter(c => c.systemed === false).sort((a, b) => a.name.localeCompare(b.name));
-                // 创建未存在的列
-                for (let property of properties) {
+                // 创建不存在的列
+                for (let property of boInfo.properties) {
                     if (ibas.objects.isNull(property)) {
                         continue;
                     }
@@ -845,11 +744,8 @@ namespace sap {
                     if (property.authorised === ibas.emAuthoriseType.NONE) {
                         continue;
                     }
-                    property = factories.newProperty(property, boInfo);
-                    let fieldPosition: number = 0;
-                    // 获取字段位置
-                    if (property.systemed === false) {
-                        fieldPosition = boUserFields.indexOf(boUserFields.filter(c => c.name === property.name)[0]);
+                    if (ptyColumnMap.has(property)) {
+                        continue;
                     }
                     let column: DataColumn = new DataColumn("", {
                         propertyInfo: property,
@@ -932,69 +828,194 @@ namespace sap {
                                 }
                             }
                         }),
-                        sortProperty: property.systemed === true ? property.searched === true ? property.name : undefined :
-                            property.searched === true ? "userFields/" + fieldPosition + "/value" : undefined,
-                        filterProperty: property.systemed === true ? property.searched === true ? property.name : undefined :
-                            property.searched === true ? "userFields/" + fieldPosition + "/value" : undefined,
-                        filterType: ibas.strings.equalsIgnoreCase(property.dataType, "NUMERIC") ? new sap.ui.model.type.Integer() :
-                            ibas.strings.equalsIgnoreCase(property.dataType, "DECIMAL") ? new sap.ui.model.type.Float() :
-                                ibas.strings.equalsIgnoreCase(property.dataType, "DATE") ?
-                                    ibas.strings.equalsIgnoreCase(property.editType, "TIME") ? new sap.ui.model.type.Integer() : new sap.ui.model.type.Date()
-                                    : new sap.ui.model.type.String()
                     });
-                    if (column.getTemplate() instanceof sap.ui.core.Control) {
-                        let type: any = (<any>column.getTemplate()).getBindingInfo("bindingValue").type;
-                        if (type instanceof sap.extension.data.Enum) {
-                            column.setFilterType(function (value: any): any {
-                                for (let key in type.enumType) {
-                                    if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
-                                        return key.toString();
+                    ptyColumnMap.set(property, column);
+                }
+                // 补充列功能
+                for (let property of ptyColumnMap.keys()) {
+                    let column: ui.table.Column = ptyColumnMap.get(property);
+                    let template: sap.ui.core.Control | string = column.getTemplate();
+                    if (template instanceof sap.ui.core.Control) {
+                        if (property.authorised === ibas.emAuthoriseType.READ) {
+                            controls.nonEditable(template);
+                            // 已被应用，则重新设置
+                            if (this.hasModel()) {
+                                column.setTemplate(template);
+                            }
+                        } else if (property.authorised === ibas.emAuthoriseType.ALL) {
+                            if (column.getVisible() === false) {
+                                column.setVisible(true);
+                            }
+                        }
+                        if (property.searched === true) {
+                            column.setSortProperty(property.name);
+                            column.setFilterProperty(property.name);
+                            if (ibas.strings.equalsIgnoreCase(property.dataType, "NUMERIC")) {
+                                if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
+                                    column.setFilterType(new sap.extension.data.Alphanumeric());
+                                } else {
+                                    column.setFilterType(new sap.ui.model.type.Integer());
+                                }
+                            } else if (ibas.strings.equalsIgnoreCase(property.dataType, "DECIMAL")) {
+                                column.setFilterType(new sap.ui.model.type.Float());
+                            } else if (ibas.strings.equalsIgnoreCase(property.dataType, "DATE")) {
+                                if (ibas.strings.equalsIgnoreCase(property.editType, "TIME")) {
+                                    column.setFilterType(new sap.ui.model.type.Integer());
+                                } else {
+                                    column.setFilterType(new sap.ui.model.type.Date());
+                                }
+                            } else if (ibas.strings.equalsIgnoreCase(property.dataType, "ALPHANUMERIC")) {
+                                if (column.getTemplate() instanceof sap.ui.core.Control) {
+                                    let bind: any = (<any>column.getTemplate()).getBindingInfo("bindingValue");
+                                    if (!ibas.objects.isNull(bind) && bind.parts instanceof Array && bind.parts.length === 1) {
+                                        let type: any = bind.parts[0].type;
+                                        if (type instanceof sap.extension.data.Enum && !ibas.objects.isNull(type.enumType)) {
+                                            column.setFilterType(function (value: any): any {
+                                                for (let key in type.enumType) {
+                                                    if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
+                                                        return key.toString();
+                                                    }
+                                                }
+                                            });
+                                        }
                                     }
                                 }
-                            });
-                        } else if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
-                            column.setFilterType(new sap.ui.model.type.String());
+                            }
                         }
-                    }
-                    if (!ibas.strings.isEmpty(property.width)) {
-                        let value: string = property.width;
-                        if (!(value.endsWith("px") || value.endsWith("rem"))) {
-                            value += "rem";
+                        if (property.required === true) {
+                            let label: any = column.getLabel();
+                            if (label instanceof sap.m.Label) {
+                                label.setRequired(true);
+                            }
                         }
-                        column.setWidth(value);
-                    }
-                    this.addColumn(column);
-                }
-                // 可拖拽排序（仅当排序列显示时）
-                let dragable: boolean = false;
-                let sortProperty: string = this.getSortProperty();
-                // 位置修正
-                let showedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = new ibas.ArrayList<sap.extension.table.DataColumn>();
-                for (let column of this.getColumns()) {
-                    if (!(column instanceof sap.extension.table.DataColumn)) {
-                        continue;
-                    }
-                    let info: shell.bo.BizPropertyInfo = (<any>column)?.getPropertyInfo();
-                    if (!ibas.objects.isNull(info)) {
-                        // 有位置信息的列重新移除并重新排序，没有的按原有位置显示
-                        if (!ibas.objects.isNull(info.position)) {
-                            showedColumns.add(column);
-                            this.removeColumn(column);
-                        }
-                        // 排序列显示
-                        if (ibas.strings.equalsIgnoreCase(info.name, sortProperty)) {
-                            dragable = true;
+                        if (!ibas.strings.isEmpty(property.width)) {
+                            let value: string = property.width;
+                            if (!(value.endsWith("px") || value.endsWith("rem"))) {
+                                value += "rem";
+                            }
+                            column.setWidth(value);
                         }
                     }
                 }
-                // 列按位置信息排序
-                let sortedColumns: ibas.ArrayList<sap.extension.table.DataColumn> = showedColumns.sort((a: sap.extension.table.DataColumn, b: sap.extension.table.DataColumn) => {
-                    let aInfo: shell.bo.IBizPropertyInfo = a.getPropertyInfo();
-                    let bInfo: shell.bo.IBizPropertyInfo = b.getPropertyInfo();
-                    return aInfo.position - bInfo.position;
-                });
-                // 增强列过滤
-                (<any>DataColumn).prototype.filter = function (sValue: any): Promise<any> {
+                // 列排序并添加
+                let oColumn: ibas.IList<ui.table.Column> = ibas.arrays.create(this.getColumns());
+                for (let i: number = 0; i < oColumn.length; i++) {
+                    let column: any = oColumn[i];
+                    let property: { position: number } = null;
+                    if (column instanceof DataColumn) {
+                        property = column.getPropertyInfo();
+                    }
+                    if (ibas.objects.isNull(property)) {
+                        property = {
+                            position: i,
+                        };
+                    }
+                    ptyColumnMap.set(<any>property, column);
+                }
+                for (let item of oColumn.reverse()) {
+                    this.removeColumn(item);
+                }
+                for (let property of ibas.arrays.create(ptyColumnMap.keys()).sort((a, b) => a.position - b.position)) {
+                    if (property.position > 0) {
+                        this.insertColumn(ptyColumnMap.get(property), property.position);
+                    } else {
+                        this.addColumn(ptyColumnMap.get(property));
+                    }
+                }
+                // 拖动排序，步长为0，不支持拖动
+                if (this.getSortIntervalStep() > 0
+                    && !(this.getDragDropConfig()?.length > 0)) {
+                    // 可拖拽排序（仅当排序列显示时）
+                    let dragable: boolean = false;
+                    let sortProperty: string = this.getSortProperty();
+                    if (!ibas.strings.isEmpty(sortProperty)) {
+                        for (let column of this.getColumns()) {
+                            if (column instanceof DataColumn) {
+                                if (ibas.objects.isNull(column.getPropertyInfo())) {
+                                    continue;
+                                }
+                                if (ibas.strings.equalsIgnoreCase(sortProperty, column.getPropertyInfo().name)) {
+                                    dragable = true;
+                                    break;
+                                }
+                            }
+                        }
+                    }
+                    if (dragable === true) {
+                        this.addDragDropConfig(new sap.ui.core.dnd.DragDropInfo("", {
+                            sourceAggregation: "rows",
+                            targetAggregation: "rows",
+                            dropPosition: sap.ui.core.dnd.DropPosition.Between,
+                            dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
+                            drop(event: sap.ui.base.Event): void {
+                                let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
+                                let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
+                                let dropPosition: string = event.getParameter("dropPosition");
+                                let table: any = (<any>event.getSource())?.getDropTarget();
+                                let sortProperty: string = table.getSortProperty();
+                                if (table instanceof DataTable) {
+                                    let index: number = 1;
+                                    let step: number = table.getSortIntervalStep();
+                                    if (step <= 0) {
+                                        step = 1;
+                                    }
+                                    for (let row of (<any>table).getBinding().getContexts()) {
+                                        if (ibas.objects.isNull(row)) {
+                                            continue;
+                                        }
+                                        if (dragged === row) {
+                                            continue;
+                                        } else if (dropped === row) {
+                                            if (dropPosition === "Before") {
+                                                dragged.getObject()[sortProperty] = index * step;
+                                                index++;
+                                                dropped.getObject()[sortProperty] = index * step;
+                                                index++;
+                                            } else if (dropPosition === "After") {
+                                                dropped.getObject()[sortProperty] = index * step;
+                                                index++;
+                                                dragged.getObject()[sortProperty] = index * step;
+                                                index++;
+                                            }
+                                        } else {
+                                            row.getObject()[sortProperty] = index * step;
+                                            index++;
+                                        }
+                                    }
+                                    if (index > 1) {
+                                        table.getModel().refresh(true);
+                                    }
+                                }
+                            },
+                        }));
+                    }
+                }
+            }
+            /**
+             * 数据表格列
+             */
+            Column.extend("sap.extension.table.DataColumn", {
+                metadata: {
+                    properties: {
+                        /** 属性信息 */
+                        propertyInfo: { type: "any" },
+                    },
+                    events: {}
+                },
+                /**
+                 * 获取属性信息
+                 */
+                getPropertyInfo(this: Column): shell.bo.IBizPropertyInfo {
+                    return this.getProperty("propertyInfo");
+                },
+                /**
+                 * 设置属性信息
+                 * @param value 值
+                 */
+                setPropertyInfo(this: Column, value: shell.bo.IBizPropertyInfo): Column {
+                    return this.setProperty("propertyInfo", value);
+                },
+                filter(sValue: any): void {
                     let oTable: any = this.getParent();
                     if (oTable && oTable.isBound("rows")) {
                         // notify the event listeners
@@ -1154,85 +1175,9 @@ namespace sap {
                         }
                     }
                     return this;
-                };
-                for (let column of sortedColumns) {
-                    this.insertColumn(column, column.getPropertyInfo().position);
-                }
-                // 拖动排序
-                if (this.getSortIntervalStep() > 0
-                    && !(this.getDragDropConfig()?.length > 0) && dragable === true) {
-                    // 步长为0，不支持拖动
-                    this.addDragDropConfig(new sap.ui.core.dnd.DragDropInfo("", {
-                        sourceAggregation: "rows",
-                        targetAggregation: "rows",
-                        dropPosition: sap.ui.core.dnd.DropPosition.Between,
-                        dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
-                        drop(event: sap.ui.base.Event): void {
-                            let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
-                            let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
-                            let dropPosition: string = event.getParameter("dropPosition");
-                            let table: any = (<any>event.getSource())?.getDropTarget();
-                            let sortProperty: string = table.getSortProperty();
-                            if (table instanceof DataTable) {
-                                let index: number = 1;
-                                let step: number = table.getSortIntervalStep();
-                                if (step <= 0) {
-                                    step = 1;
-                                }
-                                for (let row of (<any>table).getBinding().getContexts()) {
-                                    if (ibas.objects.isNull(row)) {
-                                        continue;
-                                    }
-                                    if (dragged === row) {
-                                        continue;
-                                    } else if (dropped === row) {
-                                        if (dropPosition === "Before") {
-                                            dragged.getObject()[sortProperty] = index * step;
-                                            index++;
-                                            dropped.getObject()[sortProperty] = index * step;
-                                            index++;
-                                        } else if (dropPosition === "After") {
-                                            dropped.getObject()[sortProperty] = index * step;
-                                            index++;
-                                            dragged.getObject()[sortProperty] = index * step;
-                                            index++;
-                                        }
-                                    } else {
-                                        row.getObject()[sortProperty] = index * step;
-                                        index++;
-                                    }
-                                }
-                                if (index > 1) {
-                                    table.getModel().refresh(true);
-                                }
-                            }
-                        },
-                    }));
-                }
-            }
-            /**
-             * 数据表格列
-             */
-            Column.extend("sap.extension.table.DataColumn", {
-                metadata: {
-                    properties: {
-                        /** 属性信息 */
-                        propertyInfo: { type: "any" },
-                    },
-                    events: {}
                 },
-                /**
-                 * 获取属性信息
-                 */
-                getPropertyInfo(this: Column): shell.bo.IBizPropertyInfo {
-                    return this.getProperty("propertyInfo");
-                },
-                /**
-                 * 设置属性信息
-                 * @param value 值
-                 */
-                setPropertyInfo(this: Column, value: shell.bo.IBizPropertyInfo): Column {
-                    return this.setProperty("propertyInfo", value);
+                ofCell(oCell: any): any {
+                    return (<any>sap.ui.table.Column).ofCell.apply(this, arguments);
                 },
                 /** 重构设置 */
                 applySettings(this: DataColumn, mSettings: any): DataColumn {
@@ -1257,9 +1202,6 @@ namespace sap {
                     return this;
                 }
             });
-            (<any>DataColumn).ofCell = function (oCell: any): any {
-                return (<any>sap.ui.table.Column).ofCell.apply(this, arguments);
-            };
             /**
              * 表格树
              */
@@ -1696,48 +1638,6 @@ namespace sap {
                         }
                     }
                     return this;
-                },
-                /**
-                 * 设置模型
-                 * @param oModel 数据模型
-                 * @param sName 名称
-                 */
-                setModel(this: DataTreeTable, oModel: model.JSONModel, sName?: string): DataTreeTable {
-                    let model: model.JSONModel = this.getModel();
-                    // 判断是否有有效模型
-                    if (model && model.getData()) {
-                        let data: any = model.getData();
-                        if (!(data?.rows instanceof Array && data.rows.length > 0)) {
-                            model = undefined;
-                        }
-                    }
-                    // 没有设置过模型，则更新控件绑定信息
-                    if (ibas.objects.isNull(model) && !ibas.objects.isNull(oModel)) {
-                        // 获取对象信息
-                        let data: any = oModel.getData();
-                        if (data instanceof Array) {
-                            data = data[0];
-                        } else if (data.rows instanceof Array) {
-                            data = data.rows[0];
-                        }
-                        if (!ibas.objects.isNull(data)) {
-                            let userFields: ibas.IUserFields = data.userFields;
-                            if (!ibas.objects.isNull(userFields)) {
-                                for (let column of this.getColumns()) {
-                                    if (column instanceof DataColumn) {
-                                        let template: sap.ui.core.Control | string = column.getTemplate();
-                                        if (template instanceof sap.ui.core.Control) {
-                                            let bindingInfo: any = managedobjects.bindingInfo(template, "bindingValue");
-                                            if (!ibas.objects.isNull(bindingInfo)) {
-                                                userfields.check(userFields, bindingInfo);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    }
-                    return TreeTable.prototype.setModel.apply(this, arguments);
                 },
             });
         }

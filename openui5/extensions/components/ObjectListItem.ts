@@ -91,64 +91,32 @@ namespace sap {
                     }
                     return this;
                 },
-                init(this: DataObjectListItem): void {
-                    (<any>ObjectListItem.prototype).init.apply(this, arguments);
-                    this.attachModelContextChange(undefined, function (event: sap.ui.base.Event): void {
-                        let source: any = sap.ui.getCore().byId(event.getParameter("id"));
-                        if (source instanceof ObjectListItem) {
-                            let content: any = source.getBindingContext();
-                            if (content instanceof sap.ui.model.Context) {
-                                let data: any = content.getObject();
-                                if (!ibas.objects.isNull(data)) {
-                                    let userFields: ibas.IUserFields = data.userFields;
-                                    if (!ibas.objects.isNull(userFields)) {
-                                        for (let item of source.getAttributes()) {
-                                            let bindingInfo: any = managedobjects.bindingInfo(item, "bindingValue");
-                                            if (!ibas.objects.isNull(bindingInfo)) {
-                                                userfields.check(userFields, bindingInfo);
-                                            }
-                                        }
-                                    }
-                                }
-                            }
-                        }
-                    });
-                }
             });
             function propertyControls(this: DataObjectListItem, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
                 }
-                let properties: shell.bo.IBizPropertyInfo[] = Object.assign([], boInfo.properties);
-                for (let item of this.getAttributes()) {
+                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo, sap.m.ObjectAttribute> = new Map<any, any>();
+                for (let i: number = 0; i < this.getAttributes().length; i++) {
+                    let item: sap.m.ObjectAttribute = this.getAttributes()[i];
                     let bindingPath: string = managedobjects.bindingPath(item);
-                    let index: number = properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                    let index: number = boInfo.properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
                     if (index < 0) {
                         return;
                     }
-                    let propertyInfo: shell.bo.IBizPropertyInfo = properties[index];
-                    if (!ibas.objects.isNull(propertyInfo)) {
-                        if (propertyInfo.authorised === ibas.emAuthoriseType.NONE) {
-                            this.removeAttribute(item);
+                    let property: shell.bo.IBizPropertyInfo = boInfo.properties[index];
+                    if (!ibas.objects.isNull(property)) {
+                        if (property.authorised === ibas.emAuthoriseType.NONE) {
                             continue;
                         }
-                        // 修正位置
-                        if (propertyInfo.position > 0) {
-                            let index: number = this.indexOfAttribute(item);
-                            let position: number = propertyInfo.position - 1;
-                            if (position < index) {
-                                this.removeAttribute(item);
-                                this.insertAttribute(item, position);
-                            } else if (position > index) {
-                                this.removeAttribute(item);
-                                this.insertAttribute(item, position - 1);
-                            }
-                        }
-                        properties[index] = null;
+                        ptyColumnMap.set(property, item);
+                    } else {
+                        property = <any>{ position: i };
+                        ptyColumnMap.set(property, item);
                     }
                 }
                 if (this.getUserFieldsMode() === "attribute") {
-                    for (let property of properties) {
+                    for (let property of boInfo.properties.sort((a, b) => a.position - b.position)) {
                         if (ibas.objects.isNull(property)) {
                             continue;
                         }
@@ -163,24 +131,18 @@ namespace sap {
                         if (property.systemed === true && element instanceof sap.m.ObjectAttribute) {
                             element.setTitle(ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()));
                         }
-                        let content: any = this.getBindingContext();
-                        if (content instanceof sap.ui.model.Context) {
-                            let data: any = content.getObject();
-                            if (!ibas.objects.isNull(data)) {
-                                let userFields: ibas.IUserFields = data.userFields;
-                                if (!ibas.objects.isNull(userFields)) {
-                                    let bindingInfo: any = managedobjects.bindingInfo(element, "bindingValue");
-                                    if (!ibas.objects.isNull(bindingInfo)) {
-                                        userfields.check(userFields, bindingInfo);
-                                    }
-                                }
-                            }
-                        }
-                        if (property.position > 0) {
-                            this.insertAttribute(element, property.position);
-                        } else {
-                            this.addAttribute(element);
-                        }
+                        ptyColumnMap.set(property, element);
+                    }
+                }
+                // 排序并添加
+                for (let item of ibas.arrays.create(this.getAttributes()).reverse()) {
+                    this.removeAttribute(item);
+                }
+                for (let property of ibas.arrays.create(ptyColumnMap.keys()).sort((a, b) => a.position - b.position)) {
+                    if (property.position > 0) {
+                        this.insertAttribute(ptyColumnMap.get(property), property.position);
+                    } else {
+                        this.addAttribute(ptyColumnMap.get(property));
                     }
                 }
             }
