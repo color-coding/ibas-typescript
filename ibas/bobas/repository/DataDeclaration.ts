@@ -97,6 +97,8 @@ declare namespace ibas4j {
         OnlyHasChilds: boolean;
         /** 包含不符合条件子项 */
         IncludingOtherChilds: boolean;
+        /** 查询入口 */
+        Entry: boolean;
     }
     /** 文件信息 */
     export interface IFileData extends IDataDeclaration {

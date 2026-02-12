@@ -179,6 +179,9 @@ namespace ibas {
          * 包含不符合条件子项（仅查到结果时有效）
          */
         includingOtherChilds: boolean;
+
+        /** 查询入口 */
+        entry: boolean;
     }
 
     /**
@@ -848,6 +851,19 @@ namespace ibas {
 
         set includingOtherChilds(value: boolean) {
             this.IncludingOtherChilds = value;
+        }
+
+        /**
+         * 查询入口
+         */
+        private Entry: boolean;
+
+        get entry(): boolean {
+            return this.Entry;
+        }
+
+        set entry(value: boolean) {
+            this.Entry = value;
         }
     }
 
