@@ -103,7 +103,7 @@ declare namespace ibas4j {
     /** 文件信息 */
     export interface IFileData extends IDataDeclaration {
         /** 文件名称  */
-        FileName: string;
+        Name: string;
         /** 位置 */
         Location: string;
         /** 原始名称 */

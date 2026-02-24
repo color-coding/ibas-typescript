@@ -97,8 +97,8 @@ namespace ibas {
                     OnlyHasChilds: newData.onlyHasChilds,
                     Entry: newData.entry,
                     IncludingOtherChilds: newData.includingOtherChilds,
-                    Conditions: conditions,
-                    ChildCriterias: childCriteria,
+                    Conditions: conditions.length > 0 ? conditions : undefined,
+                    ChildCriterias: childCriteria.length > 0 ? childCriteria : undefined,
                     Sorts: sorts
                 };
                 return remote;
@@ -122,9 +122,9 @@ namespace ibas {
                     ResultCount: newData.result,
                     NoChilds: newData.noChilds,
                     Remarks: newData.remarks,
-                    Conditions: conditions,
-                    ChildCriterias: childCriteria,
-                    Sorts: sorts
+                    Conditions: conditions.length > 0 ? conditions : undefined,
+                    ChildCriterias: childCriteria.length > 0 ? childCriteria : undefined,
+                    Sorts: sorts.length > 0 ? sorts : undefined,
                 };
                 return remote;
             } else if (objects.instanceOf(data, Condition)) {
@@ -132,8 +132,8 @@ namespace ibas {
                 let remote: ibas4j.ICondition = {
                     type: data.constructor.name,
                     Alias: newData.alias,
-                    BracketClose: newData.bracketClose,
-                    BracketOpen: newData.bracketOpen,
+                    BracketClose: newData.bracketClose > 0 ? newData.bracketClose : undefined,
+                    BracketOpen: newData.bracketOpen > 0 ? newData.bracketOpen : undefined,
                     ComparedAlias: newData.comparedAlias,
                     Value: newData.value,
                     Operation: enums.toString(emConditionOperation, newData.operation),
@@ -153,7 +153,7 @@ namespace ibas {
                 let newData: FileData = data;
                 let remote: ibas4j.IFileData = {
                     type: data.constructor.name,
-                    FileName: newData.fileName,
+                    Name: newData.name,
                     Location: newData.location,
                     OriginalName: newData.originalName
                 };
@@ -327,7 +327,7 @@ namespace ibas {
             } else if (data.type === FileData.name) {
                 let remote: ibas4j.IFileData = data;
                 let newData: FileData = new FileData();
-                newData.fileName = remote.FileName;
+                newData.name = remote.Name;
                 newData.location = remote.Location;
                 newData.originalName = remote.OriginalName;
                 return newData;

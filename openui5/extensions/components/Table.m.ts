@@ -297,7 +297,8 @@ namespace sap {
                     return;
                 }
                 // 补充列绑定属性信息
-                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo, { column: sap.m.Column, cell: any }> = new Map<any, any>();
+                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo,
+                    { column: sap.m.Column, cell: any } | { column: sap.m.Column, cell: any }[]> = new Map<any, any>();
                 let template: sap.m.ColumnListItem = itemsBindingInfo.template;
                 for (let item of template.getCells()) {
                     let bindingPath: string = managedobjects.bindingPath(item);
@@ -312,9 +313,17 @@ namespace sap {
                         }
                         index = template.indexOfCell(item);
                         if (index >= 0 && index < this.getColumns().length) {
-                            ptyColumnMap.set(property, { column: this.getColumns()[index], cell: item });
+                            if (ptyColumnMap.has(property)) {
+                                ptyColumnMap.set(property, ibas.arrays.create(ptyColumnMap.get(property), { column: this.getColumns()[index], cell: item }));
+                            } else {
+                                ptyColumnMap.set(property, { column: this.getColumns()[index], cell: item });
+                            }
                         } else {
-                            ptyColumnMap.set(property, { column: undefined, cell: item });
+                            if (ptyColumnMap.has(property)) {
+                                ptyColumnMap.set(property, ibas.arrays.create(ptyColumnMap.get(property), { column: undefined, cell: item }));
+                            } else {
+                                ptyColumnMap.set(property, { column: undefined, cell: item });
+                            }
                         }
                     } else {
                         index = template.indexOfCell(item);
@@ -357,26 +366,28 @@ namespace sap {
                     template.removeCell(item);
                 }
                 for (let property of ibas.arrays.create(ptyColumnMap.keys()).sort((a, b) => a.position - b.position)) {
-                    let column: any = ptyColumnMap.get(property).column;
-                    let cell: any = ptyColumnMap.get(property).cell;
-                    if (property.position > 0) {
-                        if (!ibas.objects.isNull(column)) {
-                            this.insertColumn(column, property.position);
-                        }
-                        if (!ibas.objects.isNull(cell)) {
-                            template.insertCell(cell, property.position);
-                        }
-                    } else {
-                        if (!ibas.objects.isNull(column)) {
-                            this.addColumn(column);
-                        }
-                        if (!ibas.objects.isNull(cell)) {
-                            template.addCell(cell);
+                    for (let item of ibas.arrays.create(ptyColumnMap.get(property))) {
+                        let column: any = item.column;
+                        let cell: any = item.cell;
+                        if (property.position > 0) {
+                            if (!ibas.objects.isNull(column)) {
+                                this.insertColumn(column, property.position);
+                            }
+                            if (!ibas.objects.isNull(cell)) {
+                                template.insertCell(cell, property.position);
+                            }
+                        } else {
+                            if (!ibas.objects.isNull(column)) {
+                                this.addColumn(column);
+                            }
+                            if (!ibas.objects.isNull(cell)) {
+                                template.addCell(cell);
+                            }
                         }
                     }
                 }
                 // 拖动排序，步长为0，不支持拖动
-                if (this.getSortIntervalStep() > 0
+                if (this.getSortIntervalStep instanceof Function && this.getSortIntervalStep() > 0
                     && !(this.getDragDropConfig()?.length > 0)) {
                     // 可拖拽排序（仅当排序列显示时）
                     let dragable: boolean = false;

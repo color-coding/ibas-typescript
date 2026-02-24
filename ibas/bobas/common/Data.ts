@@ -305,30 +305,12 @@ namespace ibas {
      * 文件数据
      */
     export class FileData {
-        private FileName: string;
         /** 文件名称 */
-        get fileName(): string {
-            return this.FileName;
-        }
-        set fileName(value: string) {
-            this.FileName = value;
-        }
-        private Location: string;
+        name: string;
         /** 位置 */
-        get location(): string {
-            return this.Location;
-        }
-        set location(value: string) {
-            this.Location = value;
-        }
-        private OriginalName: string;
+        location: string;
         /** 原始名 */
-        get originalName(): string {
-            return this.OriginalName;
-        }
-        set originalName(value: string) {
-            this.OriginalName = value;
-        }
+        originalName: string;
     }
     /** 文件项目 */
     export class FileItem {

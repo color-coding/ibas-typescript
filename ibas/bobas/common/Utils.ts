@@ -1294,46 +1294,15 @@ namespace ibas {
          * @param value1 值1
          * @param value2 值2
          * @param digits 小数位
-         * @param degree 精确度（默认增加1位）
+         * @param degree 精确度（默认减1位）
          */
         export function isApproximated(value1: number, value2: number, digits: number = 6, degree: number = 1): boolean {
-            if (isNaN(value1)) {
-                return false;
-            }
-            if (isNaN(value2)) {
-                return false;
-            }
-            if (value1 === value2) {
-                return true;
-            }
-            if (value1 === 0 && value2 !== 0) {
-                return false;
-            }
-            if (value1 !== 0 && value2 === 0) {
-                return false;
-            }
-            if (typeof (digits) === "string") {
-                digits = numbers.valueOf(digits);
-            }
-            if (typeof (degree) === "string") {
-                degree = numbers.valueOf(degree);
-            }
-            if (!(digits > 0)) {
-                return value1 === value2;
-            }
-            let nValue1: number = Math.round(value1 * Math.pow(10, digits + degree));
-            let nValue2: number = Math.round(value2 * Math.pow(10, digits + degree));
-            let difference: number = Math.abs(nValue1 - nValue2);
-            if (degree > 0) {
-                if (difference >= 5) {
-                    return false;
-                }
-            } else {
-                if (difference > 1) {
-                    return false;
-                }
-            }
-            return true;
+            let diff: number = Math.abs(value1 - value2);
+            let absEpsilon: number = Math.pow(10, degree - digits);
+            let relEpsilon: number = Math.pow(10, - digits);
+            if (diff <= absEpsilon) { return true; } // 针对接近 0 的情况
+            // 相对误差判断
+            return diff / Math.max(Math.abs(value1), Math.abs(value2)) <= relEpsilon;
         }
     }
 

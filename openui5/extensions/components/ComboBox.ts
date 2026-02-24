@@ -355,7 +355,7 @@ namespace sap {
                                                         }));
                                                     }
                                                 }
-                                            }
+                                            } break;
                                         }
                                     }
                                     return;

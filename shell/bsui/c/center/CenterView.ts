@@ -45,7 +45,7 @@ namespace shell {
             /** 消息数量 */
             const _MESSAGE_COUNT: number = ibas.config.get(CONFIG_ITEM_MAX_MESSAGE_COUNT, 50);
             /** 快捷键映射 */
-            let shortcutKeyMap: Map<number, number> = function (): Map<number, number> {
+            const shortcutKeyMap: Map<number, number> = function (): Map<number, number> {
                 let keyMap: Map<number, number> = new Map<number, number>();
                 for (let item of ibas.config.get(CONFIG_ITEM_SHORTCUT_KEY_MAPPING, "")?.split(ibas.DATA_SEPARATOR)) {
                     if (ibas.strings.count(item, ":") !== 1) {
@@ -62,6 +62,49 @@ namespace shell {
             const UI_MAIN_BACK: string = "__UI_MAIN_BACK";
             const UI_MAIN_TITLE: string = "__UI_MAIN_TITLE";
             const UI_BUSY_DIALOG: string = "__UI_BUSY_DIALOG";
+
+            const viewDataKeys: (view: any) => string = function (view: any): string {
+                let viewName: string = null;
+                let viewData: any = null;
+                if (view.application instanceof ibas.BOEditApplication) {
+                    viewData = (<any>view.application).editData;
+                } else if (view.application instanceof ibas.BOViewApplication) {
+                    viewData = (<any>view.application).viewData;
+                }
+                if (viewData instanceof ibas.BOMasterData || viewData instanceof ibas.BOMasterDataLine) {
+                    let masKey: any = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_CODE);
+                    if (!ibas.strings.isEmpty(masKey)) {
+                        let lineId: number = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_LINEID);
+                        if (lineId > 0) {
+                            viewName = ibas.strings.format("{0} - {1}", masKey, lineId);
+                        } else {
+                            viewName = ibas.strings.valueOf(masKey);
+                        }
+                    }
+                } else if (viewData instanceof ibas.BODocument || viewData instanceof ibas.BODocumentLine) {
+                    let masKey: any = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_DOCENTRY);
+                    if (masKey > 0) {
+                        let lineId: number = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_LINEID);
+                        if (lineId > 0) {
+                            viewName = ibas.strings.format("{0} - {1}", masKey, lineId);
+                        } else {
+                            viewName = ibas.strings.valueOf(masKey);
+                        }
+                    }
+                } else if (viewData instanceof ibas.BOSimple || viewData instanceof ibas.BOSimpleLine) {
+                    let masKey: any = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_OBJECTKEY);
+                    if (masKey > 0) {
+                        let lineId: number = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_LINEID);
+                        if (lineId > 0) {
+                            viewName = ibas.strings.format("{0} - {1}", masKey, lineId);
+                        } else {
+                            viewName = ibas.strings.valueOf(masKey);
+                        }
+                    }
+                }
+                return viewName;
+            };
+
             /**
              * 视图-中心
              */
@@ -320,20 +363,30 @@ namespace shell {
                                             if (!(pages.length > 1)) {
                                                 return;
                                             }
-                                            that.showMessageBox({
+                                            let currentPage: any = source.getCurrentPage();
+                                            jQuery.sap.require("sap.m.MessageBox");
+                                            sap.m.MessageBox.confirm(ibas.i18n.prop(["shell_close_all_views", "shell_continue"]), {
                                                 title: that.title,
-                                                type: ibas.emMessageType.QUESTION,
-                                                message: ibas.i18n.prop(["shell_close_all_views", "shell_continue"]),
-                                                actions: [ibas.emMessageAction.YES, ibas.emMessageAction.NO],
-                                                onCompleted: (result) => {
-                                                    if (result === ibas.emMessageAction.YES) {
-                                                        for (let item of pages) {
-                                                            let vItem: any = sap.extension.customdatas.getView(item);
-                                                            if (vItem instanceof ibas.View) {
-                                                                ibas.Application.prototype.close.apply(vItem.application);
-                                                            }
+                                                actions: [
+                                                    ibas.i18n.prop("shell_all"),
+                                                    ibas.i18n.prop("shell_keep_selected"),
+                                                    ibas.i18n.prop("shell_exit"),
+                                                ],
+                                                onClose(oAction: any): void {
+                                                    if (oAction === ibas.i18n.prop("shell_exit")) {
+                                                        return;
+                                                    }
+                                                    if (oAction === ibas.i18n.prop("shell_all")) {
+                                                        currentPage = undefined;
+                                                    }
+                                                    for (let item of pages) {
+                                                        if (item === currentPage) {
+                                                            continue;
                                                         }
-                                                        source.setSelectedItem(source.getItems()[0]);
+                                                        let vItem: any = sap.extension.customdatas.getView(item);
+                                                        if (vItem instanceof ibas.View) {
+                                                            ibas.Application.prototype.close.apply(vItem.application);
+                                                        }
                                                     }
                                                 }
                                             });
@@ -778,57 +831,14 @@ namespace shell {
                                         return containerItem.getName();
                                     },
                                     set: function (value: string): void {
-                                        let viewData: any = null;
-                                        if (view.application instanceof ibas.BOEditApplication) {
-                                            viewData = (<any>view.application).editData;
-                                        } else if (view.application instanceof ibas.BOViewApplication) {
-                                            viewData = (<any>view.application).viewData;
+                                        let viewName: string = viewDataKeys(view);
+                                        if (!ibas.strings.isEmpty(viewName)) {
+                                            containerItem.setName(viewName);
+                                            containerItem.setAdditionalText(value);
+                                        } else {
+                                            containerItem.setAdditionalText(undefined);
+                                            containerItem.setName(value);
                                         }
-                                        if (viewData instanceof ibas.BOMasterData || viewData instanceof ibas.BOMasterDataLine) {
-                                            let masKey: any = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_CODE);
-                                            if (!ibas.strings.isEmpty(masKey)) {
-                                                let lineId: number = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_LINEID);
-                                                if (lineId > 0) {
-                                                    containerItem.setName(ibas.strings.format("{0} - {1}", masKey, lineId));
-                                                    containerItem.setAdditionalText(value);
-                                                    return;
-                                                } else {
-                                                    containerItem.setName(masKey);
-                                                    containerItem.setAdditionalText(value);
-                                                    return;
-                                                }
-                                            }
-                                        } else if (viewData instanceof ibas.BODocument || viewData instanceof ibas.BODocumentLine) {
-                                            let masKey: any = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_DOCENTRY);
-                                            if (masKey > 0) {
-                                                let lineId: number = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_LINEID);
-                                                if (lineId > 0) {
-                                                    containerItem.setName(ibas.strings.format("{0} - {1}", masKey, lineId));
-                                                    containerItem.setAdditionalText(value);
-                                                    return;
-                                                } else {
-                                                    containerItem.setName(masKey);
-                                                    containerItem.setAdditionalText(value);
-                                                    return;
-                                                }
-                                            }
-                                        } else if (viewData instanceof ibas.BOSimple || viewData instanceof ibas.BOSimpleLine) {
-                                            let masKey: any = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_OBJECTKEY);
-                                            if (masKey > 0) {
-                                                let lineId: number = ibas.objects.propertyValue(viewData, ibas.BO_PROPERTY_NAME_LINEID);
-                                                if (lineId > 0) {
-                                                    containerItem.setName(ibas.strings.format("{0} - {1}", masKey, lineId));
-                                                    containerItem.setAdditionalText(value);
-                                                    return;
-                                                } else {
-                                                    containerItem.setName(masKey);
-                                                    containerItem.setAdditionalText(value);
-                                                    return;
-                                                }
-                                            }
-                                        }
-                                        containerItem.setAdditionalText(undefined);
-                                        containerItem.setName(value);
                                     }
                                 });
                                 this.pageContainer.addPage(containerItem);
@@ -848,6 +858,8 @@ namespace shell {
                         ibas.views.displayed.call(view);
                     }
                 }
+
+
                 protected showShellView(view: app.ShellView): void {
                     let app: any = sap.ui.getCore().byId(UI_APP);
                     if (app instanceof sap.m.App) {
@@ -1190,6 +1202,11 @@ namespace shell {
                                 grand.removeItem(parent);
                                 // grand.back(null);
                             }
+                            setTimeout(() => {
+                                if (ibas.strings.isEmpty(grand.getSelectedItem()) && grand.getItems().length > 0) {
+                                    grand.setSelectedItem(grand.getItems()[grand.getItems().length - 1]);
+                                }
+                            }, 100);
                         }
                     }
                     if (view instanceof ibas.View) {

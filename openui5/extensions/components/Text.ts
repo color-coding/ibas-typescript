@@ -301,7 +301,7 @@ namespace sap {
                                                     this.setText(textBudilder.toString());
                                                     this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
                                                 }
-                                            }
+                                            } break;
                                         }
                                     }
                                     return;

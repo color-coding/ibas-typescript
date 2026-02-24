@@ -1215,6 +1215,8 @@ namespace sap {
                         dataInfo: { type: "any" },
                         /** 属性名称 */
                         propertyName: { type: "string" },
+                        /** 仅值选择，不可输入 */
+                        valueHelpOnly: { type: "boolean", defaultValue: false },
                     },
                     events: {}
                 },
@@ -1354,7 +1356,7 @@ namespace sap {
                                                         default: item.default,
                                                     }));
                                                 }
-                                            }
+                                            } break;
                                         }
                                     }
                                     if (this.getSuggestionItems().length > 0) {
@@ -1370,6 +1372,17 @@ namespace sap {
                         }
                     });
                     return this;
+                },
+                /**
+                 * 重写此方法，保证建议弹出
+                 */
+                getShowSuggestion(this: PropertyInput): boolean {
+                    if (this.getSuggestionItems().length > 0) {
+                        if (this.getShowValueHelp()) {
+                            return true;
+                        }
+                    }
+                    return Input.prototype.getShowSuggestion.apply(this, arguments);
                 },
                 init(this: Input): void {
                     (<any>Input.prototype).init.apply(this, arguments);

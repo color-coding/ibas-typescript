@@ -65,37 +65,6 @@ namespace shell {
                             icon: item.icon ? item.icon : ibas.config.get("defalutModuleIcon"),
                             text: this.text(item.name, item.copyright),
                             info: item.version,
-                            iconPress(oControlEvent: sap.ui.base.Event): void {
-                                // 按钮按下，查询此模块资源消耗
-                                let feedListItem: sap.m.FeedListItem = <sap.m.FeedListItem>oControlEvent.getSource();
-                                if (feedListItem.getBusy()) {
-                                    return;
-                                }
-                                feedListItem.setBusy(true);
-                                let monitor: app.ModuleMonitor = new app.ModuleMonitor();
-                                monitor.monitor({
-                                    name: item.name,
-                                    onCompleted(opRslt: ibas.IOperationResult<any>): void {
-                                        feedListItem.setBusy(false);
-                                        if (opRslt.resultCode !== 0 || opRslt.informations.length === 0) {
-                                            return;
-                                        }
-                                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                        builder.append("memory: ");
-                                        builder.append("used ");
-                                        builder.append(opRslt.informations.firstOrDefault(
-                                            c => app.ModuleMonitor.RUNTIME_INFORMATION_USED_MEMORY === c.name).content.toLowerCase());
-                                        builder.append(", total ");
-                                        builder.append(opRslt.informations.firstOrDefault(
-                                            c => app.ModuleMonitor.RUNTIME_INFORMATION_TOTAL_MEMORY === c.name).content.toLowerCase());
-                                        builder.append(", max ");
-                                        builder.append(opRslt.informations.firstOrDefault(
-                                            c => app.ModuleMonitor.RUNTIME_INFORMATION_MAX_MEMORY === c.name).content.toLowerCase());
-                                        builder.append(".");
-                                        feedListItem.setTimestamp(builder.toString());
-                                    }
-                                });
-                            }
                         }));
                     }
                     this.form.insertContent(list, 0);

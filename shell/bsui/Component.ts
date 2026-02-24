@@ -371,6 +371,23 @@ namespace shell {
                 },
                 onAfterRendering(this: TabContainer): void {
                 },
+                _rerenderContent(this: TabContainer, oContent: any): void {
+                    // 重写，复杂界面展示前出现等待框
+                    (<any>sap.m.TabContainer.prototype)._rerenderContent.call(this, [
+                        new sap.m.HBox("", {
+                            fitContainer: true,
+                            justifyContent: sap.m.FlexJustifyContent.Center,
+                            alignItems: sap.m.FlexAlignItems.Center,
+                            renderType: sap.m.FlexRendertype.Bare,
+                            items: [
+                                new sap.m.BusyIndicator()
+                            ]
+                        })
+                    ]);
+                    setTimeout(() => {
+                        (<any>sap.m.TabContainer.prototype)._rerenderContent.apply(this, arguments);
+                    }, 0);
+                },
                 addPage(this: TabContainer, container: any): TabContainer {
                     return this.addItem(container);
                 },

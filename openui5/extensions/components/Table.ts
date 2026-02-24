@@ -98,6 +98,15 @@ namespace sap {
                                 this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
                                     ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
                                     showHeaderSelector: true,
+                                    selectionChange(event: sap.ui.base.Event): void {
+                                        let table: any = event.getSource();
+                                        if (table instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                                            table = table.getParent();
+                                            if (table instanceof sap.ui.table.Table) {
+                                                (<any>table).fireRowSelectionChange({ rowIndices: event.getParameter("indices") });
+                                            }
+                                        }
+                                    }
                                 }));
                                 return this.setProperty("enableSelectAll", value);
                             }
@@ -703,7 +712,7 @@ namespace sap {
                 // 只读列表（遍历列，存在输入框则非只读）
                 let readonly: boolean = true;
                 // 补充列绑定属性信息
-                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo, ui.table.Column> = new Map<any, any>();
+                let ptyColumnMap: Map<shell.bo.IBizPropertyInfo, ui.table.Column | ui.table.Column[]> = new Map<any, any>();
                 for (let column of this.getColumns()) {
                     let template: sap.ui.core.Control | string = column.getTemplate();
                     if (readonly && template instanceof sap.m.InputBase) {
@@ -730,7 +739,11 @@ namespace sap {
                         if (property.authorised === ibas.emAuthoriseType.NONE) {
                             continue;
                         }
-                        ptyColumnMap.set(property, column);
+                        if (ptyColumnMap.has(property)) {
+                            ptyColumnMap.set(property, ibas.arrays.create(ptyColumnMap.get(property), column));
+                        } else {
+                            ptyColumnMap.set(property, column);
+                        }
                     }
                 }
                 // 创建不存在的列
@@ -833,67 +846,68 @@ namespace sap {
                 }
                 // 补充列功能
                 for (let property of ptyColumnMap.keys()) {
-                    let column: ui.table.Column = ptyColumnMap.get(property);
-                    let template: sap.ui.core.Control | string = column.getTemplate();
-                    if (template instanceof sap.ui.core.Control) {
-                        if (property.authorised === ibas.emAuthoriseType.READ) {
-                            controls.nonEditable(template);
-                            // 已被应用，则重新设置
-                            if (this.hasModel()) {
-                                column.setTemplate(template);
-                            }
-                        } else if (property.authorised === ibas.emAuthoriseType.ALL) {
-                            if (column.getVisible() === false) {
-                                column.setVisible(true);
-                            }
-                        }
-                        if (property.searched === true) {
-                            column.setSortProperty(property.name);
-                            column.setFilterProperty(property.name);
-                            if (ibas.strings.equalsIgnoreCase(property.dataType, "NUMERIC")) {
-                                if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
-                                    column.setFilterType(new sap.extension.data.Alphanumeric());
-                                } else {
-                                    column.setFilterType(new sap.ui.model.type.Integer());
+                    for (let column of ibas.arrays.create(ptyColumnMap.get(property))) {
+                        let template: sap.ui.core.Control | string = column.getTemplate();
+                        if (template instanceof sap.ui.core.Control) {
+                            if (property.authorised === ibas.emAuthoriseType.READ) {
+                                controls.nonEditable(template);
+                                // 已被应用，则重新设置
+                                if (this.hasModel()) {
+                                    column.setTemplate(template);
                                 }
-                            } else if (ibas.strings.equalsIgnoreCase(property.dataType, "DECIMAL")) {
-                                column.setFilterType(new sap.ui.model.type.Float());
-                            } else if (ibas.strings.equalsIgnoreCase(property.dataType, "DATE")) {
-                                if (ibas.strings.equalsIgnoreCase(property.editType, "TIME")) {
-                                    column.setFilterType(new sap.ui.model.type.Integer());
-                                } else {
-                                    column.setFilterType(new sap.ui.model.type.Date());
+                            } else if (property.authorised === ibas.emAuthoriseType.ALL) {
+                                if (column.getVisible() === false) {
+                                    column.setVisible(true);
                                 }
-                            } else if (ibas.strings.equalsIgnoreCase(property.dataType, "ALPHANUMERIC")) {
-                                if (column.getTemplate() instanceof sap.ui.core.Control) {
-                                    let bind: any = (<any>column.getTemplate()).getBindingInfo("bindingValue");
-                                    if (!ibas.objects.isNull(bind) && bind.parts instanceof Array && bind.parts.length === 1) {
-                                        let type: any = bind.parts[0].type;
-                                        if (type instanceof sap.extension.data.Enum && !ibas.objects.isNull(type.enumType)) {
-                                            column.setFilterType(function (value: any): any {
-                                                for (let key in type.enumType) {
-                                                    if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
-                                                        return key.toString();
+                            }
+                            if (property.searched === true) {
+                                column.setSortProperty(property.name);
+                                column.setFilterProperty(property.name);
+                                if (ibas.strings.equalsIgnoreCase(property.dataType, "NUMERIC")) {
+                                    if ((<any>column.getTemplate()).getDataInfo instanceof Function && (<any>column.getTemplate()).getDataInfo()) {
+                                        column.setFilterType(new sap.extension.data.Alphanumeric());
+                                    } else {
+                                        column.setFilterType(new sap.ui.model.type.Integer());
+                                    }
+                                } else if (ibas.strings.equalsIgnoreCase(property.dataType, "DECIMAL")) {
+                                    column.setFilterType(new sap.ui.model.type.Float());
+                                } else if (ibas.strings.equalsIgnoreCase(property.dataType, "DATE")) {
+                                    if (ibas.strings.equalsIgnoreCase(property.editType, "TIME")) {
+                                        column.setFilterType(new sap.ui.model.type.Integer());
+                                    } else {
+                                        column.setFilterType(new sap.ui.model.type.Date());
+                                    }
+                                } else if (ibas.strings.equalsIgnoreCase(property.dataType, "ALPHANUMERIC")) {
+                                    if (column.getTemplate() instanceof sap.ui.core.Control) {
+                                        let bind: any = (<any>column.getTemplate()).getBindingInfo("bindingValue");
+                                        if (!ibas.objects.isNull(bind) && bind.parts instanceof Array && bind.parts.length === 1) {
+                                            let type: any = bind.parts[0].type;
+                                            if (type instanceof sap.extension.data.Enum && !ibas.objects.isNull(type.enumType)) {
+                                                column.setFilterType(function (value: any): any {
+                                                    for (let key in type.enumType) {
+                                                        if (ibas.enums.describe(type.enumType, type.enumType[key]).indexOf(value) !== -1) {
+                                                            return key.toString();
+                                                        }
                                                     }
-                                                }
-                                            });
+                                                });
+                                            }
                                         }
                                     }
                                 }
                             }
-                        }
-                        if (property.required === true) {
-                            let label: any = column.getLabel();
-                            if (label instanceof sap.m.Label) {
-                                label.setRequired(true);
+                            if (property.required === true) {
+                                let label: any = column.getLabel();
+                                if (label instanceof sap.m.Label) {
+                                    label.setRequired(true);
+                                }
                             }
-                        }
-                        if (!ibas.strings.isEmpty(property.width)) {
-                            let value: string = property.width;
-                            if (!(value.endsWith("px") || value.endsWith("rem"))) {
-                                value += "rem";
+                            if (!ibas.strings.isEmpty(property.width)) {
+                                let value: string = property.width;
+                                if (!(value.endsWith("px") || value.endsWith("rem"))) {
+                                    value += "rem";
+                                }
+                                column.setWidth(value);
                             }
-                            column.setWidth(value);
                         }
                     }
                 }
@@ -909,21 +923,23 @@ namespace sap {
                         property = {
                             position: i,
                         };
+                        ptyColumnMap.set(<any>property, column);
                     }
-                    ptyColumnMap.set(<any>property, column);
                 }
                 for (let item of oColumn.reverse()) {
                     this.removeColumn(item);
                 }
                 for (let property of ibas.arrays.create(ptyColumnMap.keys()).sort((a, b) => a.position - b.position)) {
-                    if (property.position > 0) {
-                        this.insertColumn(ptyColumnMap.get(property), property.position);
-                    } else {
-                        this.addColumn(ptyColumnMap.get(property));
+                    for (let column of ibas.arrays.create(ptyColumnMap.get(property))) {
+                        if (property.position > 0) {
+                            this.insertColumn(column, property.position);
+                        } else {
+                            this.addColumn(column);
+                        }
                     }
                 }
                 // 拖动排序，步长为0，不支持拖动
-                if (this.getSortIntervalStep() > 0
+                if (this.getSortIntervalStep instanceof Function && this.getSortIntervalStep() > 0
                     && !(this.getDragDropConfig()?.length > 0)) {
                     // 可拖拽排序（仅当排序列显示时）
                     let dragable: boolean = false;
@@ -1261,6 +1277,15 @@ namespace sap {
                                 this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
                                     ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
                                     showHeaderSelector: true,
+                                    selectionChange(event: sap.ui.base.Event): void {
+                                        let table: any = event.getSource();
+                                        if (table instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                                            table = table.getParent();
+                                            if (table instanceof sap.ui.table.Table) {
+                                                (<any>table).fireRowSelectionChange({ rowIndices: event.getParameter("indices") });
+                                            }
+                                        }
+                                    }
                                 }));
                                 return this.setProperty("enableSelectAll", value);
                             }

@@ -480,12 +480,18 @@ namespace ibas {
                             // 集合变化，则父项修改
                             if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
                                 this.parent.markDirty();
+                                if (this.parent instanceof Bindable) {
+                                    (<any>this.parent).firePropertyChanged("isDirty");
+                                }
                             }
                             runRules.call(this, null);
                         } else {
                             // 集合变化，则父项修改
                             if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
                                 this.parent.markDirty();
+                                if (this.parent instanceof Bindable) {
+                                    (<any>this.parent).firePropertyChanged("isDirty");
+                                }
                             }
                             runRules.call(this, name);
                         }

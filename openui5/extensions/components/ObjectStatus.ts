@@ -504,7 +504,7 @@ namespace sap {
                                                             return;
                                                         }
                                                     }
-                                                }
+                                                } break;
                                             }
                                         }
                                         return;
