@@ -121,6 +121,29 @@ declare namespace sap {
                  * @param value 值：0，不支持调整
                  */
                 setSortIntervalStep(value: number): this;
+                /**
+                 * 监听更新属性列事件
+                 * @param oData 数据
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                attachUpdatePropertyColumns(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 移出更新属性列事件
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                detachUpdatePropertyColumns(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发更新属性列事件
+                 * @param param 参数
+                 */
+                protected fireUpdatePropertyColumns(param: { boInfo: shell.bo.IBizObjectInfo }): void;
+                /**
+                 * 更新属性列
+                 * @param param 参数
+                 */
+                updatePropertyColumns(boInfo?: shell.bo.IBizObjectInfo): void;
             }
         }
     }

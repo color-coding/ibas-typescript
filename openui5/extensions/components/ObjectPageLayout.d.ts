@@ -59,6 +59,29 @@ declare namespace sap {
                  * @param value 值
                  */
                 setDataInfo(value: { code: string, name?: string } | string | shell.bo.IBizObjectInfo): this;
+                /**
+                 * 监听更新属性项事件
+                 * @param oData 数据
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                attachUpdatePropertyControls(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * 移出更新属性项事件
+                 * @param fnFunction 方法
+                 * @param oListener 监听者
+                 */
+                detachUpdatePropertyControls(fnFunction: Function, oListener?: any): this;
+                /**
+                 * 触发更新属性项事件
+                 * @param param 参数
+                 */
+                protected fireUpdatePropertyControls(param: { boInfo: shell.bo.IBizObjectInfo }): void;
+                /**
+                 * 更新属性项
+                 * @param param 参数
+                 */
+                updatePropertyControls(boInfo?: shell.bo.IBizObjectInfo): void;
             }
         }
     }

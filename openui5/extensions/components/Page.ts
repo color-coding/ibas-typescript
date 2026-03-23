@@ -49,7 +49,15 @@ namespace sap {
                         /** 属性过滤器 */
                         propertyFilter: { type: "function" },
                     },
-                    events: {}
+                    events: {
+                        "updatePropertyControls": {
+                            parameters: {
+                                boInfo: {
+                                    type: "any",
+                                }
+                            }
+                        },
+                    }
                 },
                 renderer: {
                 },
@@ -92,46 +100,55 @@ namespace sap {
                         ];
                     }
                     Page.prototype.applySettings.apply(this, arguments);
-                    // 设置其他属性
-                    let dataInfo: any = this.getDataInfo();
-                    if (typeof dataInfo === "string") {
-                        dataInfo = {
-                            code: dataInfo,
-                        };
-                    } else if (typeof dataInfo === "function") {
-                        dataInfo = {
-                            code: dataInfo.BUSINESS_OBJECT_CODE,
-                            name: ibas.objects.nameOf(dataInfo),
-                        };
-                    }
-                    if (typeof dataInfo === "object") {
-                        if (dataInfo.properties instanceof Array) {
-                            propertyControls.call(this, dataInfo);
-                        } else {
-                            let info: { code: string, name?: string } = dataInfo;
-                            let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBizObjectInfo({
-                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                                boCode: ibas.config.applyVariables(info.code),
-                                boName: info.name,
-                                onCompleted: (opRslt) => {
-                                    if (opRslt.resultCode !== 0) {
-                                        ibas.logger.log(new Error(opRslt.message));
-                                    } else {
-                                        propertyControls.call(this, opRslt.resultObjects.firstOrDefault());
-                                        // 已加载数据，则重置
-                                        let model: any = this.getModel();
-                                        if (model !== undefined) {
-                                            this.setModel(undefined);
-                                            this.setModel(model);
-                                        }
-                                    }
-                                }
-                            });
-                        }
+                    // 根据绑定对象刷新列
+                    if (mSettings?.dataInfo) {
+                        this.updatePropertyControls();
                     }
                     return this;
                 },
+                updatePropertyControls(this: DataPage, boInfo: shell.bo.IBizObjectInfo): void {
+                    if (ibas.objects.isNull(boInfo)) {
+                        let dataInfo: any = this.getDataInfo();
+                        if (typeof dataInfo === "string") {
+                            dataInfo = {
+                                code: dataInfo,
+                            };
+                        } else if (typeof dataInfo === "function") {
+                            dataInfo = {
+                                code: dataInfo.BUSINESS_OBJECT_CODE,
+                                name: ibas.objects.nameOf(dataInfo),
+                            };
+                        }
+                        if (typeof dataInfo === "object") {
+                            if (dataInfo.properties instanceof Array) {
+                                this.updatePropertyControls(dataInfo);
+                            } else {
+                                let info: { code: string, name?: string } = dataInfo;
+                                let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                                boRepository.fetchBizObjectInfo({
+                                    user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                                    boCode: ibas.config.applyVariables(info.code),
+                                    boName: info.name,
+                                    onCompleted: (opRslt) => {
+                                        if (opRslt.resultCode !== 0) {
+                                            ibas.logger.log(new Error(opRslt.message));
+                                        } else if (opRslt.resultObjects.length > 0) {
+                                            this.updatePropertyControls(opRslt.resultObjects.firstOrDefault());
+                                            // 已加载数据，则重置
+                                            let model: any = this.getModel();
+                                            if (model !== undefined) {
+                                                this.setModel(undefined);
+                                                this.setModel(model);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+                        propertyControls.call(this, boInfo);
+                    }
+                }
             });
             function checkFormContent(control: sap.ui.core.Control, properties: shell.bo.IBizPropertyInfo[]): void {
                 if (control instanceof sap.ui.layout.VerticalLayout) {
@@ -428,6 +445,8 @@ namespace sap {
                         }
                     }
                 }
+                // 触发事件
+                this.fireUpdatePropertyControls({ boInfo: boInfo });
             }
             /** 配置项目-自动显示用户字段区域 */
             export const CONFIG_ITEM_AUTO_SHOW_USER_FIELDS_SIDE: string = "autoShowUserFieldsSide";

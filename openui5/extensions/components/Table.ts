@@ -585,7 +585,15 @@ namespace sap {
                         /** 排序间隔步长，0:不支持调整 */
                         sortIntervalStep: { type: "int", defaultValue: 0 },
                     },
-                    events: {}
+                    events: {
+                        "updatePropertyColumns": {
+                            parameters: {
+                                boInfo: {
+                                    type: "any",
+                                }
+                            }
+                        },
+                    }
                 },
                 renderer: {},
                 /**
@@ -653,34 +661,41 @@ namespace sap {
                     }
                     */
                     Table.prototype.applySettings.apply(this, arguments);
-                    let dataInfo: any = this.getDataInfo();
-                    if (typeof dataInfo === "string") {
-                        dataInfo = {
-                            code: dataInfo,
-                        };
-                    } else if (typeof dataInfo === "function") {
-                        dataInfo = {
-                            code: dataInfo.BUSINESS_OBJECT_CODE,
-                            name: ibas.objects.nameOf(dataInfo),
-                        };
+                    // 根据绑定对象刷新列
+                    if (mSettings?.dataInfo) {
+                        this.updatePropertyColumns();
                     }
-                    if (typeof dataInfo === "object") {
-                        if (dataInfo.properties instanceof Array) {
-                            propertyColumns.call(this, dataInfo);
-                        } else {
-                            let info: { code: string, name?: string } = dataInfo;
-                            let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBizObjectInfo({
-                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                                boCode: ibas.config.applyVariables(info.code),
-                                boName: info.name,
-                                onCompleted: (opRslt) => {
-                                    if (opRslt.resultCode !== 0) {
-                                        ibas.logger.log(new Error(opRslt.message));
-                                    } else {
-                                        let boInfo: shell.bo.IBizObjectInfo = opRslt.resultObjects.firstOrDefault();
-                                        if (!ibas.objects.isNull(boInfo)) {
-                                            if (typeof mSettings?.dataInfo === "object") {
+                    return this;
+                },
+                updatePropertyColumns(this: DataTable, boInfo?: shell.bo.IBizObjectInfo): void {
+                    if (ibas.objects.isNull(boInfo)) {
+                        let dataInfo: any = this.getDataInfo();
+                        if (typeof dataInfo === "string") {
+                            dataInfo = {
+                                code: dataInfo,
+                            };
+                        } else if (typeof dataInfo === "function") {
+                            dataInfo = {
+                                code: dataInfo.BUSINESS_OBJECT_CODE,
+                                name: ibas.objects.nameOf(dataInfo),
+                            };
+                        }
+                        if (typeof dataInfo === "object") {
+                            if (dataInfo.properties instanceof Array) {
+                                this.updatePropertyColumns(dataInfo);
+                            } else {
+                                let info: { code: string, name?: string } = dataInfo;
+                                let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                                boRepository.fetchBizObjectInfo({
+                                    user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                                    boCode: ibas.config.applyVariables(info.code),
+                                    boName: info.name,
+                                    onCompleted: (opRslt) => {
+                                        if (opRslt.resultCode !== 0) {
+                                            ibas.logger.log(new Error(opRslt.message));
+                                        } else if (opRslt.resultObjects.length > 0) {
+                                            let boInfo: shell.bo.IBizObjectInfo = opRslt.resultObjects.firstOrDefault();
+                                            if (!ibas.objects.isNull(boInfo)) {
                                                 if (ibas.objects.isNull(this.getRowSettingsTemplate())) {
                                                     if (boInfo.type === "Document") {
                                                         this.setRowSettingsTemplate(createRowSettings("Document"));
@@ -688,23 +703,25 @@ namespace sap {
                                                         this.setRowSettingsTemplate(createRowSettings("DocumentLine"));
                                                     }
                                                 }
-                                            }
-                                            propertyColumns.call(this, boInfo);
-                                            // 已加载数据，则重置
-                                            let model: any = this.getModel();
-                                            if (model !== undefined) {
-                                                this.setModel(undefined);
-                                                this.setModel(model);
+                                                this.updatePropertyColumns(boInfo);
+                                                // 已加载数据，则重置
+                                                let model: any = this.getModel();
+                                                if (model !== undefined) {
+                                                    this.setModel(undefined);
+                                                    this.setModel(model);
+                                                }
                                             }
                                         }
                                     }
-                                }
-                            });
+                                });
+                            }
                         }
+                    } else {
+                        propertyColumns.call(this, boInfo);
                     }
-                    return this;
-                },
+                }
             });
+
             function propertyColumns(this: DataTable, boInfo: shell.bo.IBizObjectInfo): void {
                 if (!boInfo || !(boInfo.properties instanceof Array)) {
                     return;
@@ -1006,7 +1023,10 @@ namespace sap {
                         }));
                     }
                 }
+                // 触发事件
+                this.fireUpdatePropertyColumns({ boInfo: boInfo });
             }
+
             /**
              * 数据表格列
              */
@@ -1593,7 +1613,15 @@ namespace sap {
                         /** 属性过滤器 */
                         propertyFilter: { type: "function" },
                     },
-                    events: {}
+                    events: {
+                        "updatePropertyColumns": {
+                            parameters: {
+                                boInfo: {
+                                    type: "any",
+                                }
+                            }
+                        },
+                    }
                 },
                 renderer: {},
                 /**
@@ -1625,44 +1653,54 @@ namespace sap {
                 /** 重构设置 */
                 applySettings(this: DataTreeTable, mSettings: any): DataTreeTable {
                     TreeTable.prototype.applySettings.apply(this, arguments);
-                    let dataInfo: any = this.getDataInfo();
-                    if (typeof dataInfo === "string") {
-                        dataInfo = {
-                            code: dataInfo,
-                        };
-                    } else if (typeof dataInfo === "function") {
-                        dataInfo = {
-                            code: dataInfo.BUSINESS_OBJECT_CODE,
-                            name: ibas.objects.nameOf(dataInfo),
-                        };
-                    }
-                    if (typeof dataInfo === "object") {
-                        if (dataInfo.properties instanceof Array) {
-                            propertyColumns.call(this, dataInfo);
-                        } else {
-                            let info: { code: string, name?: string } = dataInfo;
-                            let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
-                            boRepository.fetchBizObjectInfo({
-                                user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
-                                boCode: ibas.config.applyVariables(info.code),
-                                boName: info.name,
-                                onCompleted: (opRslt) => {
-                                    if (opRslt.resultCode !== 0) {
-                                        ibas.logger.log(new Error(opRslt.message));
-                                    } else {
-                                        propertyColumns.call(this, opRslt.resultObjects.firstOrDefault());
-                                        // 已加载数据，则重置
-                                        let model: any = this.getModel();
-                                        if (model !== undefined) {
-                                            this.setModel(undefined);
-                                            this.setModel(model);
-                                        }
-                                    }
-                                }
-                            });
-                        }
+                    // 根据绑定对象刷新列
+                    if (mSettings?.dataInfo) {
+                        this.updatePropertyColumns();
                     }
                     return this;
+                },
+                updatePropertyColumns(this: DataTable, boInfo: shell.bo.IBizObjectInfo): void {
+                    if (ibas.objects.isNull(boInfo)) {
+                        let dataInfo: any = this.getDataInfo();
+                        if (typeof dataInfo === "string") {
+                            dataInfo = {
+                                code: dataInfo,
+                            };
+                        } else if (typeof dataInfo === "function") {
+                            dataInfo = {
+                                code: dataInfo.BUSINESS_OBJECT_CODE,
+                                name: ibas.objects.nameOf(dataInfo),
+                            };
+                        }
+                        if (typeof dataInfo === "object") {
+                            if (dataInfo.properties instanceof Array) {
+                                this.updatePropertyColumns(dataInfo);
+                            } else {
+                                let info: { code: string, name?: string } = dataInfo;
+                                let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
+                                boRepository.fetchBizObjectInfo({
+                                    user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
+                                    boCode: ibas.config.applyVariables(info.code),
+                                    boName: info.name,
+                                    onCompleted: (opRslt) => {
+                                        if (opRslt.resultCode !== 0) {
+                                            ibas.logger.log(new Error(opRslt.message));
+                                        } else {
+                                            this.updatePropertyColumns(opRslt.resultObjects.firstOrDefault());
+                                            // 已加载数据，则重置
+                                            let model: any = this.getModel();
+                                            if (model !== undefined) {
+                                                this.setModel(undefined);
+                                                this.setModel(model);
+                                            }
+                                        }
+                                    }
+                                });
+                            }
+                        }
+                    } else {
+                        propertyColumns.call(this, boInfo);
+                    }
                 },
             });
         }
