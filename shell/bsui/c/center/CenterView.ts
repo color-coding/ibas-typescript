@@ -320,6 +320,77 @@ namespace shell {
                                             ]
                                         })
                                     ],
+                                    headerActionSheet: new sap.m.ActionSheet("", {
+                                        buttons: [
+                                            new sap.m.Button("", {
+                                                icon: "sap-icon://collapse-group",
+                                                text: ibas.i18n.prop("shell_close_view"),
+                                                type: sap.m.ButtonType.Transparent,
+                                                press: function (): void {
+                                                    let currentPage: any = that.pageContainer.getCurrentPage();
+                                                    let vItem: any = sap.extension.customdatas.getView(currentPage);
+                                                    if (vItem instanceof ibas.View) {
+                                                        ibas.Application.prototype.close.apply(vItem.application);
+                                                    }
+                                                }
+                                            }),
+                                            new sap.m.Button("", {
+                                                icon: "sap-icon://source-code",
+                                                text: ibas.i18n.prop("shell_close_other_views"),
+                                                type: sap.m.ButtonType.Transparent,
+                                                press: function (): void {
+                                                    let currentPage: any = that.pageContainer.getCurrentPage();
+                                                    for (let item of that.pageContainer.getPages()) {
+                                                        if (item === currentPage) {
+                                                            continue;
+                                                        }
+                                                        let vItem: any = sap.extension.customdatas.getView(item);
+                                                        if (vItem instanceof ibas.View) {
+                                                            ibas.Application.prototype.close.apply(vItem.application);
+                                                        }
+                                                    }
+                                                }
+                                            }),
+                                            new sap.m.Button("", {
+                                                icon: "sap-icon://close-command-field",
+                                                text: ibas.i18n.prop("shell_close_left_views"),
+                                                type: sap.m.ButtonType.Transparent,
+                                                press: function (): void {
+                                                    let currentPage: any = that.pageContainer.getCurrentPage();
+                                                    for (let item of that.pageContainer.getPages()) {
+                                                        if (item === currentPage) {
+                                                            break;
+                                                        }
+                                                        let vItem: any = sap.extension.customdatas.getView(item);
+                                                        if (vItem instanceof ibas.View) {
+                                                            ibas.Application.prototype.close.apply(vItem.application);
+                                                        }
+                                                    }
+                                                }
+                                            }),
+                                            new sap.m.Button("", {
+                                                icon: "sap-icon://open-command-field",
+                                                text: ibas.i18n.prop("shell_close_right_views"),
+                                                type: sap.m.ButtonType.Transparent,
+                                                press: function (): void {
+                                                    let currentPage: any = that.pageContainer.getCurrentPage();
+                                                    for (let item of that.pageContainer.getPages()) {
+                                                        if (item === currentPage) {
+                                                            currentPage = null;
+                                                            continue;
+                                                        }
+                                                        if (currentPage !== null) {
+                                                            continue;
+                                                        }
+                                                        let vItem: any = sap.extension.customdatas.getView(item);
+                                                        if (vItem instanceof ibas.View) {
+                                                            ibas.Application.prototype.close.apply(vItem.application);
+                                                        }
+                                                    }
+                                                }
+                                            }),
+                                        ]
+                                    }),
                                     itemClose(event: sap.ui.base.Event): void {
                                         let source: any = event.getSource();
                                         if (source instanceof sap.m.TabContainer) {
@@ -363,26 +434,19 @@ namespace shell {
                                             if (!(pages.length > 1)) {
                                                 return;
                                             }
-                                            let currentPage: any = source.getCurrentPage();
-                                            jQuery.sap.require("sap.m.MessageBox");
-                                            sap.m.MessageBox.confirm(ibas.i18n.prop(["shell_close_all_views", "shell_continue"]), {
+                                            that.showMessageBox({
                                                 title: that.title,
+                                                type: ibas.emMessageType.QUESTION,
+                                                message: ibas.i18n.prop(["shell_close_all_views", "shell_continue"]),
                                                 actions: [
-                                                    ibas.i18n.prop("shell_all"),
-                                                    ibas.i18n.prop("shell_keep_selected"),
-                                                    ibas.i18n.prop("shell_exit"),
+                                                    ibas.emMessageAction.YES,
+                                                    ibas.emMessageAction.NO,
                                                 ],
-                                                onClose(oAction: any): void {
-                                                    if (oAction === ibas.i18n.prop("shell_exit")) {
+                                                onCompleted(oAction: any): void {
+                                                    if (oAction !== ibas.emMessageAction.YES) {
                                                         return;
                                                     }
-                                                    if (oAction === ibas.i18n.prop("shell_all")) {
-                                                        currentPage = undefined;
-                                                    }
                                                     for (let item of pages) {
-                                                        if (item === currentPage) {
-                                                            continue;
-                                                        }
                                                         let vItem: any = sap.extension.customdatas.getView(item);
                                                         if (vItem instanceof ibas.View) {
                                                             ibas.Application.prototype.close.apply(vItem.application);

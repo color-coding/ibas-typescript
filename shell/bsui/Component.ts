@@ -356,6 +356,7 @@ namespace shell {
                         },
                     },
                     aggregations: {
+                        "headerActionSheet": { type: "sap.m.ActionSheet", multiple: false },
                     },
                 },
                 renderer: {
@@ -457,6 +458,23 @@ namespace shell {
                                 // 延迟触发事件（等绘制完成）
                                 source.fireAfterNavigate({ toId: source.getSelectedItem() });
                             }, 100);
+                        }
+                    });
+                    // 监听右键菜单
+                    this.attachBrowserEvent("contextmenu", function (this: TabContainer, oEvent: any): void {
+                        let oTarget: any = oEvent.target;
+                        // 找到被右键的 tab header DOM
+                        if (!oTarget.closest(".sapMTabStripItem")) {
+                            return;
+                        }
+                        let popover: any = this.getHeaderActionSheet();
+                        if (popover instanceof sap.m.ActionSheet) {
+                            if (popover.isOpen()) {
+                                popover.close();
+                            }
+                            popover.openBy(oTarget);
+                            // 阻止浏览器默认右键菜单
+                            oEvent.preventDefault();
                         }
                     });
                 }

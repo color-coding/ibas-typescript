@@ -41,6 +41,10 @@ declare namespace shell {
 
                 back(id: string): this;
 
+                getHeaderActionSheet(): sap.m.ActionSheet;
+
+                setHeaderActionSheet(popover: sap.m.ActionSheet): this;
+
                 protected fireAfterNavigate(param: { toId: string }): void;
             }
 
