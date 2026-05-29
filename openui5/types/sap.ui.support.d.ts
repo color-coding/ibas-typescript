@@ -12,9 +12,6 @@ declare namespace sap {
          */
         namespace support {
             /**
-             */
-            var CoreFacade: any;
-            /**
              * <p><p>Analysis result which is created after analysis with the SupportAssistant.</p></p>
              */
             export interface AnalysisResult {
@@ -48,7 +45,7 @@ declare namespace sap {
                 issues: any;
             }
             /**
-             * <p><p>Defines the Audiences.</p></p>
+             * <p><p>Defines the Audiences.</p><p>This enum is part of the 'sap/ui/support/library' module export and must be accessed by the property 'Audiences'.</p></p>
              */
             export enum Audiences {
                 /**
@@ -65,7 +62,7 @@ declare namespace sap {
                 Internal = "Internal",
             }
             /**
-             * <p><p>Issue Categories.</p></p>
+             * <p><p>Issue Categories.</p><p>This enum is part of the 'sap/ui/support/library' module export and must be accessed by the property 'Categories'.</p></p>
              */
             export enum Categories {
                 /**
@@ -118,42 +115,53 @@ declare namespace sap {
                 Usage = "Usage",
             }
             /**
-             * <p>Allows to select the scope of analysis on an application.</p><h3>Overview</h3><p><code>ExecutionScope</code> is the third parameter of a rule check function. It provides access to internal UI5 objects available for inspection. The <code>getElements</code> API method allows the user to select a specific subset of elements valid for their case. It accepts one query object argument.</p><h3>Usage</h3><p>When a rule is executed, three parameters are passed: <code>oIssueManager</code>, <code>oCoreFacade</code> and <code>oScope</code>.</p><p>An <code>ExecutionScope</code> instance is passed to every call of a rule check function. When you analyze your application, available objects are collected depending on the settings passed to the Support Assistant at the moment when you start it.</p>
+             */
+            export class CoreFacade {
+                /**
+                 * <p>Gets the Components from the Core object.</p>
+                 * @returns any <p>Object with all components, keyed by their ID</p>
+                 */
+                getComponents(): any;
+                /**
+                 * <p>Gets the UI areas from the Core object.</p>
+                 * @returns any <p>Object with all UIAreas, keyed by their ID</p>
+                 */
+                getUIAreas(): any;
+            }
+            /**
+             * <p>Allows to select the scope of analysis on an application.</p><h3>Overview</h3><p>The ExecutionScope provides access to internal UI5 objects available for inspection. The <code>getElements</code> API method allows the user to select a specific subset of elements valid for their case. It accepts one query object argument.</p><h3>Usage</h3><p> The ExecutionScope is passed as third argument to all rule check functions.</p><p>When you analyze your application, available objects are collected depending on the settings passed to the Support Assistant at the moment when you start it.</p>
              */
             export class ExecutionScope {
                 /**
                  * @param {any} oConfig <p>Object with specific filtering options</p>
                  * @returns any[] <p>Array of matched elements</p>
                  */
-                static getElements(oConfig: any): any[];
+                getElements(oConfig: any): any[];
                 /**
                  * <p>Gets elements by their type</p>
                  * @param {string | Function} classNameSelector <p>Either string or function to be used when selecting a subset of elements</p>
                  * @returns any[] <p>Array of matched elements</p>
                  */
-                static getElementsByClassName(classNameSelector: string | Function): any[];
+                getElementsByClassName(classNameSelector: string | Function): any[];
                 /**
                  * <p>Gets the logged objects by object type</p>
                  * @param {any} type <p>Type of logged objects</p>
                  * @returns any[] <p>Array of logged objects</p>
                  */
-                static getLoggedObjects(type: any): any[];
+                getLoggedObjects(type: any): any[];
                 /**
                  * <p>Returns all public elements, i.e. elements that are part of public API aggregations</p>
                  * @returns any[] <p>Array of matched elements</p>
                  */
-                static getPublicElements(): any[];
+                getPublicElements(): any[];
                 /**
                  * <p>Gets the type of the execution scope</p>
                  * @returns string <p>The type of the execution scope. Possible values are <code>global</code>, <code>subtree</code> or <code>components</code>.</p>
                  */
-                static getType(): string;
-                /**
-                 */
-                constructor();
+                getType(): string;
             }
             /**
-             * <p><p>Analysis history formats.</p></p>
+             * <p><p>Analysis history formats.</p><p>This enum is part of the 'sap/ui/support/library' module export and must be accessed by the property 'HistoryFormats'.</p></p>
              */
             export enum HistoryFormats {
                 /**
@@ -166,7 +174,51 @@ declare namespace sap {
                 String = "String",
             }
             /**
-             * <p><p>Defines severity types.</p></p>
+             */
+            export class IssueManagerFacade {
+                /**
+                 * <p>Adds issue</p>
+                 * @param {any} oIssue <p>Issue object to be added</p>
+                 */
+                addIssue(oIssue: any): void;
+            }
+            /**
+             * <p><p>Support Assistant rule configuration</p></p>
+             */
+            export interface RuleConfiguration {
+                /**
+                 */
+                id: any;
+                /**
+                 */
+                async: any;
+                /**
+                 */
+                title: any;
+                /**
+                 */
+                resolution: any;
+                /**
+                 */
+                minversion: any;
+                /**
+                 */
+                categories: any;
+                /**
+                 */
+                audiences: any;
+                /**
+                 */
+                description: any;
+                /**
+                 */
+                resolutionurls: any;
+                /**
+                 */
+                check: any;
+            }
+            /**
+             * <p><p>Defines severity types.</p><p>This enum is part of the 'sap/ui/support/library' module export and must be accessed by the property 'Severity'.</p></p>
              */
             export enum Severity {
                 /**
@@ -183,13 +235,17 @@ declare namespace sap {
                 Medium = "Medium",
             }
             /**
-             * <p><p>Contains the available system presets.</p></p>
+             * <p><p>Contains the available system presets.</p><p>This enum is part of the 'sap/ui/support/library' module export and must be accessed by the property 'SystemPresets'.</p></p>
              */
             export enum SystemPresets {
                 /**
                  * <p>The accessibility preset.</p>
                  */
                 Accessibility = "Accessibility",
+                /**
+                 * <p>Preset to find usages of deprecated controls, properties, aggregations and others.</p>
+                 */
+                Deprecations = "Deprecations",
             }
         }
     }
@@ -203,23 +259,23 @@ declare namespace sap {
             namespace RuleAnalyzer {
                 /**
                  * <p>Adds new temporary rule when in silent mode</p>
-                 * @param {any} oRule <p>Settings for the new rule. For detailed information about its properties see <a target="_self" href="topic/eaeea19a991d46f29e6d8d8827317d0e">Rule Property Values</a></p>
+                 * @param {sap.ui.support.RuleConfiguration} oRule <p>Settings for the new rule. For detailed information about its properties see <a target="_self" href="topic/eaeea19a991d46f29e6d8d8827317d0e">Rule Property Values</a></p>
                  * @returns string <p>Rule creation status. Possible values are "success" or description of why adding failed.</p>
                  */
-                function addRule(oRule: any): string;
+                function addRule(oRule: sap.ui.support.RuleConfiguration): string;
                 /**
                  * <p>Main method to perform analysis of a given running application.</p><p>Allows to choose a particular execution scope - desired part of the UI to be checked and a flexible way to specify the list of rules to be used.</p>
                  * @param {any} oExecutionScope <p>The execution scope of the analysis (see <a target="_self" href="topic/e15067d976f24b11907f4c262bd749a0">Execution Scope</a>).</p>
-                 * @param {any | string | object[]} vPresetOrRules <p>This optional parameter allows for selection of subset of rules for the analysis. You can pass: <ul> <li>A rule preset object containing the preset ID and the list of rules it contains.</li> <li>A string that refers to the ID of a system preset.</li> <li>An object array with a plain list of rules.</li> </ul></p>
+                 * @param {any} vPresetOrRules <p>This optional parameter allows for selection of subset of rules for the analysis. You can pass: <ul> <li>A rule preset object containing the preset ID and the list of rules it contains.</li> <li>A string that refers to the ID of a system preset.</li> <li>An object array with a plain list of rules.</li> </ul></p>
                  * @param {any} oMetadata <p>Metadata in custom format. Its only purpose is to be included in the analysis report.</p>
                  * @returns Promise<any> <p>Notifies the finished state by starting the Analyzer</p>
                  */
-                function analyze(oExecutionScope?: any, vPresetOrRules?: any | string | object[], oMetadata?: any): Promise<any>;
+                function analyze(oExecutionScope?: any, vPresetOrRules?: any, oMetadata?: any): Promise<any>;
                 /**
                  * <p>Returns the history of all executed analyses.</p>
                  * @returns sap.ui.support.AnalysisResult[] <p>Array of history objects in the order of analyses performed. The results of the last analysis are contained in the last element in the array.</p>
                  */
-                function getAnalysisHistory(): sap.ui.support.AnalysisResult[];
+                function getAnalysisHistory(): any;
                 /**
                  * <p>Returns the history of all executed analyses into formatted output depending on the passed format.</p>
                  * @param {sap.ui.support.HistoryFormats} sFormat <p>The format into which the history object will be converted. Possible values are listed in sap.ui.support.HistoryFormats.</p>
@@ -231,54 +287,6 @@ declare namespace sap {
                  * @returns sap.ui.support.AnalysisResult <p>Last analysis history.</p>
                  */
                 function getLastAnalysisHistory(): sap.ui.support.AnalysisResult;
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace support {
-            /**
-             * <p><p>Creates a RuleSet. The RuleSet can store multiple rules concerning namespaces. </p></p><h3>Usage</h3><p><p> The RuleSet is an interface used to create, update and delete rulesets.</p></p>
-             */
-            namespace RuleSet {
-                /**
-                 * <p>Adds rules to RuleSet.</p>
-                 * @param {any} oSettings <p>Settings object with rule information</p>
-                 * @returns string <p>sRuleVerificationStatus Verification status</p>
-                 */
-                function addRule(oSettings: any): string;
-                /**
-                 * <p>Clears all rulesets inside the RuleSet.</p>
-                 */
-                function clearAllRuleSets(): void;
-                /**
-                 * <p>Gets all rules from the RuleSet.</p>
-                 * @returns any <p>All rules within the current RuleSet</p>
-                 */
-                function getRules(): any;
-                /**
-                 * <p>Loads the previous selection of the user - which rules are selected to be run by the Rule Analyzer. The method applies the settings to the currently loaded rules.</p>
-                 * @param {Object[]} aLibraries <p>The current loaded libraries and their rules</p>
-                 */
-                function loadSelectionOfRules(aLibraries: Object[]): void;
-                /**
-                 * <p>Remove rule from RuleSet.</p>
-                 * @param {any} oRule <p>Rule object that will be removed</p>
-                 */
-                function removeRule(oRule: any): void;
-                /**
-                 * <p>Stores which rules are selected to be run by the analyzer on the next check</p>
-                 * @param {Object[]} aLibraries <p>The data for the libraries and their rules</p>
-                 */
-                function storeSelectionOfRules(aLibraries: Object[]): void;
-                /**
-                 * <p>Updates rules from the RuleSet.</p>
-                 * @param {string} sRuleId <p>Rule ID</p>
-                 * @param {any} ORuleSettings <p>Rule settings</p>
-                 * @returns string <p>sRuleVerification Rule Verification status</p>
-                 */
-                function updateRule(sRuleId: string, ORuleSettings: any): string;
             }
         }
     }

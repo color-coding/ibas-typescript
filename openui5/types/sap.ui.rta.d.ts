@@ -28,11 +28,11 @@ declare namespace sap {
                 namespace Action {
                     /**
                      * <p>Returns a list of available actions for the specified control(s).</p>
-                     * @param {string | string[]} vControlIds <p>Control ID or an array of IDs to get actions for</p>
+                     * @param {any} vControlIds <p>Control ID or an array of IDs to get actions for</p>
                      * @param {string} sActionId <p>Action ID to be executed on the specified controls</p>
                      * @returns any <p>Result of the operation wrapped in a promise.</p>
                      */
-                    function execute(vControlIds: string | string[], sActionId: string): any;
+                    function execute(vControlIds: any, sActionId: string): any;
                     /**
                      * <p>Returns a list of available actions for the specified control(s) wrapped in a promise.</p><p>Example:</p><p><pre>
                     [
@@ -74,10 +74,10 @@ declare namespace sap {
                         }
                     ]
                     </pre></p>
-                     * @param {string | string[]} vControlIds <p>Control ID or an array of IDs to get actions for</p>
+                     * @param {any} vControlIds <p>Control ID or an array of IDs to get actions for</p>
                      * @returns any <p>List of available actions wrapped in a promise</p>
                      */
-                    function get(vControlIds: string | string[]): any;
+                    function get(vControlIds: any): any;
                     /**
                      * <p><p>Object containing the detailed information about the action.</p><p><pre>
                     {
@@ -109,15 +109,16 @@ declare namespace sap {
                      * <p>Creates a change that adds an extension to the controller associated with the given view. Throws an error if the information is not complete. As of now, this only creates the change with a reference to a file. The consumer has to take care of creating that file and adding it to the backend.</p>
                      * @param {string} sCodeRef <p>Name of the file, without path, with the extension <code>.js</code>. Must comply to UI5 module naming convention. Has to be unique and must not conflict with other already defined modules.</p>
                      * @param {string} sViewId <p>ID of the view whose controller should be extended</p>
+                     * @param {boolean} bIncludeViewId <p>Whether the change should include the view ID in the selector - for instance-specific controller extensions</p>
                      * @returns any <p>Definition of the newly created change</p>
                      */
-                    function add(sCodeRef: string, sViewId: string): any;
+                    function add(sCodeRef: string, sViewId: string, bIncludeViewId: boolean): any;
                     /**
                      * <p>Gets the controller extension template from the <code>DesignTimeMetadata</code> of the given view and returns it as a string wrapped in a promise. If there is no template specified, a default template will be returned.</p>
                      * @param {string} sViewId <p>ID of the view whose template should be retrieved</p>
-                     * @returns Promise<any> <p>Promise that resolves with the template as string or rejects when the file was not found</p>
+                     * @returns any <p>Promise that resolves with the template as string or rejects when the file was not found</p>
                      */
-                    function getTemplate(sViewId: string): Promise<any>;
+                    function getTemplate(sViewId: string): any;
                 }
             }
         }
@@ -209,21 +210,31 @@ declare namespace sap {
                 export class Selection {
                     /**
                      * <p>Adds the specified controls to the current selection.</p>
-                     * @param {string | string[]} vControlIds <p>Control IDs to be selected</p>
+                     * @param {any} vControlIds <p>Control IDs to be selected</p>
                      * @returns boolean <p><code>true</code> if the selection has changed</p>
                      */
-                    static add(vControlIds: string | string[]): boolean;
+                    static add(vControlIds: any): boolean;
+                    /**
+                     * <p>Adds hover effect to the specified controls.</p>
+                     * @param {any} vControlIds <p>Control IDs to which to add the hover effect</p>
+                     */
+                    static addHover(vControlIds: any): void;
                     /**
                      * <p>Gets list of currently selected controls.</p>
                      * @returns string[] <p>Selected control IDs</p>
                      */
-                    static get(): string[];
+                    static get(): any;
                     /**
                      * <p>Removes the selection from the specified controls.</p>
-                     * @param {string | string[]} vControlIds <p>Control IDs from which to remove the selection</p>
+                     * @param {any} vControlIds <p>Control IDs from which to remove the selection</p>
                      * @returns boolean <p><code>true</code> if the selection has changed</p>
                      */
-                    static remove(vControlIds: string | string[]): boolean;
+                    static remove(vControlIds: any): boolean;
+                    /**
+                     * <p>Removes hover effect from the specified controls.</p>
+                     * @param {any} vControlIds <p>Control IDs from which to remove the hover effect</p>
+                     */
+                    static removeHover(vControlIds: any): void;
                     /**
                      * <p>Resets the current selection.</p>
                      * @returns boolean <p><code>true</code> if completed successfully (<code>false</code> if there is nothing to reset)</p>
@@ -231,10 +242,10 @@ declare namespace sap {
                     static reset(): boolean;
                     /**
                      * <p>Deselects the current selection and selects the specified list of controls.</p>
-                     * @param {string | string[]} vControlIds <p>Control IDs to be selected</p>
+                     * @param {any} vControlIds <p>Control IDs to be selected</p>
                      * @returns boolean <p><code>true</code> if the selection has changed</p>
                      */
-                    static set(vControlIds: string | string[]): boolean;
+                    static set(vControlIds: any): boolean;
                 }
             }
         }
@@ -331,6 +342,118 @@ declare namespace sap {
             /**
              */
             namespace enablement {
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace rta {
+            /**
+             */
+            namespace plugin {
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace rta {
+            namespace plugin {
+                /**
+                 */
+                namespace annotations {
+                    /**
+                     * <p><p>Annotation change definition</p></p>
+                     */
+                    export interface AnnotationChangeDefinition {
+                        /**
+                         * <p>Change type</p>
+                         */
+                        annotationChangeType: any;
+                        /**
+                         * <p>Url of the OData service</p>
+                         */
+                        serviceUrl: any;
+                        /**
+                         * <p>Change content</p>
+                         */
+                        content: any;
+                        /**
+                         * <p><p>Path of the property</p></p>
+                         */
+                        annotationPath: any;
+                        /**
+                         * <p><p>New value</p></p>
+                         */
+                        value: any;
+                        /**
+                         * <p><p>New value as translatable text. If given, the value is ignored</p></p>
+                         */
+                        text: any;
+                        /**
+                         * <p><p>Object template to construct a return object. If given the applyChange function will return an object as value, which is parsed from the template string.</p></p>
+                         */
+                        objectTemplateInfo?: any;
+                        /**
+                         * <p><p>Stringified template to be used for constructing the return object</p></p>
+                         */
+                        templateAsString?: any;
+                        /**
+                         * <p><p>Placeholder in the template string. Will be replaced by the new value</p></p>
+                         */
+                        placeholder?: any;
+                    }
+                    /**
+                     * <p><p>Annotation change info</p></p>
+                     */
+                    export interface AnnotationChangeInfo {
+                        /**
+                         * <p>Url of the OData service</p>
+                         */
+                        serviceUrl: any;
+                        /**
+                         * <p>Array of properties</p>
+                         */
+                        properties: any;
+                        /**
+                         * <p><p>Path of the property</p></p>
+                         */
+                        annotationPath: any;
+                        /**
+                         * <p><p>Name of the property</p></p>
+                         */
+                        propertyName: any;
+                        /**
+                         * <p><p>Current value of the property</p></p>
+                         */
+                        currentValue: any;
+                        /**
+                         * <p><p>Label of the property. If not given, the property name is used</p></p>
+                         */
+                        label?: any;
+                        /**
+                         * <p><p>Tooltip of the property</p></p>
+                         */
+                        tooltip?: any;
+                        /**
+                         * <p>Array of possible values for value list type properties</p>
+                         */
+                        possibleValues: any;
+                        /**
+                         * <p><p>Key of the option</p></p>
+                         */
+                        key: any;
+                        /**
+                         * <p><p>Text of the option</p></p>
+                         */
+                        text: any;
+                        /**
+                         * <p>Name of the property that should be filtered for initially</p>
+                         */
+                        preSelectedProperty?: any;
+                    }
+                }
             }
         }
     }

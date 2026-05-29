@@ -40,11 +40,11 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.AvatarGroup#events/press">press</a> event of this <code>sap.f.AvatarGroup</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.AvatarGroup</code> itself.</p><p>Fired when the user clicks or taps on the control.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.AvatarGroup</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachPress(oData: any, fnFunction: any, oListener?: any): this;
+			attachPress(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.f.AvatarGroup#methods/getItems">items</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -52,11 +52,11 @@ declare namespace sap {
 			destroyItems(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.AvatarGroup#events/press">press</a> event of this <code>sap.f.AvatarGroup</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachPress(fnFunction: any, oListener?: any): this;
+			detachPress(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.AvatarGroup#events/press">press</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -87,7 +87,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.AvatarGroup#methods/getItems">items</a>.</p><p>The <code>AvatarGroupItems</code> contained by the control.</p>
 			 * @returns sap.f.AvatarGroupItem[] 
 			 */
-			getItems(): sap.f.AvatarGroupItem[];
+			getItems(): any;
 			/**
 			 * <p>Checks for the provided <code>sap.f.AvatarGroupItem</code> in the aggregation <a target="_self" href="api/sap.f.AvatarGroup#methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
 			 * @param {sap.f.AvatarGroupItem} oItem <p>The item whose index is looked for</p>
@@ -105,11 +105,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.AvatarGroup#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.f.AvatarGroupItem[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllItems(): sap.f.AvatarGroupItem[];
+			removeAllItems(): any;
 			/**
 			 * <p>Removes a item from the aggregation <a target="_self" href="api/sap.f.AvatarGroup#methods/getItems">items</a>.</p>
 			 * @param {number | string | sap.f.AvatarGroupItem} vItem <p>The item to remove or its index or id</p>
-			 * @returns sap.f.AvatarGroupItem|null <p>The removed item or <code>null</code></p>
+			 * @returns sap.f.AvatarGroupItem | null <p>The removed item or <code>null</code></p>
 			 */
 			removeItem(vItem: number | string | sap.f.AvatarGroupItem): sap.f.AvatarGroupItem | null;
 			/**
@@ -187,7 +187,7 @@ declare namespace sap {
 			setSrc(sSrc?: sap.ui.core.URI): this;
 		}
 		/**
-		 * <p><p>Group modes for the <a target="_self" href="api/sap.f.AvatarGroup">sap.f.AvatarGroup</a> control.</p></p>
+		 * <p><p>Group modes for the <a target="_self" href="api/sap.f.AvatarGroup">sap.f.AvatarGroup</a> control.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'AvatarGroupType'.</p></p>
 		 */
 		export enum AvatarGroupType {
 			/**
@@ -254,9 +254,22 @@ declare namespace sap {
 			setHeaderPosition(sHeaderPosition?: sap.f.cards.HeaderPosition): this;
 		}
 		/**
+		 * <p><p>Enumeration for different visibility options for the card badge.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'CardBadgeVisibilityMode'.</p></p>
+		 */
+		export enum CardBadgeVisibilityMode {
+			/**
+			 * <p>Badge will be hidden after header is focused.</p>
+			 */
+			Disappear = "Disappear",
+			/**
+			 * <p>Badge will not be hidden after header is focused.</p>
+			 */
+			Persist = "Persist",
+		}
+		/**
 		 * <p>A base class for controls that represent a container with a predefined header and content.</p>
 		 */
-		export class CardBase extends sap.ui.core.Control implements sap.f.ICard {
+		export class CardBase extends sap.ui.core.Control implements sap.f.ICard, sap.f.IGridContainerItem {
 			/**
 			 * <p>Constructor for a new <code>CardBase</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 			 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
@@ -264,15 +277,46 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.CardBase#events/press">press</a> event of this <code>sap.f.CardBase</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.CardBase</code> itself.</p><p>Fired when action is added on card level. *Note**: Can be used only if <code>semanticRole</code> is <code>sap.f.cards.SemanticRole.ListItem</code> or the control is placed inside a <code>sap.f.GridContainer</code>.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.CardBase</code> itself</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachPress(oData: any, fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.CardBase#events/press">press</a> event of this <code>sap.f.CardBase</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachPress(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Fires event <a target="_self" href="api/sap.f.CardBase#events/press">press</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected firePress(mParameters?: any): this;
+			/**
 			 * <p>Returns the DOM Element that should get the focus.</p>
 			 * @returns HTMLElement <p>Returns the DOM Element that should get the focus</p>
 			 */
 			protected getFocusDomRef(): HTMLElement;
 			/**
+			 * <p>Returns the accessibility role for the <code>sap.f.GridContainer</code> item.</p>
+			 * @returns string <p>The accessibility role for the <code>sap.f.GridContainer</code> item</p>
+			 */
+			getGridItemRole(): string;
+			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.CardBase#methods/getHeight">height</a>.</p><p>Defines the height of the card.</p><p>Default value is <code>"auto"</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
 			 */
 			getHeight(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.CardBase#methods/getSemanticRole">semanticRole</a>.</p><p>Defines the accessibility role of the control. *Note:** When the control is placed inside a <code>sap.f.GridContainer</code>, its accessibility role is overridden by the accessibility role specified by the <code>sap.f.GridContainer</code>.</p><p>Default value is <code>Region</code>.</p>
+			 * @returns sap.f.cards.SemanticRole <p>Value of property <code>semanticRole</code></p>
+			 */
+			getSemanticRole(): sap.f.cards.SemanticRole;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.CardBase#methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>Default value is <code>"100%"</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
@@ -284,6 +328,12 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setHeight(sHeight?: sap.ui.core.CSSSize): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.CardBase#methods/getSemanticRole">semanticRole</a>.</p><p>Defines the accessibility role of the control. *Note:** When the control is placed inside a <code>sap.f.GridContainer</code>, its accessibility role is overridden by the accessibility role specified by the <code>sap.f.GridContainer</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Region</code>.</p>
+			 * @param {sap.f.cards.SemanticRole} sSemanticRole <p>New value for property <code>semanticRole</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSemanticRole(sSemanticRole?: sap.f.cards.SemanticRole): this;
 			/**
 			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.CardBase#methods/getWidth">width</a>.</p><p>Defines the width of the card.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"100%"</code>.</p>
 			 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
@@ -302,13 +352,21 @@ declare namespace sap {
 			 */
 			constructor(sId?: string, mSettings?: any);
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.DynamicPage#events/pinnedStateChange">pinnedStateChange</a> event of this <code>sap.f.DynamicPage</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.DynamicPage</code> itself.</p><p>The event is fired when the <code>headerPinned</code> property is changed via user interaction.</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.DynamicPage#events/breakpointChange">breakpointChange</a> event of this <code>sap.f.DynamicPage</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.DynamicPage</code> itself.</p><p>The event is fired when the media breakpoint changes. Applications can use this event to adjust content based on the current screen size.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.DynamicPage</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachPinnedStateChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachBreakpointChange(oData: any, fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.DynamicPage#events/pinnedStateChange">pinnedStateChange</a> event of this <code>sap.f.DynamicPage</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.DynamicPage</code> itself.</p><p>The event is fired when the <code>headerPinned</code> property is changed via user interaction.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.DynamicPage</code> itself</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachPinnedStateChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys the content in the aggregation <a target="_self" href="api/sap.f.DynamicPage#methods/getContent">content</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -335,12 +393,25 @@ declare namespace sap {
 			 */
 			destroyTitle(): this;
 			/**
-			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.DynamicPage#events/pinnedStateChange">pinnedStateChange</a> event of this <code>sap.f.DynamicPage</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.DynamicPage#events/breakpointChange">breakpointChange</a> event of this <code>sap.f.DynamicPage</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachPinnedStateChange(fnFunction: any, oListener?: any): this;
+			detachBreakpointChange(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.DynamicPage#events/pinnedStateChange">pinnedStateChange</a> event of this <code>sap.f.DynamicPage</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachPinnedStateChange(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Fires event <a target="_self" href="api/sap.f.DynamicPage#events/breakpointChange">breakpointChange</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireBreakpointChange(mParameters?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.DynamicPage#events/pinnedStateChange">pinnedStateChange</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -395,7 +466,7 @@ declare namespace sap {
 			 */
 			getPreserveHeaderStateOnScroll(): boolean;
 			/**
-			 * <p>Returns the <code>sap.ui.core.ScrollEnablement</code> delegate which is used with this control.</p>
+			 * <p>Returns the <code>sap.ui.core.delegate.ScrollEnablement</code> delegate which is used with this control.</p>
 			 * @returns sap.ui.core.delegate.ScrollEnablement <p>The scroll delegate instance</p>
 			 */
 			getScrollDelegate(): sap.ui.core.delegate.ScrollEnablement;
@@ -406,9 +477,9 @@ declare namespace sap {
 			getShowFooter(): boolean;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.f.DynamicPage#methods/getStickySubheaderProvider">stickySubheaderProvider</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getStickySubheaderProvider(): sap.ui.core.ID;
+			getStickySubheaderProvider(): sap.ui.core.ID | null;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPage#methods/getTitle">title</a>.</p><p><code>DynamicPage</code> title.</p>
 			 * @returns sap.f.DynamicPageTitle 
@@ -529,6 +600,11 @@ declare namespace sap {
 			 */
 			getFooterRole(): sap.ui.core.AccessibleLandmarkRole;
 			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.DynamicPageAccessibleLandmarkInfo#methods/getHeaderContentLabel">headerContentLabel</a>.</p><p>Texts which describe the landmark of the section inside the header container of the corresponding <code>sap.f.DynamicPage</code> control.</p><p>If not set, default "Expanded header" aria-label is set.</p>
+			 * @returns string <p>Value of property <code>headerContentLabel</code></p>
+			 */
+			getHeaderContentLabel(): string;
+			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.DynamicPageAccessibleLandmarkInfo#methods/getHeaderLabel">headerLabel</a>.</p><p>Texts which describe the landmark of the header container of the corresponding <code>sap.f.DynamicPage</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p>
 			 * @returns string <p>Value of property <code>headerLabel</code></p>
 			 */
@@ -572,6 +648,12 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setFooterRole(sFooterRole?: sap.ui.core.AccessibleLandmarkRole): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.DynamicPageAccessibleLandmarkInfo#methods/getHeaderContentLabel">headerContentLabel</a>.</p><p>Texts which describe the landmark of the section inside the header container of the corresponding <code>sap.f.DynamicPage</code> control.</p><p>If not set, default "Expanded header" aria-label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sHeaderContentLabel <p>New value for property <code>headerContentLabel</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHeaderContentLabel(sHeaderContentLabel?: string): this;
 			/**
 			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.DynamicPageAccessibleLandmarkInfo#methods/getHeaderLabel">headerLabel</a>.</p><p>Texts which describe the landmark of the header container of the corresponding <code>sap.f.DynamicPage</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 			 * @param {string} sHeaderLabel <p>New value for property <code>headerLabel</code></p>
@@ -627,7 +709,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageHeader#methods/getContent">content</a>.</p><p>The content of the header.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getContent(): sap.ui.core.Control[];
+			getContent(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.DynamicPageHeader#methods/getPinnable">pinnable</a>.</p><p>Determines whether the header is pinnable.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>pinnable</code></p>
@@ -650,11 +732,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.DynamicPageHeader#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllContent(): sap.ui.core.Control[];
+			removeAllContent(): any;
 			/**
 			 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.f.DynamicPageHeader#methods/getContent">content</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -669,6 +751,27 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setPinnable(bPinnable?: boolean): this;
+		}
+		/**
+		 * <p><p>Defines the media breakpoints for DynamicPage.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'DynamicPageMediaRange'.</p></p>
+		 */
+		export enum DynamicPageMediaRange {
+			/**
+			 * <p>Desktop breakpoint (1025px to 1439px).</p>
+			 */
+			Desktop = "Desktop",
+			/**
+			 * <p>Desktop Extra Large breakpoint (1440px and above).</p>
+			 */
+			DesktopExtraLarge = "DesktopExtraLarge",
+			/**
+			 * <p>Phone breakpoint (up to 600px).</p>
+			 */
+			Phone = "Phone",
+			/**
+			 * <p>Tablet breakpoint (601px to 1024px).</p>
+			 */
+			Tablet = "Tablet",
 		}
 		/**
 		 * <p>Title of the <a target="_self" href="api/sap.f.DynamicPage">sap.f.DynamicPage</a>.</p><h3>Overview</h3><p>The <code>DynamicPageTitle</code> control is part of the <a target="_self" href="api/sap.f.DynamicPage">sap.f.DynamicPage</a> family and is used to serve as title of the <a target="_self" href="api/sap.f.DynamicPage">DynamicPage</a>.</p><h3>Usage</h3><p>The <code>DynamicPageTitle</code> can hold any control and displays the most important information regarding the object that will always remain visible while scrolling.</p><p><b>Note:</b> The <code>actions</code> aggregation accepts any UI5 control, but it`s recommended to use controls, suitable for <a target="_self" href="api/sap.m.Toolbar">sap.m.Toolbar</a> and <a target="_self" href="api/sap.m.OverflowToolbar">sap.m.OverflowToolbar</a>.</p><p>If the <code>toggleHeaderOnTitleClick</code> property of the <a target="_self" href="api/sap.f.DynamicPage">DynamicPage</a> is set to <code>true</code>, the user can switch between the expanded/collapsed states of the <a target="_self" href="api/sap.f.DynamicPageHeader">DynamicPageHeader</a> by clicking on the <code>DynamicPageTitle</code> or by using the expand/collapse visual indicators, positioned at the bottom of the <code>DynamicPageTitle</code> and the <code>DynamicPageHeader</code>.</p><p>If set to <code>false</code>, the <code>DynamicPageTitle</code> is not clickable, the visual indicators are not available, and the app must provide other means for expanding/collapsing the <code>DynamicPageHeader</code>, if necessary.</p><h3>Responsive Behavior</h3><p>The responsive behavior of the <code>DynamicPageTitle</code> depends on the behavior of the content that is displayed.</p>
@@ -719,11 +822,11 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.DynamicPageTitle#events/stateChange">stateChange</a> event of this <code>sap.f.DynamicPageTitle</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.DynamicPageTitle</code> itself.</p><p>Fired when the title state (expanded/collapsed) is toggled by user interaction. For example, scrolling, title clicking/tapping, using expand/collapse button.</p><p>Also fired when the developer toggles the title state by programmatically changing the scroll position of the scrollbar of <code>DynamicPage</code>.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.DynamicPageTitle</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachStateChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachStateChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the actions in the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getActions">actions</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -776,11 +879,11 @@ declare namespace sap {
 			destroySnappedTitleOnMobile(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.DynamicPageTitle#events/stateChange">stateChange</a> event of this <code>sap.f.DynamicPageTitle</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachStateChange(fnFunction: any, oListener?: any): this;
+			detachStateChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.DynamicPageTitle#events/stateChange">stateChange</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -788,10 +891,10 @@ declare namespace sap {
 			 */
 			protected fireStateChange(mParameters?: any): this;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getActions">actions</a>.</p><p>The <code>DynamicPageTitle</code> actions. <br><b>Note:</b> The <code>actions</code> aggregation accepts any UI5 control, but it`s recommended to use controls, suitable for <a target="_self" href="api/sap.m.Toolbar">sap.m.Toolbar</a> and <a target="_self" href="api/sap.m.OverflowToolbar">sap.m.OverflowToolbar</a>.</p><p><b>Note:</b> If the <code>snappedTitleOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>DynamicPageHeader</code> is in its collapsed (snapped) state.</p>
+			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getActions">actions</a>.</p><p>The <code>DynamicPageTitle</code> actions. <br><b>Note:</b> The <code>actions</code> aggregation accepts any UI5 control. However, it is best to use buttons or controls that work well inside toolbars, such as those typically used with <a target="_self" href="api/sap.m.Toolbar">sap.m.Toolbar</a> and <a target="_self" href="api/sap.m.OverflowToolbar">sap.m.OverflowToolbar</a>.</p><p><b>Note:</b> If the <code>snappedTitleOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>DynamicPageHeader</code> is in its collapsed (snapped) state.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getActions(): sap.ui.core.Control[];
+			getActions(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getAreaShrinkRatio">areaShrinkRatio</a>.</p><p>Assigns shrinking ratio to the <code>DynamicPageTitle</code> areas (Heading, Content, Actions). The greater value a section has the faster it shrinks when the screen size is being reduced.</p><p>The value must be set in <code>Heading:Content:Actions</code> format where Title, Content and Actions are numbers greater than or equal to 0. If set to 0, the respective area will not shrink.</p><p>For example, if <code>2:7:1</code> is set, the Content area will shrink seven times faster than the Actions area. So, when all three areas have width of 500px and the available space is reduced by 100px the Title area will reduced by 20px, the Content area - by 70px and the Actions area - by 10px.</p><p>If all the areas have assigned values greater than 1, the numbers are scaled so that at least one of them is equal to 1. For example, value of <code>2:4:8</code> is equal to <code>1:2:4</code>.</p><p><Note:> When this property is set the <code>primaryArea</code> property has no effect.</p><p>Default value is <code>"1:1.6:1.6"</code>.</p>
 			 * @returns sap.f.DynamicPageTitleShrinkRatio <p>Value of property <code>areaShrinkRatio</code></p>
@@ -801,7 +904,7 @@ declare namespace sap {
 			 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
 			 * @returns sap.ui.core.ID[] 
 			 */
-			getAriaDescribedBy(): sap.ui.core.ID[];
+			getAriaDescribedBy(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Determines the background color of the <code>DynamicPageTitle</code>.</p><p><b>Note:</b> The default value of <code>backgroundDesign</code> property is null. If the property is not set, the color of the background is <code>@sapUiObjectHeaderBackground</code>, which depends on the specific theme.</p>
 			 * @returns sap.m.BackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
@@ -816,12 +919,12 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getContent">content</a>.</p><p>The content is positioned in the <code>DynamicPageTitle</code> middle area and displayed in both expanded and collapsed (snapped) states.</p><p><b>Note:</b> If the <code>snappedTitleOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>DynamicPageHeader</code> is in its collapsed (snapped) state.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getContent(): sap.ui.core.Control[];
+			getContent(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getExpandedContent">expandedContent</a>.</p><p>The content that is displayed in the <code>DynamicPageTitle</code> in expanded state.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getExpandedContent(): sap.ui.core.Control[];
+			getExpandedContent(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getExpandedHeading">expandedHeading</a>.</p><p>The <code>expandedHeading</code> is positioned in the <code>DynamicPageTitle</code> left area and is displayed when the header is in expanded state only. Use this aggregation to display a title (or any other UI5 control that serves as a heading) that has to be present in expanded state only.</p><p><b>Note:</b> In order for <code>expandedHeading</code> to be taken into account, <code>heading</code> has to be empty. Combine <code>expandedHeading</code> with <code>snappedHeading</code> to switch content when the header switches state.</p>
 			 * @returns sap.ui.core.Control 
@@ -836,12 +939,12 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getNavigationActions">navigationActions</a>.</p><p>The <code>DynamicPageTitle</code> navigation actions.</p><p><b>Notes:</b> <ul> <li>The <code>navigationActions</code> position depends on the control size. If the control size is 1280px or bigger, they are rendered right next to the <code>actions</code>. Otherwise, they are rendered in the top-right area, above the <code>actions</code>. If a large number of elements(buttons) are used, there could be visual degradations as the space for the <code>navigationActions</code> is limited.</li> <li>If the <code>snappedTitleOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>DynamicPageHeader</code> is in its collapsed (snapped) state.</li> </ul></p>
 			 * @returns sap.m.Button[] 
 			 */
-			getNavigationActions(): sap.m.Button[];
+			getNavigationActions(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getSnappedContent">snappedContent</a>.</p><p>The content that is displayed in the <code>DynamicPageTitle</code> in collapsed (snapped) state.</p><p><b>Note:</b> If the <code>snappedTitleOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>DynamicPageHeader</code> is in its collapsed (snapped) state.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getSnappedContent(): sap.ui.core.Control[];
+			getSnappedContent(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getSnappedHeading">snappedHeading</a>.</p><p>The <code>snappedHeading</code> is positioned in the <code>DynamicPageTitle</code> left area and is displayed when the header is in collapsed (snapped) state only. Use this aggregation to display a title (or any other UI5 control that serves as a heading) that has to be present in collapsed state only.</p><p><b>Notes:</b> <ul> <li>In order for <code>snappedHeading</code> to be taken into account, <code>heading</code> has to be empty. Combine <code>snappedHeading</code> with <code>expandedHeading</code> to switch content when the header switches state.</li> <li>If the <code>snappedTitleOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>DynamicPageHeader</code> is in its collapsed (snapped) state.</li> </ul></p>
 			 * @returns sap.ui.core.Control 
@@ -920,67 +1023,67 @@ declare namespace sap {
 			/**
 			 * <p>Removes a action from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getActions">actions</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vAction <p>The action to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed action or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed action or <code>null</code></p>
 			 */
 			removeAction(vAction: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getActions">actions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllActions(): sap.ui.core.Control[];
+			removeAllActions(): any;
 			/**
 			 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
 			 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllAriaDescribedBy(): sap.ui.core.ID[];
+			removeAllAriaDescribedBy(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllContent(): sap.ui.core.Control[];
+			removeAllContent(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getExpandedContent">expandedContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllExpandedContent(): sap.ui.core.Control[];
+			removeAllExpandedContent(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getNavigationActions">navigationActions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.m.Button[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllNavigationActions(): sap.m.Button[];
+			removeAllNavigationActions(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getSnappedContent">snappedContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllSnappedContent(): sap.ui.core.Control[];
+			removeAllSnappedContent(): any;
 			/**
 			 * <p>Removes an ariaDescribedBy from the association named <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
 			 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to be removed or its index or ID</p>
-			 * @returns sap.ui.core.ID|null <p>The removed ariaDescribedBy or <code>null</code></p>
+			 * @returns sap.ui.core.ID | null <p>The removed ariaDescribedBy or <code>null</code></p>
 			 */
 			removeAriaDescribedBy(vAriaDescribedBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
 			/**
 			 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getContent">content</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes a expandedContent from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getExpandedContent">expandedContent</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vExpandedContent <p>The expandedContent to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed expandedContent or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed expandedContent or <code>null</code></p>
 			 */
 			removeExpandedContent(vExpandedContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes a navigationAction from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getNavigationActions">navigationActions</a>.</p>
 			 * @param {number | string | sap.m.Button} vNavigationAction <p>The navigationAction to remove or its index or id</p>
-			 * @returns sap.m.Button|null <p>The removed navigationAction or <code>null</code></p>
+			 * @returns sap.m.Button | null <p>The removed navigationAction or <code>null</code></p>
 			 */
 			removeNavigationAction(vNavigationAction: number | string | sap.m.Button): sap.m.Button | null;
 			/**
 			 * <p>Removes a snappedContent from the aggregation <a target="_self" href="api/sap.f.DynamicPageTitle#methods/getSnappedContent">snappedContent</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vSnappedContent <p>The snappedContent to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed snappedContent or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed snappedContent or <code>null</code></p>
 			 */
 			removeSnappedContent(vSnappedContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -1027,7 +1130,7 @@ declare namespace sap {
 			setSnappedTitleOnMobile(oSnappedTitleOnMobile: sap.m.Title): this;
 		}
 		/**
-		 * <p><p>Defines the areas within the <code>sap.f.DynamicPageTitle</code> control.</p></p>
+		 * <p><p>Defines the areas within the <code>sap.f.DynamicPageTitle</code> control.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'DynamicPageTitleArea'.</p></p>
 		 */
 		export enum DynamicPageTitleArea {
 			/**
@@ -1040,7 +1143,7 @@ declare namespace sap {
 			Middle = "Middle",
 		}
 		/**
-		 * <p>Implements the master-detail-detail paradigm by displaying up to three pages in separate columns.</p><h3>Overview</h3><p>The control is logically similar to <a target="_self" href="api/sap.m.SplitContainer">sap.m.SplitContainer</a> with the difference that it capable of handling three columns (referred to as <code>Begin</code>, <code>Mid</code> and <code>End</code>) rather than two (<code>Master</code>, <code>Detail</code>). The width of the three columns is variable.</p><p>There are several possible layouts that can be changed either with the control's API, or by the user with the help of layout arrows.</p><p>Internally the control makes use of three instances of <a target="_self" href="api/sap.m.NavContainer">sap.m.NavContainer</a>, thus forming the three columns.</p><h3>Usage</h3><p>Use this control for applications that need to display several logical levels of related information side by side (e.g. list of items, item, sub-item, etc.). The control is flexible in a sense that the application can focus the user's attention on one particular column by making it larger or even fullscreen.</p><p>The columns are accessible with the <code>beginColumnPages</code>, <code>midColumnPages</code> and <code>endColumnPages</code> aggregations.</p><p>The relative sizes and the visibility of the three columns are determined based on the value of the <a target="_self" href="api/sap.f.LayoutType">layout</a> property.</p><p>Changes to the layout due to user interaction are communicated to the app with the <code>stateChange</code> event.</p><p><ul><b>Notes:</b> <li>To easily implement the recommended UX design of a <code>sap.f.FlexibleColumnLayout</code>-based app, you can use the <code>sap.f.FlexibleColumnLayoutSemanticHelper</code> class.</li> <li>To facilitate the navigation and view loading, you can use the <a target="_self" href="api/sap.f.routing.Router">sap.f.routing.Router</a> </li></ul></p><h3>Responsive Behavior</h3><p>The control automatically displays the maximum possible number of columns based on the device size and current <code>layout</code>. The app does not need to take into consideration the current device/screen size, but only to add content to the columns and change the value of the <code>layout</code> property.</p><p>For detailed information, see <a target="_self" href="api/sap.f.LayoutType">LayoutType</a> enumeration.</p>
+		 * <p>Implements the list-detail-detail paradigm by displaying up to three pages in separate columns.</p><h3>Overview</h3><p>The control is logically similar to <a target="_self" href="api/sap.m.SplitContainer">sap.m.SplitContainer</a> with the difference that it capable of handling three columns (referred to as <code>Begin</code>, <code>Mid</code> and <code>End</code>) rather than two (<code>Master</code>, <code>Detail</code>). The width of the three columns is variable.</p><p>There are several possible layouts that can be changed either with the control's API, or by the user with the help of the draggable column separators. The draggable column separators allow the user to customize the column widths for the current layout, or to switch to a new layout (if the user drags the column separator past a breakpoint that delimits two different layouts). After the user customized the column widths for a given layout, these user preferences are internally saved and automatically re-applied whenever the user re-visits the same layout.</p><p>Internally the control makes use of three instances of <a target="_self" href="api/sap.m.NavContainer">sap.m.NavContainer</a>, thus forming the three columns.</p><h3>Usage</h3><p>Use this control for applications that need to display several logical levels of related information side by side (e.g. list of items, item, sub-item, etc.). The control is flexible in a sense that the application can focus the user's attention on one particular column by making it larger or even fullscreen.</p><p>The columns are accessible with the <code>beginColumnPages</code>, <code>midColumnPages</code> and <code>endColumnPages</code> aggregations.</p><p>The relative sizes and the visibility of the three columns are determined based on the value of the <a target="_self" href="api/sap.f.LayoutType">layout</a> property.</p><p>Changes to the layout due to user interaction are communicated to the app with the <code>stateChange</code> event.</p><p><ul><b>Notes:</b> <li>To easily implement the recommended UX design of a <code>sap.f.FlexibleColumnLayout</code>-based app, you can use the <code>sap.f.FlexibleColumnLayoutSemanticHelper</code> class.</li> <li>To facilitate the navigation and view loading, you can use the <a target="_self" href="api/sap.f.routing.Router">sap.f.routing.Router</a> </li></ul></p><h3>Responsive Behavior</h3><p>The control automatically displays the maximum possible number of columns based on the device size and current <code>layout</code>. The app does not need to take into consideration the current device/screen size, but only to add content to the columns and change the value of the <code>layout</code> property.</p><p>For detailed information, see <a target="_self" href="api/sap.f.LayoutType">LayoutType</a> enumeration.</p>
 		 */
 		export class FlexibleColumnLayout extends sap.ui.core.Control {
 			/**
@@ -1070,67 +1173,75 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterBeginColumnNavigate">afterBeginColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fires when navigation between two pages in the <code>Begin</code> column has completed.</p><p>NOTE: In case of animated transitions this event is fired with some delay after the navigate event.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachAfterBeginColumnNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachAfterBeginColumnNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterEndColumnNavigate">afterEndColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fires when navigation between two pages in the <code>End</code> column has completed.</p><p>NOTE: In case of animated transitions this event is fired with some delay after the navigate event.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachAfterEndColumnNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachAfterEndColumnNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterMidColumnNavigate">afterMidColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fires when navigation between two pages in the <code>Mid</code> column has completed.</p><p>NOTE: In case of animated transitions this event is fired with some delay after the navigate event.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachAfterMidColumnNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachAfterMidColumnNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/beginColumnNavigate">beginColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fires when navigation between two pages in the <code>Begin</code> column has been triggered. The transition (if any) to the new page has not started yet. This event can be aborted by the application with preventDefault(), which means that there will be no navigation.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachBeginColumnNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachBeginColumnNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/columnResize">columnResize</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fired when resize of each column has completed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachColumnResize(oData: any, fnFunction: any, oListener?: any): this;
+			attachColumnResize(oData: any, fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/columnsDistributionChange">columnsDistributionChange</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fired when user resize columns.</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachColumnsDistributionChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/endColumnNavigate">endColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fires when navigation between two pages in the <code>End</code> column has been triggered. The transition (if any) to the new page has not started yet. This event can be aborted by the application with preventDefault(), which means that there will be no navigation.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachEndColumnNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachEndColumnNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/midColumnNavigate">midColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fires when navigation between two pages in the <code>Mid</code> column has been triggered. The transition (if any) to the new page has not started yet. This event can be aborted by the application with preventDefault(), which means that there will be no navigation.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachMidColumnNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachMidColumnNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/stateChange">stateChange</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fired when there is a change in the <code>layout</code> property or in the maximum number of columns that can be displayed at once. <br/></br> <ul>The interactions that may lead to a state change are: <li>the property <code>layout</code> was changed indirectly by the user clicking a layout arrow</li> <li>the user resized the browser beyond a breakpoint, thus changing the maximum number of columns that can be displayed at once.</li></ul> <br/><br/> <b>Note: </b>The event is suppressed while the control has zero width and will be fired the first time it gets a non-zero width</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/stateChange">stateChange</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.FlexibleColumnLayout</code> itself.</p><p>Fired when there is a change in the <code>layout</code> property or in the maximum number of columns that can be displayed at once. <br/></br> <ul>The interactions that may lead to a state change are: <li>The property <code>layout</code> was changed indirectly by the user dragging the column separator or clicking on its arrow (where arrow is available).</li> <li>The user resized the browser window beyond a breakpoint, thus changing the maximum number of columns that can be displayed at once.</li></ul> <br/><br/> <b>Note: </b>The event is suppressed while the control has zero width and will be fired the first time it gets a non-zero width</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.FlexibleColumnLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachStateChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachStateChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Navigates back to a page in the <code>FlexibleColumnLayout</code>. Columns are scanned for the page in the following order: <code>Begin</code>, <code>Mid</code>, <code>End</code>.</p><p>Calling this navigation method, first triggers the (cancelable) navigate event on the SplitContainer, then the BeforeHide pseudo event on the source page, BeforeFirstShow (if applicable), and BeforeShow on the target page. Later, after the transition has completed, the AfterShow pseudo event is triggered on the target page and AfterHide - on the page, which has been left. The given backData object is available in the BeforeFirstShow, BeforeShow, and AfterShow event objects as data property. The original "data" object from the "to" navigation is also available in these event objects.</p>
 			 * @param {string} sPageId <p>The screen to which is being navigated to. The ID or the control itself can be given.</p>
@@ -1182,60 +1293,67 @@ declare namespace sap {
 			destroyMidColumnPages(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterBeginColumnNavigate">afterBeginColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachAfterBeginColumnNavigate(fnFunction: any, oListener?: any): this;
+			detachAfterBeginColumnNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterEndColumnNavigate">afterEndColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachAfterEndColumnNavigate(fnFunction: any, oListener?: any): this;
+			detachAfterEndColumnNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterMidColumnNavigate">afterMidColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachAfterMidColumnNavigate(fnFunction: any, oListener?: any): this;
+			detachAfterMidColumnNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/beginColumnNavigate">beginColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachBeginColumnNavigate(fnFunction: any, oListener?: any): this;
+			detachBeginColumnNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/columnResize">columnResize</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachColumnResize(fnFunction: any, oListener?: any): this;
+			detachColumnResize(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/columnsDistributionChange">columnsDistributionChange</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachColumnsDistributionChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/endColumnNavigate">endColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachEndColumnNavigate(fnFunction: any, oListener?: any): this;
+			detachEndColumnNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/midColumnNavigate">midColumnNavigate</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachMidColumnNavigate(fnFunction: any, oListener?: any): this;
+			detachMidColumnNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/stateChange">stateChange</a> event of this <code>sap.f.FlexibleColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachStateChange(fnFunction: any, oListener?: any): this;
+			detachStateChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/afterBeginColumnNavigate">afterBeginColumnNavigate</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1266,6 +1384,12 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			protected fireColumnResize(mParameters?: any): this;
+			/**
+			 * <p>Fires event <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/columnsDistributionChange">columnsDistributionChange</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireColumnsDistributionChange(mParameters?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.FlexibleColumnLayout#events/endColumnNavigate">endColumnNavigate</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1298,7 +1422,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getBeginColumnPages">beginColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>Begin</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" href="api/sap.m.NavContainerChild#events/BeforeShow">BeforeShow</a>, they are documented in the pseudo interface <a target="_self" href="api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getBeginColumnPages(): sap.ui.core.Control[];
+			getBeginColumnPages(): any;
 			/**
 			 * <p>Returns the currently displayed Begin column page.</p>
 			 * @returns sap.ui.core.Control <p>The UI5 control in the Begin column</p>
@@ -1333,22 +1457,22 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getEndColumnPages">endColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>End</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" href="api/sap.m.NavContainerChild#events/BeforeShow">BeforeShow</a>, they are documented in the pseudo interface <a target="_self" href="api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getEndColumnPages(): sap.ui.core.Control[];
+			getEndColumnPages(): any;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getInitialBeginColumnPage">initialBeginColumnPage</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getInitialBeginColumnPage(): sap.ui.core.ID;
+			getInitialBeginColumnPage(): sap.ui.core.ID | null;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getInitialEndColumnPage">initialEndColumnPage</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getInitialEndColumnPage(): sap.ui.core.ID;
+			getInitialEndColumnPage(): sap.ui.core.ID | null;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getInitialMidColumnPage">initialMidColumnPage</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getInitialMidColumnPage(): sap.ui.core.ID;
+			getInitialMidColumnPage(): sap.ui.core.ID | null;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getLandmarkInfo">landmarkInfo</a>.</p><p>Accessible landmark settings to be applied on the containers of the <code>sap.f.FlexibleColumnLayout</code> control.</p><p>If not set, no landmarks will be written.</p>
 			 * @returns sap.f.FlexibleColumnLayoutAccessibleLandmarkInfo 
@@ -1368,7 +1492,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getMidColumnPages">midColumnPages</a>.</p><p>The content entities between which the <code>FlexibleColumnLayout</code> navigates in the <code>Mid</code> column.</p><p>These should be any control with page semantics. These aggregated controls will receive navigation events like <a target="_self" href="api/sap.m.NavContainerChild#events/BeforeShow">BeforeShow</a>, they are documented in the pseudo interface <a target="_self" href="api/sap.m.NavContainerChild">sap.m.NavContainerChild</a>.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getMidColumnPages(): sap.ui.core.Control[];
+			getMidColumnPages(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getRestoreFocusOnBackNavigation">restoreFocusOnBackNavigation</a>.</p><p>Determines whether the focus is restored to the last known when navigating back to a prevously opened column, for example, upon closing of the end column and being transfered back to the mid column.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>restoreFocusOnBackNavigation</code></p>
@@ -1417,33 +1541,33 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getBeginColumnPages">beginColumnPages</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllBeginColumnPages(): sap.ui.core.Control[];
+			removeAllBeginColumnPages(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getEndColumnPages">endColumnPages</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllEndColumnPages(): sap.ui.core.Control[];
+			removeAllEndColumnPages(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getMidColumnPages">midColumnPages</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllMidColumnPages(): sap.ui.core.Control[];
+			removeAllMidColumnPages(): any;
 			/**
 			 * <p>Removes a beginColumnPage from the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getBeginColumnPages">beginColumnPages</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vBeginColumnPage <p>The beginColumnPage to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed beginColumnPage or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed beginColumnPage or <code>null</code></p>
 			 */
 			removeBeginColumnPage(vBeginColumnPage: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes a endColumnPage from the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getEndColumnPages">endColumnPages</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vEndColumnPage <p>The endColumnPage to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed endColumnPage or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed endColumnPage or <code>null</code></p>
 			 */
 			removeEndColumnPage(vEndColumnPage: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes a midColumnPage from the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getMidColumnPages">midColumnPages</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vMidColumnPage <p>The midColumnPage to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed midColumnPage or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed midColumnPage or <code>null</code></p>
 			 */
 			removeMidColumnPage(vMidColumnPage: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -1648,6 +1772,203 @@ declare namespace sap {
 			setMiddleColumnLabel(sMiddleColumnLabel?: string): this;
 		}
 		/**
+		 * <p>Holds layout data for <code>sap.f.FlexibleColumnLayout</code>. Allows LayoutData of type <code>sap.f.FlexibleColumnLayoutDataForDesktop</code> or <code>sap.f.FlexibleColumnLayoutDataForTablet</code></p>
+		 */
+		export class FlexibleColumnLayoutData extends sap.ui.core.LayoutData {
+			/**
+			 * <p>Constructor for a new <code>sap.f.FlexibleColumnLayoutData</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new element, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new element.</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Destroys the desktopLayoutData in the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayoutData#methods/getDesktopLayoutData">desktopLayoutData</a>.</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyDesktopLayoutData(): this;
+			/**
+			 * <p>Destroys the tabletLayoutData in the aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayoutData#methods/getTabletLayoutData">tabletLayoutData</a>.</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyTabletLayoutData(): this;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayoutData#methods/getDesktopLayoutData">desktopLayoutData</a>.</p><p>Allows LayoutData of type <code>sap.f.FlexibleColumnLayoutDataForDesktop</code></p>
+			 * @returns sap.f.FlexibleColumnLayoutDataForDesktop 
+			 */
+			getDesktopLayoutData(): sap.f.FlexibleColumnLayoutDataForDesktop;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.FlexibleColumnLayoutData#methods/getTabletLayoutData">tabletLayoutData</a>.</p><p>Allows LayoutData of type <code>sap.f.FlexibleColumnLayoutDataForTablet</code></p>
+			 * @returns sap.f.FlexibleColumnLayoutDataForTablet 
+			 */
+			getTabletLayoutData(): sap.f.FlexibleColumnLayoutDataForTablet;
+			/**
+			 * <p>Sets the aggregated <a target="_self" href="api/sap.f.FlexibleColumnLayoutData#methods/getDesktopLayoutData">desktopLayoutData</a>.</p>
+			 * @param {sap.f.FlexibleColumnLayoutDataForDesktop} oDesktopLayoutData <p>The desktopLayoutData to set</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setDesktopLayoutData(oDesktopLayoutData: sap.f.FlexibleColumnLayoutDataForDesktop): this;
+			/**
+			 * <p>Sets the aggregated <a target="_self" href="api/sap.f.FlexibleColumnLayoutData#methods/getTabletLayoutData">tabletLayoutData</a>.</p>
+			 * @param {sap.f.FlexibleColumnLayoutDataForTablet} oTabletLayoutData <p>The tabletLayoutData to set</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTabletLayoutData(oTabletLayoutData: sap.f.FlexibleColumnLayoutDataForTablet): this;
+		}
+		/**
+		 * <p>Holds layout data for columns of <code>sap.f.FlexibleColumnLayout</code> on desktop.</p>
+		 */
+		export class FlexibleColumnLayoutDataForDesktop extends sap.ui.core.LayoutData {
+			/**
+			 * <p>Constructor for a new <code>sap.f.FlexibleColumnLayoutDataForDesktop</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new element, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new element.</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsBeginExpandedEndHidden">threeColumnsBeginExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsBeginExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsBeginExpandedEndHidden</code></p>
+			 */
+			getThreeColumnsBeginExpandedEndHidden(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsEndExpanded">threeColumnsEndExpanded</a>.</p><p>Columns distribution of ThreeColumnsEndExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"25/25/50"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsEndExpanded</code></p>
+			 */
+			getThreeColumnsEndExpanded(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsMidExpanded">threeColumnsMidExpanded</a>.</p><p>Columns distribution of ThreeColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"25/50/25"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsMidExpanded</code></p>
+			 */
+			getThreeColumnsMidExpanded(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsMidExpandedEndHidden">threeColumnsMidExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsMidExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsMidExpandedEndHidden</code></p>
+			 */
+			getThreeColumnsMidExpandedEndHidden(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getTwoColumnsBeginExpanded">twoColumnsBeginExpanded</a>.</p><p>Columns distribution of TwoColumnsBeginExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @returns string <p>Value of property <code>twoColumnsBeginExpanded</code></p>
+			 */
+			getTwoColumnsBeginExpanded(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getTwoColumnsMidExpanded">twoColumnsMidExpanded</a>.</p><p>Columns distribution of TwoColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @returns string <p>Value of property <code>twoColumnsMidExpanded</code></p>
+			 */
+			getTwoColumnsMidExpanded(): string;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsBeginExpandedEndHidden">threeColumnsBeginExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsBeginExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @param {string} sThreeColumnsBeginExpandedEndHidden <p>New value for property <code>threeColumnsBeginExpandedEndHidden</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsBeginExpandedEndHidden(sThreeColumnsBeginExpandedEndHidden?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsEndExpanded">threeColumnsEndExpanded</a>.</p><p>Columns distribution of ThreeColumnsEndExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"25/25/50"</code>.</p>
+			 * @param {string} sThreeColumnsEndExpanded <p>New value for property <code>threeColumnsEndExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsEndExpanded(sThreeColumnsEndExpanded?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsMidExpanded">threeColumnsMidExpanded</a>.</p><p>Columns distribution of ThreeColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"25/50/25"</code>.</p>
+			 * @param {string} sThreeColumnsMidExpanded <p>New value for property <code>threeColumnsMidExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsMidExpanded(sThreeColumnsMidExpanded?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getThreeColumnsMidExpandedEndHidden">threeColumnsMidExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsMidExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @param {string} sThreeColumnsMidExpandedEndHidden <p>New value for property <code>threeColumnsMidExpandedEndHidden</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsMidExpandedEndHidden(sThreeColumnsMidExpandedEndHidden?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getTwoColumnsBeginExpanded">twoColumnsBeginExpanded</a>.</p><p>Columns distribution of TwoColumnsBeginExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @param {string} sTwoColumnsBeginExpanded <p>New value for property <code>twoColumnsBeginExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTwoColumnsBeginExpanded(sTwoColumnsBeginExpanded?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForDesktop#methods/getTwoColumnsMidExpanded">twoColumnsMidExpanded</a>.</p><p>Columns distribution of TwoColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @param {string} sTwoColumnsMidExpanded <p>New value for property <code>twoColumnsMidExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTwoColumnsMidExpanded(sTwoColumnsMidExpanded?: string): this;
+		}
+		/**
+		 * <p>Holds layout data for columns of <code>sap.f.FlexibleColumnLayout</code> on tablet.</p>
+		 */
+		export class FlexibleColumnLayoutDataForTablet extends sap.ui.core.LayoutData {
+			/**
+			 * <p>Constructor for a new <code>sap.f.FlexibleColumnLayoutDataForTablet</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+			 * @param {string} sId <p>ID for the new element, generated automatically if no ID is given</p>
+			 * @param {any} mSettings <p>Initial settings for the new element.</p>
+			 */
+			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsBeginExpandedEndHidden">threeColumnsBeginExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsBeginExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsBeginExpandedEndHidden</code></p>
+			 */
+			getThreeColumnsBeginExpandedEndHidden(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsEndExpanded">threeColumnsEndExpanded</a>.</p><p>Columns distribution of ThreeColumnsEndExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"0/33/67"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsEndExpanded</code></p>
+			 */
+			getThreeColumnsEndExpanded(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsMidExpanded">threeColumnsMidExpanded</a>.</p><p>Columns distribution of ThreeColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"0/67/33"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsMidExpanded</code></p>
+			 */
+			getThreeColumnsMidExpanded(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsMidExpandedEndHidden">threeColumnsMidExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsMidExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @returns string <p>Value of property <code>threeColumnsMidExpandedEndHidden</code></p>
+			 */
+			getThreeColumnsMidExpandedEndHidden(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getTwoColumnsBeginExpanded">twoColumnsBeginExpanded</a>.</p><p>Columns distribution of TwoColumnsBeginExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @returns string <p>Value of property <code>twoColumnsBeginExpanded</code></p>
+			 */
+			getTwoColumnsBeginExpanded(): string;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getTwoColumnsMidExpanded">twoColumnsMidExpanded</a>.</p><p>Columns distribution of TwoColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @returns string <p>Value of property <code>twoColumnsMidExpanded</code></p>
+			 */
+			getTwoColumnsMidExpanded(): string;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsBeginExpandedEndHidden">threeColumnsBeginExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsBeginExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @param {string} sThreeColumnsBeginExpandedEndHidden <p>New value for property <code>threeColumnsBeginExpandedEndHidden</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsBeginExpandedEndHidden(sThreeColumnsBeginExpandedEndHidden?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsEndExpanded">threeColumnsEndExpanded</a>.</p><p>Columns distribution of ThreeColumnsEndExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"0/33/67"</code>.</p>
+			 * @param {string} sThreeColumnsEndExpanded <p>New value for property <code>threeColumnsEndExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsEndExpanded(sThreeColumnsEndExpanded?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsMidExpanded">threeColumnsMidExpanded</a>.</p><p>Columns distribution of ThreeColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"0/67/33"</code>.</p>
+			 * @param {string} sThreeColumnsMidExpanded <p>New value for property <code>threeColumnsMidExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsMidExpanded(sThreeColumnsMidExpanded?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getThreeColumnsMidExpandedEndHidden">threeColumnsMidExpandedEndHidden</a>.</p><p>Columns distribution of ThreeColumnsMidExpandedEndHidden layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @param {string} sThreeColumnsMidExpandedEndHidden <p>New value for property <code>threeColumnsMidExpandedEndHidden</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setThreeColumnsMidExpandedEndHidden(sThreeColumnsMidExpandedEndHidden?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getTwoColumnsBeginExpanded">twoColumnsBeginExpanded</a>.</p><p>Columns distribution of TwoColumnsBeginExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"67/33/0"</code>.</p>
+			 * @param {string} sTwoColumnsBeginExpanded <p>New value for property <code>twoColumnsBeginExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTwoColumnsBeginExpanded(sTwoColumnsBeginExpanded?: string): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.FlexibleColumnLayoutDataForTablet#methods/getTwoColumnsMidExpanded">twoColumnsMidExpanded</a>.</p><p>Columns distribution of TwoColumnsMidExpanded layout in the format "begin/mid/end", where values are set in percentages.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"33/67/0"</code>.</p>
+			 * @param {string} sTwoColumnsMidExpanded <p>New value for property <code>twoColumnsMidExpanded</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTwoColumnsMidExpanded(sTwoColumnsMidExpanded?: string): this;
+		}
+		/**
 		 * <p>Helper class, facilitating the implementation of the recommended UX design of a <code>sap.f.FlexibleColumnLayout</code>-based app.</p><p><b>Note:</b> Using this class is not mandatory in order to build an app with <code>sap.f.FlexibleColumnLayout</code>, but exists for convenience only.</p><p><ul>The usage of <code>sap.f.FlexibleColumnLayoutSemanticHelper</code> revolves around two main methods: <li><code>getCurrentUIState</code>Suggests which action buttons to show in each <code>sap.f.FlexibleColumnLayout</code> column, based on the current control state (number and visibility of columns, layout, etc..)</li> <li><code>getNextUIState</code>Suggests which <code>layout</code> to use when navigating to another view level (e.g. from one view to two views).</li></ul></p><p>Sample usage of the class:</p><p><pre>
 		<code>
 		 var helper = sap.f.FlexibleColumnLayoutSemanticHelper.getInstanceFor(myFlexibleColumnLayout);
@@ -1655,7 +1976,7 @@ declare namespace sap {
 		 helper.getNextUIState(2);
 		 helper.getNextUIState(0);
 		</code>
-		</pre></p><p>Calling <code>getCurrentUIState()</code> will return information which action buttons (Close, FullScreen, ExitFullScreen) must be currently shown in which column, according to UX guidelines, as well as to what layout clicking them should lead.</p><p>Calling <code>getNextUIState(2)</code> will return information about the expected layout and action buttons if the application should display three views (master-detail-detail), based on the current state.</p><p>Similarly, calling <code>getNextUIState(0)</code> will return information about the expected layout and action buttons if the application should display the initial view only (master), based on the current state.</p><p>For more information, see <a target="_self" href="api/sap.f.FlexibleColumnLayoutSemanticHelper#methods/getCurrentUIState">sap.f.FlexibleColumnLayoutSemanticHelper#getCurrentUIState</a> and <a target="_self" href="api/sap.f.FlexibleColumnLayoutSemanticHelper#methods/getNextUIState">sap.f.FlexibleColumnLayoutSemanticHelper#getNextUIState</a></p>
+		</pre></p><p>Calling <code>getCurrentUIState()</code> will return information which action buttons (Close, FullScreen, ExitFullScreen) must be currently shown in which column, according to UX guidelines, as well as to what layout clicking them should lead.</p><p>Calling <code>getNextUIState(2)</code> will return information about the expected layout and action buttons if the application should display three views (list-detail-detail), based on the current state.</p><p>Similarly, calling <code>getNextUIState(0)</code> will return information about the expected layout and action buttons if the application should display the initial view only (list), based on the current state.</p><p>For more information, see <a target="_self" href="api/sap.f.FlexibleColumnLayoutSemanticHelper#methods/getCurrentUIState">sap.f.FlexibleColumnLayoutSemanticHelper#getCurrentUIState</a> and <a target="_self" href="api/sap.f.FlexibleColumnLayoutSemanticHelper#methods/getNextUIState">sap.f.FlexibleColumnLayoutSemanticHelper#getNextUIState</a></p>
 		 */
 		export class FlexibleColumnLayoutSemanticHelper {
 			/**
@@ -1683,7 +2004,7 @@ declare namespace sap {
 			getDefaultLayouts(): any;
 			/**
 			 * <p>Returns an object, describing the state that the control will have after navigating to a different view level.</p>
-			 * @param {number} iNextLevel <p>the view level that should be represented. 0 means initial (master only), 1 - master-detail, 2 - master-detail-detail, 3 and above - subsequent views</p>
+			 * @param {number} iNextLevel <p>the view level that should be represented. 0 means initial (list only), 1 - list-detail, 2 - list-detail-detail, 3 and above - subsequent views</p>
 			 * @returns sap.f.FlexibleColumnLayoutSemanticHelper.UIState <p>The object describing the next UI state</p>
 			 */
 			getNextUIState(iNextLevel: number): sap.f.FlexibleColumnLayoutSemanticHelper.UIState;
@@ -1716,11 +2037,11 @@ declare namespace sap {
 				/**
 				 * <p>Configuration of the navigation actions of the mid column.</p>
 				 */
-				midColumn: any;
+				midColumn?: any;
 				/**
 				 * <p>Configuration of the navigation actions of the end column.</p>
 				 */
-				endColumn: any;
+				endColumn?: any;
 			}
 			/**
 			 * <p><p>Represents the relative percentage sizes of all columns as integers.</p></p>
@@ -1729,15 +2050,15 @@ declare namespace sap {
 				/**
 				 * <p>The relative percentage width of the begin column as integer.</p>
 				 */
-				beginColumn: any;
+				beginColumn?: any;
 				/**
 				 * <p>The relative percentage width of the mid column as integer.</p>
 				 */
-				midColumn: any;
+				midColumn?: any;
 				/**
 				 * <p>The relative percentage width of the end column as integer.</p>
 				 */
-				endColumn: any;
+				endColumn?: any;
 			}
 			/**
 			 * <p><p>Represents the visibility of the columns.</p></p>
@@ -1746,32 +2067,32 @@ declare namespace sap {
 				/**
 				 * <p>The visibility of the begin column.</p>
 				 */
-				beginColumn: any;
+				beginColumn?: any;
 				/**
 				 * <p>The visibility of the mid column.</p>
 				 */
-				midColumn: any;
+				midColumn?: any;
 				/**
 				 * <p>The visibility of the end column.</p>
 				 */
-				endColumn: any;
+				endColumn?: any;
 			}
 			/**
-			 * <p><p>Configures the target layouts of the navigation acion buttons in a column.</p></p>
+			 * <p><p>Configures the target layouts of the navigation action buttons in a column.</p></p>
 			 */
 			export interface NavigationActionsTargets {
 				/**
 				 * <p>The target <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getLayout">layout</a> when the <code>fullscreen</code> navigation action button is pressed. If null, then the respective action button should not be shown.</p>
 				 */
-				fullScreen: any;
+				fullScreen?: any;
 				/**
 				 * <p>The target <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getLayout">layout</a> when the <code>exitFullScreen</code> navigation action button is pressed. If null, then the respective action button should not be shown.</p>
 				 */
-				exitFullScreen: any;
+				exitFullScreen?: any;
 				/**
 				 * <p>The target <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getLayout">layout</a> when the <code>closeColumn</code> navigation action button is pressed. If null, then the respective action button should not be shown.</p>
 				 */
-				closeColumn: any;
+				closeColumn?: any;
 			}
 			/**
 			 * <p><p>Configuration of the state of the <code>FlexibleColumnLayout</code> control and the expected action buttons for each column.</p><p>Example value:</p><p><pre>
@@ -1811,35 +2132,35 @@ declare namespace sap {
 				/**
 				 * <p>The value of the <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getLayout">layout</a> property.</p>
 				 */
-				layout: any;
+				layout?: any;
 				/**
 				 * <p>The maximum number of columns that can be displayed at once based on the control width. See <a target="_self" href="api/sap.f.FlexibleColumnLayout#methods/getMaxColumnsCount">sap.f.FlexibleColumnLayout#getMaxColumnsCount</a></p>
 				 */
-				maxColumnsCount: any;
+				maxColumnsCount?: any;
 				/**
 				 * <p>Represents the relative percentage sizes of all columns as integers.</p>
 				 */
-				columnsSizes: any;
+				columnsSizes?: any;
 				/**
 				 * <p>Represents the visibility of the columns.</p>
 				 */
-				columnsVisibility: any;
+				columnsVisibility?: any;
 				/**
 				 * <p>The value is <code>true</code> if only one column is visible at the moment, <code>false</code> otherwise.</p><p><b>Note:</b> This may be due to small screen size (phone) or due to a layout, for which a single column takes up the whole width.</p>
 				 */
-				isFullScreen: any;
+				isFullScreen?: any;
 				/**
 				 * <p>The value is <code>true</code> if the current <code>layout</code> is one of the following: <code>sap.f.LayoutType.OneColumn, sap.f.LayoutType.MidColumnFullScreen, sap.f.LayoutType.EndColumnFullScreen</code>, <code>false</code> otherwise.</p><p><b>Note:</b> While <code>isFullScreen</code> can be <code>true</code> for any layout, due to small screen size, <code>isLogicallyFullScreen</code> will only be <code>true</code> for the layout values, listed above.</p>
 				 */
-				isLogicallyFullScreen: any;
+				isLogicallyFullScreen?: any;
 				/**
 				 * <p>The configuration of the navigation actions in the columns.</p>
 				 */
-				actionButtonsInfo: any;
+				actionButtonsInfo?: any;
 			}
 		}
 		/**
-		 * <p>A layout container control used for aligning items with various sizes in a simple grid.</p><h3>Overview</h3><p>The control is used to align tiles, cards and other controls in configuration, such as a home page or a dashboard. It represents a grid layout with specific row and column sizes, in which the items can take any number of rows and columns.</p><p>The number of columns and rows each item takes can be configured with the use of the <code><a target="_self" href="api/sap.f.GridContainerItemLayoutData">sap.f.GridContainerItemLayoutData</a></code>.</p><p>All rows have the same height and all columns have the same width. Their sizes can be configured with the use of the <code>layout</code> aggregation and <code><a target="_self" href="api/sap.f.GridContainerSettings">sap.f.GridContainerSettings</a></code>.</p><h3>Usage</h3><p><i>When to use</i> <ul> <li>For aligning home page and dashboard items like Tiles and Cards in a simple grid system with equally sized rows and columns.</li> </ul></p><p><i>When not to use</i> <ul> <li>If a more complex layout grid system, where columns and rows may vary in size, is needed.</li> </ul></p><h3>Example:</h3><p> <pre>
+		 * <p>A layout container control used for aligning items with various sizes in a simple grid.</p><h3>Overview</h3><p>The control is used to align tiles, cards and other controls in configuration, such as a home page or a dashboard. It represents a grid layout with specific row and column sizes, in which the items can take any number of rows and columns.</p><p>The number of columns and rows each item takes can be configured with the use of the <code><a target="_self" href="api/sap.f.GridContainerItemLayoutData">sap.f.GridContainerItemLayoutData</a></code>.</p><p>All rows have the same height and all columns have the same width. Their sizes can be configured with the use of the <code>layout</code> aggregation and <code><a target="_self" href="api/sap.f.GridContainerSettings">sap.f.GridContainerSettings</a></code>.</p><p>**Note:** To ensure better keyboard and accessibility support, child items should implement <code>sap.f.IGridContainerItem</code> interface.</p><h3>Usage</h3><p><i>When to use</i> <ul> <li>For aligning home page and dashboard items like Tiles and Cards in a simple grid system with equally sized rows and columns.</li> </ul></p><p><i>When not to use</i> <ul> <li>If a more complex layout grid system, where columns and rows may vary in size, is needed.</li> </ul></p><h3>Example:</h3><p> <pre>
 		&lt;f:GridContainer&gt;
 			&lt;f:layout&gt;
 				&lt;f:GridContainerSettings rowSize=&quot;5rem&quot; columnSize=&quot;5rem&quot; gap=&quot;1rem&quot; /&gt;
@@ -1896,27 +2217,27 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.GridContainer#events/borderReached">borderReached</a> event of this <code>sap.f.GridContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.GridContainer</code> itself.</p><p>Fires if the border of the visualizations is reached so that an application can react on this.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.GridContainer</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachBorderReached(oData: any, fnFunction: any, oListener?: any): this;
+			attachBorderReached(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.GridContainer#events/columnsChange">columnsChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.GridContainer</code> itself.</p><p>Fired when the grid columns count is changed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.GridContainer</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachColumnsChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachColumnsChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.GridContainer#events/layoutChange">layoutChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.GridContainer</code> itself.</p><p>Fired when the currently active GridSettings change.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.GridContainer</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachLayoutChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachLayoutChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.f.GridContainer#methods/getItems">items</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1954,25 +2275,25 @@ declare namespace sap {
 			destroyLayoutXS(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.GridContainer#events/borderReached">borderReached</a> event of this <code>sap.f.GridContainer</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachBorderReached(fnFunction: any, oListener?: any): this;
+			detachBorderReached(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.GridContainer#events/columnsChange">columnsChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachColumnsChange(fnFunction: any, oListener?: any): this;
+			detachColumnsChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.GridContainer#events/layoutChange">layoutChange</a> event of this <code>sap.f.GridContainer</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachLayoutChange(fnFunction: any, oListener?: any): this;
+			detachLayoutChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.GridContainer#events/borderReached">borderReached</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2017,12 +2338,12 @@ declare namespace sap {
 			 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.f.GridContainer#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
 			 * @returns sap.ui.core.ID[] 
 			 */
-			getAriaDescribedBy(): sap.ui.core.ID[];
+			getAriaDescribedBy(): any;
 			/**
 			 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.f.GridContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 			 * @returns sap.ui.core.ID[] 
 			 */
-			getAriaLabelledBy(): sap.ui.core.ID[];
+			getAriaLabelledBy(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.GridContainer#methods/getContainerQuery">containerQuery</a>.</p><p>If set to <code>true</code> the current range (large, medium or small) is defined by the size of the container surrounding the <code>GridContainer</code>, instead of the device screen size (media Query).</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>containerQuery</code></p>
@@ -2037,7 +2358,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.GridContainer#methods/getItems">items</a>.</p><p>The items contained by the control.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getItems(): sap.ui.core.Control[];
+			getItems(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.GridContainer#methods/getLayout">layout</a>.</p><p>The sap.f.GridContainerSettings applied if no settings are provided for a specific size.</p><p>If no layout is given, a default layout will be used. See the default values for <code>sap.f.GridContainerSettings</code>.</p><p><b>Note:</b> It is not possible to reuse the same instance of <code>GridContainerSettings</code> for several layouts. New instance has to be created for each of them. This is caused by the fact that one object can exist in only a single aggregation.</p>
 			 * @returns sap.f.GridContainerSettings 
@@ -2091,44 +2412,44 @@ declare namespace sap {
 			indexOfItem(oItem: sap.ui.core.Control): number;
 			/**
 			 * <p>Inserts an item into the aggregation named <code>items</code>.</p>
-			 * @param {sap.ui.core.Item} oItem <p>The item to be inserted; if empty, nothing is inserted.</p>
+			 * @param {sap.ui.core.Control} oItem <p>The item to be inserted; if empty, nothing is inserted.</p>
 			 * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position.</p>
 			 * @returns this <p><code>this</code> to allow method chaining.</p>
 			 */
-			insertItem(oItem: sap.ui.core.Item, iIndex: number): this;
+			insertItem(oItem: sap.ui.core.Control, iIndex: number): this;
 			/**
 			 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.f.GridContainer#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
 			 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllAriaDescribedBy(): sap.ui.core.ID[];
+			removeAllAriaDescribedBy(): any;
 			/**
 			 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.f.GridContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 			 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllAriaLabelledBy(): sap.ui.core.ID[];
+			removeAllAriaLabelledBy(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.GridContainer#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllItems(): sap.ui.core.Control[];
+			removeAllItems(): any;
 			/**
 			 * <p>Removes an ariaDescribedBy from the association named <a target="_self" href="api/sap.f.GridContainer#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
 			 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to be removed or its index or ID</p>
-			 * @returns sap.ui.core.ID|null <p>The removed ariaDescribedBy or <code>null</code></p>
+			 * @returns sap.ui.core.ID | null <p>The removed ariaDescribedBy or <code>null</code></p>
 			 */
 			removeAriaDescribedBy(vAriaDescribedBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
 			/**
 			 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.f.GridContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 			 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-			 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
+			 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
 			 */
 			removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
 			/**
 			 * <p>Removes an item from the aggregation named <code>items</code>.</p>
-			 * @param {number | string | sap.ui.core.Item} vItem <p>The item to remove or its index or ID.</p>
-			 * @returns sap.ui.core.Control|null <p>The removed item or <code>null</code>.</p>
+			 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vItem <p>The item to remove or its index or ID.</p>
+			 * @returns sap.ui.core.Control | null <p>The removed item or <code>null</code>.</p>
 			 */
-			removeItem(vItem: number | string | sap.ui.core.Item): sap.ui.core.Control | null;
+			removeItem(vItem: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.GridContainer#methods/getAllowDenseFill">allowDenseFill</a>.</p><p>Increases the density when arranging the items. Smaller items will take up all of the available space, ignoring their order.</p><p><b>Note:</b> The order of the items is ignored. An item which is normally at the bottom, can appear on top.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 			 * @param {boolean} bAllowDenseFill <p>New value for property <code>allowDenseFill</code></p>
@@ -2223,7 +2544,7 @@ declare namespace sap {
 			 */
 			getMinRows(): number;
 			/**
-			 * <p>Gets current value of property <a target="_self" href="api/sap.f.GridContainerItemLayoutData#methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p>
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.GridContainerItemLayoutData#methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take. For more flexible layout in which the number of rows is determined by the item's height it is recommended to use the "minRows" property instead</p>
 			 * @returns number <p>Value of property <code>rows</code></p>
 			 */
 			getRows(): number;
@@ -2240,7 +2561,7 @@ declare namespace sap {
 			 */
 			setMinRows(iMinRows: number): this;
 			/**
-			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.GridContainerItemLayoutData#methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.GridContainerItemLayoutData#methods/getRows">rows</a>.</p><p>Specifies the number of rows, which the item should take. For more flexible layout in which the number of rows is determined by the item's height it is recommended to use the "minRows" property instead</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 			 * @param {number} iRows <p>New value for property <code>rows</code></p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -2340,11 +2661,11 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.GridList#events/borderReached">borderReached</a> event of this <code>sap.f.GridList</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.GridList</code> itself.</p><p>Fires if the border of the visualizations is reached so that an application can react on this.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.GridList</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachBorderReached(oData: any, fnFunction: any, oListener?: any): this;
+			attachBorderReached(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys the customLayout in the aggregation <a target="_self" href="api/sap.f.GridList#methods/getCustomLayout">customLayout</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2352,11 +2673,11 @@ declare namespace sap {
 			destroyCustomLayout(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.GridList#events/borderReached">borderReached</a> event of this <code>sap.f.GridList</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachBorderReached(fnFunction: any, oListener?: any): this;
+			detachBorderReached(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.GridList#events/borderReached">borderReached</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2379,7 +2700,7 @@ declare namespace sap {
 			 * <p>Implements IGridConfigurable interface.</p>
 			 * @returns HTMLElement[] <p>An array with the DOM elements</p>
 			 */
-			protected getGridDomRefs(): HTMLElement[];
+			protected getGridDomRefs(): any;
 			/**
 			 * <p>Implements IGridConfigurable interface.</p>
 			 * @returns sap.ui.layout.cssgrid.GridLayoutBase <p>The grid layout</p>
@@ -2423,7 +2744,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.GridListItem#methods/getContent">content</a>.</p><p>The content of this list item</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getContent(): sap.ui.core.Control[];
+			getContent(): any;
 			/**
 			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.f.GridListItem#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
 			 * @param {sap.ui.core.Control} oContent <p>The content whose index is looked for</p>
@@ -2441,11 +2762,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.GridListItem#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllContent(): sap.ui.core.Control[];
+			removeAllContent(): any;
 			/**
 			 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.f.GridListItem#methods/getContent">content</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -2463,6 +2784,11 @@ declare namespace sap {
 		 * <p><p>Interface for controls suitable for the <code>stickySubheaderProvider</code> association of <code><a target="_self" href="api/sap.f.DynamicPage">sap.f.DynamicPage</a></code>.</p><p>Controls that implemenet this interface should have the following methods: <ul> <li><code>_getStickyContent</code> - returns the content (control) used in the subheader</li> <li><code>_returnStickyContent</code> - ensures that the content (control) returned by <code>_getStickyContent</code>, is placed back in its place in the provider</li> <li><code>_getStickySubHeaderSticked</code> - returns boolean value that shows where the sticky content is placed (in its provider or in the <code>DynamicPage</code>)</li> <li><code>_setStickySubHeaderSticked</code> - accepts a boolean argument to notify the provider where its sticky content is placed</li> </ul></p></p>
 		 */
 		export interface IDynamicPageStickyContent {
+		}
+		/**
+		 * <p><p>Interface for controls suitable for the <code>items</code> aggregation of <code><a target="_self" href="api/sap.f.GridContainer">sap.f.GridContainer</a></code>.</p><p>Classes implementing this interface should use the accessibility role provided by the <code>sap.f.IGridContainerItem.getGridItemRole</code> method.</p></p>
+		 */
+		export interface IGridContainerItem {
 		}
 		/**
 		 * <p>A combination of message and illustration to represent an empty or a success state.</p><h3>Overview</h3><p>An <code>IllustratedMessage</code> is a recommended combination of a solution-oriented message, an engaging illustration, and conversational tone to better communicate an empty or a success state than just show a message alone. Empty states are moments in the user experience where there’s no data to display. Success states are occasions to celebrate and reward a user’s special accomplishment or the completion of an important task.</p><p>The <code>IllustratedMessage</code> control is meant to be used inside container controls, for example a <code>Card</code>, a <code>Dialog</code>, or a <code>Page</code>.</p><h3>Structure</h3><p>The <code>IllustratedMessage</code> consists of the following elements, which are displayed below each other in the following order: <ul> <li>Illustration</li> <li>Title</li> <li>Description</li> <li>Additional Content</li> </ul></p><h3>Responsive Behavior</h3><p>The <code>IllustratedMessage</code> control can adapt depending on the API settings provided by the app developer and the available space of its parent container. Some of the structural elements are displayed differently or are omitted in the different breakpoint sizes (XS, S, M, L).</p>
@@ -2492,7 +2818,7 @@ declare namespace sap {
 		export interface IShellBar {
 		}
 		/**
-		 * <p><p>Layouts, representing the number of columns to be displayed and their relative widths for a <a target="_self" href="api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a> control.</p><p>Each layout has a predefined ratio for the three columns, depending on device size. Based on the device and layout, some columns are hidden. For more information, refer to the ratios (in %) for each value, listed below: (dash "-" means non-accessible columns).</p><p><b>Note:</b> Please note that on a phone device, due to the limited screen size, only one column can be displayed at a time. For all two-column layouts, this column is the <code>Mid</code> column, and for all three-column layouts - the <code>End</code> column, even though the respective column may be hidden on desktop and tablet for that particular layout. Therefore some of the names (such as <code>ThreeColumnsMidExpandedEndHidden</code> for example) are representative of the desktop scenario only.</p><p>For more information, see <a target="_self" href="topic/3b9f760da5b64adf8db7f95247879086">Types of Layout</a> in the documentation.</p></p>
+		 * <p><p>Layouts, representing the number of columns to be displayed and their relative widths for a <a target="_self" href="api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a> control.</p><p>Each layout has a default predefined ratio for the three columns, depending on device size. Based on the device and layout, some columns are hidden. For more information, refer to the ratios (in %) for each value, listed below: (hyphen "-" means non-accessible columns).</p><p><b>Notes:</b> <ul> <li>The user is allowed to customize the default ratio by dragging the column separators to resize the columns. The user preferences are then internally saved (in browser localStorage) and automatically re-applied whenever the user re-visits the same layout. </li> <li>Please note that on a phone device, due to the limited screen size, only one column can be displayed at a time. For all two-column layouts, this column is the <code>Mid</code> column, and for all three-column layouts - the <code>End</code> column, even though the respective column may be hidden on desktop and tablet for that particular layout. Therefore some of the names (such as <code>ThreeColumnsMidExpandedEndHidden</code> for example) are representative of the desktop scenario only. </li> </ul></p><p>For more information, see <a target="_self" href="topic/3b9f760da5b64adf8db7f95247879086">Types of Layout</a> in the documentation.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'LayoutType'.</p></p>
 		 */
 		export enum LayoutType {
 			/**
@@ -2508,32 +2834,32 @@ declare namespace sap {
 			 */
 			OneColumn = "OneColumn",
 			/**
-			 * <p>Desktop: 67/33/0 Begin (expanded) and Mid columns are displayed, End is accessible by layout arrows</p><p>Tablet: 67/33/0 Begin (expanded) and Mid columns are displayed, End is accessible by layout arrows</p><p>Phone: -/-/100 only the End column is displayed</p><p>Use to display the master and detail pages when the user should focus on the master. The detail-detail is still loaded and easily accessible with layout arrows.</p>
+			 * <p>Desktop: default ratio is 67/33/0 Begin (expanded) and Mid columns are displayed, End is accessible by dragging the column separators</p><p>Tablet: default ratio is 67/33/0 Begin (expanded) and Mid columns are displayed, End is accessible by dragging the column separators</p><p>Phone: -/-/100 only the End column is displayed</p><p>Use to display the master and detail pages when the user should focus on the master. The detail-detail is still loaded and easily accessible by dragging the column separators.</p>
 			 */
 			ThreeColumnsBeginExpandedEndHidden = "ThreeColumnsBeginExpandedEndHidden",
 			/**
-			 * <p>Desktop: 25/25/50 Begin, Mid and End (expanded) columns are displayed</p><p>Tablet: 0/33/67 Mid and End (expanded) columns are displayed, Begin is accessible by layout arrows</p><p>Phone: -/-/100 (only the End column is displayed)</p><p>Use to display all three pages (master, detail, detail-detail) when the user should focus on the detail-detail.</p>
+			 * <p>Desktop: default ratio is 25/25/50 Begin, Mid and End (expanded) columns are displayed</p><p>Tablet: default ratio is 0/33/67 Mid and End (expanded) columns are displayed, Begin is accessible by dragging the column separator to expand the column</p><p>Phone: -/-/100 (only the End column is displayed)</p><p>Use to display all three pages (master, detail, detail-detail) when the user should focus on the detail-detail.</p>
 			 */
 			ThreeColumnsEndExpanded = "ThreeColumnsEndExpanded",
 			/**
-			 * <p>Desktop: 25/50/25 Begin, Mid (expanded) and End columns are displayed</p><p>Tablet: 0/67/33 Mid (expanded) and End columns are displayed, Begin is accessible by a layout arrow</p><p>Phone: -/-/100 only the End column is displayed</p><p>Use to display all three pages (master, detail, detail-detail) when the user should focus on the detail.</p>
+			 * <p>Desktop: default ratio is 25/50/25 Begin, Mid (expanded) and End columns are displayed</p><p>Tablet: default ratio is 0/67/33 Mid (expanded) and End columns are displayed, Begin is accessible by dragging its adjacent column separator to expand the column.</p><p>Phone: -/-/100 only the End column is displayed</p><p>Use to display all three pages (master, detail, detail-detail) when the user should focus on the detail.</p>
 			 */
 			ThreeColumnsMidExpanded = "ThreeColumnsMidExpanded",
 			/**
-			 * <p>Desktop: 33/67/0 Begin and Mid (expanded) columns are displayed, End is accessible by a layout arrow</p><p>Tablet: 33/67/0 Begin and Mid (expanded) columns are displayed, End is accessible by a layout arrow</p><p>Phone: -/-/100 only the End column is displayed</p><p>Use to display the master and detail pages when the user should focus on the detail. The detail-detail is still loaded and easily accessible with a layout arrow.</p>
+			 * <p>Desktop: default ratio is 33/67/0 Begin and Mid (expanded) columns are displayed, End is accessible by dragging the column-separator to expand the column.</p><p>Tablet: default ratio is 33/67/0 Begin and Mid (expanded) columns are displayed, End is accessible by dragging the column-separator to expand the column.</p><p>Phone: -/-/100 only the End column is displayed</p><p>Use to display the master and detail pages when the user should focus on the detail. The detail-detail is still loaded and easily accessible upon dragging the column-separator to expand the column.</p>
 			 */
 			ThreeColumnsMidExpandedEndHidden = "ThreeColumnsMidExpandedEndHidden",
 			/**
-			 * <p>Desktop: 67/33/- Begin (expanded) and Mid columns are displayed</p><p>Tablet: 67/33/- Begin (expanded) and Mid columns are displayed</p><p>Phone: -/100/- only the Mid column is displayed</p><p>Use to display both a master and a detail page when the user should focus on the master page.</p>
+			 * <p>Desktop: default ratio is 67/33/- Begin (expanded) and Mid columns are displayed</p><p>Tablet: default ratio is 67/33/- Begin (expanded) and Mid columns are displayed</p><p>Phone: -/100/- only the Mid column is displayed</p><p>Use to display both a master and a detail page when the user should focus on the master page.</p>
 			 */
 			TwoColumnsBeginExpanded = "TwoColumnsBeginExpanded",
 			/**
-			 * <p>Desktop: 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Tablet: 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Phone: -/100/- only the Mid column is displayed</p><p>Use to display both a master and a detail page when the user should focus on the detail page.</p>
+			 * <p>Desktop: default ratio is 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Tablet: default ratio is 33/67/- Begin and Mid (expanded) columns are displayed</p><p>Phone: -/100/- only the Mid column is displayed</p><p>Use to display both a master and a detail page when the user should focus on the detail page.</p>
 			 */
 			TwoColumnsMidExpanded = "TwoColumnsMidExpanded",
 		}
 		/**
-		 * <p><p>Enumeration for different navigation directions.</p></p>
+		 * <p><p>Enumeration for different navigation directions.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'NavigationDirection'.</p></p>
 		 */
 		export enum NavigationDirection {
 			/**
@@ -2572,11 +2898,11 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ProductSwitch#events/change">change</a> event of this <code>sap.f.ProductSwitch</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ProductSwitch</code> itself.</p><p>Fires when an unselected item is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ProductSwitch</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.f.ProductSwitch#methods/getItems">items</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2584,11 +2910,11 @@ declare namespace sap {
 			destroyItems(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ProductSwitch#events/change">change</a> event of this <code>sap.f.ProductSwitch</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachChange(fnFunction: any, oListener?: any): this;
+			detachChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.ProductSwitch#events/change">change</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2599,12 +2925,12 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.ProductSwitch#methods/getItems">items</a>.</p><p><code>ProductSwitch</code> content.</p>
 			 * @returns sap.f.ProductSwitchItem[] 
 			 */
-			getItems(): sap.f.ProductSwitchItem[];
+			getItems(): any;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.f.ProductSwitch#methods/getSelectedItem">selectedItem</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getSelectedItem(): sap.ui.core.ID;
+			getSelectedItem(): sap.ui.core.ID | null;
 			/**
 			 * <p>Checks for the provided <code>sap.f.ProductSwitchItem</code> in the aggregation <a target="_self" href="api/sap.f.ProductSwitch#methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
 			 * @param {sap.f.ProductSwitchItem} oItem <p>The item whose index is looked for</p>
@@ -2622,19 +2948,19 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.ProductSwitch#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.f.ProductSwitchItem[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllItems(): sap.f.ProductSwitchItem[];
+			removeAllItems(): any;
 			/**
 			 * <p>Removes a item from the aggregation <a target="_self" href="api/sap.f.ProductSwitch#methods/getItems">items</a>.</p>
 			 * @param {number | string | sap.f.ProductSwitchItem} vItem <p>The item to remove or its index or id</p>
-			 * @returns sap.f.ProductSwitchItem|null <p>The removed item or <code>null</code></p>
+			 * @returns sap.f.ProductSwitchItem | null <p>The removed item or <code>null</code></p>
 			 */
 			removeItem(vItem: number | string | sap.f.ProductSwitchItem): sap.f.ProductSwitchItem | null;
 			/**
 			 * <p>Sets the <code>selectedItem</code> association.</p>
-			 * @param {string | sap.f.ProductSwitchItem | null} vItem <p>New value for the <code>selectedItem</code> association. If an ID of a <code>sap.f.ProductSwitchItem</code> instance is given, the item with this ID becomes the <code>selectedItem</code> association. Alternatively, a <code>sap.f.ProductSwitchItem</code> instance may be given or <code>null</code> to clear the selection.</p>
+			 * @param {sap.ui.core.ID | sap.f.ProductSwitchItem | null} vItem <p>New value for the <code>selectedItem</code> association. If an ID of a <code>sap.f.ProductSwitchItem</code> instance is given, the item with this ID becomes the <code>selectedItem</code> association. Alternatively, a <code>sap.f.ProductSwitchItem</code> instance may be given or <code>null</code> to clear the selection.</p>
 			 * @returns this <p><code>this</code> to allow method chaining</p>
 			 */
-			setSelectedItem(vItem: string | sap.f.ProductSwitchItem | null): this;
+			setSelectedItem(vItem: sap.ui.core.ID | sap.f.ProductSwitchItem | null): this;
 		}
 		/**
 		 * <p>A control that is used as a child of <code>ProductSwitch</code></p><p><b>Note:</b> <code>ProductSwitchItem</code> is not supported when used outside of <code>ProductSwitch</code>.</p>
@@ -2646,6 +2972,11 @@ declare namespace sap {
 			 * @param {any} mSettings <p>Initial settings for the new control</p>
 			 */
 			constructor(sId?: string, mSettings?: any);
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.ProductSwitchItem#methods/getImageSrc">imageSrc</a>.</p><p>Defines the image to be displayed as graphical element within the <code>ProductSwitchItem</code>.</p><p><b>Note:</b> This property takes precedence over the <code>src</code> property.</p>
+			 * @returns sap.ui.core.URI <p>Value of property <code>imageSrc</code></p>
+			 */
+			getImageSrc(): sap.ui.core.URI;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.ProductSwitchItem#methods/getSrc">src</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>ProductSwitchItem</code>. It can be an icon from the SAP icon font.</p>
 			 * @returns sap.ui.core.URI <p>Value of property <code>src</code></p>
@@ -2671,6 +3002,12 @@ declare namespace sap {
 			 * @returns string <p>Value of property <code>title</code></p>
 			 */
 			getTitle(): string;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.ProductSwitchItem#methods/getImageSrc">imageSrc</a>.</p><p>Defines the image to be displayed as graphical element within the <code>ProductSwitchItem</code>.</p><p><b>Note:</b> This property takes precedence over the <code>src</code> property.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {sap.ui.core.URI} sImageSrc <p>New value for property <code>imageSrc</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setImageSrc(sImageSrc?: sap.ui.core.URI): this;
 			/**
 			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.ProductSwitchItem#methods/getSrc">src</a>.</p><p>Defines the icon to be displayed as graphical element within the <code>ProductSwitchItem</code>. It can be an icon from the SAP icon font.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 			 * @param {sap.ui.core.URI} sSrc <p>New value for property <code>src</code></p>
@@ -2721,27 +3058,27 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.SearchManager#events/liveChange">liveChange</a> event of this <code>sap.f.SearchManager</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SearchManager</code> itself.</p><p>Fired when the value of the search field is changed by the user, for example at each key press.</p><p><b>Note:</b> Do not invalidate or re-render a focused search field, especially during the <code>liveChange</code> event.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SearchManager</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachLiveChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachLiveChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.SearchManager#events/search">search</a> event of this <code>sap.f.SearchManager</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SearchManager</code> itself.</p><p>Fired when the user triggers a search.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SearchManager</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachSearch(oData: any, fnFunction: any, oListener?: any): this;
+			attachSearch(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.SearchManager#events/suggest">suggest</a> event of this <code>sap.f.SearchManager</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SearchManager</code> itself.</p><p>Fired when the search field is initially focused or its value is changed by the user. This event means that suggestion data should be updated, in case if suggestions are used. Use the value parameter to create new suggestions for it.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SearchManager</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachSuggest(oData: any, fnFunction: any, oListener?: any): this;
+			attachSuggest(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Binds property <a target="_self" href="api/sap.f.SearchManager#methods/getValue">value</a> to model data.</p><p>See <a target="_self" href="api/sap.ui.base.ManagedObject#methods/bindProperty">ManagedObject.bindProperty</a> for a detailed description of the possible properties of <code>oBindingInfo</code></p>
 			 * @param {sap.ui.base.ManagedObject.PropertyBindingInfo} oBindingInfo <p>The binding information</p>
@@ -2755,25 +3092,25 @@ declare namespace sap {
 			destroySuggestionItems(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.SearchManager#events/liveChange">liveChange</a> event of this <code>sap.f.SearchManager</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachLiveChange(fnFunction: any, oListener?: any): this;
+			detachLiveChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.SearchManager#events/search">search</a> event of this <code>sap.f.SearchManager</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachSearch(fnFunction: any, oListener?: any): this;
+			detachSearch(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.SearchManager#events/suggest">suggest</a> event of this <code>sap.f.SearchManager</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachSuggest(fnFunction: any, oListener?: any): this;
+			detachSuggest(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.SearchManager#events/liveChange">liveChange</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2816,7 +3153,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.SearchManager#methods/getSuggestionItems">suggestionItems</a>.</p><p><code>SuggestionItems</code> are the items which are displayed in the suggestions list. The following properties can be used: <ul> <li><code>key</code> - it is not displayed and may be used as internal technical field</li> <li><code>text</code> - it is displayed as normal suggestion text</li> <li><code>icon</code></li> <li><code>description</code> - additional text that may be used to visually display search item type or category</li> </ul></p>
 			 * @returns sap.m.SuggestionItem[] 
 			 */
-			getSuggestionItems(): sap.m.SuggestionItem[];
+			getSuggestionItems(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SearchManager#methods/getValue">value</a>.</p><p>Defines the input value.</p>
 			 * @returns string <p>Value of property <code>value</code></p>
@@ -2839,11 +3176,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.SearchManager#methods/getSuggestionItems">suggestionItems</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.m.SuggestionItem[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllSuggestionItems(): sap.m.SuggestionItem[];
+			removeAllSuggestionItems(): any;
 			/**
 			 * <p>Removes a suggestionItem from the aggregation <a target="_self" href="api/sap.f.SearchManager#methods/getSuggestionItems">suggestionItems</a>.</p>
 			 * @param {number | string | sap.m.SuggestionItem} vSuggestionItem <p>The suggestionItem to remove or its index or id</p>
-			 * @returns sap.m.SuggestionItem|null <p>The removed suggestionItem or <code>null</code></p>
+			 * @returns sap.m.SuggestionItem | null <p>The removed suggestionItem or <code>null</code></p>
 			 */
 			removeSuggestionItem(vSuggestionItem: number | string | sap.m.SuggestionItem): sap.m.SuggestionItem | null;
 			/**
@@ -2883,7 +3220,7 @@ declare namespace sap {
 			unbindValue(): this;
 		}
 		/**
-		 * <p>A horizontal bar control holding multiple child controls used as application shell header.</p><h3>Overview</h3><p>The <code>ShellBar</code> is used as the uppermost section (shell) of the app. It is fully responsive and adaptive, and corresponds to the SAP Fiori Design Guidelines.</p><h3>Usage</h3><p>Content specified in the <code>ShellBar</code> properties and aggregations is automatically positioned in dedicated places of the control.</p>
+		 * <p><b>Note:</b> <code>sap.f.ShellBar</code> is not UXC-compliant and will no longer be aligned with future UXC design updates. For UXC-compliant applications, use the ui5-shellbar web component instead. It can be integrated seamlessly using ui5-tooling-modules. See <a target="_self" href="topic/1c80793df5bb424091954697fc0b2828">Using Web Components</a>. <br/><br/></p><p>A horizontal bar control holding multiple child controls used as application shell header.</p><h3>Overview</h3><p>The <code>ShellBar</code> is used as the uppermost section (shell) of the app. It is fully responsive and adaptive, and corresponds to the SAP Fiori Design Guidelines.</p><h3>Usage</h3><p>Content specified in the <code>ShellBar</code> properties and aggregations is automatically positioned in dedicated places of the control.</p>
 		 */
 		export class ShellBar extends sap.ui.core.Control {
 			/**
@@ -2916,67 +3253,67 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/avatarPressed">avatarPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the profile avatar is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachAvatarPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachAvatarPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/copilotPressed">copilotPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the SAP CoPilot icon is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachCopilotPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachCopilotPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/homeIconPressed">homeIconPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the <code>homeIcon</code> is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachHomeIconPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachHomeIconPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/menuButtonPressed">menuButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the alternative menu button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachMenuButtonPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachMenuButtonPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/navButtonPressed">navButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the navigation/back button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachNavButtonPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachNavButtonPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/notificationsPressed">notificationsPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the notifications button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachNotificationsPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachNotificationsPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/productSwitcherPressed">productSwitcherPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the product switcher button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachProductSwitcherPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachProductSwitcherPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.ShellBar#events/searchButtonPressed">searchButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.ShellBar</code> itself.</p><p>Fired when the search button is pressed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.ShellBar</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachSearchButtonPressed(oData: any, fnFunction: any, oListener?: any): this;
+			attachSearchButtonPressed(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the additionalContent in the aggregation <a target="_self" href="api/sap.f.ShellBar#methods/getAdditionalContent">additionalContent</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2999,60 +3336,60 @@ declare namespace sap {
 			destroySearchManager(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/avatarPressed">avatarPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachAvatarPressed(fnFunction: any, oListener?: any): this;
+			detachAvatarPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/copilotPressed">copilotPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachCopilotPressed(fnFunction: any, oListener?: any): this;
+			detachCopilotPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/homeIconPressed">homeIconPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachHomeIconPressed(fnFunction: any, oListener?: any): this;
+			detachHomeIconPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/menuButtonPressed">menuButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachMenuButtonPressed(fnFunction: any, oListener?: any): this;
+			detachMenuButtonPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/navButtonPressed">navButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachNavButtonPressed(fnFunction: any, oListener?: any): this;
+			detachNavButtonPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/notificationsPressed">notificationsPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachNotificationsPressed(fnFunction: any, oListener?: any): this;
+			detachNotificationsPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/productSwitcherPressed">productSwitcherPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachProductSwitcherPressed(fnFunction: any, oListener?: any): this;
+			detachProductSwitcherPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.ShellBar#events/searchButtonPressed">searchButtonPressed</a> event of this <code>sap.f.ShellBar</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachSearchButtonPressed(fnFunction: any, oListener?: any): this;
+			detachSearchButtonPressed(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.ShellBar#events/avatarPressed">avatarPressed</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -3105,12 +3442,12 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.ShellBar#methods/getAdditionalContent">additionalContent</a>.</p><p>Additional content to be displayed in the control.</p><p><b>Note:</b> Only controls implementing the <code><a target="_self" href="api/sap.f.IShellBar">sap.f.IShellBar</a></code> interface are allowed.</p>
 			 * @returns sap.f.IShellBar[] 
 			 */
-			getAdditionalContent(): sap.f.IShellBar[];
+			getAdditionalContent(): any;
 			/**
 			 * <p>Gets the available Bar contexts.</p>
-			 * @returns any <p>with all available contexts</p>
+			 * @returns sap.m.BarContexts <p>with all available contexts</p>
 			 */
-			protected getContext(): any;
+			protected getContext(): sap.m.BarContexts;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.ShellBar#methods/getHomeIcon">homeIcon</a>.</p><p>Defines the URI to the home icon, such as company or product logo.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns sap.ui.core.URI <p>Value of property <code>homeIcon</code></p>
@@ -3207,14 +3544,14 @@ declare namespace sap {
 			/**
 			 * <p>Removes a additionalContent from the aggregation <a target="_self" href="api/sap.f.ShellBar#methods/getAdditionalContent">additionalContent</a>.</p>
 			 * @param {number | string | sap.f.IShellBar} vAdditionalContent <p>The additionalContent to remove or its index or id</p>
-			 * @returns sap.f.IShellBar|null <p>The removed additionalContent or <code>null</code></p>
+			 * @returns sap.f.IShellBar | null <p>The removed additionalContent or <code>null</code></p>
 			 */
 			removeAdditionalContent(vAdditionalContent: number | string | sap.f.IShellBar): sap.f.IShellBar | null;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.ShellBar#methods/getAdditionalContent">additionalContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.f.IShellBar[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllAdditionalContent(): sap.f.IShellBar[];
+			removeAllAdditionalContent(): any;
 			/**
 			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.ShellBar#methods/getHomeIcon">homeIcon</a>.</p><p>Defines the URI to the home icon, such as company or product logo.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 			 * @param {sap.ui.core.URI} sHomeIcon <p>New value for property <code>homeIcon</code></p>
@@ -3239,6 +3576,12 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setMenu(oMenu: sap.m.Menu): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.ShellBar#methods/getNotificationsNumber">notificationsNumber</a>.</p><p>Defines the displayed number of upcoming notifications.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+			 * @param {string} sNotificationsNumber <p>New value for property <code>notificationsNumber</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setNotificationsNumber(sNotificationsNumber?: string): this;
 			/**
 			 * <p>Sets the aggregated <a target="_self" href="api/sap.f.ShellBar#methods/getProfile">profile</a>.</p>
 			 * @param {sap.m.Avatar} oProfile <p>The profile to set</p>
@@ -3301,7 +3644,7 @@ declare namespace sap {
 			setTitle(sTitle?: string): this;
 		}
 		/**
-		 * <h3>Overview</h3><p><code>SidePanel</code> is a layout control that allows primary and additional content to be displayed by clicking/tapping the action items from its action bar.</p><h3>Usage</h3><p>Action bar with action items have two states - collapsed and expanded. In collapsed state only icons are displayed, and in expanded state both icons and titles are displayed.</p><p>Each action item can have a content and click/tap on action item toggles the display of its content. The content can be added to the action item's <code>content</code> aggregation, or can be added or changed later.</p><p>Each click/tap fires an event, and in the event handler specific content can be added/changed to the <code>content</code> aggregation of the clicked/tapped action item or data can be retreived from the same aggregation depending on the state of the action item.</p><p>If the side content is displayed, there is automatically generated header of the side content which contains the icon and title of the selected action item and a close button that closes the area where side content is displayed.</p><h3>Responsive Behavior</h3><p><b>On desktop/tablet device</b></p><p>The side panel contains action bar that have action items placed vertically, and when expanded, the side content is displayed next to the action bar. If there is not enough space for all available action items, an overflow icon is displayed, and it toggles ON/OFF an overflow menu with the rest of the action items that are not visible at the moment.</p><p>Screen width > 1440 px</p><p><ul><li>When expanded, the side content shrinks the main content.</li></ul></p><p>Screen width <= 1440 px</p><p><ul><li>When expanded, the side content is placed over the main content.</li></ul></p><p><b>On mobile device</b></p><p>The side panel contains action bar that have action items placed horizontally at the bottom of the display, and when expanded, the side content is displayed above the action bar. If there is not enough room for all action items, the action bar can be swiped to access the rest of the action items.</p><h3>Keyboard shortcuts</h3><p><ul> <li>[Shift] + [Command] + [p] (Mac) / [Shift] + [Control] + [p] (Windows) - Expand/Collapse side panel</li> <li>[Arrow Up], [Arrow Down] - Move to the next or previous action item</li> <li>[Enter], [Space] - Choose the selected action item</li> <li>[Command] + [Arrow Left] (Mac) / [Control] + [Arrow Left] (Windows) / [Tab]- Move from action items to the opened side content panel</li> <li>[Command] + [Arrow Right] (Mac) / [Control] + [Arrow Right] (Windows) / [Shift] + [Tab]- Move from opened side content panel to the action items</li> <li>[F6] / [Shift] + [F6] - Navigate back and forth between main content, side panel and side content groups <li>[Esc] - Close the opened side content panel and set focus back to main content</li> </ul></p>
+		 * <h3>Overview</h3><p><code>SidePanel</code> is a layout control that allows primary and additional content to be displayed by choosing the action items from its action bar.</p><h3>Usage</h3><p>Action bar with action items have two states - collapsed and expanded. In collapsed state only icons are displayed, and in expanded state both icons and titles are displayed.</p><p>Each action item can have a content and choose an action item toggles the display of its content. The content can be added to the action item's <code>content</code> aggregation, or can be added or changed later.</p><p>Each click/tap fires an event, and in the event handler specific content can be added/changed to the <code>content</code> aggregation of the clicked/tapped action item or data can be retrieved from the same aggregation depending on the state of the action item.</p><p>If the side content is displayed, there is automatically generated header of the side content which contains the icon and title of the selected action item and a close button that closes the area where side content is displayed.</p><h3>Responsive Behavior</h3><p><b>On desktop/tablet device</b></p><p>The side panel contains action bar that have action items placed vertically, and when expanded, the side content is displayed next to the action bar. If there is not enough space for all available action items, an overflow icon is displayed, and it toggles ON/OFF an overflow menu with the rest of the action items that are not visible at the moment.</p><p>When expanded, the side content shrinks the main content.</p><p><b>On mobile device</b></p><p>The side panel contains action bar that have action items placed horizontally at the bottom of the display, and when expanded, the side content is displayed above the action bar. If there is not enough room for all action items, the action bar can be swiped to access the rest of the action items.</p><h3>Resizing</h3><p>Resizing functionality only affects desktop or tablet devices.</p><p>By setting the <code>sidePanelResizable</code> property, the expanded side panel can be resized by mouse (by drag or by double click on resize splitter), by keyboard or by choosing one of three predefined positions in the side panel's context menu (min, max and default widths)</p><h3>Keyboard shortcuts</h3><p><ul> <li>[Shift] + [Command] + [p] (Mac) / [Shift] + [Control] + [p] (Windows) - Expand/Collapse side panel</li> <li>[Arrow Up], [Arrow Down] - Move to the next or previous action item</li> <li>[Enter], [Space] - Choose the selected action item</li> <li>[Command] + [Arrow Left] (Mac) / [Control] + [Arrow Left] (Windows) / [Tab]- Move from action items to the opened side content panel</li> <li>[Command] + [Arrow Right] (Mac) / [Control] + [Arrow Right] (Windows) / [Shift] + [Tab]- Move from opened side content panel to the action items</li> <li>[F6] / [Shift] + [F6] - Navigate back and forth between main content, side panel and side content groups <li>[Esc] - Close the opened side content panel and set focus back to main content</li> </ul></p><p>If the side panel's <code>sidePanelResizable</code> property is set, there is an action item chosen, and the resize splitter is focused:</p><p><ul> <li>[Home] - set the expanded side panel width to the minimum value defined in <code>sidePanelMinWidth</code> property</li> <li>[End] - set the expanded side panel width to the maximum value defined in <code>sidePanelMaxWidth</code> property</li> <li>[Enter] - set the expanded side panel width to the default value defined in <code>sidePanelWidth</code> property</li> <li>[Shift]+[F10] or [Context menu] - show the resize context menu</li> <li>[Arrow Left] or [Arrow Up] / [Arrow Right] or [Arrow Down] - increase/decrease the width of the expanded side panel with the regular step</li> <li>[Shift] + [Arrow Left] or [Shift] + [Arrow Up] / [Shift] + [Arrow Right] or [Shift] + [Arrow Down] - increase/decrease the width of the expanded side panel with the larger step</li> </ul></p>
 		 */
 		export class SidePanel extends sap.ui.core.Control {
 			/**
@@ -3325,11 +3668,11 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.SidePanel#events/toggle">toggle</a> event of this <code>sap.f.SidePanel</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.SidePanel</code> itself.</p><p>Fires on expand and collapse of the side content.</p><p><ul><li>If the event fired as a result of action item selection (<code>expanded</code> parameter contains <code>true</code>) is prevented, the display of the side content will be blocked.</li> <li>If the event fired as a result of action item deselection, selection of different action item, pressing the <code>Close</code> button, or pressing the <code>Escape</code> key (<code>expanded</code> parameter contains <code>false</code>) is prevented, this will block closing of the currently displayed side content, and if the event is fired by selection of a different action item, the selection will be cancelled, and the next event (for expansion of a new action item) will not be fired and the new side content will not be displayed.</li></ul></p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.SidePanel</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachToggle(oData: any, fnFunction: any, oListener?: any): this;
+			attachToggle(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getItems">items</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -3342,11 +3685,11 @@ declare namespace sap {
 			destroyMainContent(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.SidePanel#events/toggle">toggle</a> event of this <code>sap.f.SidePanel</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachToggle(fnFunction: any, oListener?: any): this;
+			detachToggle(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.f.SidePanel#events/toggle">toggle</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -3367,17 +3710,47 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getItems">items</a>.</p><p>The list of action items. Each action items can have different side content added to its <code>content</code> aggregation.</p>
 			 * @returns sap.f.SidePanelItem[] 
 			 */
-			getItems(): sap.f.SidePanelItem[];
+			getItems(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getMainContent">mainContent</a>.</p><p>The list of controls for the main content.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getMainContent(): sap.ui.core.Control[];
+			getMainContent(): any;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.f.SidePanel#methods/getSelectedItem">selectedItem</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getSelectedItem(): sap.ui.core.ID;
+			getSelectedItem(): sap.ui.core.ID | null;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelMaxWidth">sidePanelMaxWidth</a>.</p><p>Determines the maximum side panel width (Side Content width + Action Bar width). <b>Note:</b> if the width is given in percent(%), it is calculated as given percent from the Side Panel parent container width, otherwise it's calculated in absolute units.</p><p>Default value is <code>"90%"</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>sidePanelMaxWidth</code></p>
+			 */
+			getSidePanelMaxWidth(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelMinWidth">sidePanelMinWidth</a>.</p><p>Determines the minimum side panel width (Side Content width + Action Bar width). <b>Note:</b> if the width is given in percent(%), it is calculated as given percent from the Side Panel parent container width, otherwise it's calculated in absolute units.</p><p>Default value is <code>"15rem"</code>.</p>
+			 * @returns sap.ui.core.CSSSize <p>Value of property <code>sidePanelMinWidth</code></p>
+			 */
+			getSidePanelMinWidth(): sap.ui.core.CSSSize;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelPosition">sidePanelPosition</a>.</p><p>Defines where to place the side panel position.</p><p>Default value is <code>Right</code>.</p>
+			 * @returns sap.f.SidePanelPosition <p>Value of property <code>sidePanelPosition</code></p>
+			 */
+			getSidePanelPosition(): sap.f.SidePanelPosition;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelResizable">sidePanelResizable</a>.</p><p>Determines whether the side panel is resizable or fixed. <b>Note:</b> setting this property only affects desktop or tablet devices.</p><p>Default value is <code>false</code>.</p>
+			 * @returns boolean <p>Value of property <code>sidePanelResizable</code></p>
+			 */
+			getSidePanelResizable(): boolean;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelResizeLargerStep">sidePanelResizeLargerStep</a>.</p><p>Determines the large step (in pixels) when changing the width of the side panel with the keyboard. <b>Note:</b> the width can be changed by large step with <code>Shift + Left Arrow</code> and <code>Shift + Right Arrow</code> keys when the resize splitter is focused.</p><p>Default value is <code>100</code>.</p>
+			 * @returns number <p>Value of property <code>sidePanelResizeLargerStep</code></p>
+			 */
+			getSidePanelResizeLargerStep(): number;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelResizeStep">sidePanelResizeStep</a>.</p><p>Determines the step (in pixels) when changing the width of the side panel with the keyboard. <b>Note:</b> the width can be changed by this step with <code>Left Arrow</code> and <code>Right Arrow</code> keys when the resize splitter is focused.</p><p>Default value is <code>10</code>.</p>
+			 * @returns number <p>Value of property <code>sidePanelResizeStep</code></p>
+			 */
+			getSidePanelResizeStep(): number;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelWidth">sidePanelWidth</a>.</p><p>Determines the side panel width (Side Content width + Action Bar width). <b>Note:</b> if the width is given in percent(%), it is calculated as given percent from the Side Panel parent container width, otherwise it's calculated in absolute units.</p><p>Default value is <code>"20rem"</code>.</p>
 			 * @returns sap.ui.core.CSSSize <p>Value of property <code>sidePanelWidth</code></p>
@@ -3413,22 +3786,22 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.f.SidePanelItem[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllItems(): sap.f.SidePanelItem[];
+			removeAllItems(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getMainContent">mainContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllMainContent(): sap.ui.core.Control[];
+			removeAllMainContent(): any;
 			/**
 			 * <p>Removes a item from the aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getItems">items</a>.</p>
 			 * @param {number | string | sap.f.SidePanelItem} vItem <p>The item to remove or its index or id</p>
-			 * @returns sap.f.SidePanelItem|null <p>The removed item or <code>null</code></p>
+			 * @returns sap.f.SidePanelItem | null <p>The removed item or <code>null</code></p>
 			 */
 			removeItem(vItem: number | string | sap.f.SidePanelItem): sap.f.SidePanelItem | null;
 			/**
 			 * <p>Removes a mainContent from the aggregation <a target="_self" href="api/sap.f.SidePanel#methods/getMainContent">mainContent</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vMainContent <p>The mainContent to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed mainContent or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed mainContent or <code>null</code></p>
 			 */
 			removeMainContent(vMainContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -3444,11 +3817,41 @@ declare namespace sap {
 			 */
 			setAriaLabel(sAriaLabel?: string): this;
 			/**
-			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelWidth">sidePanelWidth</a>.</p><p>Determines the side panel width (Side Content width + Action Bar width). <b>Note:</b> if the width is given in percent(%), it is calculated as given percent from the Side Panel parent container width, otherwise it's calculated in absolute units.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"20rem"</code>.</p>
-			 * @param {sap.ui.core.CSSSize} sSidePanelWidth <p>New value for property <code>sidePanelWidth</code></p>
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelMaxWidth">sidePanelMaxWidth</a>.</p><p>Determines the maximum side panel width (Side Content width + Action Bar width). <b>Note:</b> if the width is given in percent(%), it is calculated as given percent from the Side Panel parent container width, otherwise it's calculated in absolute units.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"90%"</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sSidePanelMaxWidth <p>New value for property <code>sidePanelMaxWidth</code></p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			setSidePanelWidth(sSidePanelWidth?: sap.ui.core.CSSSize): this;
+			setSidePanelMaxWidth(sSidePanelMaxWidth?: sap.ui.core.CSSSize): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelMinWidth">sidePanelMinWidth</a>.</p><p>Determines the minimum side panel width (Side Content width + Action Bar width). <b>Note:</b> if the width is given in percent(%), it is calculated as given percent from the Side Panel parent container width, otherwise it's calculated in absolute units.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"15rem"</code>.</p>
+			 * @param {sap.ui.core.CSSSize} sSidePanelMinWidth <p>New value for property <code>sidePanelMinWidth</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSidePanelMinWidth(sSidePanelMinWidth?: sap.ui.core.CSSSize): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelPosition">sidePanelPosition</a>.</p><p>Defines where to place the side panel position.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Right</code>.</p>
+			 * @param {sap.f.SidePanelPosition} sSidePanelPosition <p>New value for property <code>sidePanelPosition</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSidePanelPosition(sSidePanelPosition?: sap.f.SidePanelPosition): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelResizable">sidePanelResizable</a>.</p><p>Determines whether the side panel is resizable or fixed. <b>Note:</b> setting this property only affects desktop or tablet devices.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+			 * @param {boolean} bSidePanelResizable <p>New value for property <code>sidePanelResizable</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSidePanelResizable(bSidePanelResizable?: boolean): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelResizeLargerStep">sidePanelResizeLargerStep</a>.</p><p>Determines the large step (in pixels) when changing the width of the side panel with the keyboard. <b>Note:</b> the width can be changed by large step with <code>Shift + Left Arrow</code> and <code>Shift + Right Arrow</code> keys when the resize splitter is focused.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>100</code>.</p>
+			 * @param {number} iSidePanelResizeLargerStep <p>New value for property <code>sidePanelResizeLargerStep</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSidePanelResizeLargerStep(iSidePanelResizeLargerStep?: number): this;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.f.SidePanel#methods/getSidePanelResizeStep">sidePanelResizeStep</a>.</p><p>Determines the step (in pixels) when changing the width of the side panel with the keyboard. <b>Note:</b> the width can be changed by this step with <code>Left Arrow</code> and <code>Right Arrow</code> keys when the resize splitter is focused.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10</code>.</p>
+			 * @param {number} iSidePanelResizeStep <p>New value for property <code>sidePanelResizeStep</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setSidePanelResizeStep(iSidePanelResizeStep?: number): this;
 		}
 		/**
 		 * <h3>Overview</h3><p>The SidePanel Action Item.</p>
@@ -3472,15 +3875,25 @@ declare namespace sap {
 			 */
 			destroyContent(): this;
 			/**
+			 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.f.SidePanelItem#methods/getTitle">title</a>.</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			destroyTitle(): this;
+			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.SidePanelItem#methods/getContent">content</a>.</p><p>The list of controls for side content of the action item.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getContent(): sap.ui.core.Control[];
+			getContent(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.f.SidePanelItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>Default value is <code>empty string</code>.</p>
 			 * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
 			 */
 			getIcon(): sap.ui.core.URI;
+			/**
+			 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.SidePanelItem#methods/getTitle">title</a>.</p><p>The title of the action item. If not set, the title of the parent side panel will be used.</p>
+			 * @returns sap.m.Title 
+			 */
+			getTitle(): sap.m.Title;
 			/**
 			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.f.SidePanelItem#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
 			 * @param {sap.ui.core.Control} oContent <p>The content whose index is looked for</p>
@@ -3498,11 +3911,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.SidePanelItem#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllContent(): sap.ui.core.Control[];
+			removeAllContent(): any;
 			/**
 			 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.f.SidePanelItem#methods/getContent">content</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -3511,6 +3924,38 @@ declare namespace sap {
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
 			setIcon(sIcon?: sap.ui.core.URI): this;
+			/**
+			 * <p>Sets the aggregated <a target="_self" href="api/sap.f.SidePanelItem#methods/getTitle">title</a>.</p>
+			 * @param {sap.m.Title} oTitle <p>The title to set</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setTitle(oTitle: sap.m.Title): this;
+		}
+		/**
+		 * <p><p>Enumeration for different SidePanel position.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'SidePanelPosition'.</p></p>
+		 */
+		export enum SidePanelPosition {
+			/**
+			 * <p>The position is left.</p>
+			 */
+			Left = "Left",
+			/**
+			 * <p>The position is right.</p>
+			 */
+			Right = "Right",
+		}
+	}
+}
+declare namespace sap {
+	namespace f {
+		namespace cards {
+			namespace loading {
+				/**
+				 * <p><p>PlaceholderBase renderer.</p></p>
+				 */
+				namespace PlaceholderBaseRenderer {
+				}
+			}
 		}
 	}
 }
@@ -3551,26 +3996,181 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
+				 * <p>Adds some infoSection to the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>.</p>
+				 * @param {sap.ui.core.Control} oInfoSection <p>The infoSection to add; if empty, nothing is inserted</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				addInfoSection(oInfoSection: sap.ui.core.Control): this;
+				/**
+				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.cards.BaseHeader#events/press">press</a> event of this <code>sap.f.cards.BaseHeader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.cards.BaseHeader</code> itself.</p><p>Fires when the user presses the control.</p>
+				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.cards.BaseHeader</code> itself</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				attachPress(oData: any, fnFunction: Function, oListener?: any): this;
+				/**
+				 * <p>Destroys all the infoSection in the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>.</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				destroyInfoSection(): this;
+				/**
 				 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getToolbar">toolbar</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				destroyToolbar(): this;
+				/**
+				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.cards.BaseHeader#events/press">press</a> event of this <code>sap.f.cards.BaseHeader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				detachPress(fnFunction: Function, oListener?: any): this;
+				/**
+				 * <p>Fires event <a target="_self" href="api/sap.f.cards.BaseHeader#events/press">press</a> to attached listeners.</p>
+				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				protected firePress(mParameters?: any): this;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getDataTimestamp">dataTimestamp</a>.</p><p>Defines the timestamp of the oldest data in the card. Use this to show to the end user how fresh the information in the card is.</p><p>Must be specified in ISO 8601 format.</p><p>Will be shown as a relative time like "5 minutes ago".</p><p>Default value is <code>empty string</code>.</p>
 				 * @returns string <p>Value of property <code>dataTimestamp</code></p>
 				 */
 				getDataTimestamp(): string;
 				/**
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>.</p><p>Info sections to be displayed in the header.</p>
+				 * @returns sap.ui.core.Control[] 
+				 */
+				getInfoSection(): any;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getStatusVisible">statusVisible</a>.</p><p>Defines the status text visibility.</p><p>Default value is <code>true</code>.</p>
+				 * @returns boolean <p>Value of property <code>statusVisible</code></p>
+				 */
+				getStatusVisible(): boolean;
+				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getToolbar">toolbar</a>.</p><p>Defines the toolbar.</p>
 				 * @returns sap.ui.core.Control 
 				 */
 				getToolbar(): sap.ui.core.Control;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getWrappingType">wrappingType</a>.</p><p>Defines the type of text wrapping to be used inside the header. This applies to title, subtitle and details texts of the header.</p><p>Default value is <code>Normal</code>.</p>
+				 * @returns sap.m.WrappingType <p>Value of property <code>wrappingType</code></p>
+				 */
+				getWrappingType(): sap.m.WrappingType;
+				/**
+				 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>. and returns its index if found or -1 otherwise.</p>
+				 * @param {sap.ui.core.Control} oInfoSection <p>The infoSection whose index is looked for</p>
+				 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+				 */
+				indexOfInfoSection(oInfoSection: sap.ui.core.Control): number;
+				/**
+				 * <p>Inserts a infoSection into the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>.</p>
+				 * @param {sap.ui.core.Control} oInfoSection <p>The infoSection to insert; if empty, nothing is inserted</p>
+				 * @param {number} iIndex <p>The <code>0</code>-based index the infoSection should be inserted at; for a negative value of <code>iIndex</code>, the infoSection is inserted at position 0; for a value greater than the current size of the aggregation, the infoSection is inserted at the last position</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				insertInfoSection(oInfoSection: sap.ui.core.Control, iIndex: number): this;
+				/**
+				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
+				 */
+				removeAllInfoSection(): any;
+				/**
+				 * <p>Removes a infoSection from the aggregation <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getInfoSection">infoSection</a>.</p>
+				 * @param {number | string | sap.ui.core.Control} vInfoSection <p>The infoSection to remove or its index or id</p>
+				 * @returns sap.ui.core.Control | null <p>The removed infoSection or <code>null</code></p>
+				 */
+				removeInfoSection(vInfoSection: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getDataTimestamp">dataTimestamp</a>.</p><p>Defines the timestamp of the oldest data in the card. Use this to show to the end user how fresh the information in the card is.</p><p>Must be specified in ISO 8601 format.</p><p>Will be shown as a relative time like "5 minutes ago".</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sDataTimestamp <p>New value for property <code>dataTimestamp</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setDataTimestamp(sDataTimestamp?: string): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getStatusVisible">statusVisible</a>.</p><p>Defines the status text visibility.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * @param {boolean} bStatusVisible <p>New value for property <code>statusVisible</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setStatusVisible(bStatusVisible?: boolean): this;
 				/**
 				 * <p>Sets the aggregated <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getToolbar">toolbar</a>.</p>
 				 * @param {sap.ui.core.Control} oToolbar <p>The toolbar to set</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setToolbar(oToolbar: sap.ui.core.Control): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.BaseHeader#methods/getWrappingType">wrappingType</a>.</p><p>Defines the type of text wrapping to be used inside the header. This applies to title, subtitle and details texts of the header.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Normal</code>.</p>
+				 * @param {sap.m.WrappingType} sWrappingType <p>New value for property <code>wrappingType</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setWrappingType(sWrappingType?: sap.m.WrappingType): this;
+			}
+			/**
+			 * <p>Contains a single key/value pair of custom data attached to an <code>Element</code>.</p><p>For more information, see <a target="_self" href="api/sap.ui.core.Element#methods/data">Element.prototype.data</a> and <a target="_self" href="topic/91f0c3ee6f4d1014b6dd926db0e91070">Custom Data - Attaching Data Objects to Controls</a>.</p>
+			 */
+			export class CardBadgeCustomData extends sap.ui.core.CustomData {
+				/**
+				 * <p>Constructor for a new <code>CardBadgeCustomData</code> element.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+				 * @param {string} sId <p>ID for the new element, generated automatically if no ID is given</p>
+				 * @param {any} mSettings <p>Initial settings for the new element</p>
+				 */
+				constructor(sId?: string, mSettings?: any);
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getAnnouncementText">announcementText</a>.</p><p>Defines text which will is overriding default announcement.</p><p>Default value is <code>empty string</code>.</p>
+				 * @returns string <p>Value of property <code>announcementText</code></p>
+				 */
+				getAnnouncementText(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getIcon">icon</a>.</p><p>Icon URI. This may be either an icon font or image path.</p>
+				 * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
+				 */
+				getIcon(): sap.ui.core.URI;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getState">state</a>.</p><p>Defines the color of the badge. The allowed values are from the enum type <code>sap.ui.core.IndicationColor</code>. Additionally values from <code>sap.ui.core.ValueState</code> can be used, but this is not recommended by design guidelines.</p><p>Default value is <code>IndicationColor.Indication05</code>.</p>
+				 * @returns string <p>Value of property <code>state</code></p>
+				 */
+				getState(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getVisibilityMode">visibilityMode</a>.</p><p>Describes the corresponding visibility mode, see also <a target="_self" href="api/sap.f.CardBadgeVisibilityMode">sap.f.CardBadgeVisibilityMode</a>.</p><p>Default value is <code>Disappear</code>.</p>
+				 * @returns sap.f.CardBadgeVisibilityMode <p>Value of property <code>visibilityMode</code></p>
+				 */
+				getVisibilityMode(): sap.f.CardBadgeVisibilityMode;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getVisible">visible</a>.</p><p>Defines the cards badge visibility.</p><p>Default value is <code>true</code>.</p>
+				 * @returns boolean <p>Value of property <code>visible</code></p>
+				 */
+				getVisible(): boolean;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getAnnouncementText">announcementText</a>.</p><p>Defines text which will is overriding default announcement.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+				 * @param {string} sAnnouncementText <p>New value for property <code>announcementText</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setAnnouncementText(sAnnouncementText?: string): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getIcon">icon</a>.</p><p>Icon URI. This may be either an icon font or image path.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIcon(sIcon?: sap.ui.core.URI): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getState">state</a>.</p><p>Defines the color of the badge. The allowed values are from the enum type <code>sap.ui.core.IndicationColor</code>. Additionally values from <code>sap.ui.core.ValueState</code> can be used, but this is not recommended by design guidelines.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>IndicationColor.Indication05</code>.</p>
+				 * @param {string} sState <p>New value for property <code>state</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setState(sState?: string): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getVisibilityMode">visibilityMode</a>.</p><p>Describes the corresponding visibility mode, see also <a target="_self" href="api/sap.f.CardBadgeVisibilityMode">sap.f.CardBadgeVisibilityMode</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Disappear</code>.</p>
+				 * @param {sap.f.CardBadgeVisibilityMode} sVisibilityMode <p>New value for property <code>visibilityMode</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setVisibilityMode(sVisibilityMode?: sap.f.CardBadgeVisibilityMode): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.CardBadgeCustomData#methods/getVisible">visible</a>.</p><p>Defines the cards badge visibility.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setVisible(bVisible?: boolean): this;
 			}
 			/**
 			 * <p>Displays general information in the header of the <a target="_self" href="api/sap.f.Card">sap.f.Card</a>.</p><p>You can configure the title, subtitle, status text and icon, using the provided properties.</p><p><b>Notes:</b> <ul> <li>You should always set a title.</li> <li>To show a KPI or any numeric information, use <a target="_self" href="api/sap.f.cards.NumericHeader">sap.f.cards.NumericHeader</a> instead.</li> <ul></p>
@@ -3583,32 +4183,11 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.cards.Header#events/press">press</a> event of this <code>sap.f.cards.Header</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.cards.Header</code> itself.</p><p>Fires when the user presses the control.</p>
-				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.cards.Header</code> itself</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				attachPress(oData: any, fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.cards.Header#events/press">press</a> event of this <code>sap.f.cards.Header</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				detachPress(fnFunction: any, oListener?: any): this;
-				/**
 				 * <p>This method is a hook for the RenderManager that gets called during the rendering of child Controls. It allows to add, remove and update existing accessibility attributes (ARIA) of those controls.</p>
 				 * @param {sap.ui.core.Control} oElement <p>The Control that gets rendered by the RenderManager</p>
 				 * @param {any} mAriaProps <p>The mapping of "aria-" prefixed attributes</p>
 				 */
 				protected enhanceAccessibilityState(oElement: sap.ui.core.Control, mAriaProps: any): void;
-				/**
-				 * <p>Fires event <a target="_self" href="api/sap.f.cards.Header#events/press">press</a> to attached listeners.</p>
-				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				protected firePress(mParameters?: any): this;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconAlt">iconAlt</a>.</p><p>Defines an alt text for the avatar or icon.</p><p>Default value is <code>empty string</code>.</p>
 				 * @returns string <p>Value of property <code>iconAlt</code></p>
@@ -3625,15 +4204,30 @@ declare namespace sap {
 				 */
 				getIconDisplayShape(): sap.m.AvatarShape;
 				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconFitType">iconFitType</a>.</p><p>Defines how the image fits in the icon area.</p><p>Default value is <code>Cover</code>.</p>
+				 * @returns sap.m.AvatarImageFitType <p>Value of property <code>iconFitType</code></p>
+				 */
+				getIconFitType(): sap.m.AvatarImageFitType;
+				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconInitials">iconInitials</a>.</p><p>Defines the initials of the icon.</p><p>Default value is <code>empty string</code>.</p>
 				 * @returns string <p>Value of property <code>iconInitials</code></p>
 				 */
 				getIconInitials(): string;
 				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconSize">iconSize</a>.</p><p>Defines the size of the icon.</p><p>Default value is <code>S</code>.</p>
+				 * @returns sap.m.AvatarSize <p>Value of property <code>iconSize</code></p>
+				 */
+				getIconSize(): sap.m.AvatarSize;
+				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconSrc">iconSrc</a>.</p><p>Defines the icon source.</p><p>Default value is <code>empty string</code>.</p>
 				 * @returns sap.ui.core.URI <p>Value of property <code>iconSrc</code></p>
 				 */
 				getIconSrc(): sap.ui.core.URI;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconState">iconState</a>.</p><p>Defines a status-colored, non-interactive message icon in the icon area.</p><p>Default value is <code>None</code>.</p>
+				 * @returns sap.ui.core.ValueState <p>Value of property <code>iconState</code></p>
+				 */
+				getIconState(): sap.ui.core.ValueState;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.Header#methods/getIconVisible">iconVisible</a>.</p><p>Defines whether the card icon is visible.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>iconVisible</code></p>
@@ -3683,17 +4277,35 @@ declare namespace sap {
 				 */
 				setIconDisplayShape(sIconDisplayShape?: sap.m.AvatarShape): this;
 				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.Header#methods/getIconFitType">iconFitType</a>.</p><p>Defines how the image fits in the icon area.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Cover</code>.</p>
+				 * @param {sap.m.AvatarImageFitType} sIconFitType <p>New value for property <code>iconFitType</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconFitType(sIconFitType?: sap.m.AvatarImageFitType): this;
+				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.Header#methods/getIconInitials">iconInitials</a>.</p><p>Defines the initials of the icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 				 * @param {string} sIconInitials <p>New value for property <code>iconInitials</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setIconInitials(sIconInitials?: string): this;
 				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.Header#methods/getIconSize">iconSize</a>.</p><p>Defines the size of the icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>S</code>.</p>
+				 * @param {sap.m.AvatarSize} sIconSize <p>New value for property <code>iconSize</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconSize(sIconSize?: sap.m.AvatarSize): this;
+				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.Header#methods/getIconSrc">iconSrc</a>.</p><p>Defines the icon source.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
 				 * @param {sap.ui.core.URI} sIconSrc <p>New value for property <code>iconSrc</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setIconSrc(sIconSrc?: sap.ui.core.URI): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.Header#methods/getIconState">iconState</a>.</p><p>Defines a status-colored, non-interactive message icon in the icon area.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+				 * @param {sap.ui.core.ValueState} sIconState <p>New value for property <code>iconState</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconState(sIconState?: sap.ui.core.ValueState): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.Header#methods/getIconVisible">iconVisible</a>.</p><p>Defines whether the card icon is visible.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bIconVisible <p>New value for property <code>iconVisible</code></p>
@@ -3730,9 +4342,13 @@ declare namespace sap {
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setTitleMaxLines(iTitleMaxLines?: number): this;
+				/**
+				 * @returns boolean <p>If the icon should be shown.</p>
+				 */
+				protected shouldShowIcon(): boolean;
 			}
 			/**
-			 * <p><p>Different options for the position of the header in controls that implement the <a target="_self" href="api/sap.f.ICard">sap.f.ICard</a> interface.</p></p>
+			 * <p><p>Different options for the position of the header in controls that implement the <a target="_self" href="api/sap.f.ICard">sap.f.ICard</a> interface.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'cards.HeaderPosition'.</p></p>
 			 */
 			export enum HeaderPosition {
 				/**
@@ -3766,37 +4382,21 @@ declare namespace sap {
 				 */
 				addSideIndicator(oSideIndicator: sap.f.cards.NumericSideIndicator): this;
 				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.f.cards.NumericHeader#events/press">press</a> event of this <code>sap.f.cards.NumericHeader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.f.cards.NumericHeader</code> itself.</p><p>Fires when the user presses the control.</p>
-				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.f.cards.NumericHeader</code> itself</p>
+				 * <p>Destroys the microChart in the aggregation <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getMicroChart">microChart</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachPress(oData: any, fnFunction: any, oListener?: any): this;
+				destroyMicroChart(): this;
 				/**
 				 * <p>Destroys all the sideIndicators in the aggregation <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getSideIndicators">sideIndicators</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				destroySideIndicators(): this;
 				/**
-				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.f.cards.NumericHeader#events/press">press</a> event of this <code>sap.f.cards.NumericHeader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				detachPress(fnFunction: any, oListener?: any): this;
-				/**
 				 * <p>This method is a hook for the RenderManager that gets called during the rendering of child Controls. It allows to add, remove and update existing accessibility attributes (ARIA) of those controls.</p>
 				 * @param {sap.ui.core.Control} oElement <p>The Control that gets rendered by the RenderManager</p>
 				 * @param {any} mAriaProps <p>The mapping of "aria-" prefixed attributes</p>
 				 */
 				protected enhanceAccessibilityState(oElement: sap.ui.core.Control, mAriaProps: any): void;
-				/**
-				 * <p>Fires event <a target="_self" href="api/sap.f.cards.NumericHeader#events/press">press</a> to attached listeners.</p>
-				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				protected firePress(mParameters?: any): this;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getDetails">details</a>.</p><p>Additional text which adds more details to what is shown in the numeric header.</p>
 				 * @returns string <p>Value of property <code>details</code></p>
@@ -3808,10 +4408,35 @@ declare namespace sap {
 				 */
 				getDetailsMaxLines(): number;
 				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getIconFitType">iconFitType</a>.</p><p>Defines how the image fits in the icon area.</p><p>Default value is <code>Cover</code>.</p>
+				 * @returns sap.m.AvatarImageFitType <p>Value of property <code>iconFitType</code></p>
+				 */
+				getIconFitType(): sap.m.AvatarImageFitType;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getIconSize">iconSize</a>.</p><p>Defines the size of the icon.</p><p>Default value is <code>S</code>.</p>
+				 * @returns sap.m.AvatarSize <p>Value of property <code>iconSize</code></p>
+				 */
+				getIconSize(): sap.m.AvatarSize;
+				/**
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getMicroChart">microChart</a>.</p><p>Micro Chart</p>
+				 * @returns sap.ui.core.Control 
+				 */
+				getMicroChart(): sap.ui.core.Control;
+				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getNumber">number</a>.</p><p>The numeric value of the main number indicator. If the value contains more than five characters, only the first five are displayed. Without rounding the number.</p>
 				 * @returns string <p>Value of property <code>number</code></p>
 				 */
 				getNumber(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getNumberSize">numberSize</a>.</p><p>The size of the main indicator. Possible values are "S" and "L".</p><p>Default value is <code>"L"</code>.</p>
+				 * @returns string <p>Value of property <code>numberSize</code></p>
+				 */
+				getNumberSize(): string;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getNumberVisible">numberVisible</a>.</p><p>Whether the main numeric indicator is visible or not</p><p>Default value is <code>true</code>.</p>
+				 * @returns boolean <p>Value of property <code>numberVisible</code></p>
+				 */
+				getNumberVisible(): boolean;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getScale">scale</a>.</p><p>Defines the unit of measurement (scaling prefix) for the main indicator. Financial characters can be used for currencies and counters. The International System of Units (SI) prefixes can be used. If the unit contains more than three characters, only the first three characters are displayed.</p>
 				 * @returns string <p>Value of property <code>scale</code></p>
@@ -3821,7 +4446,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getSideIndicators">sideIndicators</a>.</p><p>Additional side number indicators. For example "Deviation" and "Target". Not more than two side indicators should be used.</p>
 				 * @returns sap.f.cards.NumericSideIndicator[] 
 				 */
-				getSideIndicators(): sap.f.cards.NumericSideIndicator[];
+				getSideIndicators(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getSideIndicatorsAlignment">sideIndicatorsAlignment</a>.</p><p>The alignment of the side indicators.</p><p>Default value is <code>"Begin"</code>.</p>
 				 * @returns sap.f.cards.NumericHeaderSideIndicatorsAlignment <p>Value of property <code>sideIndicatorsAlignment</code></p>
@@ -3884,11 +4509,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getSideIndicators">sideIndicators</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.f.cards.NumericSideIndicator[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllSideIndicators(): sap.f.cards.NumericSideIndicator[];
+				removeAllSideIndicators(): any;
 				/**
 				 * <p>Removes a sideIndicator from the aggregation <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getSideIndicators">sideIndicators</a>.</p>
 				 * @param {number | string | sap.f.cards.NumericSideIndicator} vSideIndicator <p>The sideIndicator to remove or its index or id</p>
-				 * @returns sap.f.cards.NumericSideIndicator|null <p>The removed sideIndicator or <code>null</code></p>
+				 * @returns sap.f.cards.NumericSideIndicator | null <p>The removed sideIndicator or <code>null</code></p>
 				 */
 				removeSideIndicator(vSideIndicator: number | string | sap.f.cards.NumericSideIndicator): sap.f.cards.NumericSideIndicator | null;
 				/**
@@ -3904,11 +4529,41 @@ declare namespace sap {
 				 */
 				setDetailsMaxLines(iDetailsMaxLines?: number): this;
 				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getIconFitType">iconFitType</a>.</p><p>Defines how the image fits in the icon area.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Cover</code>.</p>
+				 * @param {sap.m.AvatarImageFitType} sIconFitType <p>New value for property <code>iconFitType</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconFitType(sIconFitType?: sap.m.AvatarImageFitType): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getIconSize">iconSize</a>.</p><p>Defines the size of the icon.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>S</code>.</p>
+				 * @param {sap.m.AvatarSize} sIconSize <p>New value for property <code>iconSize</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setIconSize(sIconSize?: sap.m.AvatarSize): this;
+				/**
+				 * <p>Sets the aggregated <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getMicroChart">microChart</a>.</p>
+				 * @param {sap.ui.core.Control} oMicroChart <p>The microChart to set</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setMicroChart(oMicroChart: sap.ui.core.Control): this;
+				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getNumber">number</a>.</p><p>The numeric value of the main number indicator. If the value contains more than five characters, only the first five are displayed. Without rounding the number.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {string} sNumber <p>New value for property <code>number</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setNumber(sNumber: string): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getNumberSize">numberSize</a>.</p><p>The size of the main indicator. Possible values are "S" and "L".</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"L"</code>.</p>
+				 * @param {string} sNumberSize <p>New value for property <code>numberSize</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setNumberSize(sNumberSize?: string): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getNumberVisible">numberVisible</a>.</p><p>Whether the main numeric indicator is visible or not</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * @param {boolean} bNumberVisible <p>New value for property <code>numberVisible</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setNumberVisible(bNumberVisible?: boolean): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.cards.NumericHeader#methods/getScale">scale</a>.</p><p>Defines the unit of measurement (scaling prefix) for the main indicator. Financial characters can be used for currencies and counters. The International System of Units (SI) prefixes can be used. If the unit contains more than three characters, only the first three characters are displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {string} sScale <p>New value for property <code>scale</code></p>
@@ -3969,9 +4624,13 @@ declare namespace sap {
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setUnitOfMeasurement(sUnitOfMeasurement: string): this;
+				/**
+				 * @returns boolean <p>If the icon should be shown.</p>
+				 */
+				protected shouldShowIcon(): boolean;
 			}
 			/**
-			 * <p><p>Different options for the alignment of the side indicators in the numeric header.</p></p>
+			 * <p><p>Different options for the alignment of the side indicators in the numeric header.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'cards.NumericHeaderSideIndicatorsAlignment'.</p></p>
 			 */
 			export enum NumericHeaderSideIndicatorsAlignment {
 				/**
@@ -4038,6 +4697,29 @@ declare namespace sap {
 				 */
 				setUnit(sValue: string): this;
 			}
+			/**
+			 * <p><p>Different options for the semantic role in controls that implement the <a target="_self" href="api/sap.f.ICard">sap.f.ICard</a> interface.</p><p>This enum is part of the 'sap/f/library' module export and must be accessed by the property 'cards.SemanticRole'.</p></p>
+			 */
+			export enum SemanticRole {
+				/**
+				 * <p>The card has interactive elements.</p>
+				 */
+				ListItem = "ListItem",
+				/**
+				 * <p>The card has no interactive elements.</p>
+				 */
+				Region = "Region",
+			}
+		}
+	}
+}
+declare namespace sap {
+	namespace f {
+		namespace cards {
+			/**
+			 */
+			namespace loading {
+			}
 		}
 	}
 }
@@ -4057,16 +4739,16 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.f.dnd.GridDropInfo#methods/getDropIndicatorSize">dropIndicatorSize</a>.</p><p>A function which will define the desired drop indicator size. The drop indicator shows the user how the grid will rearrange after drop.</p><p>Use when custom size needs to be defined. For example when an item is dragged from outside a grid and is dropped over the grid.</p><p>If not specified or if the function returns <code>null</code>, the indicator size will be calculated automatically.</p><p>This callback will be called when the indicator is displayed, that happens during the drag over movement.</p><p>The callback receives <code>draggedControl</code> as parameter and must return an object of type <code>{rows: <int>, columns: <int>}</code> or <code>null</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.dnd.GridDropInfo#methods/getDropIndicatorSize">dropIndicatorSize</a>.</p><p>A function which will define the desired drop indicator size. The drop indicator shows the user how the grid will rearrange after drop. Use when custom size needs to be defined. For example, when an item is dragged from outside a grid and is dropped over the grid.</p><p>If not specified or if the function returns <code>null</code>, the indicator size will be calculated automatically.</p><p>This callback will be called when the indicator is displayed, which happens during the drag over movement.</p><p>The callback receives <code>draggedControl</code> as parameter and must return an object of type <code>{rows: int, columns: int}</code> or <code>null</code>.</p>
 				 * @returns Function <p>Value of property <code>dropIndicatorSize</code></p>
 				 */
 				getDropIndicatorSize(): Function;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.dnd.GridDropInfo#methods/getDropIndicatorSize">dropIndicatorSize</a>.</p><p>A function which will define the desired drop indicator size. The drop indicator shows the user how the grid will rearrange after drop.</p><p>Use when custom size needs to be defined. For example when an item is dragged from outside a grid and is dropped over the grid.</p><p>If not specified or if the function returns <code>null</code>, the indicator size will be calculated automatically.</p><p>This callback will be called when the indicator is displayed, that happens during the drag over movement.</p><p>The callback receives <code>draggedControl</code> as parameter and must return an object of type <code>{rows: <int>, columns: <int>}</code> or <code>null</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.dnd.GridDropInfo#methods/setDropIndicatorSize">dropIndicatorSize</a>.</p><p>A function which will define the desired drop indicator size. The drop indicator shows the user how the grid will rearrange after drop. Use when custom size needs to be defined. For example when an item is dragged from outside a grid and is dropped over the grid.</p><p>If not specified or if the function returns <code>null</code>, the indicator size will be calculated automatically.</p><p>This callback will be called when the indicator is displayed, which happens during the drag over movement.</p><p>The callback receives <code>draggedControl</code> as parameter and must return an object of type <code>{rows: int, columns: int}</code> or <code>null</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {Function} fnDropIndicatorSize <p>New value for property <code>dropIndicatorSize</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				setDropIndicatorSize(fnDropIndicatorSize: Function): this;
+				setDropIndicatorSize(fnDropIndicatorSize?: Function): this;
 			}
 			/**
 			 * <p><p>Interface that should be implemented by grid controls, if they are working with the <code>sap.f.dnd.GridDropInfo</code>.</p><p>It is highly recommended that those grid controls have optimized <code>removeItem</code> and <code>insertItem</code> methods (if "items" is target drop aggregation). Meaning to override them in a way that they don't trigger invalidation.</p></p>
@@ -4082,16 +4764,16 @@ declare namespace sap {
 		 */
 		namespace routing {
 			/**
-			 * <p>The <code>sap.f.routing.Router</code> class is intended to be used with <code><a target="_self" href="api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a></code> as a root control.</p><p>The difference to the <code><a target="_self" href="api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> are the <code>level</code>, <code>transition</code>, and <code>transitionParameters</code> properties that you can specify in every Route or Target created by this router.</p><p>The difference to the <code><a target="_self" href="api/sap.m.routing.Router">sap.m.routing.Router</a></code> is the additional <code>layout</code> property that can be specified in every Route, in which case it is applied to the root control. Also, the <code>sap.f.routing.Router</code> supports navigations that involve both change of <code><a target="_self" href="api/sap.f.LayoutType">sap.f.LayoutType</a></code> and change of the current page within a single column of the <code>sap.f.FlexibleColumnLayout</code>.</p><p>See <code><a target="_self" href="api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> for the constructor arguments.</p>
+			 * <p>The <code>sap.f.routing.Router</code> extends the capabilities of the standard <code><a target="_self" href="api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> to support flexible and responsive layouts based on <code><a target="_self" href="api/sap.f.FlexibleColumnLayout">sap.f.FlexibleColumnLayout</a></code> as the root control.</p><p>This router enables advanced navigation scenarios tailored to flexible column layouts, such as changing both the layout type (e.g., OneColumn, TwoColumnsMidExpanded) and the currently displayed views within individual columns.</p><p>Compared to <code><a target="_self" href="api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code>, it adds support for additional target properties: <ul> <li><code>level</code>: Defines the hierarchical level of the target view for proper history and back navigation handling</li> <li><code>transition</code>: Specifies the type of transition animation between views (e.g., <code>slide</code>, <code>fade</code>)</li> <li><code>transitionParameters</code>: Custom parameters for transitions</li> </ul></p><p>Compared to <code><a target="_self" href="api/sap.m.routing.Router">sap.m.routing.Router</a></code>, it further introduces a <code>layout</code> property on each route, allowing you to define the desired <code><a target="_self" href="api/sap.f.LayoutType">sap.f.LayoutType</a></code> to be applied to the <code>FlexibleColumnLayout</code> root control during navigation.</p><p>See <code><a target="_self" href="api/sap.ui.core.routing.Router">sap.ui.core.routing.Router</a></code> for the constructor arguments.</p>
 			 */
 			export class Router extends sap.ui.core.routing.Router {
 				/**
 				 * <p>Constructor for a new <code>sap.f.routing.Router</code>.</p>
-				 * @param {any | object[]} oRoutes <p>may contain many Route configurations as <a target="_self" href="api/sap.ui.core.routing.Route#constructor">sap.ui.core.routing.Route#constructor</a>.</p>
+				 * @param {any} oRoutes <p>may contain many Route configurations as <a target="_self" href="api/sap.ui.core.routing.Route#constructor">sap.ui.core.routing.Route#constructor</a>.</p>
 				 * @param {sap.ui.core.UIComponent} oOwner <p>the Component of all the views that will be created by this Router, will get forwarded to the <a target="_self" href="api/sap.ui.core.routing.Views#constructor">sap.ui.core.routing.Views#constructor</a>. If you are using the componentMetadata to define your routes you should skip this parameter.</p>
 				 * @param {any} oTargetsConfig <p>the target configuration, see <a target="_self" href="api/sap.f.routing.Targets#constructor">sap.f.routing.Targets#constructor</a> documentation (the options object).</p>
 				 */
-				constructor(oRoutes?: any | object[], oOwner?: sap.ui.core.UIComponent, oTargetsConfig?: any);
+				constructor(oRoutes?: any, oOwner?: sap.ui.core.UIComponent, oTargetsConfig?: any);
 				/**
 				 * <p>Returns the <code>TargetHandler</code> instance.</p>
 				 * @returns sap.f.routing.TargetHandler <p>The <code>TargetHandler</code> instance</p>
@@ -4648,7 +5330,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getCustomShareActions">customShareActions</a>.</p><p>The <code>customShareActions</code> are placed in the <code>ShareMenu</code> area of the <code>SemanticPage</code> title, right after the semantic actions.</p><p>The text and icon of the button inside the <code>customShareActions</code> aggregation, can be customized.</p><p><b>Note:</b> If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</p>
 				 * @returns sap.m.Button[] 
 				 */
-				getCustomShareActions(): sap.m.Button[];
+				getCustomShareActions(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getDeleteAction">deleteAction</a>.</p><p>A semantic-specific button which is placed in the <code>TextActions</code> area of the <code>SemanticPage</code> title.</p><p><b>Note:</b> If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</p>
 				 * @returns sap.f.semantic.DeleteAction 
@@ -4693,7 +5375,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getFooterCustomActions">footerCustomActions</a>.</p><p>The <code>footerCustomActions</code> are placed in the <code>FooterRight</code> area of the <code>SemanticPage</code> footer, right after the semantic footer actions.</p><p><b>Note:</b> Buttons that are part of this aggregation will always have their <code>type</code> property set to <code>Transparent</code> by design.</p>
 				 * @returns sap.m.Button[] 
 				 */
-				getFooterCustomActions(): sap.m.Button[];
+				getFooterCustomActions(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getFooterMainAction">footerMainAction</a>.</p><p>A semantic-specific button which is placed in the <code>FooterRight</code> area of the <code>SemanticPage</code> footer with default text value set to <code>Save</code>.</p>
 				 * @returns sap.f.semantic.FooterMainAction 
@@ -4708,7 +5390,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getHeaderContent">headerContent</a>.</p><p>The header content.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getHeaderContent(): sap.ui.core.Control[];
+				getHeaderContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getHeaderExpanded">headerExpanded</a>.</p><p>Determines whether the header is expanded.</p><p>The header can be also expanded/collapsed by user interaction, which requires the property to be internally mutated by the control to reflect the changed state.</p><p><b>Note:</b> Please be aware, that initially collapsed header state is not supported, so <code>headerExpanded</code> should not be set to <code>false</code> when initializing the control.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>headerExpanded</code></p>
@@ -4720,7 +5402,7 @@ declare namespace sap {
 				 */
 				getHeaderPinnable(): boolean;
 				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getLandmarkInfo">landmarkInfo</a>.</p><p>Accessible landmark settings to be applied to the containers of the <code>sap.f.SemanticPage</code> control.</p><p>If not set, no landmarks will be written.</p>
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getLandmarkInfo">landmarkInfo</a>.</p><p>Accessible landmark settings to be applied to the containers of the <code>sap.f.semantic.SemanticPage</code> control.</p><p>If not set, no landmarks will be written.</p>
 				 * @returns sap.f.DynamicPageAccessibleLandmarkInfo 
 				 */
 				getLandmarkInfo(): sap.f.DynamicPageAccessibleLandmarkInfo;
@@ -4775,7 +5457,7 @@ declare namespace sap {
 				 */
 				getShowFooter(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleAreaShrinkRatio">titleAreaShrinkRatio</a>.</p><p>Assigns shrinking ratio to the <code>SemanticPage</code> title areas (Heading, Content, Actions). The greater value a section has the faster it shrinks when the screen size is being reduced.</p><p>The value must be set in <code>Heading:Content:Actions</code> format where Title, Content and Actions are numbers greater than or equal to 0. If set to 0, the respective area will not shrink.</p><p>For example, if <code>2:7:1</code> is set, the Content area will shrink seven times faster than the Actions area. So, when all three areas have width of 500px and the available space is reduced by 100px the Title area will be reduced by 20px, the Content area - by 70px and the Actions area - by 10px.</p><p>If all the areas have assigned values greater than 1, the numbers are scaled so that at least one of them is equal to 1. For example, value of <code>2:4:8</code> is equal to <code>1:2:4</code>.</p><p><Note:> When this property is set the <code>titlePrimaryArea</code> property has no effect.</p><p>Default value is <code>"1:1.6:1.6"</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleAreaShrinkRatio">titleAreaShrinkRatio</a>.</p><p>Assigns shrinking ratio to the <code>SemanticPage</code> title areas (Heading, Content, Actions). The greater value a section has the faster it shrinks when the screen size is being reduced.</p><p>The value must be set in <code>Heading:Content:Actions</code> format where Title, Content and Actions are numbers greater than or equal to 0. If set to 0, the respective area will not shrink.</p><p>For example, if <code>2:7:1</code> is set, the Content area will shrink seven times faster than the Actions area. So, when all three areas have width of 500px and the available space is reduced by 100px the Title area will be reduced by 20px, the Content area - by 70px and the Actions area - by 10px.</p><p>If all the areas have assigned values greater than 1, the numbers are scaled so that at least one of them is equal to 1. For example, value of <code>2:4:8</code> is equal to <code>1:2:4</code>.</p><p>Default value is <code>"1:1.6:1.6"</code>.</p>
 				 * @returns sap.f.DynamicPageTitleShrinkRatio <p>Value of property <code>titleAreaShrinkRatio</code></p>
 				 */
 				getTitleAreaShrinkRatio(): sap.f.DynamicPageTitleShrinkRatio;
@@ -4788,22 +5470,22 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleContent">titleContent</a>.</p><p>The content, displayed in the title.</p><p><b>Notes:</b> <ul> <li>The controls will be placed in the middle area.</li> <li>If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</li> </ul></p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getTitleContent(): sap.ui.core.Control[];
+				getTitleContent(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleCustomIconActions">titleCustomIconActions</a>.</p><p>The <code>titleCustomIconActions</code> are placed in the <code>IconActions</code> area of the <code>SemanticPage</code> title, right before the semantic icon action.</p><p><b>Note:</b> If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</p>
 				 * @returns sap.m.OverflowToolbarButton[] 
 				 */
-				getTitleCustomIconActions(): sap.m.OverflowToolbarButton[];
+				getTitleCustomIconActions(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleCustomTextActions">titleCustomTextActions</a>.</p><p>The <code>titleCustomTextActions</code> are placed in the <code>TextActions</code> area of the <code>SemanticPage</code> title, right before the semantic text action.</p><p><b>Notes:</b> <ul> <li>If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</li> <li>Buttons that are part of this aggregation will always have their <code>type</code> property set to <code>Transparent</code> by design.</li> </ul></p>
 				 * @returns sap.m.Button[] 
 				 */
-				getTitleCustomTextActions(): sap.m.Button[];
+				getTitleCustomTextActions(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleExpandedContent">titleExpandedContent</a>.</p><p>The content,displayed in the title, when the header is in expanded state.</p><p><b>Note:</b> The controls will be placed in the title`s left area, under the <code>titleHeading</code> aggregation.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getTitleExpandedContent(): sap.ui.core.Control[];
+				getTitleExpandedContent(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleExpandedHeading">titleExpandedHeading</a>.</p><p>The <code>titleExpandedHeading</code> is positioned in the <code>SemanticPage</code> title left area and is displayed when the header is in expanded state only. Use this aggregation to display a title (or any other UI5 control that serves as a heading) that has to be present in expanded state only.</p><p><b>Note:</b> In order for <code>titleExpandedHeading</code> to be taken into account, <code>titleHeading</code> has to be empty. Combine <code>titleExpandedHeading</code> with <code>titleSnappedHeading</code> to switch content when the header switches state.</p>
 				 * @returns sap.ui.core.Control 
@@ -4823,7 +5505,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleSnappedContent">titleSnappedContent</a>.</p><p>The content, displayed in the title, when the header is in collapsed state.</p><p><b>Notes:</b> <ul> <li>The controls will be placed in the title`s left area, under the <code>titleHeading</code> aggregation.</li> <li>If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</li> </ul></p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getTitleSnappedContent(): sap.ui.core.Control[];
+				getTitleSnappedContent(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleSnappedHeading">titleSnappedHeading</a>.</p><p>The <code>titleSnappedHeading</code> is positioned in the <code>SemanticPage</code> title left area and is displayed when the header is in collapsed (snapped) state only. Use this aggregation to display a title (or any other UI5 control that serves as a heading) that has to be present in collapsed state only.</p><p><b>Notes:</b> <ul> <li>In order for <code>titleSnappedHeading</code> to be taken into account, <code>titleHeading</code> has to be empty. Combine <code>titleSnappedHeading</code> with <code>titleExpandedHeading</code> to switch content when the header switches state.</li> <li>If the <code>titleSnappedOnMobile</code> aggregation is set, its content overrides this aggregation when the control is viewed on a phone mobile device and the <code>SemanticPage</code> header is in its collapsed (snapped) state.</li> </ul></p>
 				 * @returns sap.ui.core.Control 
@@ -4947,88 +5629,88 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getCustomShareActions">customShareActions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.m.Button[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllCustomShareActions(): sap.m.Button[];
+				removeAllCustomShareActions(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getFooterCustomActions">footerCustomActions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.m.Button[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllFooterCustomActions(): sap.m.Button[];
+				removeAllFooterCustomActions(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getHeaderContent">headerContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllHeaderContent(): sap.ui.core.Control[];
+				removeAllHeaderContent(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleContent">titleContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllTitleContent(): sap.ui.core.Control[];
+				removeAllTitleContent(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleCustomIconActions">titleCustomIconActions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.m.OverflowToolbarButton[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllTitleCustomIconActions(): sap.m.OverflowToolbarButton[];
+				removeAllTitleCustomIconActions(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleCustomTextActions">titleCustomTextActions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.m.Button[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllTitleCustomTextActions(): sap.m.Button[];
+				removeAllTitleCustomTextActions(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleExpandedContent">titleExpandedContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllTitleExpandedContent(): sap.ui.core.Control[];
+				removeAllTitleExpandedContent(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleSnappedContent">titleSnappedContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllTitleSnappedContent(): sap.ui.core.Control[];
+				removeAllTitleSnappedContent(): any;
 				/**
 				 * <p>Removes a customShareAction from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getCustomShareActions">customShareActions</a>.</p>
 				 * @param {number | string | sap.m.Button} vCustomShareAction <p>The customShareAction to remove or its index or id</p>
-				 * @returns sap.m.Button|null <p>The removed customShareAction or <code>null</code></p>
+				 * @returns sap.m.Button | null <p>The removed customShareAction or <code>null</code></p>
 				 */
 				removeCustomShareAction(vCustomShareAction: number | string | sap.m.Button): sap.m.Button | null;
 				/**
 				 * <p>Removes a footerCustomAction from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getFooterCustomActions">footerCustomActions</a>.</p>
 				 * @param {number | string | sap.m.Button} vFooterCustomAction <p>The footerCustomAction to remove or its index or id</p>
-				 * @returns sap.m.Button|null <p>The removed footerCustomAction or <code>null</code></p>
+				 * @returns sap.m.Button | null <p>The removed footerCustomAction or <code>null</code></p>
 				 */
 				removeFooterCustomAction(vFooterCustomAction: number | string | sap.m.Button): sap.m.Button | null;
 				/**
 				 * <p>Removes a headerContent from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getHeaderContent">headerContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vHeaderContent <p>The headerContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed headerContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed headerContent or <code>null</code></p>
 				 */
 				removeHeaderContent(vHeaderContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
 				 * <p>Removes a titleContent from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleContent">titleContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vTitleContent <p>The titleContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed titleContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed titleContent or <code>null</code></p>
 				 */
 				removeTitleContent(vTitleContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
 				 * <p>Removes a titleCustomIconAction from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleCustomIconActions">titleCustomIconActions</a>.</p>
 				 * @param {number | string | sap.m.OverflowToolbarButton} vTitleCustomIconAction <p>The titleCustomIconAction to remove or its index or id</p>
-				 * @returns sap.m.OverflowToolbarButton|null <p>The removed titleCustomIconAction or <code>null</code></p>
+				 * @returns sap.m.OverflowToolbarButton | null <p>The removed titleCustomIconAction or <code>null</code></p>
 				 */
 				removeTitleCustomIconAction(vTitleCustomIconAction: number | string | sap.m.OverflowToolbarButton): sap.m.OverflowToolbarButton | null;
 				/**
 				 * <p>Removes a titleCustomTextAction from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleCustomTextActions">titleCustomTextActions</a>.</p>
 				 * @param {number | string | sap.m.Button} vTitleCustomTextAction <p>The titleCustomTextAction to remove or its index or id</p>
-				 * @returns sap.m.Button|null <p>The removed titleCustomTextAction or <code>null</code></p>
+				 * @returns sap.m.Button | null <p>The removed titleCustomTextAction or <code>null</code></p>
 				 */
 				removeTitleCustomTextAction(vTitleCustomTextAction: number | string | sap.m.Button): sap.m.Button | null;
 				/**
 				 * <p>Removes a titleExpandedContent from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleExpandedContent">titleExpandedContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vTitleExpandedContent <p>The titleExpandedContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed titleExpandedContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed titleExpandedContent or <code>null</code></p>
 				 */
 				removeTitleExpandedContent(vTitleExpandedContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
 				 * <p>Removes a titleSnappedContent from the aggregation <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleSnappedContent">titleSnappedContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vTitleSnappedContent <p>The titleSnappedContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed titleSnappedContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed titleSnappedContent or <code>null</code></p>
 				 */
 				removeTitleSnappedContent(vTitleSnappedContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -5194,7 +5876,7 @@ declare namespace sap {
 				 */
 				setShowFooter(bShowFooter?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleAreaShrinkRatio">titleAreaShrinkRatio</a>.</p><p>Assigns shrinking ratio to the <code>SemanticPage</code> title areas (Heading, Content, Actions). The greater value a section has the faster it shrinks when the screen size is being reduced.</p><p>The value must be set in <code>Heading:Content:Actions</code> format where Title, Content and Actions are numbers greater than or equal to 0. If set to 0, the respective area will not shrink.</p><p>For example, if <code>2:7:1</code> is set, the Content area will shrink seven times faster than the Actions area. So, when all three areas have width of 500px and the available space is reduced by 100px the Title area will be reduced by 20px, the Content area - by 70px and the Actions area - by 10px.</p><p>If all the areas have assigned values greater than 1, the numbers are scaled so that at least one of them is equal to 1. For example, value of <code>2:4:8</code> is equal to <code>1:2:4</code>.</p><p><Note:> When this property is set the <code>titlePrimaryArea</code> property has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"1:1.6:1.6"</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.f.semantic.SemanticPage#methods/getTitleAreaShrinkRatio">titleAreaShrinkRatio</a>.</p><p>Assigns shrinking ratio to the <code>SemanticPage</code> title areas (Heading, Content, Actions). The greater value a section has the faster it shrinks when the screen size is being reduced.</p><p>The value must be set in <code>Heading:Content:Actions</code> format where Title, Content and Actions are numbers greater than or equal to 0. If set to 0, the respective area will not shrink.</p><p>For example, if <code>2:7:1</code> is set, the Content area will shrink seven times faster than the Actions area. So, when all three areas have width of 500px and the available space is reduced by 100px the Title area will be reduced by 20px, the Content area - by 70px and the Actions area - by 10px.</p><p>If all the areas have assigned values greater than 1, the numbers are scaled so that at least one of them is equal to 1. For example, value of <code>2:4:8</code> is equal to <code>1:2:4</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"1:1.6:1.6"</code>.</p>
 				 * @param {sap.f.DynamicPageTitleShrinkRatio} sTitleAreaShrinkRatio <p>New value for property <code>titleAreaShrinkRatio</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */

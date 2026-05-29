@@ -11,7 +11,196 @@ declare namespace sap {
      */
     namespace tnt {
         /**
-         * <p>The <code>InfoLabel</code> is a small non-interactive control which contains text information and non-semantic color chosen from a list of predefined color schemes. It serves the purpose to attract the user attention to some piece of information (state, quantity, condition, etc.).</p><h3>Overview</h3><p>The control visualizes text information without user interaction. The text inside the control is always in upper case. It can have smaller or larger side paddings which can be specified by the <code>renderMode</code> property. The text-background color pair can be changed by setting a number between 1 and 10 that corresponds to the 10 predefined color combinations of the <code>colorScheme</code> property. The control is designed to be vertically aligned with UI5 Input and Button control families. When using <code>InfoLabel</code> in non-editable <code>Forms</code>, <code>Tables</code>, etc., set <code>displayOnly=true</code> for best visual results.</p><h3>Usage Guidelines</h3><p> <ul> <li>If the text is longer than the width of the control, it doesn’t wrap. Instead, it’s represented as ellipsis. </li> <li>When truncated, the full text in the control is not visible. Therefore, it’s recommended to make more space for longer items to be fully displayed.</li> <li>Colors are not semantic and have no visual representation in sap_belize_hcb and sap_belize_hcw themes.</li> <li>The control shows plain text only, formatting is not visualized.</li> </ul></p>
+         * <p><p>Available TNT <code>Illustration</code> types for the <a target="_self" href="api/sap.m.IllustratedMessage">sap.m.IllustratedMessage</a> control.</p></p>
+         */
+        export enum IllustratedMessageType {
+            /**
+             * <p>"Avatar" illustration type.</p>
+             */
+            Avatar = "Avatar",
+            /**
+             * <p>"Calculator" illustration type.</p>
+             */
+            Calculator = "Calculator",
+            /**
+             * <p>"ChartArea" illustration type.</p>
+             */
+            ChartArea = "ChartArea",
+            /**
+             * <p>"ChartArea2" illustration type.</p>
+             */
+            ChartArea2 = "ChartArea2",
+            /**
+             * <p>"ChartBar" illustration type.</p>
+             */
+            ChartBar = "ChartBar",
+            /**
+             * <p>"ChartBPMNFlow" illustration type.</p>
+             */
+            ChartBPMNFlow = "ChartBPMNFlow",
+            /**
+             * <p>"ChartBullet" illustration type.</p>
+             */
+            ChartBullet = "ChartBullet",
+            /**
+             * <p>"ChartDoughnut" illustration type.</p>
+             */
+            ChartDoughnut = "ChartDoughnut",
+            /**
+             * <p>"ChartFlow" illustration type.</p>
+             */
+            ChartFlow = "ChartFlow",
+            /**
+             * <p>"ChartGantt" illustration type.</p>
+             */
+            ChartGantt = "ChartGantt",
+            /**
+             * <p>"ChartOrg" illustration type.</p>
+             */
+            ChartOrg = "ChartOrg",
+            /**
+             * <p>"ChartPie" illustration type.</p>
+             */
+            ChartPie = "ChartPie",
+            /**
+             * <p>"CodePlaceholder" illustration type.</p>
+             */
+            CodePlaceholder = "CodePlaceholder",
+            /**
+             * <p>"Company" illustration type.</p>
+             */
+            Company = "Company",
+            /**
+             * <p>"Compass" illustration type.</p>
+             */
+            Compass = "Compass",
+            /**
+             * <p>"Components" illustration type.</p>
+             */
+            Components = "Components",
+            /**
+             * <p>"Dialog" illustration type.</p>
+             */
+            Dialog = "Dialog",
+            /**
+             * <p>"EmptyContentPane" illustration type.</p>
+             */
+            EmptyContentPane = "EmptyContentPane",
+            /**
+             * <p>"ExternalLink" illustration type.</p>
+             */
+            ExternalLink = "ExternalLink",
+            /**
+             * <p>"FaceID" illustration type.</p>
+             */
+            FaceID = "FaceID",
+            /**
+             * <p>"Fingerprint" illustration type.</p>
+             */
+            Fingerprint = "Fingerprint",
+            /**
+             * <p>"Handshake" illustration type.</p>
+             */
+            Handshake = "Handshake",
+            /**
+             * <p>"Help" illustration type.</p>
+             */
+            Help = "Help",
+            /**
+             * <p>"Lock" illustration type.</p>
+             */
+            Lock = "Lock",
+            /**
+             * <p>"Mission" illustration type.</p>
+             */
+            Mission = "Mission",
+            /**
+             * <p>"MissionFailed" illustration type.</p>
+             */
+            MissionFailed = "MissionFailed",
+            /**
+             * <p>"NoApplications" illustration type.</p>
+             */
+            NoApplications = "NoApplications",
+            /**
+             * <p>"NoFlows" illustration type.</p>
+             */
+            NoFlows = "NoFlows",
+            /**
+             * <p>"NoUsers" illustration type.</p>
+             */
+            NoUsers = "NoUsers",
+            /**
+             * <p>"Radar" illustration type.</p>
+             */
+            Radar = "Radar",
+            /**
+             * <p>"RoadMap" illustration type.</p>
+             */
+            RoadMap = "RoadMap",
+            /**
+             * <p>"Secrets" illustration type.</p>
+             */
+            Secrets = "Secrets",
+            /**
+             * <p>"Services" illustration type.</p>
+             */
+            Services = "Services",
+            /**
+             * <p>"SessionExpired" illustration type.</p>
+             */
+            SessionExpired = "SessionExpired",
+            /**
+             * <p>"SessionExpiring" illustration type.</p>
+             */
+            SessionExpiring = "SessionExpiring",
+            /**
+             * <p>"Settings" illustration type.</p>
+             */
+            Settings = "Settings",
+            /**
+             * <p>"Success" illustration type.</p>
+             */
+            Success = "Success",
+            /**
+             * <p>"SuccessfulAuth" illustration type.</p>
+             */
+            SuccessfulAuth = "SuccessfulAuth",
+            /**
+             * <p>"Systems" illustration type.</p>
+             */
+            Systems = "Systems",
+            /**
+             * <p>"Teams" illustration type.</p>
+             */
+            Teams = "Teams",
+            /**
+             * <p>"Tools" illustration type.</p>
+             */
+            Tools = "Tools",
+            /**
+             * <p>"Tutorials" illustration type.</p>
+             */
+            Tutorials = "Tutorials",
+            /**
+             * <p>"UnableToLoad" illustration type.</p>
+             */
+            UnableToLoad = "UnableToLoad",
+            /**
+             * <p>"Unlock" illustration type.</p>
+             */
+            Unlock = "Unlock",
+            /**
+             * <p>"UnsuccessfulAuth" illustration type.</p>
+             */
+            UnsuccessfulAuth = "UnsuccessfulAuth",
+            /**
+             * <p>"User2" illustration type.</p>
+             */
+            User2 = "User2",
+        }
+        /**
+         * <p>The <code>InfoLabel</code> is a small non-interactive control which contains text information and non-semantic color chosen from a list of predefined color schemes. It serves the purpose to attract the user attention to some piece of information (state, quantity, condition, etc.).</p><h3>Overview</h3><p>The control visualizes text information without user interaction. The text-background color pair can be changed by setting a number between 1 and 10 that corresponds to the 10 predefined color combinations of the <code>colorScheme</code> property. The control is designed to be vertically aligned with UI5 Input and Button control families. When using <code>InfoLabel</code> in non-editable <code>Forms</code>, <code>Tables</code>, etc., set <code>displayOnly=true</code> for best visual results.</p><h3>Usage Guidelines</h3><p> <ul> <li>If the text is longer than the width of the control, it doesn’t wrap. Instead, it’s represented as ellipsis. </li> <li>When truncated, the full text in the control is not visible. Therefore, it’s recommended to make more space for longer items to be fully displayed.</li> <li>Colors are not semantic and have no visual representation in sap_belize_hcb, sap_belize_hcw, sap_fiori_3_hcb and sap_fiori_3_hcw themes.</li> <li>The control shows plain text only, formatting is not visualized.</li> </ul></p>
          */
         export class InfoLabel extends sap.ui.core.Control {
             /**
@@ -27,7 +216,7 @@ declare namespace sap {
              */
             bindText(oBindingInfo: sap.ui.base.ManagedObject.PropertyBindingInfo): this;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a number between 1 and 10 as a value. You can choose from 10 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. <b>Note:</b> ColorScheme 10 is available only in Fiori 3 theme. The default <code>colorScheme</code> is 7.</p><p>Default value is <code>7</code>.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a number between 1 and 10 as a value. You can choose from 10 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. <b>Note:</b> ColorScheme 10 is available only in Fiori 3 and Horizon themes. The default <code>colorScheme</code> is 7.</p><p>Default value is <code>7</code>.</p>
              * @returns number <p>Value of property <code>colorScheme</code></p>
              */
             getColorScheme(): number;
@@ -42,7 +231,7 @@ declare namespace sap {
              */
             getIcon(): sap.ui.core.URI;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>Default value is <code>Loose</code>.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts. <b>Note:</b> In Horizon theme there is only one mode and setting this property will not have effect.</p><p>Default value is <code>Loose</code>.</p>
              * @returns sap.tnt.RenderMode <p>Value of property <code>renderMode</code></p>
              */
             getRenderMode(): sap.tnt.RenderMode;
@@ -62,7 +251,7 @@ declare namespace sap {
              */
             getWidth(): sap.ui.core.CSSSize;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a number between 1 and 10 as a value. You can choose from 10 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. <b>Note:</b> ColorScheme 10 is available only in Fiori 3 theme. The default <code>colorScheme</code> is 7.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>7</code>.</p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getColorScheme">colorScheme</a>.</p><p>Specifies the fill and text color of the control. Accepts a number between 1 and 10 as a value. You can choose from 10 predefined background and text color combinations. The color schemes are non-semantic, you can select them according to your own preferences. <b>Note:</b> ColorScheme 10 is available only in Fiori 3 and Horizon themes. The default <code>colorScheme</code> is 7.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>7</code>.</p>
              * @param {number} iColorScheme <p>New value for property <code>colorScheme</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -80,7 +269,7 @@ declare namespace sap {
              */
             setIcon(sIcon?: sap.ui.core.URI): this;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Loose</code>.</p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.InfoLabel#methods/getRenderMode">renderMode</a>.</p><p>Specifies the type of the <code>InfoLabel</code> paddings - loose or narrow. <b>Note:</b> By default the padding is loose. It is recommended to use narrow (smaller) paddings for numeric texts. <b>Note:</b> In Horizon theme there is only one mode and setting this property will not have effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Loose</code>.</p>
              * @param {sap.tnt.RenderMode} sRenderMode <p>New value for property <code>renderMode</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
@@ -119,7 +308,7 @@ declare namespace sap {
          */
         export class NavigationList extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new NavigationList.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new <code>NavigationList</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
@@ -138,30 +327,51 @@ declare namespace sap {
             addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
             /**
              * <p>Adds some item to the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>.</p>
-             * @param {sap.tnt.NavigationListItem} oItem <p>The item to add; if empty, nothing is inserted</p>
+             * @param {sap.tnt.NavigationListItemBase} oItem <p>The item to add; if empty, nothing is inserted</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            addItem(oItem: sap.tnt.NavigationListItem): this;
+            addItem(oItem: sap.tnt.NavigationListItemBase): this;
             /**
-             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.NavigationList#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationList</code> itself.</p><p>Fired when an item is selected.</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.NavigationList#events/itemPress">itemPress</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationList</code> itself.</p><p>Fired when an item is pressed.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-             * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.NavigationList</code> itself</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            attachItemSelect(oData: any, fnFunction: any, oListener?: any): this;
+            attachItemPress(oData: any, fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.NavigationList#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationList</code> itself.</p><p>Fired when an item is selected.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.NavigationList</code> itself</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachItemSelect(oData: any, fnFunction: Function, oListener?: any): this;
             /**
              * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>.</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyItems(): this;
             /**
-             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.NavigationList#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-             * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.NavigationList#events/itemPress">itemPress</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachItemSelect(fnFunction: any, oListener?: any): this;
+            detachItemPress(fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.NavigationList#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.NavigationList</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachItemSelect(fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Fires event <a target="_self" href="api/sap.tnt.NavigationList#events/itemPress">itemPress</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns boolean <p>Whether or not to prevent the default action</p>
+             */
+            protected fireItemPress(mParameters?: any): boolean;
             /**
              * <p>Fires event <a target="_self" href="api/sap.tnt.NavigationList#events/itemSelect">itemSelect</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -172,12 +382,12 @@ declare namespace sap {
              * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.tnt.NavigationList#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @returns sap.ui.core.ID[] 
              */
-            getAriaDescribedBy(): sap.ui.core.ID[];
+            getAriaDescribedBy(): any;
             /**
              * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.tnt.NavigationList#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @returns sap.ui.core.ID[] 
              */
-            getAriaLabelledBy(): sap.ui.core.ID[];
+            getAriaLabelledBy(): any;
             /**
              * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationList#methods/getExpanded">expanded</a>.</p><p>Specifies if the control is in expanded or collapsed mode.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>expanded</code></p>
@@ -185,12 +395,12 @@ declare namespace sap {
             getExpanded(): boolean;
             /**
              * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>.</p><p>The items displayed in the list.</p>
-             * @returns sap.tnt.NavigationListItem[] 
+             * @returns sap.tnt.NavigationListItemBase[] 
              */
-            getItems(): sap.tnt.NavigationListItem[];
+            getItems(): any;
             /**
              * <p>Gets the currently selected <code>NavigationListItem</code>.</p>
-             * @returns sap.tnt.NavigationListItem|null <p>The selected item or <code>null</code> if nothing is selected</p>
+             * @returns sap.tnt.NavigationListItem | null <p>The selected item or <code>null</code> if nothing is selected</p>
              */
             getSelectedItem(): sap.tnt.NavigationListItem | null;
             /**
@@ -204,51 +414,51 @@ declare namespace sap {
              */
             getWidth(): sap.ui.core.CSSSize;
             /**
-             * <p>Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
-             * @param {sap.tnt.NavigationListItem} oItem <p>The item whose index is looked for</p>
+             * <p>Checks for the provided <code>sap.tnt.NavigationListItemBase</code> in the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
+             * @param {sap.tnt.NavigationListItemBase} oItem <p>The item whose index is looked for</p>
              * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
              */
-            indexOfItem(oItem: sap.tnt.NavigationListItem): number;
+            indexOfItem(oItem: sap.tnt.NavigationListItemBase): number;
             /**
              * <p>Inserts a item into the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>.</p>
-             * @param {sap.tnt.NavigationListItem} oItem <p>The item to insert; if empty, nothing is inserted</p>
+             * @param {sap.tnt.NavigationListItemBase} oItem <p>The item to insert; if empty, nothing is inserted</p>
              * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            insertItem(oItem: sap.tnt.NavigationListItem, iIndex: number): this;
+            insertItem(oItem: sap.tnt.NavigationListItemBase, iIndex: number): this;
             /**
              * <p>Removes all the controls in the association named <a target="_self" href="api/sap.tnt.NavigationList#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
              */
-            removeAllAriaDescribedBy(): sap.ui.core.ID[];
+            removeAllAriaDescribedBy(): any;
             /**
              * <p>Removes all the controls in the association named <a target="_self" href="api/sap.tnt.NavigationList#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
              */
-            removeAllAriaLabelledBy(): sap.ui.core.ID[];
+            removeAllAriaLabelledBy(): any;
             /**
              * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-             * @returns sap.tnt.NavigationListItem[] <p>An array of the removed elements (might be empty)</p>
+             * @returns sap.tnt.NavigationListItemBase[] <p>An array of the removed elements (might be empty)</p>
              */
-            removeAllItems(): sap.tnt.NavigationListItem[];
+            removeAllItems(): any;
             /**
              * <p>Removes an ariaDescribedBy from the association named <a target="_self" href="api/sap.tnt.NavigationList#methods/getAriaDescribedBy">ariaDescribedBy</a>.</p>
              * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaDescribedBy <p>The ariaDescribedBy to be removed or its index or ID</p>
-             * @returns sap.ui.core.ID|null <p>The removed ariaDescribedBy or <code>null</code></p>
+             * @returns sap.ui.core.ID | null <p>The removed ariaDescribedBy or <code>null</code></p>
              */
             removeAriaDescribedBy(vAriaDescribedBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
             /**
              * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.tnt.NavigationList#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
              * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-             * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
+             * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
              */
             removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
             /**
              * <p>Removes a item from the aggregation <a target="_self" href="api/sap.tnt.NavigationList#methods/getItems">items</a>.</p>
-             * @param {number | string | sap.tnt.NavigationListItem} vItem <p>The item to remove or its index or id</p>
-             * @returns sap.tnt.NavigationListItem|null <p>The removed item or <code>null</code></p>
+             * @param {number | string | sap.tnt.NavigationListItemBase} vItem <p>The item to remove or its index or id</p>
+             * @returns sap.tnt.NavigationListItemBase | null <p>The removed item or <code>null</code></p>
              */
-            removeItem(vItem: number | string | sap.tnt.NavigationListItem): sap.tnt.NavigationListItem | null;
+            removeItem(vItem: number | string | sap.tnt.NavigationListItemBase): sap.tnt.NavigationListItemBase | null;
             /**
              * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationList#methods/getExpanded">expanded</a>.</p><p>Specifies if the control is in expanded or collapsed mode.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
@@ -257,16 +467,16 @@ declare namespace sap {
             setExpanded(bExpanded?: boolean): this;
             /**
              * <p>Sets the association for selectedItem. Set <code>null</code> to deselect.</p>
-             * @param {string | sap.tnt.NavigationListItem} selectedItem <p>The control to be set as selected</p>
-             * @returns sap.tnt.NavigationList|null <p>The <code>selectedItem</code> association</p>
+             * @param {sap.ui.core.ID | sap.tnt.NavigationListItem} oItem <p>The control to be set as selected</p>
+             * @returns sap.tnt.NavigationList | null <p>The <code>selectedItem</code> association</p>
              */
-            setSelectedItem(selectedItem: string | sap.tnt.NavigationListItem): sap.tnt.NavigationList | null;
+            setSelectedItem(oItem: sap.ui.core.ID | sap.tnt.NavigationListItem): sap.tnt.NavigationList | null;
             /**
              * <p>Sets the selected item based on a key.</p>
-             * @param {string} selectedKey <p>The key of the item to be selected</p>
+             * @param {string} sSelectedKey <p>The key of the item to be selected</p>
              * @returns this <p>this pointer for chaining</p>
              */
-            setSelectedKey(selectedKey: string): this;
+            setSelectedKey(sSelectedKey: string): this;
             /**
              * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationList#methods/getWidth">width</a>.</p><p>Specifies the width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
@@ -275,9 +485,60 @@ declare namespace sap {
             setWidth(sWidth: sap.ui.core.CSSSize): this;
         }
         /**
-         * <p>The NavigationListItem control represents an action, which can be selected by the user. It can provide sub items.</p>
+         * <p>The NavigationListGroup represents a group of navigation actions, which can be selected by the user.</p>
          */
-        export class NavigationListItem extends sap.ui.core.Item {
+        export class NavigationListGroup extends sap.tnt.NavigationListItemBase {
+            /**
+             * <p>Constructor for a new NavigationListGroup.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+             * @param {any} mSettings <p>Initial settings for the new control</p>
+             */
+            constructor(sId?: string, mSettings?: any);
+            /**
+             * <p>Adds some item to the aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>.</p>
+             * @param {sap.tnt.NavigationListItem} oItem <p>The item to add; if empty, nothing is inserted</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            addItem(oItem: sap.tnt.NavigationListItem): this;
+            /**
+             * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>.</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            destroyItems(): this;
+            /**
+             * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>.</p><p>The sub items.</p>
+             * @returns sap.tnt.NavigationListItem[] 
+             */
+            getItems(): any;
+            /**
+             * <p>Checks for the provided <code>sap.tnt.NavigationListItem</code> in the aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>. and returns its index if found or -1 otherwise.</p>
+             * @param {sap.tnt.NavigationListItem} oItem <p>The item whose index is looked for</p>
+             * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+             */
+            indexOfItem(oItem: sap.tnt.NavigationListItem): number;
+            /**
+             * <p>Inserts a item into the aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>.</p>
+             * @param {sap.tnt.NavigationListItem} oItem <p>The item to insert; if empty, nothing is inserted</p>
+             * @param {number} iIndex <p>The <code>0</code>-based index the item should be inserted at; for a negative value of <code>iIndex</code>, the item is inserted at position 0; for a value greater than the current size of the aggregation, the item is inserted at the last position</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            insertItem(oItem: sap.tnt.NavigationListItem, iIndex: number): this;
+            /**
+             * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+             * @returns sap.tnt.NavigationListItem[] <p>An array of the removed elements (might be empty)</p>
+             */
+            removeAllItems(): any;
+            /**
+             * <p>Removes a item from the aggregation <a target="_self" href="api/sap.tnt.NavigationListGroup#methods/getItems">items</a>.</p>
+             * @param {number | string | sap.tnt.NavigationListItem} vItem <p>The item to remove or its index or id</p>
+             * @returns sap.tnt.NavigationListItem | null <p>The removed item or <code>null</code></p>
+             */
+            removeItem(vItem: number | string | sap.tnt.NavigationListItem): sap.tnt.NavigationListItem | null;
+        }
+        /**
+         * <p>The NavigationListItem represents a navigation action, which can be selected by the user. It can provide sub items.</p>
+         */
+        export class NavigationListItem extends sap.tnt.NavigationListItemBase {
             /**
              * <p>Constructor for a new NavigationListItem.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
@@ -293,11 +554,11 @@ declare namespace sap {
             /**
              * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.NavigationListItem#events/select">select</a> event of this <code>sap.tnt.NavigationListItem</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationListItem</code> itself.</p><p>Fired when this item is selected.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-             * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.NavigationListItem</code> itself</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            attachSelect(oData: any, fnFunction: any, oListener?: any): this;
+            attachSelect(oData: any, fnFunction: Function, oListener?: any): this;
             /**
              * <p>Destroys all the items in the aggregation <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getItems">items</a>.</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -305,11 +566,11 @@ declare namespace sap {
             destroyItems(): this;
             /**
              * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.NavigationListItem#events/select">select</a> event of this <code>sap.tnt.NavigationListItem</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-             * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachSelect(fnFunction: any, oListener?: any): this;
+            detachSelect(fnFunction: Function, oListener?: any): this;
             /**
              * <p>Fires event <a target="_self" href="api/sap.tnt.NavigationListItem#events/select">select</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -317,22 +578,22 @@ declare namespace sap {
              */
             protected fireSelect(mParameters?: any): this;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>Default value is <code>true</code>.</p>
-             * @returns boolean <p>Value of property <code>expanded</code></p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getAriaHasPopup">ariaHasPopup</a>.</p><p>Specifies the value of the <code>aria-haspopup</code> attribute</p><p>Default value is <code>None</code>.</p>
+             * @returns sap.ui.core.aria.HasPopup <p>Value of property <code>ariaHasPopup</code></p>
              */
-            getExpanded(): boolean;
+            getAriaHasPopup(): sap.ui.core.aria.HasPopup;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>Default value is <code>true</code>.</p>
-             * @returns boolean <p>Value of property <code>hasExpander</code></p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getDesign">design</a>.</p><p>Specifies if the item has a special design. <b>Note:</b> If the <code>design</code> property is not set to <code>NavigationListItemDesign.Default</code>, sub-items cannot be added.</p><p>Default value is <code>Default</code>.</p>
+             * @returns sap.tnt.NavigationListItemDesign <p>Value of property <code>design</code></p>
              */
-            getHasExpander(): boolean;
+            getDesign(): sap.tnt.NavigationListItemDesign;
             /**
              * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getHref">href</a>.</p><p>Defines the link target URI. Supports standard hyperlink behavior. If a JavaScript action should be triggered, this should not be set, but instead an event handler for the <code>select</code> event should be registered.</p>
              * @returns sap.ui.core.URI <p>Value of property <code>href</code></p>
              */
             getHref(): sap.ui.core.URI;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>Default value is <code>empty string</code>.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p><b>Note:</b> By design, icons on second-level (child) navigation items are not rendered.</p><p>Default value is <code>empty string</code>.</p>
              * @returns sap.ui.core.URI <p>Value of property <code>icon</code></p>
              */
             getIcon(): sap.ui.core.URI;
@@ -340,12 +601,22 @@ declare namespace sap {
              * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getItems">items</a>.</p><p>The sub items.</p>
              * @returns sap.tnt.NavigationListItem[] 
              */
-            getItems(): sap.tnt.NavigationListItem[];
+            getItems(): any;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getTarget">target</a>.</p><p>Specifies the browsing context where the linked content will open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered. This property is only used when the <code>href</code> property is set.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getSelectable">selectable</a>.</p><p>Specifies if the item can be selected. By default all items are selectable.</p><p>When a parent item's <code>selectable</code> property is set to <code>false</code>, selecting it will only expand or collapse its sub-items.</p><p>To improve user experience do not mix selectable parent items with not selectable parent items within a single side navigation.</p><p><b>Guidelines:</b> <ul> <li>Items that have a set href and target set to <code>_blank</code> should not be selectable.</li> <li>Items that trigger actions (with design "Action") should not be selectable.</li> </ul></p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>selectable</code></p>
+             */
+            getSelectable(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getTarget">target</a>.</p><p>Specifies the browsing context where the linked content will open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered.</p><p><b>Guidelines:</b> <ul> <li>Use only when <code>href</code> property is set.</li> <li>Items that have a set href and target set to <code>_blank</code> should not have children</li> <li>Items that have a set href, should not use target for internal navigation/li> </ul></p>
              * @returns string <p>Value of property <code>target</code></p>
              */
             getTarget(): string;
+            /**
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>visible</code></p>
+             */
+            getVisible(): boolean;
             /**
              * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>visible</code></p>
@@ -368,25 +639,25 @@ declare namespace sap {
              * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
              * @returns sap.tnt.NavigationListItem[] <p>An array of the removed elements (might be empty)</p>
              */
-            removeAllItems(): sap.tnt.NavigationListItem[];
+            removeAllItems(): any;
             /**
              * <p>Removes a item from the aggregation <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getItems">items</a>.</p>
              * @param {number | string | sap.tnt.NavigationListItem} vItem <p>The item to remove or its index or id</p>
-             * @returns sap.tnt.NavigationListItem|null <p>The removed item or <code>null</code></p>
+             * @returns sap.tnt.NavigationListItem | null <p>The removed item or <code>null</code></p>
              */
             removeItem(vItem: number | string | sap.tnt.NavigationListItem): sap.tnt.NavigationListItem | null;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-             * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getAriaHasPopup">ariaHasPopup</a>.</p><p>Specifies the value of the <code>aria-haspopup</code> attribute</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+             * @param {sap.ui.core.aria.HasPopup} sAriaHasPopup <p>New value for property <code>ariaHasPopup</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setExpanded(bExpanded?: boolean): this;
+            setAriaHasPopup(sAriaHasPopup?: sap.ui.core.aria.HasPopup): this;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item has an expander.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-             * @param {boolean} bHasExpander <p>New value for property <code>hasExpander</code></p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getDesign">design</a>.</p><p>Specifies if the item has a special design. <b>Note:</b> If the <code>design</code> property is not set to <code>NavigationListItemDesign.Default</code>, sub-items cannot be added.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+             * @param {sap.tnt.NavigationListItemDesign} sDesign <p>New value for property <code>design</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHasExpander(bHasExpander?: boolean): this;
+            setDesign(sDesign?: sap.tnt.NavigationListItemDesign): this;
             /**
              * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getHref">href</a>.</p><p>Defines the link target URI. Supports standard hyperlink behavior. If a JavaScript action should be triggered, this should not be set, but instead an event handler for the <code>select</code> event should be registered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {sap.ui.core.URI} sHref <p>New value for property <code>href</code></p>
@@ -394,17 +665,29 @@ declare namespace sap {
              */
             setHref(sHref?: sap.ui.core.URI): this;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getIcon">icon</a>.</p><p>Specifies the icon for the item.</p><p><b>Note:</b> By design, icons on second-level (child) navigation items are not rendered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
              * @param {sap.ui.core.URI} sIcon <p>New value for property <code>icon</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setIcon(sIcon?: sap.ui.core.URI): this;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getTarget">target</a>.</p><p>Specifies the browsing context where the linked content will open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered. This property is only used when the <code>href</code> property is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getSelectable">selectable</a>.</p><p>Specifies if the item can be selected. By default all items are selectable.</p><p>When a parent item's <code>selectable</code> property is set to <code>false</code>, selecting it will only expand or collapse its sub-items.</p><p>To improve user experience do not mix selectable parent items with not selectable parent items within a single side navigation.</p><p><b>Guidelines:</b> <ul> <li>Items that have a set href and target set to <code>_blank</code> should not be selectable.</li> <li>Items that trigger actions (with design "Action") should not be selectable.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bSelectable <p>New value for property <code>selectable</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setSelectable(bSelectable?: boolean): this;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getTarget">target</a>.</p><p>Specifies the browsing context where the linked content will open.</p><p>Options are the standard values for window.open() supported by browsers: <code>_self</code>, <code>_top</code>, <code>_blank</code>, <code>_parent</code>, <code>_search</code>. Alternatively, a frame name can be entered.</p><p><b>Guidelines:</b> <ul> <li>Use only when <code>href</code> property is set.</li> <li>Items that have a set href and target set to <code>_blank</code> should not have children</li> <li>Items that have a set href, should not use target for internal navigation/li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sTarget <p>New value for property <code>target</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setTarget(sTarget?: string): this;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setVisible(bVisible?: boolean): this;
             /**
              * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItem#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
              * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
@@ -413,7 +696,90 @@ declare namespace sap {
             setVisible(bVisible?: boolean): this;
         }
         /**
-         * <p><p>Predefined types of <code>InfoLabel</code></p></p>
+         * <p>The <code>NavigationListItemBase</code> class represents a base class for the items that are accepted by the <code>NavigationList</code> control.</p>
+         */
+        export abstract class NavigationListItemBase extends sap.ui.core.Item {
+            /**
+             * <p>Constructor for a new <code>NavigationListItemBase</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+             * @param {any} mSettings <p>Initial settings for the new control</p>
+             */
+            constructor(sId?: string, mSettings?: any);
+            /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.NavigationListItemBase#events/press">press</a> event of this <code>sap.tnt.NavigationListItemBase</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.NavigationListItemBase</code> itself.</p><p>Fired when an item is pressed.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.NavigationListItemBase</code> itself</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachPress(oData: any, fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.NavigationListItemBase#events/press">press</a> event of this <code>sap.tnt.NavigationListItemBase</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachPress(fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Fires event <a target="_self" href="api/sap.tnt.NavigationListItemBase#events/press">press</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns boolean <p>Whether or not to prevent the default action</p>
+             */
+            protected firePress(mParameters?: any): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>expanded</code></p>
+             */
+            getExpanded(): boolean;
+            /**
+             * <p>Returns the DOM Element that should get the focus.</p>
+             * @returns HTMLElement <p>Returns the DOM Element that should get the focus</p>
+             */
+            protected getFocusDomRef(): HTMLElement;
+            /**
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item is allowed to be expanded or collapsed by the user.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>hasExpander</code></p>
+             */
+            getHasExpander(): boolean;
+            /**
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>Default value is <code>true</code>.</p>
+             * @returns boolean <p>Value of property <code>visible</code></p>
+             */
+            getVisible(): boolean;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getExpanded">expanded</a>.</p><p>Specifies if the item is expanded.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setExpanded(bExpanded?: boolean): this;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getHasExpander">hasExpander</a>.</p><p>Specifies if the item is allowed to be expanded or collapsed by the user.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bHasExpander <p>New value for property <code>hasExpander</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setHasExpander(bHasExpander?: boolean): this;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.NavigationListItemBase#methods/getVisible">visible</a>.</p><p>Specifies if the item should be shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+             * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setVisible(bVisible?: boolean): this;
+        }
+        /**
+         * <p><p>Available types for navigation list item.</p><p>This enum is part of the 'sap/tnt/library' module export and must be accessed by the property 'NavigationListItemDesign'.</p></p>
+         */
+        export enum NavigationListItemDesign {
+            /**
+             * <p>Navigation list item type which provides access to frequent functionality.</p>
+             */
+            Action = "Action",
+            /**
+             * <p>Navigation list item type which enables navigation or contains navigation child items, or both.</p>
+             */
+            Default = "Default",
+        }
+        /**
+         * <p><p>Predefined types of <code>InfoLabel</code></p><p>This enum is part of the 'sap/tnt/library' module export and must be accessed by the property 'RenderMode'.</p></p>
          */
         export enum RenderMode {
             /**
@@ -426,23 +792,31 @@ declare namespace sap {
             Narrow = "Narrow",
         }
         /**
-         * <p>The SideNavigation control is a container, which consists of flexible and fixed parts on top of each other. </p><h4>Responsive Behavior</h4><p> <ul> <li>The flexible part adapts its size to the fixed one.</li> <li>The flexible part has a scrollbar when the content is larger than the available space.</li> </ul> <b>Note:</b> In order for the SideNavigation to stretch properly, its parent layout control should only be the sap.tnt.ToolPage.</p>
+         * <p>The <code>SideNavigation</code> control is a container, which consists of flexible and fixed parts on top of each other. </p><h4>Responsive Behavior</h4><p> <ul> <li>The flexible part adapts its size to the fixed one.</li> <li>The flexible part has a scrollbar when the content is larger than the available space.</li> </ul> <b>Note:</b> In order for the <code>SideNavigation</code> to stretch properly, its parent layout control should only be the <code>sap.tnt.ToolPage</code>. <b>Note:</b> If used outside the intended parent layout <code>sap.tnt.ToolPage</code>, for example inside a <code>sap.m.ResponsivePopover</code> to achieve a Side Navigation Overlay Mode, the application developer should set the <code>design</code> property to <code>Plain</code>.</p>
          */
         export class SideNavigation extends sap.ui.core.Control {
             /**
-             * <p>Constructor for a new SideNavigation.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+             * <p>Constructor for a new <code>SideNavigation</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
              * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
              * @param {any} mSettings <p>Initial settings for the new control</p>
              */
             constructor(sId?: string, mSettings?: any);
             /**
-             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.SideNavigation#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.SideNavigation</code> itself.</p><p>Fired when an item is selected.</p>
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.SideNavigation#events/itemPress">itemPress</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.SideNavigation</code> itself.</p><p>Fired when an item is pressed.</p>
              * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-             * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
              * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.SideNavigation</code> itself</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            attachItemSelect(oData: any, fnFunction: any, oListener?: any): this;
+            attachItemPress(oData: any, fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.tnt.SideNavigation#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.tnt.SideNavigation</code> itself.</p><p>Fired when an item is selected.</p>
+             * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+             * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+             * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.tnt.SideNavigation</code> itself</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            attachItemSelect(oData: any, fnFunction: Function, oListener?: any): this;
             /**
              * <p>Binds aggregation <a target="_self" href="api/sap.tnt.SideNavigation#methods/getItem">item</a> to model data.</p><p>See <a target="_self" href="api/sap.ui.base.ManagedObject#methods/bindAggregation">ManagedObject.bindAggregation</a> for a detailed description of the possible properties of <code>oBindingInfo</code>.</p>
              * @param {sap.ui.base.ManagedObject.AggregationBindingInfo} oBindingInfo <p>The binding information</p>
@@ -455,22 +829,30 @@ declare namespace sap {
              */
             destroyFixedItem(): this;
             /**
-             * <p>Destroys the footer in the aggregation <a target="_self" href="api/sap.tnt.SideNavigation#methods/getFooter">footer</a>.</p>
-             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-             */
-            destroyFooter(): this;
-            /**
              * <p>Destroys the item in the aggregation <a target="_self" href="api/sap.tnt.SideNavigation#methods/getItem">item</a>.</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             destroyItem(): this;
             /**
-             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.SideNavigation#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-             * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.SideNavigation#events/itemPress">itemPress</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
              * @param {any} oListener <p>Context object on which the given function had to be called</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            detachItemSelect(fnFunction: any, oListener?: any): this;
+            detachItemPress(fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.tnt.SideNavigation#events/itemSelect">itemSelect</a> event of this <code>sap.tnt.SideNavigation</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+             * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+             * @param {any} oListener <p>Context object on which the given function had to be called</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            detachItemSelect(fnFunction: Function, oListener?: any): this;
+            /**
+             * <p>Fires event <a target="_self" href="api/sap.tnt.SideNavigation#events/itemPress">itemPress</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
+             * @param {any} mParameters <p>Parameters to pass along with the event</p>
+             * @returns boolean <p>Whether or not to prevent the default action</p>
+             */
+            protected fireItemPress(mParameters?: any): boolean;
             /**
              * <p>Fires event <a target="_self" href="api/sap.tnt.SideNavigation#events/itemSelect">itemSelect</a> to attached listeners.</p>
              * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -478,10 +860,15 @@ declare namespace sap {
              */
             protected fireItemSelect(mParameters?: any): this;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getAriaLabel">ariaLabel</a>.</p><p>Specifies an optional aria-label that can be used by the screen readers.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getAriaLabel">ariaLabel</a>.</p><p>Specifies an optional <code>aria-label</code> that can be used by the screen readers.</p>
              * @returns string <p>Value of property <code>ariaLabel</code></p>
              */
             getAriaLabel(): string;
+            /**
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getDesign">design</a>.</p><p>Specifies whether the control should have own container styling, such as a box-shadow and border, or not. <b>Note:</b> This property has to be set to <code>Plain</code> when the control is used inside a <code>sap.m.ResponsivePopover</code> to achieve a Side Navigation Overlay Mode.</p><p>Default value is <code>Decorated</code>.</p>
+             * @returns sap.tnt.SideNavigationDesign <p>Value of property <code>design</code></p>
+             */
+            getDesign(): sap.tnt.SideNavigationDesign;
             /**
              * <p>Gets current value of property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getExpanded">expanded</a>.</p><p>Specifies if the control is expanded.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>expanded</code></p>
@@ -493,37 +880,43 @@ declare namespace sap {
              */
             getFixedItem(): sap.tnt.NavigationList;
             /**
-             * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.SideNavigation#methods/getFooter">footer</a>.</p><p>Defines the content inside the footer.</p>
-             * @returns sap.tnt.NavigationList 
-             */
-            getFooter(): sap.tnt.NavigationList;
-            /**
              * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.SideNavigation#methods/getItem">item</a>.</p><p>Defines the content inside the flexible part.</p>
              * @returns sap.tnt.NavigationList 
              */
             getItem(): sap.tnt.NavigationList;
             /**
              * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.tnt.SideNavigation#methods/getSelectedItem">selectedItem</a>, or <code>null</code>.</p>
-             * @returns sap.ui.core.ID 
+             * @returns sap.ui.core.ID | null 
              */
-            getSelectedItem(): sap.ui.core.ID;
+            getSelectedItem(): sap.ui.core.ID | null;
             /**
              * <p>Gets current value of property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getSelectedKey">selectedKey</a>.</p><p>Specifies the currently selected key.</p>
              * @returns string <p>Value of property <code>selectedKey</code></p>
              */
             getSelectedKey(): string;
             /**
-             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getAriaLabel">ariaLabel</a>.</p><p>Specifies an optional aria-label that can be used by the screen readers.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getWidth">width</a>.</p><p>Specifies the width of the control.</p><p><Note:> Depending on the theme, there is a minimum width set (16rem for Horizon theme). This property can be used to set a bigger width.</p>
+             * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
+             */
+            getWidth(): sap.ui.core.CSSSize;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getAriaLabel">ariaLabel</a>.</p><p>Specifies an optional <code>aria-label</code> that can be used by the screen readers.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
              * @param {string} sAriaLabel <p>New value for property <code>ariaLabel</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setAriaLabel(sAriaLabel?: string): this;
             /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getDesign">design</a>.</p><p>Specifies whether the control should have own container styling, such as a box-shadow and border, or not. <b>Note:</b> This property has to be set to <code>Plain</code> when the control is used inside a <code>sap.m.ResponsivePopover</code> to achieve a Side Navigation Overlay Mode.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Decorated</code>.</p>
+             * @param {sap.tnt.SideNavigationDesign} sDesign <p>New value for property <code>design</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setDesign(sDesign?: sap.tnt.SideNavigationDesign): this;
+            /**
              * <p>Sets if the control is in expanded or collapsed mode.</p>
-             * @param {boolean} isExpanded <p>Indication if the SideNavigation is expanded.</p>
+             * @param {boolean} bExpanded <p>Indication if the SideNavigation is expanded.</p>
              * @returns this <p>this SideNavigation reference for chaining.</p>
              */
-            setExpanded(isExpanded: boolean): this;
+            setExpanded(bExpanded: boolean): this;
             /**
              * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.SideNavigation#methods/getFixedItem">fixedItem</a>.</p>
              * @param {sap.tnt.NavigationList} oFixedItem <p>The fixedItem to set</p>
@@ -531,29 +924,29 @@ declare namespace sap {
              */
             setFixedItem(oFixedItem: sap.tnt.NavigationList): this;
             /**
-             * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.SideNavigation#methods/getFooter">footer</a>.</p>
-             * @param {sap.tnt.NavigationList} oFooter <p>The footer to set</p>
-             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-             */
-            setFooter(oFooter: sap.tnt.NavigationList): this;
-            /**
              * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.SideNavigation#methods/getItem">item</a>.</p>
              * @param {sap.tnt.NavigationList} oItem <p>The item to set</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
             setItem(oItem: sap.tnt.NavigationList): this;
             /**
-             * <p>Sets the association for selectedItem</p>
-             * @param {string | sap.tnt.NavigationListItem} selectedItem <p>The control to be set as selected</p>
-             * @returns sap.tnt.SideNavigation|null <p>The <code>selectedItem</code> association</p>
+             * <p>Sets the association for <code>selectedItem</code>.</p>
+             * @param {sap.ui.core.ID | sap.tnt.NavigationListItem} vSelectedItem <p>The control to be set as selected</p>
+             * @returns sap.tnt.SideNavigation | null <p>The <code>selectedItem</code> association</p>
              */
-            setSelectedItem(selectedItem: string | sap.tnt.NavigationListItem): sap.tnt.SideNavigation | null;
+            setSelectedItem(vSelectedItem: sap.ui.core.ID | sap.tnt.NavigationListItem): sap.tnt.SideNavigation | null;
             /**
              * <p>Sets the selected item based on a key.</p>
-             * @param {string} selectedKey <p>The key of the item to be selected</p>
+             * @param {string} sSelectedKey <p>The key of the item to be selected</p>
              * @returns this <p>this pointer for chaining</p>
              */
-            setSelectedKey(selectedKey: string): this;
+            setSelectedKey(sSelectedKey: string): this;
+            /**
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.SideNavigation#methods/getWidth">width</a>.</p><p>Specifies the width of the control.</p><p><Note:> Depending on the theme, there is a minimum width set (16rem for Horizon theme). This property can be used to set a bigger width.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+             * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setWidth(sWidth: sap.ui.core.CSSSize): this;
             /**
              * <p>Unbinds aggregation <a target="_self" href="api/sap.tnt.SideNavigation#methods/getItem">item</a> from model data.</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -561,7 +954,20 @@ declare namespace sap {
             unbindItem(): this;
         }
         /**
-         * <p>The ToolHeader control is a horizontal container that is most commonly used to display buttons, labels, and other various input controls. </p><h3>Overview</h3><p> The ToolHeader control is based on <a target="_self" href="api/sap.m.OverflowToolbar">sap.m.OverflowToolbar</a>. It contains clearly structured menus of commands that are available across the various apps within the same tool layout. </p><h3>Usage</h3><p> <ul> <li>If an app implements side navigation in addition to the tool header menu, the menu icon must be the first item on the left-hand side of the tool header.</li> <li>The app menu and the side navigation must not have any dependencies and must work independently.</li> </ul> </p><h4>Fiori 3 theme specifics</h4><p> In Fiori 3 Default theme the ToolHeader is with dark design unlike most of the other controls. This defines the usage of limited controls inside it, which will result in good design combination.<br/> The ToolHeader stylizes the contained controls with the Shell color parameters, to match the dark design requirement. However, that's not a dark theme.<br/><br/> Only the following controls are supported: <div> <table> <tr> <th>Control name</th> <th>Supported</th> <th>Not supported</th> </tr> <tr> <td>sap.m.Text</td> <td>Single line text, text truncation</td> <td>Wrapping</td> </tr> <tr> <td>sap.m.Title</td> <td>Single line text, text truncation. Consider using title headings of H4, H5, H6.</td> <td>Wrapping</td> </tr> <tr> <td>sap.m.Label</td> <td>Single line text, text truncation</td> <td>Wrapping</td> </tr> <tr> <td>sap.m.ObjectStatus</td> <td>Labels, semantic colors</td> <td>Indication colors</td> </tr> <tr> <td>sap.ui.core.Icon</td> <td>sap.ui.core.IconColor enumeration for both icons and backgrounds.</td> <td>Interaction state colors</td> </tr> <tr> <td>sap.m.Button</td> <td>Buttons in their Back, Default, Transparent and Up types. All four types are over-styled to look as transparent buttons.</td> <td>-</td> </tr> <tr> <td>sap.m.MenuButton</td> <td>Emphasized button type. Should be used for triggering Mega menu. If there is no Mega menu, use Title (H6) instead. </br> Default (over-styled as Transparent) and Transparent types are used for standard menu representation.</td> <td>-</td> </tr> <tr> <td>sap.m.Select</td> <td>Default and IconOnly types. IconOnly looks like a button while Default looks is like an input.</td> <td>Semantic states</td> </tr> <tr> <td>sap.m.SearchField</td> <td>Support for the regular state of the control.</td> <td>-</td> </tr> <tr> <td>sap.m.IconTabHeader</td> <td>All background design variations (all are transparent). Text tab filters or text and count tab filters in Inline mode only.</td> <td>Semantic colors, icons and separators.</td> </tr> <tr> <td>sap.f.Avatar/sap.m.Avatar</td> <td>Support for default (Accent 6) color. Image avatar.</td> <td>-</td> </tr> <tr> <td>sap.m.Image</td> <td>Primarily used for displaying the company logo.</td> <td>Interaction states</td> </tr> </table> </div></p>
+         * <p><p>Available options for the Side Navigation design.</p><p>This enum is part of the 'sap/tnt/library' module export and must be accessed by the property 'SideNavigationDesign'.</p></p>
+         */
+        export enum SideNavigationDesign {
+            /**
+             * <p>Side Navigation has a shadow and border.</p>
+             */
+            Decorated = "Decorated",
+            /**
+             * <p>Side Navigation without any shadow or border.</p>
+             */
+            Plain = "Plain",
+        }
+        /**
+         * <p>The ToolHeader control is a horizontal container that is most commonly used to display buttons, texts, and other various input controls. </p><h3>Overview</h3><p> The ToolHeader control is based on <a target="_self" href="api/sap.m.OverflowToolbar">sap.m.OverflowToolbar</a>. It contains clearly structured menus of commands that are available across the various apps within the same tool layout. </p><h3>Usage</h3><p> <ul> <li>This control is specialized for administrative applications. For other types of applications use: <a target="_self" href="api/sap.m.Shell">sap.m.Shell</a></li> <li>If an app implements side navigation in addition to the tool header menu, the menu icon must be the first item on the left-hand side of the tool header.</li> <li>The app menu and the side navigation must not have any dependencies and must work independently.</li> <li>Not recommended: In accordance with the UX Consistency initiative, it is recommended to use the seamlessly integrated UI5 Web Components' ui5-shellbar, as demonstrated in this <a href="https://sap-samples.github.io/uxc-integration/?sap-ui-theme=sap_horizon">UXC integration sample app</a> with <a href="https://github.com/SAP-samples/uxc-integration">UXC integration sample source code.</a></li> </ul> </p><h4>Horizon theme specifics</h4><p> Only the following controls are supported: sap.m.Button, sap.m.Image, sap.m.Title, sap.m.Text, sap.m.SearchField, sap.m.Avatar. </p><h4>Fiori 3 theme specifics</h4><p> In Fiori 3 Default theme the ToolHeader is with dark design unlike most of the other controls. This defines the usage of limited controls inside it, which will result in good design combination.<br/> The ToolHeader stylizes the contained controls with the Shell color parameters, to match the dark design requirement. However, that's not a dark theme.<br/><br/> Only the following controls are supported: <div> <table> <tr> <th>Control name</th> <th>Supported</th> <th>Not supported</th> </tr> <tr> <td>sap.m.Text</td> <td>Single line text, text truncation</td> <td>Wrapping</td> </tr> <tr> <td>sap.m.Title</td> <td>Single line text, text truncation. Consider using title headings of H4, H5, H6.</td> <td>Wrapping</td> </tr> <tr> <td>sap.m.Label</td> <td>Single line text, text truncation</td> <td>Wrapping</td> </tr> <tr> <td>sap.m.ObjectStatus</td> <td>Labels, semantic colors</td> <td>Indication colors</td> </tr> <tr> <td>sap.ui.core.Icon</td> <td>sap.ui.core.IconColor enumeration for both icons and backgrounds.</td> <td>Interaction state colors</td> </tr> <tr> <td>sap.m.Button</td> <td>Buttons in their Back, Default, Transparent and Up types. All four types are over-styled to look as transparent buttons.</td> <td>-</td> </tr> <tr> <td>sap.m.MenuButton</td> <td>Emphasized button type. Should be used for triggering Mega menu. If there is no Mega menu, use Title (H6) instead. </br> Default (over-styled as Transparent) and Transparent types are used for standard menu representation.</td> <td>-</td> </tr> <tr> <td>sap.m.Select</td> <td>Default and IconOnly types. IconOnly looks like a button while Default looks is like an input.</td> <td>Semantic states</td> </tr> <tr> <td>sap.m.SearchField</td> <td>Support for the regular state of the control.</td> <td>-</td> </tr> <tr> <td>sap.m.IconTabHeader</td> <td>All background design variations (all are transparent). Text tab filters or text and count tab filters in Inline mode only.</td> <td>Semantic colors, icons and separators.</td> </tr> <tr> <td>sap.f.Avatar/sap.m.Avatar</td> <td>Support for default (Accent 6) color. Image avatar.</td> <td>-</td> </tr> <tr> <td>sap.m.Image</td> <td>Primarily used for displaying the company logo.</td> <td>Interaction states</td> </tr> </table> </div></p>
          */
         export class ToolHeader extends sap.m.OverflowToolbar {
             /**
@@ -619,30 +1025,35 @@ declare namespace sap {
              */
             destroySubHeader(): this;
             /**
-             * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getHeader">header</a>.</p><p>The control to appear in the header area.</p>
-             * @returns sap.tnt.IToolHeader 
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.ToolPage#methods/getContentBackgroundDesign">contentBackgroundDesign</a>.</p><p>Specifies the content background design.</p><p>Default value is <code>Standard</code>.</p>
+             * @returns sap.m.PageBackgroundDesign <p>Value of property <code>contentBackgroundDesign</code></p>
              */
-            getHeader(): sap.tnt.IToolHeader;
+            getContentBackgroundDesign(): sap.m.PageBackgroundDesign;
+            /**
+             * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getHeader">header</a>.</p><p>The control to appear in the header area.</p>
+             * @returns sap.ui.core.Control 
+             */
+            getHeader(): sap.ui.core.Control;
             /**
              * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getMainContents">mainContents</a>.</p><p>The content section.</p>
              * @returns sap.ui.core.Control[] 
              */
-            getMainContents(): sap.ui.core.Control[];
+            getMainContents(): any;
             /**
              * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getSideContent">sideContent</a>.</p><p>The side menu of the layout.</p>
              * @returns sap.tnt.SideNavigation 
              */
             getSideContent(): sap.tnt.SideNavigation;
             /**
-             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.ToolPage#methods/getSideExpanded">sideExpanded</a>.</p><p>Indicates if the side menu is expanded. Overrides the <code>expanded</code> property of the <code>sideContent</code> aggregation.</p><p>Default value is <code>true</code>.</p>
+             * <p>Gets current value of property <a target="_self" href="api/sap.tnt.ToolPage#methods/getSideExpanded">sideExpanded</a>.</p><p>Indicates if the side menu is expanded. Overrides the <code>expanded</code> property of the <code>sideContent</code> aggregation. *Note:** By default, on mobile phone devices and small screens, the side content is collapsed to provide more space for the main content. On larger screens, excluding mobile phone devices, it is expanded. This behavior can be overridden by setting this property.</p><p>Default value is <code>true</code>.</p>
              * @returns boolean <p>Value of property <code>sideExpanded</code></p>
              */
             getSideExpanded(): boolean;
             /**
              * <p>Gets content of aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getSubHeader">subHeader</a>.</p><p>The control to appear in the subheader area.</p>
-             * @returns sap.tnt.IToolHeader 
+             * @returns sap.ui.core.Control 
              */
-            getSubHeader(): sap.tnt.IToolHeader;
+            getSubHeader(): sap.ui.core.Control;
             /**
              * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getMainContents">mainContents</a>. and returns its index if found or -1 otherwise.</p>
              * @param {sap.ui.core.Control} oMainContent <p>The mainContent whose index is looked for</p>
@@ -660,19 +1071,25 @@ declare namespace sap {
              * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getMainContents">mainContents</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
              * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
              */
-            removeAllMainContents(): sap.ui.core.Control[];
+            removeAllMainContents(): any;
             /**
              * <p>Removes a mainContent from the aggregation <a target="_self" href="api/sap.tnt.ToolPage#methods/getMainContents">mainContents</a>.</p>
              * @param {number | string | sap.ui.core.Control} vMainContent <p>The mainContent to remove or its index or id</p>
-             * @returns sap.ui.core.Control|null <p>The removed mainContent or <code>null</code></p>
+             * @returns sap.ui.core.Control | null <p>The removed mainContent or <code>null</code></p>
              */
             removeMainContent(vMainContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
             /**
-             * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.ToolPage#methods/getHeader">header</a>.</p>
-             * @param {sap.tnt.IToolHeader} oHeader <p>The header to set</p>
+             * <p>Sets a new value for property <a target="_self" href="api/sap.tnt.ToolPage#methods/getContentBackgroundDesign">contentBackgroundDesign</a>.</p><p>Specifies the content background design.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Standard</code>.</p>
+             * @param {sap.m.PageBackgroundDesign} sContentBackgroundDesign <p>New value for property <code>contentBackgroundDesign</code></p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setHeader(oHeader: sap.tnt.IToolHeader): this;
+            setContentBackgroundDesign(sContentBackgroundDesign?: sap.m.PageBackgroundDesign): this;
+            /**
+             * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.ToolPage#methods/getHeader">header</a>.</p>
+             * @param {sap.ui.core.Control} oHeader <p>The header to set</p>
+             * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+             */
+            setHeader(oHeader: sap.ui.core.Control): this;
             /**
              * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.ToolPage#methods/getSideContent">sideContent</a>.</p>
              * @param {sap.tnt.SideNavigation} oSideContent <p>The sideContent to set</p>
@@ -687,10 +1104,10 @@ declare namespace sap {
             setSideExpanded(bSideExpanded: boolean): this;
             /**
              * <p>Sets the aggregated <a target="_self" href="api/sap.tnt.ToolPage#methods/getSubHeader">subHeader</a>.</p>
-             * @param {sap.tnt.IToolHeader} oSubHeader <p>The subHeader to set</p>
+             * @param {sap.ui.core.Control} oSubHeader <p>The subHeader to set</p>
              * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
              */
-            setSubHeader(oSubHeader: sap.tnt.IToolHeader): this;
+            setSubHeader(oSubHeader: sap.ui.core.Control): this;
             /**
              * <p>Toggles the expand/collapse state of the SideContent.</p>
              * @returns this <p>Pointer to the control instance for chaining.</p>

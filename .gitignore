@@ -44,3 +44,7 @@
 /shell/resources
 /resources
 *.html
+
+# claude code
+.claude
+CLAUDE.md

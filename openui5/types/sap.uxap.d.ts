@@ -38,9 +38,9 @@ declare namespace sap {
 			getScrollDelegate(): sap.ui.core.delegate.ScrollEnablement;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.uxap.AnchorBar#methods/getSelectedButton">selectedButton</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getSelectedButton(): sap.ui.core.ID;
+			getSelectedButton(): sap.ui.core.ID | null;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.AnchorBar#methods/getShowPopover">showPopover</a>.</p><p>Determines whether to show a Popover with Subsection links when clicking on Section links in the Anchor bar.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>showPopover</code></p>
@@ -105,11 +105,11 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.BlockBase#events/viewInit">viewInit</a> event of this <code>sap.uxap.BlockBase</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.BlockBase</code> itself.</p><p>Fired when an aggregated view is instantiated.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.BlockBase</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachViewInit(oData: any, fnFunction: any, oListener?: any): this;
+			attachViewInit(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Creates a view.</p>
 			 * @param {any} mParameter <p>View metadata</p>
@@ -124,11 +124,11 @@ declare namespace sap {
 			destroyMappings(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.BlockBase#events/viewInit">viewInit</a> event of this <code>sap.uxap.BlockBase</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachViewInit(fnFunction: any, oListener?: any): this;
+			detachViewInit(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.uxap.BlockBase#events/viewInit">viewInit</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -149,7 +149,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.BlockBase#methods/getMappings">mappings</a>.</p><p>Map external UI5 model and internal Block model</p>
 			 * @returns sap.uxap.ModelMapping[] 
 			 */
-			getMappings(): sap.uxap.ModelMapping[];
+			getMappings(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.BlockBase#methods/getMode">mode</a>.</p><p>Determines the mode of the block. See <a target="_self" href="api/sap.uxap.ObjectPageSubSectionMode">ObjectPageSubSectionMode</a>. When <code>BlockBase</code> is used inside an <code>ObjectPageLayout</code>, the <code>mode</code> property is inherited from the respective <a target="_self" href="api/sap.uxap.ObjectPageSubSection">SubSection</a>. The <code>mode</code> property of <code>BlockBase</code> changes when the <code>mode</code> property of <code>ObjectPageSubSection</code> changes.</p>
 			 * @returns string <p>Value of property <code>mode</code></p>
@@ -157,9 +157,9 @@ declare namespace sap {
 			getMode(): string;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.uxap.BlockBase#methods/getSelectedView">selectedView</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getSelectedView(): sap.ui.core.ID;
+			getSelectedView(): sap.ui.core.ID | null;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.BlockBase#methods/getShowSubSectionMore">showSubSectionMore</a>.</p><p>Determines whether the show more button should be shown.</p><p><b>Note:</b> The property will take effect if the <code>BlockBase</code> is inside <code>ObjectPageSubSection</code> and would be ignored in case the <code>BlockBase</code> is nested inside another <code>BlockBase</code>.</p><p>Default value is <code>false</code>.</p>
 			 * @returns boolean <p>Value of property <code>showSubSectionMore</code></p>
@@ -187,11 +187,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.BlockBase#methods/getMappings">mappings</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.uxap.ModelMapping[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllMappings(): sap.uxap.ModelMapping[];
+			removeAllMappings(): any;
 			/**
 			 * <p>Removes a mapping from the aggregation <a target="_self" href="api/sap.uxap.BlockBase#methods/getMappings">mappings</a>.</p>
 			 * @param {number | string | sap.uxap.ModelMapping} vMapping <p>The mapping to remove or its index or id</p>
-			 * @returns sap.uxap.ModelMapping|null <p>The removed mapping or <code>null</code></p>
+			 * @returns sap.uxap.ModelMapping | null <p>The removed mapping or <code>null</code></p>
 			 */
 			removeMapping(vMapping: number | string | sap.uxap.ModelMapping): sap.uxap.ModelMapping | null;
 			/**
@@ -232,7 +232,7 @@ declare namespace sap {
 			setVisible(bVisible?: boolean): this;
 		}
 		/**
-		 * <p><p>Used by the <code>BlockBase</code> control to define if it should do automatic adjustment of its nested forms.</p></p>
+		 * <p><p>Used by the <code>BlockBase</code> control to define if it should do automatic adjustment of its nested forms.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'BlockBaseFormAdjustment'.</p></p>
 		 */
 		export enum BlockBaseFormAdjustment {
 			/**
@@ -283,7 +283,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.BreadCrumbs#methods/getLinks">links</a>.</p><p>A list of all the active link elements in the BreadCrumbs control.</p>
 			 * @returns sap.m.Link[] 
 			 */
-			getLinks(): sap.m.Link[];
+			getLinks(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.BreadCrumbs#methods/getShowCurrentLocation">showCurrentLocation</a>.</p><p>Sets the visibility of the current/last element in the BreadCrumbs path.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>showCurrentLocation</code></p>
@@ -306,11 +306,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.BreadCrumbs#methods/getLinks">links</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.m.Link[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllLinks(): sap.m.Link[];
+			removeAllLinks(): any;
 			/**
 			 * <p>Removes a link from the aggregation <a target="_self" href="api/sap.uxap.BreadCrumbs#methods/getLinks">links</a>.</p>
 			 * @param {number | string | sap.m.Link} vLink <p>The link to remove or its index or id</p>
-			 * @returns sap.m.Link|null <p>The removed link or <code>null</code></p>
+			 * @returns sap.m.Link | null <p>The removed link or <code>null</code></p>
 			 */
 			removeLink(vLink: number | string | sap.m.Link): sap.m.Link | null;
 			/**
@@ -359,7 +359,7 @@ declare namespace sap {
 		export interface IHeaderTitle {
 		}
 		/**
-		 * <p><p>Used by the <code>ObjectSectionBase</code> control to define the importance of the content contained in it.</p></p>
+		 * <p><p>Used by the <code>ObjectSectionBase</code> control to define the importance of the content contained in it.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'Importance'.</p></p>
 		 */
 		export enum Importance {
 			/**
@@ -450,6 +450,11 @@ declare namespace sap {
 			 */
 			getFooterRole(): sap.ui.core.AccessibleLandmarkRole;
 			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderContentLabel">headerContentLabel</a>.</p><p>Texts which describe the landmark of the section inside the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set, default "Expanded header" aria-label is set.</p>
+			 * @returns string <p>Value of property <code>headerContentLabel</code></p>
+			 */
+			getHeaderContentLabel(): string;
+			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderLabel">headerLabel</a>.</p><p>Texts which describe the landmark of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p>
 			 * @returns string <p>Value of property <code>headerLabel</code></p>
 			 */
@@ -504,6 +509,12 @@ declare namespace sap {
 			 */
 			setFooterRole(sFooterRole?: sap.ui.core.AccessibleLandmarkRole): this;
 			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderContentLabel">headerContentLabel</a>.</p><p>Texts which describe the landmark of the section inside the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set, default "Expanded header" aria-label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * @param {string} sHeaderContentLabel <p>New value for property <code>headerContentLabel</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setHeaderContentLabel(sHeaderContentLabel?: string): this;
+			/**
 			 * <p>Sets a new value for property <a target="_self" href="api/sap.uxap.ObjectPageAccessibleLandmarkInfo#methods/getHeaderLabel">headerLabel</a>.</p><p>Texts which describe the landmark of the header container of the corresponding <code>sap.uxap.ObjectPageLayout</code> control.</p><p>If not set (and a landmark different than <code>sap.ui.core.AccessibleLandmarkRole.None</code> is defined), no label is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 			 * @param {string} sHeaderLabel <p>New value for property <code>headerLabel</code></p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -541,7 +552,7 @@ declare namespace sap {
 			setRootRole(sRootRole?: sap.ui.core.AccessibleLandmarkRole): this;
 		}
 		/**
-		 * <p><p>Used by the <code>sap.uxap.component.Component</code> how to initialize the <code>ObjectPageLayout</code> sections and subsections.</p></p>
+		 * <p><p>Used by the <code>sap.uxap.component.Component</code> how to initialize the <code>ObjectPageLayout</code> sections and subsections.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'ObjectPageConfigurationMode'.</p></p>
 		 */
 		export enum ObjectPageConfigurationMode {
 			/**
@@ -596,27 +607,27 @@ declare namespace sap {
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/markChangesPress">markChangesPress</a> event of this <code>sap.uxap.ObjectPageHeader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageHeader</code> itself.</p><p>The event is fired when the unsaved changes button is pressed</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageHeader</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachMarkChangesPress(oData: any, fnFunction: any, oListener?: any): this;
+			attachMarkChangesPress(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/markLockedPress">markLockedPress</a> event of this <code>sap.uxap.ObjectPageHeader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageHeader</code> itself.</p><p>The event is fired when the Locked button is pressed</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageHeader</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachMarkLockedPress(oData: any, fnFunction: any, oListener?: any): this;
+			attachMarkLockedPress(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/titleSelectorPress">titleSelectorPress</a> event of this <code>sap.uxap.ObjectPageHeader</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageHeader</code> itself.</p><p>The event is fired when the objectPage header title selector (down-arrow) is pressed</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageHeader</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachTitleSelectorPress(oData: any, fnFunction: any, oListener?: any): this;
+			attachTitleSelectorPress(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys all the actions in the aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getActions">actions</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -644,25 +655,25 @@ declare namespace sap {
 			destroyTitleSelectorTooltip(): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/markChangesPress">markChangesPress</a> event of this <code>sap.uxap.ObjectPageHeader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachMarkChangesPress(fnFunction: any, oListener?: any): this;
+			detachMarkChangesPress(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/markLockedPress">markLockedPress</a> event of this <code>sap.uxap.ObjectPageHeader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachMarkLockedPress(fnFunction: any, oListener?: any): this;
+			detachMarkLockedPress(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/titleSelectorPress">titleSelectorPress</a> event of this <code>sap.uxap.ObjectPageHeader</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachTitleSelectorPress(fnFunction: any, oListener?: any): this;
+			detachTitleSelectorPress(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.uxap.ObjectPageHeader#events/markChangesPress">markChangesPress</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -685,7 +696,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getActions">actions</a>.</p><p>List of actions that will be displayed in the header. You can use ObjectPageHeaderActionButton controls to achieve a different visual representation of the action buttons in the action bar and the action sheet (overflow menu). You can use ObjectPageHeaderLayoutData to display a visual separator.</p><p><b>Note:</b> If an action is placed inside the overflow area, an additional <code>bInOverflow</code> parameter is passed along with the <code>press</code> event to indicate that a popup shouldn't be opened from that action and a dialog should be used instead.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getActions(): sap.ui.core.Control[];
+			getActions(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getBreadcrumbs">breadcrumbs</a>.</p><p>The breadcrumbs displayed in the <code>ObjectPageHeader</code>. If this aggregation is set, the <code>breadCrumbsLinks</code> aggregation is omitted.</p>
 			 * @returns sap.m.Breadcrumbs 
@@ -793,7 +804,7 @@ declare namespace sap {
 			getSideContentButton(): sap.m.Button;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getTitleSelectorTooltip">titleSelectorTooltip</a>.</p><p>A custom tooltip for the title selector button.</p><p>The custom tooltip will be visible if the <code>showTitleSelector</code> property is set to <code>true</code>.</p><p><b>Note:</b> If the aggregation is destroyed or set to invalid value, the default tooltip will be set. The default tooltip text is "Related options".</p>
-			 * @returns sap.ui.core.TooltipBase|string 
+			 * @returns sap.ui.core.TooltipBase | string 
 			 */
 			getTitleSelectorTooltip(): sap.ui.core.TooltipBase | string;
 			/**
@@ -812,14 +823,14 @@ declare namespace sap {
 			/**
 			 * <p>Removes a action from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getActions">actions</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vAction <p>The action to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed action or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed action or <code>null</code></p>
 			 */
 			removeAction(vAction: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getActions">actions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllActions(): sap.ui.core.Control[];
+			removeAllActions(): any;
 			/**
 			 * <p>Sets the aggregated <a target="_self" href="api/sap.uxap.ObjectPageHeader#methods/getBreadcrumbs">breadcrumbs</a>.</p>
 			 * @param {sap.m.Breadcrumbs} oBreadcrumbs <p>The breadcrumbs to set</p>
@@ -1024,7 +1035,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeaderContent#methods/getContent">content</a>.</p><p>The list of Objects of type sap.ui.core.Control.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getContent(): sap.ui.core.Control[];
+			getContent(): any;
 			/**
 			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeaderContent#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
 			 * @param {sap.ui.core.Control} oContent <p>The content whose index is looked for</p>
@@ -1042,16 +1053,16 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeaderContent#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllContent(): sap.ui.core.Control[];
+			removeAllContent(): any;
 			/**
 			 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageHeaderContent#methods/getContent">content</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 		}
 		/**
-		 * <p><p>Used by the <code>ObjectPageHeader</code> control to define which design to use.</p></p>
+		 * <p><p>Used by the <code>ObjectPageHeader</code> control to define which design to use.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'ObjectPageHeaderDesign'.</p></p>
 		 */
 		export enum ObjectPageHeaderDesign {
 			/**
@@ -1141,7 +1152,7 @@ declare namespace sap {
 			setWidth(sWidth?: sap.ui.core.CSSSize): this;
 		}
 		/**
-		 * <p><p>Used by the <code>ObjectPageHeader</code> control to define which shape to use for the image.</p></p>
+		 * <p><p>Used by the <code>ObjectPageHeader</code> control to define which shape to use for the image.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'ObjectPageHeaderPictureShape'.</p></p>
 		 */
 		export enum ObjectPageHeaderPictureShape {
 			/**
@@ -1178,53 +1189,69 @@ declare namespace sap {
 			 */
 			addSection(oSection: sap.uxap.ObjectPageSection): this;
 			/**
-			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/editHeaderButtonPress">editHeaderButtonPress</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired when the Edit Header button is pressed</p>
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/beforeNavigate">beforeNavigate</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired before the selected section is changed using the navigation. This event can be aborted by the application with preventDefault(), which means that there will be no navigation.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachEditHeaderButtonPress(oData: any, fnFunction: any, oListener?: any): this;
+			attachBeforeNavigate(oData: any, fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/breakpointChange">breakpointChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>Fired when the media range of the control changes, allowing the application to adjust the UI accordingly (e.g., change Avatar sizes responsively).</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachBreakpointChange(oData: any, fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/editHeaderButtonPress">editHeaderButtonPress</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired when the Edit Header button is pressed</p>
+			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			attachEditHeaderButtonPress(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/headerContentPinnedStateChange">headerContentPinnedStateChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired when the <code>headerContentPinned</code> property is changed via user interaction.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachHeaderContentPinnedStateChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachHeaderContentPinnedStateChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/navigate">navigate</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired when the selected section is changed using the navigation.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachNavigate(oData: any, fnFunction: any, oListener?: any): this;
+			attachNavigate(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/sectionChange">sectionChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>Fired when the current section is changed by scrolling.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachSectionChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachSectionChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/subSectionVisibilityChange">subSectionVisibilityChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>Fired when the visibility of subsections is changed.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachSubSectionVisibilityChange(oData: any, fnFunction: any, oListener?: any): this;
+			attachSubSectionVisibilityChange(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/toggleAnchorBar">toggleAnchorBar</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.uxap.ObjectPageLayout</code> itself.</p><p>The event is fired when the Anchor bar is switched from moving to fixed or the other way round.</p>
 			 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-			 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 			 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.uxap.ObjectPageLayout</code> itself</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			attachToggleAnchorBar(oData: any, fnFunction: any, oListener?: any): this;
+			attachToggleAnchorBar(oData: any, fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Destroys the footer in the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getFooter">footer</a>.</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1251,47 +1278,73 @@ declare namespace sap {
 			 */
 			destroySections(): this;
 			/**
-			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/editHeaderButtonPress">editHeaderButtonPress</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/beforeNavigate">beforeNavigate</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachEditHeaderButtonPress(fnFunction: any, oListener?: any): this;
+			detachBeforeNavigate(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/breakpointChange">breakpointChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachBreakpointChange(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/editHeaderButtonPress">editHeaderButtonPress</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			detachEditHeaderButtonPress(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/headerContentPinnedStateChange">headerContentPinnedStateChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachHeaderContentPinnedStateChange(fnFunction: any, oListener?: any): this;
+			detachHeaderContentPinnedStateChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/navigate">navigate</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachNavigate(fnFunction: any, oListener?: any): this;
+			detachNavigate(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/sectionChange">sectionChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachSectionChange(fnFunction: any, oListener?: any): this;
+			detachSectionChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/subSectionVisibilityChange">subSectionVisibilityChange</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachSubSectionVisibilityChange(fnFunction: any, oListener?: any): this;
+			detachSubSectionVisibilityChange(fnFunction: Function, oListener?: any): this;
 			/**
 			 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/toggleAnchorBar">toggleAnchorBar</a> event of this <code>sap.uxap.ObjectPageLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-			 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+			 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 			 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
-			detachToggleAnchorBar(fnFunction: any, oListener?: any): this;
+			detachToggleAnchorBar(fnFunction: Function, oListener?: any): this;
+			/**
+			 * <p>Fires event <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/beforeNavigate">beforeNavigate</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns boolean <p>Whether or not to prevent the default action</p>
+			 */
+			protected fireBeforeNavigate(mParameters?: any): boolean;
+			/**
+			 * <p>Fires event <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/breakpointChange">breakpointChange</a> to attached listeners.</p>
+			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			protected fireBreakpointChange(mParameters?: any): this;
 			/**
 			 * <p>Fires event <a target="_self" href="api/sap.uxap.ObjectPageLayout#events/editHeaderButtonPress">editHeaderButtonPress</a> to attached listeners.</p>
 			 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1357,7 +1410,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getHeaderContent">headerContent</a>.</p><p>Object page header content - the dynamic part of the Object page header.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getHeaderContent(): sap.ui.core.Control[];
+			getHeaderContent(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getHeaderContentPinnable">headerContentPinnable</a>.</p><p>Determines whether the Header Content area can be pinned.</p><p>When set to <code>true</code>, a pin button is displayed within the Header Content area. The pin button allows the user to make the Header Content always visible at the top of the page above any scrollable content.</p><p><b>Note:</b> This property is only taken into account if an instance of <code>sap.uxap.ObjectPageDynamicHeaderTitle</code> is used for the <code>headerTitle</code> aggregation.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>headerContentPinnable</code></p>
@@ -1394,7 +1447,7 @@ declare namespace sap {
 			 */
 			getPreserveHeaderStateOnScroll(): boolean;
 			/**
-			 * <p>Returns the <code>sap.ui.core.ScrollEnablement</code> delegate which is used with this control.</p>
+			 * <p>Returns the <code>sap.ui.core.delegate.ScrollEnablement</code> delegate which is used with this control.</p>
 			 * @returns sap.ui.core.delegate.ScrollEnablement <p>The scroll delegate instance</p>
 			 */
 			getScrollDelegate(): sap.ui.core.delegate.ScrollEnablement;
@@ -1407,7 +1460,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getSections">sections</a>.</p><p>The sections that make up the Object page content area.</p>
 			 * @returns sap.uxap.ObjectPageSection[] 
 			 */
-			getSections(): sap.uxap.ObjectPageSection[];
+			getSections(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getSectionTitleLevel">sectionTitleLevel</a>.</p><p>Determines the ARIA level of the <code>ObjectPageSection</code> and <code>ObjectPageSubSection</code> titles. The ARIA level is used by assisting technologies, such as screen readers, to create a hierarchical site map for faster navigation.</p><p><br><b>Note:</b> <ul> <li>Defining a <code>sectionTitleLevel</code> will add <code>aria-level</code> attribute from 1 to 6 instead of changing the titles` HTML tag from H1 to H6. <br>For example: if <code>sectionTitleLevel</code> is <code>TitleLevel.H1</code>, it will result as aria-level of 1 added to the <code>ObjectPageSection</code> title. </li></p><p><li> The <code>ObjectPageSubSection</code> title would have <code>aria-level</code> one level lower than the defined. For example: if <code>sectionTitleLevel</code> is <code>TitleLevel.H1</code>, it will result as aria-level of 2 added to the <code>ObjectPageSubSection</code> title.</li></p><p><li> It is possible to define a <code>titleLevel</code> on <code>ObjectPageSection</code> or <code>ObjectPageSubSection</code> level. In this case the value of this property will be ignored. </li> </ul></p><p>Default value is <code>Auto</code>.</p>
 			 * @returns sap.ui.core.TitleLevel <p>Value of property <code>sectionTitleLevel</code></p>
@@ -1415,9 +1468,9 @@ declare namespace sap {
 			getSectionTitleLevel(): sap.ui.core.TitleLevel;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getSelectedSection">selectedSection</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getSelectedSection(): sap.ui.core.ID;
+			getSelectedSection(): sap.ui.core.ID | null;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getShowAnchorBar">showAnchorBar</a>.</p><p>Determines whether the Navigation bar (Anchor bar) is displayed.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>showAnchorBar</code></p>
@@ -1513,22 +1566,22 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getHeaderContent">headerContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllHeaderContent(): sap.ui.core.Control[];
+			removeAllHeaderContent(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getSections">sections</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.uxap.ObjectPageSection[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllSections(): sap.uxap.ObjectPageSection[];
+			removeAllSections(): any;
 			/**
 			 * <p>Removes a headerContent from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getHeaderContent">headerContent</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vHeaderContent <p>The headerContent to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed headerContent or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed headerContent or <code>null</code></p>
 			 */
 			removeHeaderContent(vHeaderContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes a section from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLayout#methods/getSections">sections</a>.</p>
 			 * @param {number | string | sap.uxap.ObjectPageSection} vSection <p>The section to remove or its index or id</p>
-			 * @returns sap.uxap.ObjectPageSection|null <p>The removed section or <code>null</code></p>
+			 * @returns sap.uxap.ObjectPageSection | null <p>The removed section or <code>null</code></p>
 			 */
 			removeSection(vSection: number | string | sap.uxap.ObjectPageSection): sap.uxap.ObjectPageSection | null;
 			/**
@@ -1696,6 +1749,27 @@ declare namespace sap {
 			setUseTwoColumnsForLargeScreen(bUseTwoColumnsForLargeScreen?: boolean): this;
 		}
 		/**
+		 * <p><p>Defines the media breakpoints for ObjectPageLayout.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'ObjectPageLayoutMediaRange'.</p></p>
+		 */
+		export enum ObjectPageLayoutMediaRange {
+			/**
+			 * <p>Desktop breakpoint (1025px to 1439px).</p>
+			 */
+			Desktop = "Desktop",
+			/**
+			 * <p>Extra large desktop breakpoint (1440px and above).</p>
+			 */
+			DesktopExtraLarge = "DesktopExtraLarge",
+			/**
+			 * <p>Phone breakpoint (up to 600px).</p>
+			 */
+			Phone = "Phone",
+			/**
+			 * <p>Tablet breakpoint (601px to 1024px).</p>
+			 */
+			Tablet = "Tablet",
+		}
+		/**
 		 * <p>A helper element that enables a "stashed-based" lazy loading approach for the content of the <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> control.</p><p><code>ObjectPageLazyLoader</code> is intended to be used in a declarative way only (for example, in a view) with the <code>stashed</code> property set to <code>true</code>, and is recommended to be used only once per subsection as its sole content.</p><p><code>ObjectPageLazyLoader</code> utilizes UI5's stashing mechanism and is a lightweight alternative to the native block-based Lazy Loading of the <code>ObjectPageLayout</code>. Wrapping the content of a subsection in an <code>ObjectPageLazyLoader</code> with <code>stashed=true</code> will make the content unstash automatically as the user scrolls.</p><p><b>Note:</b> Subsections are required to have an ID when used with <code>ObjectPageLazyLoader</code>.</p>
 		 */
 		export class ObjectPageLazyLoader extends sap.ui.core.Element {
@@ -1720,7 +1794,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageLazyLoader#methods/getContent">content</a>.</p><p>Controls to be displayed after this element is unstashed</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getContent(): sap.ui.core.Control[];
+			getContent(): any;
 			/**
 			 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLazyLoader#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
 			 * @param {sap.ui.core.Control} oContent <p>The content whose index is looked for</p>
@@ -1738,11 +1812,11 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLazyLoader#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllContent(): sap.ui.core.Control[];
+			removeAllContent(): any;
 			/**
 			 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageLazyLoader#methods/getContent">content</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 			 */
 			removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 		}
@@ -1773,25 +1847,30 @@ declare namespace sap {
 			 */
 			destroySubSections(): this;
 			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getAnchorBarButtonColor">anchorBarButtonColor</a>.</p><p>Specifies the text color of each button inside the AnchorBar.</p><p>The color can be chosen from the icon colors (https://ui5.sap.com/#/api/sap.ui.core.IconColor%23overview). Possible semantic colors are: Neutral, Positive, Critical, Negative.</p><p>Default value is <code>Default</code>.</p>
+			 * @returns sap.ui.core.IconColor <p>Value of property <code>anchorBarButtonColor</code></p>
+			 */
+			getAnchorBarButtonColor(): sap.ui.core.IconColor;
+			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getHeading">heading</a>.</p><p>Section heading content.</p><p>Note: For some accessibility concerns we encourage you to use non-focusable elements.</p>
 			 * @returns sap.ui.core.Control 
 			 */
 			getHeading(): sap.ui.core.Control;
 			/**
 			 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getSelectedSubSection">selectedSubSection</a>, or <code>null</code>.</p>
-			 * @returns sap.ui.core.ID 
+			 * @returns sap.ui.core.ID | null 
 			 */
-			getSelectedSubSection(): sap.ui.core.ID;
+			getSelectedSubSection(): sap.ui.core.ID | null;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getShowTitle">showTitle</a>.</p><p>Determines whether to display the Section title or not.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>showTitle</code></p>
 			 */
 			getShowTitle(): boolean;
 			/**
-			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getSubSections">subSections</a>.</p><p>The list of Subsections.</p>
+			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getSubSections">subSections</a>.</p><p>The list of Subsections.</p><p><b>Note:</b> If you use multiple subsections, set a <code>title</code> for each subsection to avoid accessibility violations.</p>
 			 * @returns sap.uxap.ObjectPageSubSection[] 
 			 */
-			getSubSections(): sap.uxap.ObjectPageSubSection[];
+			getSubSections(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getTitleUppercase">titleUppercase</a>.</p><p>Determines whether the Section title is displayed in upper case.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>titleUppercase</code></p>
@@ -1819,13 +1898,19 @@ declare namespace sap {
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getSubSections">subSections</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.uxap.ObjectPageSubSection[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllSubSections(): sap.uxap.ObjectPageSubSection[];
+			removeAllSubSections(): any;
 			/**
 			 * <p>Removes a subSection from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getSubSections">subSections</a>.</p>
 			 * @param {number | string | sap.uxap.ObjectPageSubSection} vSubSection <p>The subSection to remove or its index or id</p>
-			 * @returns sap.uxap.ObjectPageSubSection|null <p>The removed subSection or <code>null</code></p>
+			 * @returns sap.uxap.ObjectPageSubSection | null <p>The removed subSection or <code>null</code></p>
 			 */
 			removeSubSection(vSubSection: number | string | sap.uxap.ObjectPageSubSection): sap.uxap.ObjectPageSubSection | null;
+			/**
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getAnchorBarButtonColor">anchorBarButtonColor</a>.</p><p>Specifies the text color of each button inside the AnchorBar.</p><p>The color can be chosen from the icon colors (https://ui5.sap.com/#/api/sap.ui.core.IconColor%23overview). Possible semantic colors are: Neutral, Positive, Critical, Negative.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+			 * @param {sap.ui.core.IconColor} sAnchorBarButtonColor <p>New value for property <code>anchorBarButtonColor</code></p>
+			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+			 */
+			setAnchorBarButtonColor(sAnchorBarButtonColor?: sap.ui.core.IconColor): this;
 			/**
 			 * <p>Sets the aggregated <a target="_self" href="api/sap.uxap.ObjectPageSection#methods/getHeading">heading</a>.</p>
 			 * @param {sap.ui.core.Control} oHeading <p>The heading to set</p>
@@ -1882,17 +1967,17 @@ declare namespace sap {
 			 */
 			getCustomAnchorBarButton(): sap.m.Button;
 			/**
+			 * <p>Returns the effectively applied title level. Could be different than "titleLevel" property, according to internal UX rules.</p>
+			 * @returns string <p>the effective title level</p>
+			 */
+			protected getEffectiveTitleLevel(): string;
+			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getImportance">importance</a>.</p><p>Determines whether the section will be hidden on low resolutions.</p><p>Default value is <code>High</code>.</p>
 			 * @returns sap.uxap.Importance <p>Value of property <code>importance</code></p>
 			 */
 			getImportance(): sap.uxap.Importance;
 			/**
-			 * <p>Returns the control name text.</p><p>To be overwritten by the specific control method.</p>
-			 * @returns string <p>control name text</p>
-			 */
-			protected getSectionText(): string;
-			/**
-			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Defines the title of the respective section/subsection.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title. This behavior is true even if the <code>showTitle</code> propeprty of <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> is set to <code>false</code>.</p>
+			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Defines the title of the respective section/subsection.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title. This behavior is true even if the <code>showTitle</code> property of <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> is set to <code>false</code>.</p><p><b>Note:</b> To avoid accessibility issues, always set a <code>title</code> on <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a>, especially when a section contains multiple subsections. If no <code>title</code> is set on a subsection, the anchor bar button popover will appear empty, which will lead to accessibility violations.</p>
 			 * @returns string <p>Value of property <code>title</code></p>
 			 */
 			getTitle(): string;
@@ -1901,6 +1986,11 @@ declare namespace sap {
 			 * @returns sap.ui.core.TitleLevel <p>Value of property <code>titleLevel</code></p>
 			 */
 			getTitleLevel(): sap.ui.core.TitleLevel;
+			/**
+			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitleVisible">titleVisible</a>.</p><p>Defines the actual visibility of the title of <code>ObjectPageSectionBase</code>.</p><p><b>Note:</b> This property is read-only. The <code>ObjectPageSectionBase</code> updates it, according to internal rules, based on UX specifications. You can only read the value of <code>titleVisible</code> property and use it in your binding to determine the aria-levels of the inner Controls.</p><p>Default value is <code>true</code>.</p>
+			 * @returns boolean <p>Value of property <code>titleVisible</code></p>
+			 */
+			protected getTitleVisible(): boolean;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getVisible">visible</a>.</p><p>Invisible ObjectPageSectionBase are not rendered</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>visible</code></p>
@@ -1919,7 +2009,7 @@ declare namespace sap {
 			 */
 			setImportance(sImportance?: sap.uxap.Importance): this;
 			/**
-			 * <p>Sets a new value for property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Defines the title of the respective section/subsection.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title. This behavior is true even if the <code>showTitle</code> propeprty of <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> is set to <code>false</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+			 * <p>Sets a new value for property <a target="_self" href="api/sap.uxap.ObjectPageSectionBase#methods/getTitle">title</a>.</p><p>Defines the title of the respective section/subsection.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title. This behavior is true even if the <code>showTitle</code> property of <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a> is set to <code>false</code>.</p><p><b>Note:</b> To avoid accessibility issues, always set a <code>title</code> on <a target="_self" href="api/sap.uxap.ObjectPageSubSection">sap.uxap.ObjectPageSubSection</a>, especially when a section contains multiple subsections. If no <code>title</code> is set on a subsection, the anchor bar button popover will appear empty, which will lead to accessibility violations.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 			 * @param {string} sTitle <p>New value for property <code>title</code></p>
 			 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 			 */
@@ -1938,7 +2028,7 @@ declare namespace sap {
 			setVisible(bVisible?: boolean): this;
 		}
 		/**
-		 * <p>Second-level information container of an <a target="_self" href="api/sap.uxap.ObjectPageLayout">sap.uxap.ObjectPageLayout</a>.</p><p>An <code>ObjectPageSubSection</code> may only be used within sections in the <code>ObjectPageLayout</code>. Subsections are used to display primary information in the <code>blocks</code> aggregation (always visible) and not-so-important information in the <code>moreBlocks</code> aggregation. The content in the <code>moreBlocks</code> aggregation is initially hidden, but may be accessed with a "See more" (...) button.</p><p>As of version 1.61, applications can enable auto-expand of the subsections to fit the sections container by adding the <code>sapUxAPObjectPageSubSectionFitContainer</code> class to the subsection. This is useful in situations where the sub-section contains a control that has “100%” height, for example, <code>sap.ui.table.Table</code> with <code>visibleRowCountMode</code> set to <code>Auto</code>.</p><p><b>Note:</b> This control is intended to be used only as part of the <code>ObjectPageLayout</code>.</p>
+		 * <p>Second-level information container of an <a target="_self" href="api/sap.uxap.ObjectPageLayout">sap.uxap.ObjectPageLayout</a>.</p><p>An <code>ObjectPageSubSection</code> may only be used within sections in the <code>ObjectPageLayout</code>. Subsections are used to display primary information in the <code>blocks</code> aggregation (always visible) and not-so-important information in the <code>moreBlocks</code> aggregation. The content in the <code>moreBlocks</code> aggregation is initially hidden, but may be accessed with a "See more" (...) button.</p><p>As of version 1.61, applications can enable auto-expand of the subsections to fit the sections container by adding the <code>sapUxAPObjectPageSubSectionFitContainer</code> class to the subsection. This is useful in situations where the sub-section contains a control that has “100%” height, for example, <code>sap.ui.table.Table</code> with <code>visibleRowCountMode</code> set to <code>Auto</code>.</p><p>As of version 1.122, applications can set transparent background to subsections by adding the <code>sapUxAPObjectPageSubSectionTransparentBackground</code> class to the subsection.</p><p><b>Note:</b> This control is intended to be used only as part of the <code>ObjectPageLayout</code>.</p>
 		 */
 		export class ObjectPageSubSection extends sap.uxap.ObjectPageSectionBase {
 			/**
@@ -1984,14 +2074,14 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getActions">actions</a>.</p><p>Actions available for this subsection.</p><p>Although this aggregation accepts type <code>sap.ui.core.Control</code>, it is strongly recommended to use only simple controls, such as buttons, so that the layout of the app is preserved.</p><p><b>Note:</b> Keep in mind that the controls set in the <code>actions</code> aggregation of <code>ObjectPageSubSection</code> do NOT have overflow behavior. If the available space is not enough, the controls will be displayed on more lines.</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getActions(): sap.ui.core.Control[];
+			getActions(): any;
 			/**
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getBlocks">blocks</a>.</p><p>Controls to be displayed in the subsection</p><p><b>Note:</b> The SAP Fiori Design guidelines require that the <code>ObjectPageHeader</code>'s content and the <code>ObjectPage</code>'s subsection content are aligned vertically. When using <a target="_self" href="api/sap.ui.layout.form.Form">sap.ui.layout.form.Form</a>, <a target="_self" href="api/sap.m.Panel">sap.m.Panel</a>, <a target="_self" href="api/sap.m.Table">sap.m.Table</a> and <a target="_self" href="api/sap.m.List">sap.m.List</a> in the subsection content area of <code>ObjectPage</code>, if the content is not already aligned, you need to adjust their left text offset to achieve the vertical alignment. To do this, apply the <code>sapUxAPObjectPageSubSectionAlignContent</code> CSS class to them and set their <code>width</code> property to <code>auto</code> (if not set by default).</p><p>Don't use the <code>sapUxAPObjectPageSubSectionAlignContent</code> CSS class in the following cases: <ul> <li>In combination with <code>ResponsiveLayout</code>, because <code>ResponsiveLayout</code> applies custom paddings. To align items with <code>sapUxAPObjectPageSubSectionAlignContent</code>, use <code>ColumnLayout</code>.</li> <li>If there are multiple controls in the same <code>ObjectPageSubSection</code>, because the CSS class interferes with their alignment.</li> </ul> Example:</p><p><pre>
 			<code> &lt;Form class="sapUxAPObjectPageSubSectionAlignContent" width="auto"&gt;&lt;/Form&gt; </code>
 			</pre></p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getBlocks(): sap.ui.core.Control[];
+			getBlocks(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getMode">mode</a>.</p><p>A mode property that will be passed to the controls in the blocks and moreBlocks aggregations. Only relevant if these aggregations use Object page blocks.</p><p>Default value is <code>Collapsed</code>.</p>
 			 * @returns sap.uxap.ObjectPageSubSectionMode <p>Value of property <code>mode</code></p>
@@ -2001,7 +2091,7 @@ declare namespace sap {
 			 * <p>Gets content of aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getMoreBlocks">moreBlocks</a>.</p><p>Additional controls to display when the Show more / See all / (...) button is pressed</p>
 			 * @returns sap.ui.core.Control[] 
 			 */
-			getMoreBlocks(): sap.ui.core.Control[];
+			getMoreBlocks(): any;
 			/**
 			 * <p>Gets current value of property <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getShowTitle">showTitle</a>.</p><p>Determines whether to display the <code>SubSection</code> title or not.</p><p><b>Note:</b> If a subsection is the only one (or the only one visible) within a section, its title is displayed instead of the section title even if this property is set to <code>false</code>. To hide the title of a subsection which is the only one (or the only one visible), you need to set the <code>showTitle</code> properties to <code>false</code> for both the section and its subsection.</p><p>Default value is <code>true</code>.</p>
 			 * @returns boolean <p>Value of property <code>showTitle</code></p>
@@ -2054,34 +2144,34 @@ declare namespace sap {
 			/**
 			 * <p>Removes a action from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getActions">actions</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vAction <p>The action to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed action or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed action or <code>null</code></p>
 			 */
 			removeAction(vAction: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getActions">actions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllActions(): sap.ui.core.Control[];
+			removeAllActions(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getBlocks">blocks</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllBlocks(): sap.ui.core.Control[];
+			removeAllBlocks(): any;
 			/**
 			 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getMoreBlocks">moreBlocks</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 			 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 			 */
-			removeAllMoreBlocks(): sap.ui.core.Control[];
+			removeAllMoreBlocks(): any;
 			/**
 			 * <p>Removes a block from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getBlocks">blocks</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vBlock <p>The block to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed block or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed block or <code>null</code></p>
 			 */
 			removeBlock(vBlock: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
 			 * <p>Removes a moreBlock from the aggregation <a target="_self" href="api/sap.uxap.ObjectPageSubSection#methods/getMoreBlocks">moreBlocks</a>.</p>
 			 * @param {number | string | sap.ui.core.Control} vMoreBlock <p>The moreBlock to remove or its index or id</p>
-			 * @returns sap.ui.core.Control|null <p>The removed moreBlock or <code>null</code></p>
+			 * @returns sap.ui.core.Control | null <p>The removed moreBlock or <code>null</code></p>
 			 */
 			removeMoreBlock(vMoreBlock: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			/**
@@ -2104,7 +2194,7 @@ declare namespace sap {
 			setTitleUppercase(bTitleUppercase?: boolean): this;
 		}
 		/**
-		 * <p><p>Used by the <code>ObjectPagSubSection</code> control to define which layout to apply.</p></p>
+		 * <p><p>Used by the <code>ObjectPagSubSection</code> control to define which layout to apply.</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'ObjectPageSubSectionLayout'.</p></p>
 		 */
 		export enum ObjectPageSubSectionLayout {
 			/**
@@ -2117,7 +2207,7 @@ declare namespace sap {
 			TitleOnTop = "TitleOnTop",
 		}
 		/**
-		 * <p><p>Used by the <code>ObjectPageLayout</code> control to define which layout to use (either Collapsed or Expanded).</p></p>
+		 * <p><p>Used by the <code>ObjectPageLayout</code> control to define which layout to use (either Collapsed or Expanded).</p><p>This enum is part of the 'sap/uxap/library' module export and must be accessed by the property 'ObjectPageSubSectionMode'.</p></p>
 		 */
 		export enum ObjectPageSubSectionMode {
 			/**

@@ -29,33 +29,33 @@ declare namespace sap {
                 /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#events/change">change</a> event of this <code>sap.ui.codeeditor.CodeEditor</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.codeeditor.CodeEditor</code> itself.</p><p>Fired when the value has changed and the focus leaves the code editor.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.codeeditor.CodeEditor</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachChange(oData: any, fnFunction: any, oListener?: any): this;
+                attachChange(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#events/liveChange">liveChange</a> event of this <code>sap.ui.codeeditor.CodeEditor</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.codeeditor.CodeEditor</code> itself.</p><p>Fired when the value is changed by user interaction - each keystroke, delete, paste, etc.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.codeeditor.CodeEditor</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachLiveChange(oData: any, fnFunction: any, oListener?: any): this;
+                attachLiveChange(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#events/change">change</a> event of this <code>sap.ui.codeeditor.CodeEditor</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachChange(fnFunction: any, oListener?: any): this;
+                detachChange(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#events/liveChange">liveChange</a> event of this <code>sap.ui.codeeditor.CodeEditor</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachLiveChange(fnFunction: any, oListener?: any): this;
+                detachLiveChange(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Fires event <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#events/change">change</a> to attached listeners.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -69,12 +69,12 @@ declare namespace sap {
                  */
                 protected fireLiveChange(mParameters?: any): this;
                 /**
-                 * <p>Sets the focus to the code editor</p>
-                 * @returns this <p>Returns <code>this</code> to allow method chaining</p>
+                 * <p>Returns the internal instance of the third-party Ace code editor.</p><p><b>Note:</b> This control is based on third-party open-source software, and there might be incompatible changes introduced by the code owner in their future releases.</p>
+                 * @returns any <p>the internal third-party Ace code editor instance</p>
                  */
-                focus(): this;
+                getAceEditor(): any;
                 /**
-                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getColorTheme">colorTheme</a>.</p><p>Sets the editor color theme. Possible values are: default, hcb, hcb_bright, hcb_blue, theme-ambiance, chaos, chrome, clouds, clouds_midnight, cobalt, crimson_editor, dawn, dreamweaver, eclipse, github, gob, gruvbox, idle_fingers, iplastic, katzenmilch, kr_theme, kuroir, merbivore, merbivore_soft, mono_industrial, monokai, pastel_on_dark, solarized_dark, solarized_light, sqlserver, terminal, textmate, tomorrow, tomorrow_night, tomorrow_night_blue, tomorrow_night_bright, tomorrow_night_eighties, twilight, dracula vibrant_ink, xcode</p><p>Default value is <code>"default"</code>.</p>
+                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getColorTheme">colorTheme</a>.</p><p>Sets the editor color theme. Possible values are: <ul> <li>default: best fitting to the current UI5 theme</li> <li>any light theme from the list: chrome, clouds, crimson_editor, dawn, dreamweaver, eclipse, github_light_default, github, iplastic, solarized_light, textmate, tomorrow, xcode, kuroir, katzenmilch, sqlserver, cloud_editor </li> <li>any dark theme from the list: hcb, hcb_bright, hcb_blue, ambiance, chaos, clouds_midnight, dracula, cobalt, gruvbox, gob, idle_fingers, kr_theme, merbivore, merbivore_soft, mono_industrial, monokai, nord_dark, one_dark, pastel_on_dark, solarized_dark, terminal, tomorrow_night, tomorrow_night_blue, tomorrow_night_bright, tomorrow_night_eighties, twilight, vibrant_ink, github_dark, cloud_editor_dark </li> </ul></p><p>Default value is <code>"default"</code>.</p>
                  * @returns string <p>Value of property <code>colorTheme</code></p>
                  */
                 getColorTheme(): string;
@@ -109,12 +109,12 @@ declare namespace sap {
                  */
                 getMaxLines(): number;
                 /**
-                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getSyntaxHints">syntaxHints</a>.</p><p>Sets whether to show syntax hints in the editor. This flag is only available if line numbers are shown.</p><p>Default value is <code>true</code>.</p>
+                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getSyntaxHints">syntaxHints</a>.</p><p>Sets whether to show syntax hints in the editor. Those hints are visualized as value state icons in the line numbers area. The hint text is shown in tooltip of those icons.</p><p><b>Note:</b> This flag is only available if line numbers are shown.</p><p><b>Note:</b> Syntax hints highly depend on the underlying third-party ACE editor. Comprehensive hints may not be available for all editor types, and some types may not display any hints. Currently, syntax hints are supported for the following types: javascript, json, css, html, xml, php, coffee, lua, xquery, yaml.</p><p>Default value is <code>true</code>.</p>
                  * @returns boolean <p>Value of property <code>syntaxHints</code></p>
                  */
                 getSyntaxHints(): boolean;
                 /**
-                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting. Possible types are: abap, abc, actionscript, ada, apache_conf, applescript, asciidoc, assembly_x86, autohotkey, batchfile, bro, c9search, c_cpp, cirru, clojure, cobol, coffee, coldfusion, csharp, css, curly, d, dart, diff, django, dockerfile, dot, drools, eiffel, ejs, elixir, elm, erlang, forth, fortran, ftl, gcode, gherkin, gitignore, glsl, gobstones, golang, groovy, haml, handlebars, haskell, haskell_cabal, haxe, hjson, html, html_elixir, html_ruby, ini, io, jack, jade, java, javascript, json, jsoniq, jsp, jsx, julia, kotlin, latex, lean, less, liquid, lisp, live_script, livescript, logiql, lsl, lua, luapage, lucene, makefile, markdown, mask, matlab, mavens_mate_log, maze, mel, mips_assembler, mipsassembler, mushcode, mysql, nix, nsis, objectivec, ocaml, pascal, perl, pgsql, php, plain_text, powershell, praat, prolog, properties, protobuf, python, r, razor, rdoc, rhtml, rst, ruby, rust, sass, scad, scala, scheme, scss, sh, sjs, smarty, snippets, soy_template, space, sql, sqlserver, stylus, svg, swift, swig, tcl, tex, text, textile, toml, tsx, twig, typescript, vala, vbscript, velocity, verilog, vhdl, wollok, xml, xquery, yaml, terraform, slim, redshift, red, puppet, php_laravel_blade, mixal, jssm, fsharp, edifact, csp, cssound_score, cssound_orchestra, cssound_document</p><p>Default value is <code>"javascript"</code>.</p>
+                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting.</p><p>Possible types are: "abap", "abc", "actionscript", "ada", "alda", "apache_conf", "apex", "aql", "asciidoc", "asl", "assembly_arm32", "assembly_x86", "astro", "autohotkey", "batchfile", "basic", "bibtex", "c_cpp", "c9search", "cirru", "clojure", "cobol", "coffee", "coldfusion", "crystal", "csharp", "csound_document", "csound_orchestra", "csound_score", "css", "curly", "cuttlefish", "d", "dart", "diff", "django", "dockerfile", "dot", "drools", "edifact", "eiffel", "ejs", "elixir", "elm", "erlang", "flix", "forth", "fortran", "fsharp", "fsl", "ftl", "gcode", "gherkin", "gitignore", "glsl", "gobstones", "golang", "graphqlschema", "groovy", "haml", "handlebars", "haskell", "haskell_cabal", "haxe", "hjson", "html", "html_elixir", "html_ruby", "ini", "io", "ion", "jack", "jade", "java", "javascript", "jexl", "json", "json5", "jsoniq", "jsp", "jssm", "jsx", "julia", "kotlin", "latex", "latte", "less", "liquid", "lisp", "livescript", "log", "logiql", "logtalk", "lsl", "lua", "luapage", "lucene", "makefile", "markdown", "mask", "matlab", "maze", "mediawiki", "mel", "mips", "mixal", "mushcode", "mysql", "nasal", "nginx", "nim", "nix", "nsis", "nunjucks", "objectivec", "ocaml", "odin", "partiql", "pascal", "perl", "pgsql", "php", "php_laravel_blade", "pig", "plsql", "powershell", "praat", "prisma", "prolog", "properties", "protobuf", "prql", "puppet", "python", "qml", "r", "raku", "razor", "rdoc", "red", "rhtml", "robot", "rst", "ruby", "rust", "sac", "sass", "scad", "scala", "scheme", "scrypt", "scss", "sh", "sjs", "slim", "smarty", "smithy", "snippets", "soy_template", "space", "sparql", "sql", "sqlserver", "stylus", "svg", "swift", "tcl", "terraform", "tex", "text", "textile", "toml", "tsx", "turtle", "twig", "typescript", "vala", "vbscript", "velocity", "verilog", "vhdl", "visualforce", "vue", "wollok", "xml", "xquery", "yaml", "zeek", "zig"</p><p>Default value is <code>"javascript"</code>.</p>
                  * @returns string <p>Value of property <code>type</code></p>
                  */
                 getType(): string;
@@ -134,7 +134,7 @@ declare namespace sap {
                  */
                 getWidth(): sap.ui.core.CSSSize;
                 /**
-                 * <p>Pretty-prints the content of the editor</p>
+                 * <p>Pretty-prints the content of the editor.</p><p><b>Note:</b> Works well for PHP. For other editor types (modes), the content might not be formatted well. In such cases it is recommended to use your own formatting.</p>
                  */
                 prettyPrint(): void;
                 /**
@@ -168,13 +168,13 @@ declare namespace sap {
                  */
                 setMaxLines(iMaxLines?: number): this;
                 /**
-                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getSyntaxHints">syntaxHints</a>.</p><p>Sets whether to show syntax hints in the editor. This flag is only available if line numbers are shown.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getSyntaxHints">syntaxHints</a>.</p><p>Sets whether to show syntax hints in the editor. Those hints are visualized as value state icons in the line numbers area. The hint text is shown in tooltip of those icons.</p><p><b>Note:</b> This flag is only available if line numbers are shown.</p><p><b>Note:</b> Syntax hints highly depend on the underlying third-party ACE editor. Comprehensive hints may not be available for all editor types, and some types may not display any hints. Currently, syntax hints are supported for the following types: javascript, json, css, html, xml, php, coffee, lua, xquery, yaml.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bSyntaxHints <p>New value for property <code>syntaxHints</code></p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setSyntaxHints(bSyntaxHints?: boolean): this;
                 /**
-                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting. Possible types are: abap, abc, actionscript, ada, apache_conf, applescript, asciidoc, assembly_x86, autohotkey, batchfile, bro, c9search, c_cpp, cirru, clojure, cobol, coffee, coldfusion, csharp, css, curly, d, dart, diff, django, dockerfile, dot, drools, eiffel, ejs, elixir, elm, erlang, forth, fortran, ftl, gcode, gherkin, gitignore, glsl, gobstones, golang, groovy, haml, handlebars, haskell, haskell_cabal, haxe, hjson, html, html_elixir, html_ruby, ini, io, jack, jade, java, javascript, json, jsoniq, jsp, jsx, julia, kotlin, latex, lean, less, liquid, lisp, live_script, livescript, logiql, lsl, lua, luapage, lucene, makefile, markdown, mask, matlab, mavens_mate_log, maze, mel, mips_assembler, mipsassembler, mushcode, mysql, nix, nsis, objectivec, ocaml, pascal, perl, pgsql, php, plain_text, powershell, praat, prolog, properties, protobuf, python, r, razor, rdoc, rhtml, rst, ruby, rust, sass, scad, scala, scheme, scss, sh, sjs, smarty, snippets, soy_template, space, sql, sqlserver, stylus, svg, swift, swig, tcl, tex, text, textile, toml, tsx, twig, typescript, vala, vbscript, velocity, verilog, vhdl, wollok, xml, xquery, yaml, terraform, slim, redshift, red, puppet, php_laravel_blade, mixal, jssm, fsharp, edifact, csp, cssound_score, cssound_orchestra, cssound_document</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"javascript"</code>.</p>
+                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.codeeditor.CodeEditor#methods/getType">type</a>.</p><p>The type of the code in the editor used for syntax highlighting.</p><p>Possible types are: "abap", "abc", "actionscript", "ada", "alda", "apache_conf", "apex", "aql", "asciidoc", "asl", "assembly_arm32", "assembly_x86", "astro", "autohotkey", "batchfile", "basic", "bibtex", "c_cpp", "c9search", "cirru", "clojure", "cobol", "coffee", "coldfusion", "crystal", "csharp", "csound_document", "csound_orchestra", "csound_score", "css", "curly", "cuttlefish", "d", "dart", "diff", "django", "dockerfile", "dot", "drools", "edifact", "eiffel", "ejs", "elixir", "elm", "erlang", "flix", "forth", "fortran", "fsharp", "fsl", "ftl", "gcode", "gherkin", "gitignore", "glsl", "gobstones", "golang", "graphqlschema", "groovy", "haml", "handlebars", "haskell", "haskell_cabal", "haxe", "hjson", "html", "html_elixir", "html_ruby", "ini", "io", "ion", "jack", "jade", "java", "javascript", "jexl", "json", "json5", "jsoniq", "jsp", "jssm", "jsx", "julia", "kotlin", "latex", "latte", "less", "liquid", "lisp", "livescript", "log", "logiql", "logtalk", "lsl", "lua", "luapage", "lucene", "makefile", "markdown", "mask", "matlab", "maze", "mediawiki", "mel", "mips", "mixal", "mushcode", "mysql", "nasal", "nginx", "nim", "nix", "nsis", "nunjucks", "objectivec", "ocaml", "odin", "partiql", "pascal", "perl", "pgsql", "php", "php_laravel_blade", "pig", "plsql", "powershell", "praat", "prisma", "prolog", "properties", "protobuf", "prql", "puppet", "python", "qml", "r", "raku", "razor", "rdoc", "red", "rhtml", "robot", "rst", "ruby", "rust", "sac", "sass", "scad", "scala", "scheme", "scrypt", "scss", "sh", "sjs", "slim", "smarty", "smithy", "snippets", "soy_template", "space", "sparql", "sql", "sqlserver", "stylus", "svg", "swift", "tcl", "terraform", "tex", "text", "textile", "toml", "tsx", "turtle", "twig", "typescript", "vala", "vbscript", "velocity", "verilog", "vhdl", "visualforce", "vue", "wollok", "xml", "xquery", "yaml", "zeek", "zig"</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"javascript"</code>.</p>
                  * @param {string} sType <p>New value for property <code>type</code></p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */

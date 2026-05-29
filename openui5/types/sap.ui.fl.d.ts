@@ -12,23 +12,6 @@ declare namespace sap {
          */
         namespace fl {
             /**
-             */
-            export class Change extends sap.ui.base.ManagedObject {
-                /**
-                 * <p>Flexibility change class. Stores change content and related information.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-                 * @param {any} oFile <p>File content and admin data</p>
-                 */
-                constructor(oFile: any);
-            }
-            /**
-             */
-            export class ChangePersistenceFactory {
-                /**
-                 * <p>Factory to get or create a new instances of {sap.ui.fl.ChangePersistence}</p>
-                 */
-                constructor();
-            }
-            /**
              * <p><p>Object containing information about a component if no instance is available.</p></p>
              */
             export interface ComponentSelector {
@@ -37,14 +20,6 @@ declare namespace sap {
              * <p><p>Object containing information about a control if no instance is available.</p></p>
              */
             export interface ElementSelector {
-            }
-            /**
-             */
-            export class FlexControllerFactory {
-                /**
-                 * <p>Factory to create new instances of {sap.ui.fl.FlexController}</p>
-                 */
-                constructor();
             }
             /**
              * <p><p>Object containing information about a version.</p></p>
@@ -155,9 +130,93 @@ declare namespace sap {
                         namespace descriptor {
                             namespace app {
                                 /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_addNewDataSource</code>. Adds a new data source to the manifest.json file under the path sap.app.dataSources.</p><p>Available only for build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace AddNewDataSource {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_setInbounds</code>. Overwrites all existing inbounds with new inbounds <code>sap.app/crossNavigation/inbounds</code> to the app.</p><p>Available for build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace AddNewInbound {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_addNewOutbound</code>. Adds a new outbound <code>sap.app/crossNavigation/outbounds</code> to the app.</p><p>Available for build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace AddNewOutbound {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_addTechnicalAttributes</code>. Adds tags to sap.app/tags/technicalAttributes.</p><p>Available only for build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace AddTechnicalAttributes {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
                                  * <p><p>Descriptor change merger for change type <code>appdescr_app_changeDataSource</code>. Changes a property of a specific <code>sap.app/dataSource</code> node in the manifest. Only supports <code>operation == "UPDATE"</code> and <code>operation == "UPSERT"</code>.</p><p>Only available during build time see <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
                                  */
-                                namespace ChangeDataSouce {
+                                namespace ChangeDataSource {
                                 }
                             }
                         }
@@ -179,6 +238,111 @@ declare namespace sap {
                                  * <p><p>Descriptor change merger for change type <code>appdescr_app_changeInbound</code>. Sets the title of the app by changing the manifest value <code>sap.app/crossNavigation/inbounds</code>.</p><p>Available for both runtime and build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
                                  */
                                 namespace ChangeInbound {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_ui5_changeModel</code>. Changes the settings object of the model by changing the manifest value <code>sap.ui5/models/modelId</code>.</p><p>Available for both runtime and build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace ChangeModel {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_changeOutbound</code>. Changes the outbound object of the app by changing the manifest value <code>sap.app/crossNavigation/outbounds</code>.</p><p>Available for both runtime and build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace ChangeOutbound {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_removeAllInboundsExceptOne</code>. Removes all inbounds except one <code>sap.app/crossNavigation/inbounds</code>.</p><p>Available for build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace RemoveAllInboundsExceptOne {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_setAch</code>. Sets and overwrites string for <code>sap.app/ach</code>.</p><p>Only available during build time <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace SetAch {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace app {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_app_setDescription</code>. Sets the description of the app by changing the manifest value <code>sap.app/description</code>.</p><p>Available for both runtime and build <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.Registration">sap.ui.fl.apply._internal.changes.descriptor.Registration</a>.</p></p>
+                                 */
+                                namespace SetDescription {
                                 }
                             }
                         }
@@ -239,6 +403,27 @@ declare namespace sap {
                                  * <p><p>Descriptor change merger for change type <code>appdescr_fiori_setAbstract</code>. Sets and overwrites boolean flag (only to <code>false</code>) for <code>sap.fiori/abstract</code>.</p><p>Only available during build time <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
                                  */
                                 namespace SetAbstract {
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            namespace fiori {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_fiori_cloudDevAdaptationStatus</code>. Sets and overwrites string for <code>sap.fiori/cloudDevAdaptationStatus</code>.</p><p>Only available during build time <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace SetCloudDevAdaptationStatus {
                                 }
                             }
                         }
@@ -357,10 +542,12 @@ declare namespace sap {
                 namespace _internal {
                     namespace changes {
                         namespace descriptor {
-                            /**
-                             * <p><p>Flex hook for preprocessing manifest early. Merges descriptor changes if needed.</p></p>
-                             */
-                            namespace Preprocessor {
+                            namespace platform {
+                                /**
+                                 * <p><p>Descriptor change merger for change type <code>appdescr_platform_cf_setUI5VersionNumber</code>. Upserts string value at <code>sap.platform.cf/ui5VersionNumber</code>.</p><p>Only available during build time <a target="_self" href="api/sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild">sap.ui.fl.apply._internal.changes.descriptor.RegistrationBuild</a>.</p></p>
+                                 */
+                                namespace SetUI5VersionNumber {
+                                }
                             }
                         }
                     }
@@ -590,9 +777,44 @@ declare namespace sap {
         namespace fl {
             namespace apply {
                 namespace _internal {
+                    namespace controlVariants {
+                        /**
+                         * <p><p>URL handler utility for <code>sap.ui.fl variants</code> (see <a target="_self" href="api/sap.ui.fl.variants.VariantManagement">sap.ui.fl.variants.VariantManagement</a>)</p></p>
+                         */
+                        namespace URLHandler {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
                     /**
                      */
                     namespace flexObjects {
+                        /**
+                         * <p>Flexibility Annotation Change Class.</p>
+                         */
+                        export class AnnotationChange extends sap.ui.fl.apply._internal.flexObjects.FlexObject {
+                            /**
+                             * <p>Flexibility AnnotationChange Class. Changes annotations on underlying V2 and V4 models.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            constructor();
+                        }
+                        /**
+                         * <p>Flexibility AppDescriptor Change Class.</p>
+                         */
+                        export class AppDescriptorChange extends sap.ui.fl.apply._internal.flexObjects.FlexObject {
+                            /**
+                             * <p>Flexibility AppDescriptorChange Class. Changes a specified part of the manifest.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            constructor();
+                        }
                         /**
                          * <p>CompVariant instance</p>
                          */
@@ -602,14 +824,6 @@ declare namespace sap {
                              * @param {any} mPropertyBag <p>Initial object properties</p>
                              */
                             constructor(mPropertyBag: any);
-                        }
-                        /**
-                         */
-                        export class CompVariantRevertData extends sap.ui.fl.apply._internal.flexObjects.RevertData {
-                            /**
-                             * <p>Class for storing information about reverting variants.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-                             */
-                            constructor();
                         }
                         /**
                          * <p>ControllerExtensionChange instance</p>
@@ -630,17 +844,38 @@ declare namespace sap {
                              */
                             constructor();
                         }
-                        /**
-                         */
-                        export class RevertData extends sap.ui.base.ManagedObject {
+                        namespace FlexObject {
                             /**
-                             * <p>Class for storing information about reverting variants.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            export interface FlexObjectMetadata {
+                            }
+                            /**
+                             */
+                            export interface SupportInformation {
+                            }
+                        }
+                        /**
+                         * <p>FlVariant instance</p>
+                         */
+                        export class FlVariant extends sap.ui.fl.apply._internal.flexObjects.Variant {
+                            /**
+                             * <p>Flexibility variant class. Stores variant content, changes and related information.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             * @param {any} mPropertyBag <p>Initial object properties</p>
+                             */
+                            constructor(mPropertyBag: any);
+                        }
+                        /**
+                         * <p>Flexibility class UIChange</p>
+                         */
+                        export class UIChange extends sap.ui.fl.apply._internal.flexObjects.FlexObject {
+                            /**
+                             * <p>Base class for all UI Changes</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                              */
                             constructor();
                         }
                         /**
                          */
-                        export class UpdatableChange extends sap.ui.fl.Change {
+                        export class UpdatableChange extends sap.ui.fl.apply._internal.flexObjects.UIChange {
                             /**
                              * <p>Flexibility change class. Stores change content and related information. This class also be updated as well as reverted.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                              */
@@ -655,22 +890,23 @@ declare namespace sap {
                              */
                             constructor();
                         }
-                    }
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            namespace apply {
-                namespace _internal {
-                    namespace flexObjects {
                         /**
-                         * <p><p>Flexibility AppDescriptor Change Class.</p></p>
+                         * <p>Flexibility VariantChange Change Class.</p>
                          */
-                        namespace AppDescriptorChange {
+                        export class VariantChange extends sap.ui.fl.apply._internal.flexObjects.FlexObject {
+                            /**
+                             * <p>Flexibility VariantChange Class</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            constructor();
+                        }
+                        /**
+                         * <p>Flexibility VariantManagementChange Change Class.</p>
+                         */
+                        export class VariantManagementChange extends sap.ui.fl.apply._internal.flexObjects.FlexObject {
+                            /**
+                             * <p>Flexibility VariantManagementChange Class</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            constructor();
                         }
                     }
                 }
@@ -700,26 +936,18 @@ declare namespace sap {
         namespace fl {
             namespace apply {
                 namespace _internal {
-                    namespace flexObjects {
-                        /**
-                         * <p><p>FlVariant instance</p></p>
-                         */
-                        namespace FlVariant {
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            namespace apply {
-                namespace _internal {
                     /**
                      */
                     namespace flexState {
+                        /**
+                         * <p>Base class for data selectors</p>
+                         */
+                        export class DataSelector extends sap.ui.base.ManagedObject {
+                            /**
+                             * <p>Base class for data selectors. The ID of the data selector should hint on the return type, i.e. plural for arrays and otherwise singular.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            constructor();
+                        }
                     }
                 }
             }
@@ -786,6 +1014,25 @@ declare namespace sap {
             namespace apply {
                 namespace _internal {
                     namespace flexState {
+                        namespace changes {
+                            /**
+                             * <p><p>UI Changes State Stores the dependency maps between UI changes.</p></p>
+                             */
+                            namespace UIChangesState {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace flexState {
                         /**
                          */
                         namespace compVariants {
@@ -804,9 +1051,9 @@ declare namespace sap {
                     namespace flexState {
                         namespace compVariants {
                             /**
-                             * <p><p>Class in charge of applying changes. This includes combining the variants passed on the <code>merge</code> call, sorting and applying changes.</p></p>
+                             * <p><p>Handler class provide data of smart control variant changes and its map.</p></p>
                              */
-                            namespace CompVariantMerger {
+                            namespace CompVariantManagementState {
                             }
                         }
                     }
@@ -824,25 +1071,6 @@ declare namespace sap {
                         /**
                          */
                         namespace controlVariants {
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            namespace apply {
-                namespace _internal {
-                    namespace flexState {
-                        namespace controlVariants {
-                            /**
-                             * <p><p>Provides functionality to switch variants in a variants map. See also <a target="_self" href="api/sap.ui.fl.variants.VariantManagement">sap.ui.fl.variants.VariantManagement</a>.</p></p>
-                             */
-                            namespace Switcher {
-                            }
                         }
                     }
                 }
@@ -875,6 +1103,25 @@ declare namespace sap {
             namespace apply {
                 namespace _internal {
                     namespace flexState {
+                        namespace controlVariants {
+                            /**
+                             * <p><p>Provides functionality for managing variants in the "apply" context. For example: switching variants. See also <a target="_self" href="api/sap.ui.fl.variants.VariantManagement">sap.ui.fl.variants.VariantManagement</a>.</p></p>
+                             */
+                            namespace VariantManagerApply {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace flexState {
                         /**
                          */
                         namespace FlexObjectState {
@@ -892,9 +1139,26 @@ declare namespace sap {
                 namespace _internal {
                     namespace flexState {
                         /**
-                         * <p><p>Flex state class to persist maps and raw state (cache) for a given component reference. The persistence happens inside an object mapped to the component reference, with the following properties:</p><p>{ preparedMaps: { appDescriptorMap: {}, changesMap: {}, variantsMap: {}, compVariantsMap: {}, }, storageResponse: { changes: { changes: [...], comp: { variants: [...], changes: [...], defaultVariants: [...], standardVariants: [...] } variants: [...], variantChanges: [...], variantDependentControlChanges: [...], variantManagementChanges: [...], ui2personalization: {...} }, loadModules: <boolean> }, unfilteredStorageResnonse: {...}, // same as above but without layer filtering partialFlexState: <boolean>, componentId: "<componentId>", componentData: {...} }</p></p>
+                         * <p><p>Flex state class to persist maps and raw state (cache) for a given component reference. The persistence happens inside an object mapped to the component reference, with the following properties:</p><p>{ storageResponse: { changes: {...}, // see Loader.js }, runtimePersistence: { flexObjects: [...], runtimeOnlyData: { liveDependencyMap: {...}, flexObjects: [...], // e.g. standard variants, so they survive cache invalidation lazyVariantsLoaded: [...] // VM references / persistency keys for which all variants were loaded (lazy loading) } }, maxLayer: <string>, emptyState: <boolean>, skipLoadBundle: <boolean>, componentId: "<componentId>", componentData: {...} }</p></p>
                          */
                         namespace FlexState {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace flexState {
+                        /**
+                         * <p><p>Collection of functions to initialize the FlexState maps</p></p>
+                         */
+                        namespace InitialPrepareFunctions {
                         }
                     }
                 }
@@ -962,31 +1226,6 @@ declare namespace sap {
                     /**
                      */
                     namespace preprocessors {
-                        /**
-                         */
-                        export class ControllerExtension {
-                            /**
-                             * <p>Provides the Controller Extensions to the ControllerExtensionProvider from the core</p>
-                             */
-                            constructor();
-                        }
-                    }
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            namespace apply {
-                namespace _internal {
-                    namespace preprocessors {
-                        /**
-                         * <p><p>Provides a history of events. This is needed to show/hide the personalization icon</p></p>
-                         */
-                        namespace EventHistory {
-                        }
                     }
                 }
             }
@@ -1001,23 +1240,6 @@ declare namespace sap {
                     /**
                      */
                     namespace variants {
-                    }
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            namespace apply {
-                namespace _internal {
-                    namespace variants {
-                        /**
-                         * <p><p>URL handler utility for <code>sap.ui.fl variants</code> (@see sap.ui.fl.variants.VariantManagement}</p></p>
-                         */
-                        namespace URLHandler {
-                        }
                     }
                 }
             }
@@ -1032,10 +1254,63 @@ declare namespace sap {
                  * <p><p>The <code>sap.ui.fl.apply.api</code> namespace contains public APIs that can be used during app startup, e.g. to wait for changes to be applied or to access the current variant and switch variants.</p></p>
                  */
                 namespace api {
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace api {
                     /**
-                     * <p>Provides an API for applications to work with control variants. See also <a target="_self" href="api/sap.ui.fl.variants.VariantManagement">sap.ui.fl.variants.VariantManagement</a>.</p>
+                     * <p><p>Provides an API to register and retrieve annotation change handlers.</p></p>
                      */
-                    var ControlVariantApplyAPI: any;
+                    namespace AnnotationChangeHandlerAPI {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace api {
+                    /**
+                     * <p><p>Provides an API for applications to work with control variants. See also <a target="_self" href="api/sap.ui.fl.variants.VariantManagement">sap.ui.fl.variants.VariantManagement</a>.</p></p>
+                     */
+                    namespace ControlVariantApplyAPI {
+                        /**
+                         * <p>Activates the passed variant applicable to the passed control/component. The corresponding variant management control must be available when this function is called. If the variant is not found and the backend supports lazy loading, a backend request is made to fetch the variant. If the flag standardVariant is set to true, the standard variant is activated and the variantReference is ignored: in this scenario, the passed element must be the variant management control.</p>
+                         * @param {any} mPropertyBag <p>Object with parameters as properties</p>
+                         * @returns Promise<any> <p>Resolves after the variant is activated or rejects if an error occurs</p>
+                         */
+                        function activateVariant(mPropertyBag: any): Promise<any>;
+                        /**
+                         * <p>Saves a function that will be called after a variant has been applied with the new variant as parameter. Even if the same variant is selected again the callback is called. The function also performs a sanity check after the control has been rendered. If the passed variant control ID does not match the responsible variant management control, the callback will not be saved. Optionally this function is also called after the initial variant is applied without a sanity check.</p>
+                         * @param {any} mPropertyBag <p>Object with parameters as properties</p>
+                         */
+                        function attachVariantApplied(mPropertyBag: any): void;
+                        /**
+                         * <p>Clears URL technical parameter <code>sap-ui-fl-control-variant-id</code> for control variants. Use this method in case you normally want the variant parameter in the URL, but have a few special navigation patterns where you want to clear it. If you don't want that parameter in general, set the <code>updateVariantInURL</code> parameter on your variant management control to <code>false</code>. SAP Fiori elements use this method. If a variant management control is given as a parameter, only parameters specific to that control are cleared.</p>
+                         * @param {any} mPropertyBag <p>Object with parameters as properties</p>
+                         */
+                        function clearVariantParameterInURL(mPropertyBag: any): void;
+                        /**
+                         * <p>Removes the saved callback for the given control and variant management control.</p>
+                         * @param {any} mPropertyBag <p>Object with parameters as properties</p>
+                         */
+                        function detachVariantApplied(mPropertyBag: any): void;
+                        /**
+                         * <p>Returns the current variant reference for a given variant management reference and control.</p>
+                         * @param {any} mPropertyBag <p>Object with parameters as properties</p>
+                         * @returns string <p>Current variant reference</p>
+                         */
+                        function getCurrentVariantReference(mPropertyBag: any): string;
+                    }
                 }
             }
         }
@@ -1050,6 +1325,21 @@ declare namespace sap {
                      * <p><p>Provides an API to handle default delegates.</p></p>
                      */
                     namespace DelegateMediatorAPI {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace api {
+                    /**
+                     * <p><p>Provides an API to handle specific information about the extension points into the application.</p></p>
+                     */
+                    namespace ExtensionPointRegistryAPI {
                     }
                 }
             }
@@ -1081,6 +1371,10 @@ declare namespace sap {
                      */
                     namespace SmartVariantManagementApplyAPI {
                         /**
+                         */
+                        export interface LoadVariantsResponse {
+                        }
+                        /**
                          * <p><p>Object containing data for a SmartVariantManagement control.</p></p>
                          */
                         export interface Response {
@@ -1110,19 +1404,34 @@ declare namespace sap {
     namespace ui {
         namespace fl {
             /**
-             * <p><p>Helper object to access a change from the back end. Access helper object for each change (and variant) fetched from the back end</p></p>
-             */
-            namespace Cache {
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            /**
              */
             namespace changeHandler {
+                /**
+                 * <p>Default change handler for annotations.</p>
+                 */
+                var ChangeAnnotation: any;
+                /**
+                 */
+                export class BaseAddViaDelegate {
+                    /**
+                     * <p>Returns an instance of the addViaDelegate change handler</p>
+                     * @param {any} mAddViaDelegateSettings <p>The settings required for the addViaDelegate action</p>
+                     * @returns any <p>The addViaDelegate change handler object</p>
+                     */
+                    static createAddViaDelegateChangeHandler(mAddViaDelegateSettings: any): any;
+                    /**
+                     * <p>Base Change Handler for AddViaDelegate</p>
+                     */
+                    constructor();
+                }
+                /**
+                 */
+                export class BaseRename {
+                    /**
+                     * <p>Base Change Handler for Rename</p>
+                     */
+                    constructor();
+                }
             }
         }
     }
@@ -1137,11 +1446,11 @@ declare namespace sap {
                 namespace Base {
                     /**
                      * <p>Instantiates an XML fragment inside a change.</p>
-                     * @param {sap.ui.fl.Change} oChange <p>Change object with instructions to be applied on the control</p>
+                     * @param {sap.ui.fl.apply._internal.flexObjects.FlexObject} oChange <p>Change object with instructions to be applied on the control</p>
                      * @param {any} mPropertyBag <p>Property bag</p>
-                     * @returns Element[]|sap.ui.core.Element[] <p>Array with the nodes/instances of the controls of the fragment</p>
+                     * @returns HTMLElement[] | sap.ui.core.Element[] <p>Array with the nodes/instances of the controls of the fragment</p>
                      */
-                    function instantiateFragment(oChange: sap.ui.fl.Change, mPropertyBag: any): HTMLElement[] | sap.ui.core.Element[];
+                    function instantiateFragment(oChange: sap.ui.fl.apply._internal.flexObjects.FlexObject, mPropertyBag: any): any;
                 }
             }
         }
@@ -1194,8 +1503,9 @@ declare namespace sap {
                          * <p>Descriptor Change</p>
                          * @param {any} mChangeFile <p>change file</p>
                          * @param {sap.ui.fl.descriptorRelated.api.DescriptorInlineChange} oInlineChange <p>inline change object</p>
+                         * @param {any} oAppComponent <p>Application component</p>
                          */
-                        constructor(mChangeFile: any, oInlineChange: any);
+                        constructor(mChangeFile: any, oInlineChange: any, oAppComponent: any);
                     }
                     /**
                      */
@@ -1259,6 +1569,15 @@ declare namespace sap {
                  * <p><p>The <code>sap.ui.fl.initial._internal</code> namespace contains internals that are used during app startup, e.g. to load the flex data and resolve or bootstrap the <code>sap.ui.fl.apply</code> for applying changes.</p></p>
                  */
                 namespace _internal {
+                    /**
+                     * <p>Settings class</p>
+                     */
+                    export class Settings extends sap.ui.base.ManagedObject {
+                        /**
+                         * <p>Holds all the system settings. Properties are classified as information or write operation. Write operations must have a layer configuration to determine which layers support the feature</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                         */
+                        constructor();
+                    }
                 }
             }
         }
@@ -1289,6 +1608,23 @@ declare namespace sap {
                          * <p><p>Base connector for requesting flexibility data from a back end.</p></p>
                          */
                         namespace BackendConnector {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace initial {
+                namespace _internal {
+                    namespace connectors {
+                        /**
+                         * <p><p>Connector for requesting all data from SAPUI5 Flexibility KeyUser service - including personalization.</p></p>
+                         */
+                        namespace BtpServiceConnector {
                         }
                     }
                 }
@@ -1403,6 +1739,22 @@ declare namespace sap {
         namespace fl {
             namespace initial {
                 namespace _internal {
+                    namespace preprocessors {
+                        /**
+                         */
+                        namespace ComponentLifecycleHooks {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace initial {
+                namespace _internal {
                     /**
                      * <p><p>Abstraction providing an API to handle communication with persistence like back ends, local & session storage or work spaces.</p></p>
                      */
@@ -1419,8 +1771,9 @@ declare namespace sap {
             namespace initial {
                 namespace _internal {
                     /**
+                     * <p><p>ConnectorFeaturesMerger class for Connector implementations (initial).</p></p>
                      */
-                    namespace StorageResultDisassemble {
+                    namespace StorageFeaturesMerger {
                     }
                 }
             }
@@ -1453,6 +1806,23 @@ declare namespace sap {
                  * <p><p>Base class for connectors.</p></p>
                  */
                 export interface BaseLoadConnector {
+                }
+                /**
+                 * <p><p>Interface for SAPUI5 flexibility delegates. Such delegates can be attached to controls to let key users add additional properties from metadata.</p></p><h4>Example:</h4><p><p> <pre>
+                &ltmvc:View xmlns:mvc="sap.ui.core.mvc" xmlns:f="sap.ui.layout.form" xmlns:fl="sap.ui.fl" &gt
+                    &ltf:Form id="idForm"
+                        fl:delegate='{
+                            "name":"some/library/DelegateName",
+                            "payload":{
+                                "modelName":"Books"
+                            }
+                        }'
+                    &gt...&lt/f:Form&gt
+                    ...
+                &lt/mvc:View&gt
+                </pre></p></p>
+                 */
+                export interface Delegate {
                 }
             }
         }
@@ -1497,24 +1867,6 @@ declare namespace sap {
              * <p><p>The <code>sap.ui.fl.interfaces</code> namespace contains only interface jsdoc descriptions. It does not contain running code.</p></p>
              */
             namespace registry {
-                /**
-                 */
-                export class ChangeRegistryItem {
-                    /**
-                     * <p>Object to define a change on a specific control type with it's permissions</p>
-                     * @param {any} mParam <p>Parameter description below</p>
-                     */
-                    constructor(mParam: any);
-                }
-                /**
-                 */
-                export class Settings {
-                    /**
-                     * <p>FlexSettings access</p>
-                     * @param {any} oSettings <p>Settings as JSON object</p>
-                     */
-                    constructor(oSettings: any);
-                }
             }
         }
     }
@@ -1547,7 +1899,22 @@ declare namespace sap {
             namespace support {
                 namespace _internal {
                     /**
-                     * <p><p>Provides an object with the changes for the current application as well as further information. I.e. if the changes were applied and their dependencies.</p></p>
+                     * <p><p>Returns an array with all UI Changes for the application. WARNING: No deep clone - Returns original object references to ensure that prototype methods stay intact. Do not mutate.</p></p>
+                     */
+                    namespace getAllUIChanges {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace support {
+                namespace _internal {
+                    /**
+                     * <p><p>Provides an object with the changes for the current application as well as further information. I.e. if the changes were applied and their dependencies. WARNING: No deep clone - Returns original object references to ensure that prototype methods stay intact. Do not mutate.</p></p>
                      */
                     namespace getChangeDependencies {
                     }
@@ -1562,7 +1929,22 @@ declare namespace sap {
             namespace support {
                 namespace _internal {
                     /**
-                     * <p><p>Provides an object with the flex Settings.</p></p>
+                     * <p><p>Returns an array with several FlexObject infos for the application. WARNING: No deep clone - Returns original object references to ensure that prototype methods stay intact. Do not mutate.</p></p>
+                     */
+                    namespace getFlexObjectInfos {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace support {
+                namespace _internal {
+                    /**
+                     * <p><p>Provides an object with the flex Settings. WARNING: No deep clone - Returns original object references to ensure that prototype methods stay intact. Do not mutate.</p></p>
                      */
                     namespace getFlexSettings {
                     }
@@ -1640,84 +2022,84 @@ declare namespace sap {
                     /**
                      * <p>Adds a control to the association <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/for">for</a>.</p>
                      * @param {sap.ui.core.ID | sap.ui.core.Control} vFor <p>The control to add; if empty, nothing is inserted</p>
-                     * @returns any <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    addFor(vFor: sap.ui.core.ID | sap.ui.core.Control): any;
+                    addFor(vFor: sap.ui.core.ID | sap.ui.core.Control): this;
                     /**
-                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/cancel">cancel</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when users presses the cancel button inside <i>Save As</i> dialog.</p>
+                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/cancel">cancel</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when users press the Cancel button inside the Save As dialog.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.fl.variants.VariantManagement</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachCancel(oData: any, fnFunction: any, oListener?: any): this;
+                    attachCancel(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/initialized">initialized</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when the model and context are set.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.fl.variants.VariantManagement</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachInitialized(oData: any, fnFunction: any, oListener?: any): this;
+                    attachInitialized(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
-                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/manage">manage</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when users apply changes to variants in the <i>Manage Views</i> dialog.</p>
+                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/manage">manage</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when users apply changes to variants in the Manage Views dialog.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.fl.variants.VariantManagement</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachManage(oData: any, fnFunction: any, oListener?: any): this;
+                    attachManage(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
-                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/save">save</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when the <i>Save View</i> dialog or the <i>Save As</i> dialog is closed with the save button.</p>
+                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/save">save</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when the Save View dialog or the Save As dialog is closed with the Save button.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.fl.variants.VariantManagement</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachSave(oData: any, fnFunction: any, oListener?: any): this;
+                    attachSave(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/select">select</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.fl.variants.VariantManagement</code> itself.</p><p>This event is fired when a new variant is selected.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.fl.variants.VariantManagement</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachSelect(oData: any, fnFunction: any, oListener?: any): this;
+                    attachSelect(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/cancel">cancel</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachCancel(fnFunction: any, oListener?: any): this;
+                    detachCancel(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/initialized">initialized</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachInitialized(fnFunction: any, oListener?: any): this;
+                    detachInitialized(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/manage">manage</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachManage(fnFunction: any, oListener?: any): this;
+                    detachManage(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/save">save</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachSave(fnFunction: any, oListener?: any): this;
+                    detachSave(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/select">select</a> event of this <code>sap.ui.fl.variants.VariantManagement</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachSelect(fnFunction: any, oListener?: any): this;
+                    detachSelect(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Fires event <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#events/cancel">cancel</a> to attached listeners.</p>
                      * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1749,17 +2131,17 @@ declare namespace sap {
                      */
                     protected fireSelect(mParameters?: any): this;
                     /**
-                     * <p>Gets the currently selected variant key.</p>
-                     * @returns string|null <p>Key of the currently selected variant. In case the model is not yet set <code>null</code> will be returned.</p>
+                     * <p>Gets the variant key that is currently selected in the VM control. Can be different to the actually selected variant in the state during a variant switch.</p>
+                     * @returns string | null <p>Key of the currently selected variant. In case the model is not yet set <code>null</code> will be returned</p>
                      */
                     getCurrentVariantKey(): string | null;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getDisplayTextForExecuteOnSelectionForStandardVariant">displayTextForExecuteOnSelectionForStandardVariant</a>.</p><p>Defines the Apply Automatically text for the standard variant in the Manage Views dialog if the application controls this behavior. <p> <b>Note:</b> the usage of this property is restricted to <code>sap.fe</code> components only.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getDisplayTextForExecuteOnSelectionForStandardVariant">displayTextForExecuteOnSelectionForStandardVariant</a>.</p><p>Defines the Apply Automatically text for the standard variant in the Manage Views dialog if the application controls this behavior. <p> <b>Note:</b> The usage of this property is restricted to <code>sap.fe</code> components only.</p><p>Default value is <code>empty string</code>.</p>
                      * @returns string <p>Value of property <code>displayTextForExecuteOnSelectionForStandardVariant</code></p>
                      */
                     getDisplayTextForExecuteOnSelectionForStandardVariant(): string;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getEditable">editable</a>.</p><p>Indicated if the buttons on the 'My Views' are visible.</p><p>Default value is <code>true</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getEditable">editable</a>.</p><p>Indicates whether the buttons on My Views are visible.</p><p>Default value is <code>true</code>.</p>
                      * @returns boolean <p>Value of property <code>editable</code></p>
                      */
                     getEditable(): boolean;
@@ -1772,81 +2154,86 @@ declare namespace sap {
                      * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getFor">for</a>.</p>
                      * @returns sap.ui.core.ID[] 
                      */
-                    getFor(): sap.ui.core.ID[];
+                    getFor(): any;
                     /**
                      * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getHeaderLevel">headerLevel</a>.</p><p>Semantic level of the header. For more information, see <a target="_self" href="api/sap.m.Title#methods/setLevel">sap.m.Title#setLevel</a>.</p><p>Default value is <code>Auto</code>.</p>
                      * @returns sap.ui.core.TitleLevel <p>Value of property <code>headerLevel</code></p>
                      */
                     getHeaderLevel(): sap.ui.core.TitleLevel;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getInErrorState">inErrorState</a>.</p><p>Indicates that the control is in error state. If set to <code>true</code>, an error message will be displayed whenever the variant is opened.</p><p>Default value is <code>false</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getInErrorState">inErrorState</a>.</p><p>Indicates whether the control is in error state. If set to <code>true</code>, an error message will be displayed when the variant is opened.</p><p>Default value is <code>false</code>.</p>
                      * @returns boolean <p>Value of property <code>inErrorState</code></p>
                      */
                     getInErrorState(): boolean;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getManualVariantKey">manualVariantKey</a>.</p><p>If set to <code>true</code>, the key for a vendor variant will be added manually.<br> <p> <b>Note:</b> This flag is only used internally.</p><p>Default value is <code>false</code>.</p>
-                     * @returns boolean <p>Value of property <code>manualVariantKey</code></p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getMaxWidth">maxWidth</a>.</p><p>Sets the maximum width of the control.</p><p>Default value is <code>"100%"</code>.</p>
+                     * @returns sap.ui.core.CSSSize <p>Value of property <code>maxWidth</code></p>
                      */
-                    getManualVariantKey(): boolean;
+                    getMaxWidth(): sap.ui.core.CSSSize;
                     /**
                      * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getModelName">modelName</a>.</p><p>The name of the model containing the data.</p><p>Default value is <code>empty string</code>.</p>
                      * @returns string <p>Value of property <code>modelName</code></p>
                      */
                     getModelName(): string;
                     /**
-                     * <p>Determines if the current variant is modified.</p>
-                     * @returns boolean <p>If the current variant is modified <code>true</code>, otherwise <code>false</code></p>
+                     * <p>Determines whether the current variant is modified.</p>
+                     * @returns boolean <p>Returns <code>true</code>, if the current variant is modified, otherwise <code>false</code></p>
                      */
                     getModified(): boolean;
                     /**
-                     * <p>Required by the <a target="_self" href="api/sap.m.IOverflowToolbarContent">sap.m.IOverflowToolbarContent</a> interface. Registers invalidations event which is fired when width of the control is changed.</p>
-                     * @returns any <p>Configuration information for the <code>sap.m.IOverflowToolbarContent</code> interface.</p>
+                     * <p>Registers an invalidation event that is fired when the width of the control is changed. <b>Note:</b> This is required by the <a target="_self" href="api/sap.m.IOverflowToolbarContent">sap.m.IOverflowToolbarContent</a> interface.</p>
+                     * @returns any <p>Configuration information for the <a target="_self" href="api/sap.m.IOverflowToolbarContent">sap.m.IOverflowToolbarContent</a> interface</p>
                      */
                     protected getOverflowToolbarConfig(): any;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getResetOnContextChange">resetOnContextChange</a>.</p><p>When set to <code>false</code>, doesn't reset the <code>VariantManagement</code> control to the default variant, when its binding context is changed. <p> <b>Note:</b> The <code>VariantManagement</code> control does not react in any way to this property. It is used internally by the flexibility layer.</p><p>Default value is <code>true</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getResetOnContextChange">resetOnContextChange</a>.</p><p>If set to <code>false</code>, it does not reset the <code>VariantManagement</code> control to the default variant if its binding context is changed. <p> <b>Note:</b> The <code>VariantManagement</code> control itself is not affected by this property. It is only used internally by the SAPUI5 flexibility layer.</p><p>Default value is <code>true</code>.</p>
                      * @returns boolean <p>Value of property <code>resetOnContextChange</code></p>
                      */
                     getResetOnContextChange(): boolean;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getShowSetAsDefault">showSetAsDefault</a>.</p><p>Indicated if the defaulting functionality is enabled.</p><p>Default value is <code>true</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getShowSetAsDefault">showSetAsDefault</a>.</p><p>Indicates whether the functionality of setting a default variant is enabled. The Default column in Manage Views and the Set as Default checkbox in Save View will be disabled if set to <code>false</code>.</p><p>Default value is <code>true</code>.</p>
                      * @returns boolean <p>Value of property <code>showSetAsDefault</code></p>
                      */
                     getShowSetAsDefault(): boolean;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getUpdateVariantInURL">updateVariantInURL</a>.</p><p>Determines the intention of setting the current variant based on passed information. <p> <b>Note:</b> The <code>VariantManagement</code> control does not react in any way to this property. It is used internally by the flexibility layer.</p><p>Default value is <code>false</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getTitleStyle">titleStyle</a>.</p><p>Defines the style of the title. For more information, see <a target="_self" href="api/sap.m.Title#methods/setTitleStyle">sap.m.Title#setTitleStyle</a>.</p><p>Default value is <code>Auto</code>.</p>
+                     * @returns sap.ui.core.TitleLevel <p>Value of property <code>titleStyle</code></p>
+                     */
+                    getTitleStyle(): sap.ui.core.TitleLevel;
+                    /**
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getUpdateVariantInURL">updateVariantInURL</a>.</p><p>Indicates whether the current variant is updated based on the passed information in the URL. <p> <b>Note:</b> The <code>VariantManagement</code> control itself is not affected by this property. It is only used internally by the SAPUI5 flexibility layer.</p><p>Default value is <code>false</code>.</p>
                      * @returns boolean <p>Value of property <code>updateVariantInURL</code></p>
                      */
                     getUpdateVariantInURL(): boolean;
                     /**
-                     * <p>Retrieves all variants.</p>
-                     * @returns any[] <p>All variants. In case the model is not yet set, an empty array will be returned.</p>
+                     * <p>Gets all variants.</p>
+                     * @returns any[] <p>All variants; if the model is not yet set, an empty array will be returned.</p>
                      */
                     getVariants(): any[];
                     /**
                      * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getFor">for</a>.</p>
                      * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
                      */
-                    removeAllFor(): sap.ui.core.ID[];
+                    removeAllFor(): any;
                     /**
                      * <p>Removes an for from the association named <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getFor">for</a>.</p>
                      * @param {number | sap.ui.core.ID | sap.ui.core.Control} vFor <p>The for to be removed or its index or ID</p>
-                     * @returns sap.ui.core.ID|null <p>The removed for or <code>null</code></p>
+                     * @returns sap.ui.core.ID | null <p>The removed for or <code>null</code></p>
                      */
                     removeFor(vFor: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
                     /**
                      * <p>Sets the new selected variant.</p>
-                     * @param {string} sKey <p>Key of the variant that should be selected.</p>
+                     * @param {string} sKey <p>Key of the variant that is selected</p>
                      */
                     setCurrentVariantKey(sKey: string): void;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getDisplayTextForExecuteOnSelectionForStandardVariant">displayTextForExecuteOnSelectionForStandardVariant</a>.</p><p>Defines the Apply Automatically text for the standard variant in the Manage Views dialog if the application controls this behavior. <p> <b>Note:</b> the usage of this property is restricted to <code>sap.fe</code> components only.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getDisplayTextForExecuteOnSelectionForStandardVariant">displayTextForExecuteOnSelectionForStandardVariant</a>.</p><p>Defines the Apply Automatically text for the standard variant in the Manage Views dialog if the application controls this behavior. <p> <b>Note:</b> The usage of this property is restricted to <code>sap.fe</code> components only.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {string} sDisplayTextForExecuteOnSelectionForStandardVariant <p>New value for property <code>displayTextForExecuteOnSelectionForStandardVariant</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setDisplayTextForExecuteOnSelectionForStandardVariant(sDisplayTextForExecuteOnSelectionForStandardVariant?: string): this;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getEditable">editable</a>.</p><p>Indicated if the buttons on the 'My Views' are visible.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getEditable">editable</a>.</p><p>Indicates whether the buttons on My Views are visible.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
@@ -1864,17 +2251,17 @@ declare namespace sap {
                      */
                     setHeaderLevel(sHeaderLevel?: sap.ui.core.TitleLevel): this;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getInErrorState">inErrorState</a>.</p><p>Indicates that the control is in error state. If set to <code>true</code>, an error message will be displayed whenever the variant is opened.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getInErrorState">inErrorState</a>.</p><p>Indicates whether the control is in error state. If set to <code>true</code>, an error message will be displayed when the variant is opened.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bInErrorState <p>New value for property <code>inErrorState</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setInErrorState(bInErrorState?: boolean): this;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getManualVariantKey">manualVariantKey</a>.</p><p>If set to <code>true</code>, the key for a vendor variant will be added manually.<br> <p> <b>Note:</b> This flag is only used internally.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-                     * @param {boolean} bManualVariantKey <p>New value for property <code>manualVariantKey</code></p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getMaxWidth">maxWidth</a>.</p><p>Sets the maximum width of the control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"100%"</code>.</p>
+                     * @param {sap.ui.core.CSSSize} sMaxWidth <p>New value for property <code>maxWidth</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setManualVariantKey(bManualVariantKey?: boolean): this;
+                    setMaxWidth(sMaxWidth?: sap.ui.core.CSSSize): this;
                     /**
                      * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getModelName">modelName</a>.</p><p>The name of the model containing the data.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {string} sModelName <p>New value for property <code>modelName</code></p>
@@ -1882,19 +2269,25 @@ declare namespace sap {
                      */
                     setModelName(sModelName?: string): this;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getResetOnContextChange">resetOnContextChange</a>.</p><p>When set to <code>false</code>, doesn't reset the <code>VariantManagement</code> control to the default variant, when its binding context is changed. <p> <b>Note:</b> The <code>VariantManagement</code> control does not react in any way to this property. It is used internally by the flexibility layer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getResetOnContextChange">resetOnContextChange</a>.</p><p>If set to <code>false</code>, it does not reset the <code>VariantManagement</code> control to the default variant if its binding context is changed. <p> <b>Note:</b> The <code>VariantManagement</code> control itself is not affected by this property. It is only used internally by the SAPUI5 flexibility layer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bResetOnContextChange <p>New value for property <code>resetOnContextChange</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setResetOnContextChange(bResetOnContextChange?: boolean): this;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getShowSetAsDefault">showSetAsDefault</a>.</p><p>Indicated if the defaulting functionality is enabled.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getShowSetAsDefault">showSetAsDefault</a>.</p><p>Indicates whether the functionality of setting a default variant is enabled. The Default column in Manage Views and the Set as Default checkbox in Save View will be disabled if set to <code>false</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                      * @param {boolean} bShowSetAsDefault <p>New value for property <code>showSetAsDefault</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setShowSetAsDefault(bShowSetAsDefault?: boolean): this;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getUpdateVariantInURL">updateVariantInURL</a>.</p><p>Determines the intention of setting the current variant based on passed information. <p> <b>Note:</b> The <code>VariantManagement</code> control does not react in any way to this property. It is used internally by the flexibility layer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getTitleStyle">titleStyle</a>.</p><p>Defines the style of the title. For more information, see <a target="_self" href="api/sap.m.Title#methods/setTitleStyle">sap.m.Title#setTitleStyle</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Auto</code>.</p>
+                     * @param {sap.ui.core.TitleLevel} sTitleStyle <p>New value for property <code>titleStyle</code></p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setTitleStyle(sTitleStyle?: sap.ui.core.TitleLevel): this;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.fl.variants.VariantManagement#methods/getUpdateVariantInURL">updateVariantInURL</a>.</p><p>Indicates whether the current variant is updated based on the passed information in the URL. <p> <b>Note:</b> The <code>VariantManagement</code> control itself is not affected by this property. It is only used internally by the SAPUI5 flexibility layer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
                      * @param {boolean} bUpdateVariantInURL <p>New value for property <code>updateVariantInURL</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
@@ -1910,35 +2303,6 @@ declare namespace sap {
                      * @param {any} mPropertyBag <p>Map of properties required for the constructor</p>
                      */
                     constructor(oData: any, mPropertyBag: any);
-                    /**
-                     * <p>Checks if dirty changes exist for the current variant inside the passed variant management reference. If no dirty changes exist, it marks the associated 'modified' model property to <code>false</code>.</p>
-                     * @param {string[]} aVariantManagementReferences <p>Array of variant management references</p>
-                     */
-                    checkDirtyStateForControlModels(aVariantManagementReferences: string[]): void;
-                    /**
-                     * <p>Returns the current variant for a given variant management control.</p>
-                     * @param {string} sVariantManagementReference <p>Variant management reference</p>
-                     * @returns string <p>Current variant reference</p>
-                     */
-                    getCurrentVariantReference(sVariantManagementReference: string): string;
-                    /**
-                     * <p>Opens the <i>Manage Views</i> dialog. Returns a promise which resolves to changes made from the manage dialog, based on the parameters passed.</p>
-                     * @param {sap.ui.fl.variants.VariantManagement} oVariantManagementControl <p>Variant management control</p>
-                     * @param {string} sVariantManagementReference <p>Variant management reference</p>
-                     * @param {string} sLayer <p>Current layer</p>
-                     * @param {string} sClass <p>Style class assigned to the management dialog</p>
-                     * @param {any} oContextSharingComponentPromise <p>Promise resolving with the ComponentContainer</p>
-                     * @returns Promise<any> <p>Promise which resolves when "manage" event is fired from the variant management control</p>
-                     */
-                    manageVariants(oVariantManagementControl: sap.ui.fl.variants.VariantManagement, sVariantManagementReference: string, sLayer: string, sClass: string, oContextSharingComponentPromise: any): Promise<any>;
-                    /**
-                     * <p>Sets the passed properties on a variant for the passed variant management reference and returns the content for change creation</p>
-                     * @param {sap.ui.fl.variants.VariantManagement} sVariantManagementReference <p>Variant management reference</p>
-                     * @param {any} mPropertyBag <p>Map of properties</p>
-                     * @param {boolean} bUpdateCurrentVariant <p>Update current variant</p>
-                     * @returns any <p>Additional content for change creation</p>
-                     */
-                    setVariantProperties(sVariantManagementReference: sap.ui.fl.variants.VariantManagement, mPropertyBag: any, bUpdateCurrentVariant?: boolean): any;
                 }
             }
         }
@@ -1971,6 +2335,19 @@ declare namespace sap {
                         export interface SelectedContexts {
                         }
                     }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace variants {
+                /**
+                 * <p><p>Manager for all FlVariant related tasks that are triggered by a user interaction.</p></p>
+                 */
+                namespace VariantManager {
                 }
             }
         }
@@ -2090,6 +2467,23 @@ declare namespace sap {
                          * <p><p>Base connector for saving and deleting data flexibility data from an back end.</p></p>
                          */
                         namespace BackendConnector {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace write {
+                namespace _internal {
+                    namespace connectors {
+                        /**
+                         * <p><p>Connector for saving and deleting data from SAPUI5 Flexibility KeyUser service - including personalization.</p></p>
+                         */
+                        namespace BtpServiceConnector {
                         }
                     }
                 }
@@ -2257,6 +2651,23 @@ declare namespace sap {
                 namespace _internal {
                     namespace connectors {
                         /**
+                         * <p><p>This connector is used by Flexibility Support Chrome extension. It replaces the default connector and allows to apply changes from the JSON file which has been created by the Flexibility Data Export Tool</p></p>
+                         */
+                        namespace SupportLocalStorageConnector {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace write {
+                namespace _internal {
+                    namespace connectors {
+                        /**
                          * <p><p>Util class for Connector implementations (write).</p></p>
                          */
                         namespace Utils {
@@ -2275,14 +2686,6 @@ declare namespace sap {
                     /**
                      */
                     namespace extensionPoint {
-                        /**
-                         */
-                        export class Registry {
-                            /**
-                             * <p>Object to register extension points to track their locations.</p>
-                             */
-                            constructor();
-                        }
                     }
                 }
             }
@@ -2373,19 +2776,6 @@ declare namespace sap {
                          * <p><p>Extension variant for ABAP single tenant environnments (via so called Custom Fields)</p></p>
                          */
                         namespace SingleTenantABAPExtensibilityVariant {
-                            /**
-                             * <p>Creates a new subclass of class sap.ui.fl.write._internal.fieldExtensibility.SingleTenantABAPExtensibilityVariant with name <code>sClassName</code> and enriches it with the information contained in <code>oClassInfo</code>.</p><p><code>oClassInfo</code> might contain the same kind of information as described in <a target="_self" href="api/sap.ui.fl.write._internal.fieldExtensibility.ABAPExtensibilityVariant#methods/sap.ui.fl.write._internal.fieldExtensibility.ABAPExtensibilityVariant.extend">sap.ui.fl.write._internal.fieldExtensibility.ABAPExtensibilityVariant.extend</a>.</p>
-                             * @param {string} sClassName <p>Name of the class being created</p>
-                             * @param {any} oClassInfo <p>Object literal with information about the class</p>
-                             * @param {Function} FNMetaImpl <p>Constructor function for the metadata object; if not given, it defaults to the metadata implementation used by this class</p>
-                             * @returns Function <p>Created class / constructor function</p>
-                             */
-                            function extend(sClassName: string, oClassInfo?: any, FNMetaImpl?: Function): Function;
-                            /**
-                             * <p>Returns a metadata object for class sap.ui.fl.write._internal.fieldExtensibility.SingleTenantABAPExtensibilityVariant.</p>
-                             * @returns sap.ui.base.Metadata <p>Metadata object describing this class</p>
-                             */
-                            function getMetadata(): sap.ui.base.Metadata;
                         }
                     }
                 }
@@ -2401,6 +2791,33 @@ declare namespace sap {
                     /**
                      */
                     namespace flexState {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace write {
+                namespace _internal {
+                    namespace flexState {
+                        namespace changes {
+                            /**
+                             * <p><p>Central class for the management of UIChanges within the flex states.</p></p>
+                             */
+                            namespace UIChangeManager {
+                                /**
+                                 * <p>Adds new UIChanges and returns the IDs of the new UIChanges.</p>
+                                 * @param {string} sReference <p>Flex reference of the application</p>
+                                 * @param {any} aChanges <p>Array with complete and finalized JSON object representation of the file content of the UIChanges or UIChange instances</p>
+                                 * @param {sap.ui.core.Component} oAppComponent <p>Application component instance</p>
+                                 * @returns sap.ui.fl.apply._internal.flexObjects.FlexObject[] <p>The newly added UIChanges</p>
+                                 */
+                                function addDirtyChanges(sReference: string, aChanges: any, oAppComponent: sap.ui.core.Component): any;
+                            }
+                        }
                     }
                 }
             }
@@ -2447,10 +2864,39 @@ declare namespace sap {
         namespace fl {
             namespace write {
                 namespace _internal {
-                    /**
-                     * <p><p>Abstraction providing an API to handle communication with persistencies like back ends, local & session storage or work spaces.</p></p>
-                     */
-                    namespace Storage {
+                    namespace flexState {
+                        /**
+                         * <p><p>Central class for operations on the flex states and flex objects.</p></p>
+                         */
+                        namespace FlexObjectManager {
+                            /**
+                             * <p>Adds new dirty flex objects.</p>
+                             * @param {string} sReference <p>Flex reference of the application</p>
+                             * @param {string} sComponentId <p>ID of the component</p>
+                             * @param {any} aFlexObjects <p>JSON object representation of flex objects or flex object instances</p>
+                             * @returns sap.ui.fl.apply._internal.flexObjects.FlexObject[] <p>The prepared flex objects</p>
+                             */
+                            function addDirtyFlexObjects(sReference: string, sComponentId: string, aFlexObjects: any): any;
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace write {
+                namespace _internal {
+                    namespace flexState {
+                        namespace UI2Personalization {
+                            /**
+                             * <p><p>Handler class to UI2 Personalization write functions</p></p>
+                             */
+                            namespace UI2PersonalizationState {
+                            }
+                        }
                     }
                 }
             }
@@ -2463,9 +2909,9 @@ declare namespace sap {
             namespace write {
                 namespace _internal {
                     /**
-                     * <p><p>ConnectorFeaturesMerger class for Connector implementations (write).</p></p>
+                     * <p><p>Abstraction providing an API to handle communication with persistencies like back ends, local & session storage or work spaces.</p></p>
                      */
-                    namespace StorageFeaturesMerger {
+                    namespace Storage {
                     }
                 }
             }
@@ -2520,21 +2966,6 @@ declare namespace sap {
             namespace write {
                 namespace api {
                     /**
-                     * <p><p>Provides an API for tools like <a target="_self" href="api/sap.ui.rta">sap.ui.rta</a> to create, apply and revert <a target="_self" href="api/sap.ui.fl.Change">sap.ui.fl.Change</a>.</p></p>
-                     */
-                    namespace ChangesWriteAPI {
-                    }
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace fl {
-            namespace write {
-                namespace api {
-                    /**
                      * <p><p>Namespace containing interfaces and base classes of connectors to implement a connection to a specific end point capable of storing flexibility entities as well as providing information about its capabilities.</p></p>
                      */
                     namespace connectors {
@@ -2567,7 +2998,7 @@ declare namespace sap {
             namespace write {
                 namespace api {
                     /**
-                     * <p><p>Provides an API for creating and managing context based adaptation.</p></p>
+                     * <p><p>Provides an API for creating and managing context-based adaptation.</p></p>
                      */
                     namespace ContextBasedAdaptationsAPI {
                     }
@@ -2617,9 +3048,9 @@ declare namespace sap {
             namespace write {
                 namespace api {
                     /**
-                     * <p><p>Provides an API to handle specific information about the extension points into the application.</p></p>
+                     * <p><p>Provides an API that enables tools such as <a target="_self" href="api/sap.ui.rta">sap.ui.rta</a> to manage with control variants. See also <a target="_self" href="api/sap.ui.fl.variants.VariantManager">sap.ui.fl.variants.VariantManager</a>.</p></p>
                      */
-                    namespace ExtensionPointRegistryAPI {
+                    namespace ControlVariantWriteAPI {
                     }
                 }
             }
@@ -2682,7 +3113,7 @@ declare namespace sap {
             namespace write {
                 namespace api {
                     /**
-                     * <p><p>Provides an API for tools to query, provide, save or reset <a target="_self" href="api/sap.ui.fl.Change">sap.ui.fl.Change</a>s.</p></p>
+                     * <p><p>Provides an API for tools to query, provide, save or reset <a target="_self" href="api/sap.ui.fl.apply._internal.flexObjects.FlexObject">sap.ui.fl.apply._internal.flexObjects.FlexObject</a>s.</p></p>
                      */
                     namespace PersistenceWriteAPI {
                     }
@@ -2823,9 +3254,113 @@ declare namespace sap {
         namespace fl {
             namespace apply {
                 namespace _internal {
+                    namespace flexState {
+                        /**
+                         */
+                        namespace communication {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace initial {
+                /**
+                 */
+                namespace api {
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    namespace changes {
+                        namespace descriptor {
+                            /**
+                             */
+                            namespace platform {
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
                     /**
                      */
                     namespace connectors {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    /**
+                     */
+                    namespace controlVariants {
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace apply {
+                namespace _internal {
+                    /**
+                     */
+                    namespace extensionPoint {
+                        /**
+                         */
+                        export class Registry {
+                            /**
+                             * <p>Object to register extension points to track their locations.</p>
+                             */
+                            constructor();
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace initial {
+                namespace _internal {
+                    /**
+                     */
+                    namespace preprocessors {
+                        /**
+                         */
+                        export class ControllerExtension {
+                            /**
+                             * <p>Provides the Controller Extensions to the ControllerExtensionProvider from the core</p>
+                             */
+                            constructor();
+                        }
                     }
                 }
             }
@@ -2848,6 +3383,56 @@ declare namespace sap {
                      * @param {any} mSettings <p>initial settings for the new control</p>
                      */
                     constructor(sId?: string, mSettings?: any);
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            /**
+             */
+            namespace util {
+                /**
+                 * <p>Error indicating that the reason for throwing was not an actual issue but rather a cancelation of the current action.</p>
+                 */
+                export class CancelError {
+                    /**
+                     */
+                    constructor();
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace write {
+                namespace _internal {
+                    namespace flexState {
+                        /**
+                         */
+                        namespace changes {
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+declare namespace sap {
+    namespace ui {
+        namespace fl {
+            namespace write {
+                namespace _internal {
+                    namespace flexState {
+                        /**
+                         */
+                        namespace UI2Personalization {
+                        }
+                    }
                 }
             }
         }

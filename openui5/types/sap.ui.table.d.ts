@@ -8,7 +8,7 @@
 declare namespace sap {
 	namespace ui {
 		/**
-		 * <p><p>Table-like controls, mainly for desktop scenarios.</p></p>
+		 * <p><p>Table-like controls, mainly for desktop scenarios.</p><p>Basic support for OData V4 is provided, especially by the following plugins: <ul> <li><a target="_self" href="api/sap.ui.table.plugins.ODataV4MultiSelection">ODataV4MultiSelection</a></li> <li><a target="_self" href="api/sap.ui.table.plugins.ODataV4SingleSelection">ODataV4SingleSelection</a></li> <li><a target="_self" href="api/sap.ui.table.plugins.ODataV4Aggregation">ODataV4Aggregation</a></li> <li><a target="_self" href="api/sap.ui.table.plugins.ODataV4Hierarchy">ODataV4Hierarchy</a></li> </ul> With OData V4, use one of the OData V4 selection plugins instead of the table's built-in selection or a different selection plugin.</p><p>For more extensive functionality, the SAP Fiori Elements framework for OData V4 provides the <a target="_self" href="topic/549749bd901440d4bb242282a16b0ec2">Flexible Programming Model</a>. It offers building blocks that can be used without additional integration effort. For more table-related information, see the <a target="_self" href="topic/3801656db27b4b7a9099b6ed5fa1d769">Table Building Block</a>.</p></p>
 		 */
 		namespace table {
 			/**
@@ -21,6 +21,11 @@ declare namespace sap {
 				 * @param {any} mSettings <p>initial settings for the new control</p>
 				 */
 				constructor(sId?: string, mSettings?: any);
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.AnalyticalColumn#methods/getGrouped">grouped</a>.</p><p>Indicates if the column is grouped.</p><p>Default value is <code>false</code>.</p>
+				 * @returns boolean <p>Value of property <code>grouped</code></p>
+				 */
+				getGrouped(): boolean;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.AnalyticalColumn#methods/getGroupHeaderFormatter">groupHeaderFormatter</a>.</p><p>If the column is grouped, this formatter is used to format the value in the group header</p>
 				 * @returns Function <p>Value of property <code>groupHeaderFormatter</code></p>
@@ -46,6 +51,12 @@ declare namespace sap {
 				 * @returns boolean <p>Value of property <code>summed</code></p>
 				 */
 				getSummed(): boolean;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.AnalyticalColumn#methods/getGrouped">grouped</a>.</p><p>Indicates if the column is grouped.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+				 * @param {boolean} bGrouped <p>New value for property <code>grouped</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setGrouped(bGrouped?: boolean): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.AnalyticalColumn#methods/getGroupHeaderFormatter">groupHeaderFormatter</a>.</p><p>If the column is grouped, this formatter is used to format the value in the group header</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {Function} fnGroupHeaderFormatter <p>New value for property <code>groupHeaderFormatter</code></p>
@@ -89,9 +100,9 @@ declare namespace sap {
 				constructor(sId?: string, mSettings?: any);
 			}
 			/**
-			 * <p>Table which handles analytical OData backends. The AnalyticalTable only works with an AnalyticalBinding and correctly annotated OData services. Please check on the SAP Annotations for OData Version 2.0 documentation for further details.<br><br><span>Documentation links:</span><ul><li><a target="_blank" rel="noopener noreferrer" href="http://scn.sap.com/docs/DOC-44986">http://scn.sap.com/docs/DOC-44986</a>
-						<img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
-						title="Information published on SAP site" class="sapUISDKExternalLink"/></li></ul></p>
+			 * <p>Table that handles analytical OData V2 back-end scenarios. The <code>AnalyticalTable</code> only works with <a target="_self" href="api/sap.ui.model.analytics.AnalyticalBinding">AnalyticalBinding</a> and correctly annotated OData services. Please check out the functionality of analytical binding and the SAP Annotations for OData Version 2.0 documentation for further details. For an analytical-table-like behavior with OData V4 services, use the <a target="_self" href="api/sap.ui.table.Table">Table</a> control with the <a target="_self" href="api/sap.ui.table.plugins.ODataV4Aggregation">ODataV4Aggregation</a> plugin.<br><br><span>Documentation links:</span><ul><li><a target="_blank" rel="noopener noreferrer" href="https://github.com/SAP/odata-vocabularies/blob/main/docs/v2-annotations.md">https://github.com/SAP/odata-vocabularies/blob/main/docs/v2-annotations.md</a>
+						<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
+						title="Information published on non SAP site" class="sapUISDKExternalLink"/></li><li><a target="_self" href="topic/08197fa68e4f479cbe30f639cc1cd22c">sap.ui.table</a></li></ul></p>
 			 */
 			export class AnalyticalTable extends sap.ui.table.Table {
 				/**
@@ -101,7 +112,7 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
-				 * <p>Adds the given selection interval to the selection. In case of a single selection, only <code>iIndexTo</code> is added to the selection.</p>
+				 * <p>Adds the given selection interval to the selection. In case of a single selection, only <code>iIndexTo</code> is added to the selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 				 * @param {number} iIndexTo <p>Index up to which to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -115,69 +126,73 @@ declare namespace sap {
 				 */
 				addSelectionInterval(iFromIndex: number, iToIndex: number): this;
 				/**
-				 * <p>Collapses one or more rows.</p>
-				 * @param {number | number[]} vRowIndex <p>A single index, or an array of indices of the rows to be collapsed</p>
+				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.AnalyticalTable#events/group">group</a> event of this <code>sap.ui.table.AnalyticalTable</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.AnalyticalTable</code> itself.</p><p>Fired when the table is grouped.</p>
+				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.AnalyticalTable</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				collapse(vRowIndex: number | number[]): this;
+				attachGroup(oData: any, fnFunction: Function, oListener?: any): this;
+				/**
+				 * <p>Collapses one or more rows.</p>
+				 * @param {any} vRowIndex <p>A single index, or an array of indices of the rows to be collapsed</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				collapse(vRowIndex: any): this;
 				/**
 				 * <p>Collapses all nodes (and their child nodes if collapseRecursive is activated).</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				collapseAll(): this;
 				/**
-				 * <p>Expands one or more rows.</p>
-				 * @param {number | number[]} vRowIndex <p>A single index or an array of indices of the rows to be expanded</p>
+				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.AnalyticalTable#events/group">group</a> event of this <code>sap.ui.table.AnalyticalTable</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				expand(vRowIndex: number | number[]): this;
+				detachGroup(fnFunction: Function, oListener?: any): this;
+				/**
+				 * <p>Expands one or more rows.</p>
+				 * @param {any} vRowIndex <p>A single index or an array of indices of the rows to be expanded</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				expand(vRowIndex: any): this;
 				/**
 				 * <p>Expands all nodes. The current selection is removed, and the table scrolls back to the top. If this method is called, not all groups might be loaded. If the user then scrolls to the bottom of the table, additional groups are loaded, which increases the scroll range, and the scroll thumb moves up.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				expandAll(): this;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.AnalyticalTable#methods/getColumnVisibilityMenuSorter">columnVisibilityMenuSorter</a>.</p><p>Functions which is used to sort the column visibility menu entries e.g.: function(ColumnA, ColumnB) { return 0 = equals, <0 lower, >0 greater }; Other values than functions will be ignored.</p>
-				 * @returns any <p>Value of property <code>columnVisibilityMenuSorter</code></p>
+				 * <p>Fires event <a target="_self" href="api/sap.ui.table.AnalyticalTable#events/group">group</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
+				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+				 * @returns boolean <p>Whether or not to prevent the default action</p>
 				 */
-				getColumnVisibilityMenuSorter(): any;
+				protected fireGroup(mParameters?: any): boolean;
 				/**
-				 * <p>Returns the context of a row by its index. Please note that for server-based models like OData, the supplied index might not have been loaded yet. If the context is not available at the client, the binding will trigger a backend request and request this single context. Although this API looks synchronous it may not return a context but load it and fire a change event on the binding.</p><p>For server-based models you should consider to only make this API call when the index is within the currently visible scroll area.</p>
-				 * @param {number} iIndex <p>Index of the row to return the context from.</p>
-				 * @returns sap.ui.model.Context|null <p>The context at this index or <code>null</code></p>
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a>.</p><p>Columns of the Table</p>
+				 * @returns sap.ui.table.Column[] 
 				 */
-				getContextByIndex(iIndex: number): sap.ui.model.Context | null;
+				getColumns(): any;
 				/**
-				 * <p>Returns the context of a row by its index.</p>
-				 * @param {number} iIndex <p>Index of the row to return the context from.</p>
-				 * @returns sap.ui.model.Context <p>The context of a row by its index</p>
+				 * <p>Returns the Columns of the AnalyticalTable.</p>
+				 * @returns sap.ui.table.AnalyticalColumn[] 
 				 */
-				getContextByIndex(iIndex: number): sap.ui.model.Context;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>Default value is <code>false</code>.</p>
-				 * @returns boolean <p>Value of property <code>enableGrouping</code></p>
-				 */
-				getEnableGrouping(): boolean;
-				/**
-				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>, or <code>null</code>.</p>
-				 * @returns sap.ui.core.ID 
-				 */
-				getGroupBy(): sap.ui.core.ID;
+				getColumns(): any;
 				/**
 				 * <p>Retrieves the lead selection index.</p><p>The lead selection index is, among other things, used to determine the start/end of a selection range, when using Shift-Click to select multiple entries at once.</p>
 				 * @returns number <p>Current lead selection index.</p>
 				 */
 				getSelectedIndex(): number;
 				/**
-				 * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p>
+				 * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns number[] <p>Selected indices</p>
 				 */
-				getSelectedIndices(): number[];
+				getSelectedIndices(): any;
 				/**
 				 * <p>Returns an array containing the row indices of all selected tree nodes (in ascending order).</p><p>Please be aware of the following: Due to performance/network traffic reasons, the getSelectedIndices function returns only all indices of actually selected rows/tree nodes. Unknown rows/nodes (as in "not yet loaded" to the client), will not be returned.</p>
 				 * @returns number[] <p>an array containing all selected indices</p>
 				 */
-				getSelectedIndices(): number[];
+				getSelectedIndices(): any;
 				/**
 				 * <p>Returns the total size of the data entries.</p>
 				 * @returns number <p>The total size of the data entries</p>
@@ -190,7 +205,7 @@ declare namespace sap {
 				 */
 				isExpanded(iRowIndex: number): boolean;
 				/**
-				 * <p>Checks whether an index is selected.</p>
+				 * <p>Checks whether an index is selected.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndex <p>Index to check for selection</p>
 				 * @returns boolean <p>Whether the index is selected</p>
 				 */
@@ -202,7 +217,7 @@ declare namespace sap {
 				 */
 				isIndexSelected(iRowIndex: number): boolean;
 				/**
-				 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p>
+				 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the deselection should start</p>
 				 * @param {number} iIndexTo <p>Index up to which to deselect</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -222,7 +237,7 @@ declare namespace sap {
 				 */
 				protected resumeUpdateAnalyticalInfo(bSuppressRefresh: boolean, bForceChange: boolean): void;
 				/**
-				 * <p>Adds all rows to the selection. Please note that for server based models like OData the indices which are considered to be selected might not be available at the client yet. Calling getContextByIndex might not return a result but trigger a roundtrip to request this single entity.</p>
+				 * <p>Adds all rows to the selection. Please note that for server based models like OData the indices which are considered to be selected might not be available at the client yet. Calling getContextByIndex might not return a result but trigger a roundtrip to request this single entity.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				selectAll(): this;
@@ -232,25 +247,7 @@ declare namespace sap {
 				 */
 				selectAll(): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.AnalyticalTable#methods/getColumnVisibilityMenuSorter">columnVisibilityMenuSorter</a>.</p><p>Functions which is used to sort the column visibility menu entries e.g.: function(ColumnA, ColumnB) { return 0 = equals, <0 lower, >0 greater }; Other values than functions will be ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-				 * @param {any} oColumnVisibilityMenuSorter <p>New value for property <code>columnVisibilityMenuSorter</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setColumnVisibilityMenuSorter(oColumnVisibilityMenuSorter?: any): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-				 * @param {boolean} bEnableGrouping <p>New value for property <code>enableGrouping</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setEnableGrouping(bEnableGrouping?: boolean): this;
-				/**
-				 * <p>Sets the associated <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>.</p>
-				 * @param {sap.ui.core.ID | sap.ui.table.Column} oGroupBy <p>ID of an element which becomes the new target of this groupBy association; alternatively, an element instance may be given</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setGroupBy(oGroupBy: sap.ui.core.ID | sap.ui.table.Column): this;
-				/**
-				 * <p>Sets the selected index. The previous selection is removed.</p>
+				 * <p>Sets the selected index. The previous selection is removed.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndex <p>The index to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -262,7 +259,7 @@ declare namespace sap {
 				 */
 				setSelectedIndex(iRowIndex: number): this;
 				/**
-				 * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p>
+				 * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 				 * @param {number} iIndexTo <p>Index up to which to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -283,7 +280,7 @@ declare namespace sap {
 			/**
 			 * <p>The column allows you to define column specific properties that will be applied when rendering the table.</p>
 			 */
-			export class Column extends sap.ui.core.Element {
+			export class _Column extends sap.ui.core.Element {
 				/**
 				 * <p>Constructor for a new Column.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 				 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
@@ -297,23 +294,14 @@ declare namespace sap {
 				 */
 				addMultiLabel(oMultiLabel: sap.ui.core.Control): this;
 				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Column#events/columnMenuOpen">columnMenuOpen</a> event of this <code>sap.ui.table.Column</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Column</code> itself.</p><p>Fires before the column menu is opened.</p>
-				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Column</code> itself</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 * <p>The column is resized to the width of the widest cell content that is currently displayed. This can be the content of a column header cell, or a data cell. Only rows that are currently scrolled into view are taken into consideration. The content of cells that span multiple columns is not taken into consideration, for example, if the <code>headerSpan</code> property is used.</p><p>The width might not be accurate if the cell content is not rendered yet, for example, because the data is still being loaded.</p><p>This behavior only works if the cell content is one of the following controls: <ul> <li><code>sap.m.Text</code></li> <li><code>sap.m.Label</code></li> <li><code>sap.m.Link</code></li> <li><code>sap.m.CheckBox</code></li> </ul> Otherwise, the width might not be accurate either. This includes cases where the listed control is wrapped in another control.</p>
 				 */
-				attachColumnMenuOpen(oData: any, fnFunction: any, oListener?: any): this;
+				autoResize(): void;
 				/**
 				 * <p>Destroys the label in the aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getLabel">label</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				destroyLabel(): this;
-				/**
-				 * <p>Destroys the menu in the aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMenu">menu</a>.</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				destroyMenu(): this;
 				/**
 				 * <p>Destroys all the multiLabels in the aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMultiLabels">multiLabels</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -325,20 +313,7 @@ declare namespace sap {
 				 */
 				destroyTemplate(): this;
 				/**
-				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Column#events/columnMenuOpen">columnMenuOpen</a> event of this <code>sap.ui.table.Column</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				detachColumnMenuOpen(fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Fires event <a target="_self" href="api/sap.ui.table.Column#events/columnMenuOpen">columnMenuOpen</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
-				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
-				 * @returns boolean <p>Whether or not to prevent the default action</p>
-				 */
-				protected fireColumnMenuOpen(mParameters?: any): boolean;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getAutoResizable">autoResizable</a>.</p><p>Enables auto-resizing of the column on double clicking the resize bar. The width is determined on the widest currently displayed content. It does not consider rows which are currently not scrolled into view. Currently only implemented to work with the following controls: <code>sap.m.Text, sap.m.Label, sap.m.Link, sap.m.Input, sap.ui.commons.TextView, sap.ui.commons.Label, sap.ui.commons.Link and sap.ui.commons.TextField, sap.ui.commons.Checkbox, sap.m.CheckBox</code></p><p>Default value is <code>false</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getAutoResizable">autoResizable</a>.</p><p>Enables auto-resizing of the column on double-clicking the resize bar, if the column is resizable depending on the <code>resizable</code> property. See <a target="_self" href="api/sap.ui.table.Column#methods/autoResize">#autoResize</a> for details about the auto-resize feature.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>autoResizable</code></p>
 				 */
 				getAutoResizable(): boolean;
@@ -358,12 +333,12 @@ declare namespace sap {
 				 */
 				getFilterOperator(): string;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getFilterProperty">filterProperty</a>.</p><p>Specifies the binding property on which the column shall be filtered. Since the column template may have composite bindings, it's not possible to figure out on which binding property the filter shall be applied. Therefore the binding property for filtering must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>filterProperty</code>.</p><p>A column menu entry for filtering can only be generated if the <code>filterProperty</code> is set. The default menu entry is a text input field.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getFilterProperty">filterProperty</a>.</p><p>Specifies the binding property on which the column shall be filtered. Since the column template may have composite bindings, it's not possible to figure out on which binding property the filter shall be applied. Therefore the binding property for filtering must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>filterProperty</code>.</p><p>A column menu entry for filtering can only be generated if the <code>headerMenu</code> association and <code>filterProperty</code> are set. The default menu entry is a text input field.</p>
 				 * @returns string <p>Value of property <code>filterProperty</code></p>
 				 */
 				getFilterProperty(): string;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getFilterType">filterType</a>.</p><p>Type of filter. It is used to transform the search term into the specified type and should be the same as defined in the binding for the column template. Default value is <code>sap.ui.model.type.String</code>. It can be set to the class name of the type, e.g.: <code>sap.ui.model.type.Date</code>, or an expression similar to the binding syntax, e.g.: <code>"\{type: 'sap.ui.model.type.Date', formatOptions: \{UTC: true\}, constraints: \{\} \}"</code>. Here the escaping is mandatory to avoid handling by the binding parser. As an alternative, a function can be passed that takes over the conversion. This cannot be done in the XMLView, use <a target="_self" href="api/sap.ui.table.Column#methods/setFilterType">#setFilterType</a> instead.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getFilterType">filterType</a>.</p><p>Type of filter. It is used to transform the search term into the specified type and should be the same as defined in the binding for the column template. Default value is <code>sap.ui.model.type.String</code>. It can be set to the class name of the type, e.g.: <code>sap.ui.model.type.Date</code>, or an expression similar to the binding syntax, e.g.: <code>"\{type: 'sap.ui.model.type.Date', formatOptions: \{UTC: true\}, constraints: \{\} \}"</code>. Here the escaping is mandatory to avoid handling by the binding parser. As an alternative, a function can be passed that takes over the conversion. This cannot be done in the XMLView, use <a target="_self" href="api/sap.ui.table.Column#methods/setFilterType">#setFilterType</a> instead.</p><p><b>Note:</b> The usage of string-based type definitions without explicitly loading these types (<code>sap.ui.require</code>) in the controller has been deprecated and might no longer work in future releases. Please ensure that the types are requested correctly before setting this property.</p>
 				 * @returns any <p>Value of property <code>filterType</code></p>
 				 */
 				getFilterType(): any;
@@ -385,40 +360,35 @@ declare namespace sap {
 				 */
 				getFilterValue(): string;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getGrouped">grouped</a>.</p><p>Indicates if the column is grouped.</p><p>Default value is <code>false</code>.</p>
-				 * @returns boolean <p>Value of property <code>grouped</code></p>
-				 */
-				getGrouped(): boolean;
-				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getHAlign">hAlign</a>.</p><p>Horizontal alignment of the column content. Controls with a text align do not inherit the horizontal alignment. You have to set the text align directly on the template.</p><p>Default value is <code>Begin</code>.</p>
 				 * @returns sap.ui.core.HorizontalAlign <p>Value of property <code>hAlign</code></p>
 				 */
 				getHAlign(): sap.ui.core.HorizontalAlign;
+				/**
+				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.table.Column#methods/getHeaderMenu">headerMenu</a>, or <code>null</code>.</p>
+				 * @returns sap.ui.core.ID | null 
+				 */
+				getHeaderMenu(): sap.ui.core.ID | null;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row. <b>Note:</b> Only columns with a span equal to 1 can have a column menu. When setting a column to fixed, all columns which are part of the header with the greatest span will be set to fixed.</p><p>Default value is <code>1</code>.</p>
 				 * @returns any <p>Value of property <code>headerSpan</code></p>
 				 */
 				getHeaderSpan(): any;
 				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getLabel">label</a>.</p><p>Label of the column which is displayed in the column header. This aggregation is for the standard behavior, where you only want to display one single row header. If a string is supplied, a default label control will be created. Which control this is depends on the loaded libraries.</p>
-				 * @returns sap.ui.core.Control|string 
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getLabel">label</a>.</p><p>Label of the column which is displayed in the column header. This aggregation is for the standard behavior, where you only want to display one single row header. If a string is supplied, a default label control will be created. Which control this is depends on the loaded libraries.</p><p><b>Note:</b> The <code>altType</code> string is deprecated as of version 1.118. Use a <code>Control</code> instead.</p>
+				 * @returns sap.ui.core.Control | string 
 				 */
 				getLabel(): sap.ui.core.Control | string;
-				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMenu">menu</a>.</p><p>The menu used by the column. By default the <a target="_self" href="api/sap.ui.table.ColumnMenu">sap.ui.table.ColumnMenu</a> is used.</p><p><b>Note:</b> Applications must not use or change the default <code>sap.ui.table.ColumnMenu</code> of a column in any way or create own instances of <code>sap.ui.table.ColumnMenu</code>. To add a custom menu to a column, use the aggregation <code>menu</code> with a new instance of <code>sap.ui.unified.Menu</code>.</p>
-				 * @returns sap.ui.unified.Menu 
-				 */
-				getMenu(): sap.ui.unified.Menu;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getMinWidth">minWidth</a>.</p><p>Defines the minimum width of a column in pixels. <p>This property only has an effect if the given column width is flexible, for example with width <code>auto</code>. <p>This property only influences the automatic behavior. If a user adjusts the column width manually, the column width can become smaller. <p>Minimal column width is device-dependent, for example on desktop devices the column will not be smaller than 48px.</p><p>Default value is <code>0</code>.</p>
 				 * @returns number <p>Value of property <code>minWidth</code></p>
 				 */
 				getMinWidth(): number;
 				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMultiLabels">multiLabels</a>.</p><p>Labels of the column which are displayed in the column header. Define a control for each header row in the table. Use this aggregation if you want to use multiple headers per column.</p>
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMultiLabels">multiLabels</a>.</p><p>Labels of the column which are displayed in the column header. Define a control for each header row in the table. Use this aggregation if you want to use multiple headers per column.</p><p><bNote:</b> The <a target="_self" href="api/sap.m.plugins.ColumnAIAction">ColumnAIAction</a> plugin is not compatible with multi labels.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getMultiLabels(): sap.ui.core.Control[];
+				getMultiLabels(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getName">name</a>.</p><p>The name of the column which is used for the text representation of this column, for example, in menus. If not set, the text from the multiLabels aggregation or the label aggregation (in that order) is used as a fallback option.</p>
 				 * @returns string <p>Value of property <code>name</code></p>
@@ -430,39 +400,34 @@ declare namespace sap {
 				 */
 				getResizable(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getShowFilterMenuEntry">showFilterMenuEntry</a>.</p><p>Defines if the filter menu entry is displayed</p><p>Default value is <code>true</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getShowFilterMenuEntry">showFilterMenuEntry</a>.</p><p>Defines if the filter menu entry is displayed. <b>Note</b>: It only takes effect if the <code>headerMenu</code> association is set.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>showFilterMenuEntry</code></p>
 				 */
 				getShowFilterMenuEntry(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getShowSortMenuEntry">showSortMenuEntry</a>.</p><p>Defines if the sort menu entries are displayed</p><p>Default value is <code>true</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getShowSortMenuEntry">showSortMenuEntry</a>.</p><p>Defines if the sort menu entries are displayed. <b>Note</b>: It only takes effect if the <code>headerMenu</code> association is set.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>showSortMenuEntry</code></p>
 				 */
 				getShowSortMenuEntry(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column can be sorted using <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a>.</p><p>Default value is <code>false</code>.</p>
-				 * @returns boolean <p>Value of property <code>sorted</code></p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getSortOrder">sortOrder</a>.</p><p>Controls whether a sort indicator is displayed in the column header. <b>Note:</b> Setting this property does not sort the table. The column can be sorted using <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a>.</p><p>Default value is <code>None</code>.</p>
+				 * @returns sap.ui.core.SortOrder <p>Value of property <code>sortOrder</code></p>
 				 */
-				getSorted(): boolean;
+				getSortOrder(): sap.ui.core.SortOrder;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getSortOrder">sortOrder</a>.</p><p>This property indicates the sort direction (Ascending or Descending). The corresponding icon will be rendered if the property <code>sorted</code> is <code>true</code></p><p>Default value is <code>Ascending</code>.</p>
-				 * @returns sap.ui.table.SortOrder <p>Value of property <code>sortOrder</code></p>
-				 */
-				getSortOrder(): sap.ui.table.SortOrder;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a>.</p><p>Specifies the binding property on which the column will sort. Since the column template may have composite bindings, it's not possible to figure out on which binding property the sort shall be applied. Therefore the binding property for sorting must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>sortProperty</code>.</p><p>A column menu entry for sorting can only be generated if the <code>sortProperty</code> is set.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a>.</p><p>Specifies the binding property on which the column will sort. Since the column template may have composite bindings, it's not possible to figure out on which binding property the sort shall be applied. Therefore the binding property for sorting must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>sortProperty</code>.</p><p>A column menu entry for sorting can only be generated if the <code>headerMenu</code> association and <code>sortProperty</code> are set.</p>
 				 * @returns string <p>Value of property <code>sortProperty</code></p>
 				 */
 				getSortProperty(): string;
 				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getTemplate">template</a>.</p><p>Template (cell renderer) of this column. A template is decoupled from the column. Each time the template's properties or aggregations have been changed, the template has to be applied again via <code>setTemplate</code> for the changes to take effect. If a string is defined, a default text control will be created with its text property bound to the value of the string. The default template depends on the libraries loaded. If there is no template, the column will not be rendered in the table. The set of supported controls is limited. See section "<a target="_self" href="topic/148892ff9aea4a18b912829791e38f3e">Tables: Which One Should I Choose?</a>" in the documentation for more details. While it is technically possible to also use other controls, doing so might lead to issues with regards to scrolling, alignment, condensed mode, screen reader support, and keyboard support.</p>
-				 * @returns sap.ui.core.Control|string 
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getTemplate">template</a>.</p><p>Template (cell renderer) of this column.</p><p>A template is decoupled from the column. Each time the template's properties or aggregations have been changed, the template has to be applied again via <code>setTemplate</code> for the changes to take effect.</p><p>If there is no template, the column will not be rendered in the table.</p><p>The set of supported controls is limited. See section "<a target="_self" href="topic/148892ff9aea4a18b912829791e38f3e">Tables: Which One Should I Choose?</a>" in the documentation for more details. While it is technically possible to also use other controls, doing so might lead to issues with regards to scrolling, alignment, condensed mode, screen reader support, and keyboard support.</p><p>If a string is defined, this string is interpreted as the binding path. Internally, a default text control will be created with its <code>text</code> property bound to the value of the string. The default template depends on the libraries loaded. <b>Note:</b> The <code>altType</code> string is deprecated as of version 1.118. Use a <code>Control</code> instead.</p>
+				 * @returns sap.ui.core.Control | string 
 				 */
 				getTemplate(): sap.ui.core.Control | string;
 				/**
 				 * <p>Returns a template clone. It either finds an unused clone or clones a new one from the template.</p>
 				 * @param {number} iIndex <p>Index of the column in the columns aggregation of the table</p>
-				 * @returns sap.ui.core.Control|null <p>Clone of the template, or <code>null</code> if no template is defined</p>
+				 * @returns sap.ui.core.Control | null <p>Clone of the template, or <code>null</code> if no template is defined</p>
 				 */
 				protected getTemplateClone(iIndex: number): sap.ui.core.Control | null;
 				/**
@@ -492,15 +457,15 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMultiLabels">multiLabels</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllMultiLabels(): sap.ui.core.Control[];
+				removeAllMultiLabels(): any;
 				/**
 				 * <p>Removes a multiLabel from the aggregation <a target="_self" href="api/sap.ui.table.Column#methods/getMultiLabels">multiLabels</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vMultiLabel <p>The multiLabel to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed multiLabel or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed multiLabel or <code>null</code></p>
 				 */
 				removeMultiLabel(vMultiLabel: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getAutoResizable">autoResizable</a>.</p><p>Enables auto-resizing of the column on double clicking the resize bar. The width is determined on the widest currently displayed content. It does not consider rows which are currently not scrolled into view. Currently only implemented to work with the following controls: <code>sap.m.Text, sap.m.Label, sap.m.Link, sap.m.Input, sap.ui.commons.TextView, sap.ui.commons.Label, sap.ui.commons.Link and sap.ui.commons.TextField, sap.ui.commons.Checkbox, sap.m.CheckBox</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getAutoResizable">autoResizable</a>.</p><p>Enables auto-resizing of the column on double-clicking the resize bar, if the column is resizable depending on the <code>resizable</code> property. See <a target="_self" href="api/sap.ui.table.Column#methods/autoResize">#autoResize</a> for details about the auto-resize feature.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 				 * @param {boolean} bAutoResizable <p>New value for property <code>autoResizable</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -524,7 +489,7 @@ declare namespace sap {
 				 */
 				setFilterOperator(sFilterOperator?: string): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getFilterProperty">filterProperty</a>.</p><p>Specifies the binding property on which the column shall be filtered. Since the column template may have composite bindings, it's not possible to figure out on which binding property the filter shall be applied. Therefore the binding property for filtering must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>filterProperty</code>.</p><p>A column menu entry for filtering can only be generated if the <code>filterProperty</code> is set. The default menu entry is a text input field.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getFilterProperty">filterProperty</a>.</p><p>Specifies the binding property on which the column shall be filtered. Since the column template may have composite bindings, it's not possible to figure out on which binding property the filter shall be applied. Therefore the binding property for filtering must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>filterProperty</code>.</p><p>A column menu entry for filtering can only be generated if the <code>headerMenu</code> association and <code>filterProperty</code> are set. The default menu entry is a text input field.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {string} sFilterProperty <p>New value for property <code>filterProperty</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -554,17 +519,17 @@ declare namespace sap {
 				 */
 				setFilterValue(sFilterValue?: string): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getGrouped">grouped</a>.</p><p>Indicates if the column is grouped.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-				 * @param {boolean} bGrouped <p>New value for property <code>grouped</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setGrouped(bGrouped?: boolean): this;
-				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getHAlign">hAlign</a>.</p><p>Horizontal alignment of the column content. Controls with a text align do not inherit the horizontal alignment. You have to set the text align directly on the template.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Begin</code>.</p>
 				 * @param {sap.ui.core.HorizontalAlign} sHAlign <p>New value for property <code>hAlign</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setHAlign(sHAlign?: sap.ui.core.HorizontalAlign): this;
+				/**
+				 * <p>Sets the associated <a target="_self" href="api/sap.ui.table.Column#methods/getHeaderMenu">headerMenu</a>.</p>
+				 * @param {sap.ui.core.ID | sap.ui.core.IColumnHeaderMenu} oHeaderMenu <p>ID of an element which becomes the new target of this headerMenu association; alternatively, an element instance may be given</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setHeaderMenu(oHeaderMenu: sap.ui.core.ID | sap.ui.core.IColumnHeaderMenu): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getHeaderSpan">headerSpan</a>.</p><p>If this property is set, a span is applied for the header. When moving columns, all columns which are part of the header will be moved. The <code>headerSpan</code> can be either an integer or an array of integers (if you use the multi header feature of the table). If you only specify an integer, this span is applied for all header rows, with multiple integers you can specify a separate span for each header row. <b>Note:</b> Only columns with a span equal to 1 can have a column menu. When setting a column to fixed, all columns which are part of the header with the greatest span will be set to fixed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
 				 * @param {any} oHeaderSpan <p>New value for property <code>headerSpan</code></p>
@@ -577,12 +542,6 @@ declare namespace sap {
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setLabel(vLabel: sap.ui.core.Control | string): this;
-				/**
-				 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.table.Column#methods/getMenu">menu</a>.</p>
-				 * @param {sap.ui.unified.Menu} oMenu <p>The menu to set</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setMenu(oMenu: sap.ui.unified.Menu): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getMinWidth">minWidth</a>.</p><p>Defines the minimum width of a column in pixels. <p>This property only has an effect if the given column width is flexible, for example with width <code>auto</code>. <p>This property only influences the automatic behavior. If a user adjusts the column width manually, the column width can become smaller. <p>Minimal column width is device-dependent, for example on desktop devices the column will not be smaller than 48px.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
 				 * @param {number} iMinWidth <p>New value for property <code>minWidth</code></p>
@@ -602,31 +561,25 @@ declare namespace sap {
 				 */
 				setResizable(bResizable?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getShowFilterMenuEntry">showFilterMenuEntry</a>.</p><p>Defines if the filter menu entry is displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getShowFilterMenuEntry">showFilterMenuEntry</a>.</p><p>Defines if the filter menu entry is displayed. <b>Note</b>: It only takes effect if the <code>headerMenu</code> association is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bShowFilterMenuEntry <p>New value for property <code>showFilterMenuEntry</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setShowFilterMenuEntry(bShowFilterMenuEntry?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getShowSortMenuEntry">showSortMenuEntry</a>.</p><p>Defines if the sort menu entries are displayed</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getShowSortMenuEntry">showSortMenuEntry</a>.</p><p>Defines if the sort menu entries are displayed. <b>Note</b>: It only takes effect if the <code>headerMenu</code> association is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bShowSortMenuEntry <p>New value for property <code>showSortMenuEntry</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setShowSortMenuEntry(bShowSortMenuEntry?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getSorted">sorted</a>.</p><p>Indicates if the column is sorted. This property only controls if a sort indicator is displayed in the column header - it does not trigger the sort function. The column can be sorted using <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-				 * @param {boolean} bSorted <p>New value for property <code>sorted</code></p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getSortOrder">sortOrder</a>.</p><p>Controls whether a sort indicator is displayed in the column header. <b>Note:</b> Setting this property does not sort the table. The column can be sorted using <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>None</code>.</p>
+				 * @param {sap.ui.core.SortOrder} sSortOrder <p>New value for property <code>sortOrder</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				setSorted(bSorted?: boolean): this;
+				setSortOrder(sSortOrder?: sap.ui.core.SortOrder): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getSortOrder">sortOrder</a>.</p><p>This property indicates the sort direction (Ascending or Descending). The corresponding icon will be rendered if the property <code>sorted</code> is <code>true</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Ascending</code>.</p>
-				 * @param {sap.ui.table.SortOrder} sSortOrder <p>New value for property <code>sortOrder</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setSortOrder(sSortOrder?: sap.ui.table.SortOrder): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a>.</p><p>Specifies the binding property on which the column will sort. Since the column template may have composite bindings, it's not possible to figure out on which binding property the sort shall be applied. Therefore the binding property for sorting must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>sortProperty</code>.</p><p>A column menu entry for sorting can only be generated if the <code>sortProperty</code> is set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a>.</p><p>Specifies the binding property on which the column will sort. Since the column template may have composite bindings, it's not possible to figure out on which binding property the sort shall be applied. Therefore the binding property for sorting must be specified. For example, if the first name and last name are displayed in the same column, only one of the two can be defined as <code>sortProperty</code>.</p><p>A column menu entry for sorting can only be generated if the <code>headerMenu</code> association and <code>sortProperty</code> are set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {string} sSortProperty <p>New value for property <code>sortProperty</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -683,7 +636,7 @@ declare namespace sap {
 				resetFocus(): boolean;
 			}
 			/**
-			 * <p><p>Details about the group event to distinguish between different actions associated with grouping</p></p>
+			 * <p><p>Details about the group event to distinguish between different actions associated with grouping</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'GroupEventType'.</p></p>
 			 */
 			export enum GroupEventType {
 				/**
@@ -716,7 +669,7 @@ declare namespace sap {
 				ungroupAll = "ungroupAll",
 			}
 			/**
-			 * <p><p>Navigation mode of the table</p></p>
+			 * <p><p>Navigation mode of the table</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'NavigationMode'.</p></p>
 			 */
 			export enum NavigationMode {
 				/**
@@ -729,7 +682,7 @@ declare namespace sap {
 				Scrollbar = "Scrollbar",
 			}
 			/**
-			 * <p><p>Enumeration of the <code>ResetAllMode</code> that can be used in a <code>TablePersoController</code>.</p></p>
+			 * <p><p>Enumeration of the <code>ResetAllMode</code> that can be used in a <code>TablePersoController</code>.</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'ResetAllMode'.</p></p>
 			 */
 			export enum ResetAllMode {
 				/**
@@ -770,7 +723,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Row#methods/getCells">cells</a>.</p><p>The actual cells are a table-internal construct. The controls in this aggregation are the content of the cells. This aggregation is managed by the table and must not be manipulated. Only read access is allowed.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getCells(): sap.ui.core.Control[];
+				getCells(): any;
 				/**
 				 * <p>Returns the index of the row in the table or -1 if not added to a table. This function considers the scroll position of the table and also takes fixed rows and fixed bottom rows into account.</p>
 				 * @returns number <p>index of the row (considers scroll position and fixed rows)</p>
@@ -793,16 +746,16 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.Row#methods/getCells">cells</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllCells(): sap.ui.core.Control[];
+				removeAllCells(): any;
 				/**
 				 * <p>Removes a cell from the aggregation <a target="_self" href="api/sap.ui.table.Row#methods/getCells">cells</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vCell <p>The cell to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed cell or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed cell or <code>null</code></p>
 				 */
 				removeCell(vCell: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 			}
 			/**
-			 * <p>The <code>RowAction</code> control allows to display multiple action items which can be selected by the user. If more action items are available as the available space allows to display an overflow mechanism is provided. This control must only be used in the context of the <code>sap.ui.table.Table</code> control to define row actions.</p>
+			 * <p>The <code>RowAction</code> control allows to display multiple action items which can be selected by the user. If more action items are available as the available space allows to display an overflow mechanism is provided. This control must only be used in the context of the <code>sap.ui.table.Table</code> control to define row actions.</p><p><b>Note</b>: The <code>RowActionItem</code> of type <code>Navigation</code> has a special role and is shown as the rightmost icon independent of the order in the <code>items</code> aggregation.</p>
 			 */
 			export class RowAction extends sap.ui.core.Control {
 				/**
@@ -826,7 +779,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.RowAction#methods/getItems">items</a>.</p><p>The action items which should be displayed.</p>
 				 * @returns sap.ui.table.RowActionItem[] 
 				 */
-				getItems(): sap.ui.table.RowActionItem[];
+				getItems(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.RowAction#methods/getVisible">visible</a>.</p><p>Whether the control should be visible on the screen. If set to <code>false</code>, the control is hidden.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>visible</code></p>
@@ -849,11 +802,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.RowAction#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.table.RowActionItem[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllItems(): sap.ui.table.RowActionItem[];
+				removeAllItems(): any;
 				/**
 				 * <p>Removes a item from the aggregation <a target="_self" href="api/sap.ui.table.RowAction#methods/getItems">items</a>.</p>
 				 * @param {number | string | sap.ui.table.RowActionItem} vItem <p>The item to remove or its index or id</p>
-				 * @returns sap.ui.table.RowActionItem|null <p>The removed item or <code>null</code></p>
+				 * @returns sap.ui.table.RowActionItem | null <p>The removed item or <code>null</code></p>
 				 */
 				removeItem(vItem: number | string | sap.ui.table.RowActionItem): sap.ui.table.RowActionItem | null;
 				/**
@@ -876,18 +829,18 @@ declare namespace sap {
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.RowActionItem#events/press">press</a> event of this <code>sap.ui.table.RowActionItem</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.RowActionItem</code> itself.</p><p>The <code>press</code> is fired when the user triggers the corresponding action.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.RowActionItem</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachPress(oData: any, fnFunction: any, oListener?: any): this;
+				attachPress(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.RowActionItem#events/press">press</a> event of this <code>sap.ui.table.RowActionItem</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachPress(fnFunction: any, oListener?: any): this;
+				detachPress(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Fires event <a target="_self" href="api/sap.ui.table.RowActionItem#events/press">press</a> to attached listeners.</p>
 				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -940,19 +893,19 @@ declare namespace sap {
 				setVisible(bVisible?: boolean): this;
 			}
 			/**
-			 * <p><p>Row Action types.</p></p>
+			 * <p><p>Row Action types.</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'RowActionType'.</p></p>
 			 */
 			export enum RowActionType {
 				/**
-				 * <p>Custom defined Row Action.</p>
+				 * <p>Custom-defined row action</p>
 				 */
 				Custom = "Custom",
 				/**
-				 * <p>Delete Row Action.</p>
+				 * <p>Row action for deletion</p>
 				 */
 				Delete = "Delete",
 				/**
-				 * <p>Navigation Row Action.</p>
+				 * <p>Navigation arrow (chevron) is shown</p>
 				 */
 				Navigation = "Navigation",
 			}
@@ -967,7 +920,7 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>Default value is <code>"None"</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" href="api/module:sap/ui/core/message/MessageType">MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" href="api/module:sap/ui/core/message/MessageType">module:sap/ui/core/message/MessageType</a> or <a target="_self" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a> (only values of <code>Indication01</code> to <code>Indication10</code> are supported for accessibility contrast reasons).</p><p>Accessibility support is provided through the associated <a target="_self" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" href="api/module:sap/ui/core/message/MessageType">module:sap/ui/core/message/MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>Default value is <code>"None"</code>.</p>
 				 * @returns string <p>Value of property <code>highlight</code></p>
 				 */
 				getHighlight(): string;
@@ -982,7 +935,7 @@ declare namespace sap {
 				 */
 				getNavigated(): boolean;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a> or <a target="_self" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a>.</p><p>Accessibility support is provided through the associated <a target="_self" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" href="api/sap.ui.core.MessageType">sap.ui.core.MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"None"</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.RowSettings#methods/getHighlight">highlight</a>.</p><p>The highlight state of the rows.</p><p>If the highlight is set to <a target="_self" href="api/module:sap/ui/core/message/MessageType">MessageType.None</a> (default), no highlights are visible. Valid values for the <code>highlight</code> property are values of the enumerations <a target="_self" href="api/module:sap/ui/core/message/MessageType">module:sap/ui/core/message/MessageType</a> or <a target="_self" href="api/sap.ui.core.IndicationColor">sap.ui.core.IndicationColor</a> (only values of <code>Indication01</code> to <code>Indication10</code> are supported for accessibility contrast reasons).</p><p>Accessibility support is provided through the associated <a target="_self" href="api/sap.ui.table.RowSettings#methods/setHighlightText">highlightText</a> property. If the <code>highlight</code> property is set to a value of <a target="_self" href="api/module:sap/ui/core/message/MessageType">module:sap/ui/core/message/MessageType</a>, the <code>highlightText</code> property does not need to be set because a default text is used. However, the default text can be overridden by setting the <code>highlightText</code> property. In all other cases the <code>highlightText</code> property must be set.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"None"</code>.</p>
 				 * @param {string} sHighlight <p>New value for property <code>highlight</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -1001,7 +954,7 @@ declare namespace sap {
 				setNavigated(bNavigated?: boolean): this;
 			}
 			/**
-			 * <p><p>Selection behavior of the table</p></p>
+			 * <p><p>Selection behavior of the table</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'SelectionBehavior'.</p></p>
 			 */
 			export enum SelectionBehavior {
 				/**
@@ -1018,7 +971,7 @@ declare namespace sap {
 				RowSelector = "RowSelector",
 			}
 			/**
-			 * <p><p>Selection mode of the table</p></p>
+			 * <p><p>Selection mode of the table</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'SelectionMode'.</p></p>
 			 */
 			export enum SelectionMode {
 				/**
@@ -1039,7 +992,7 @@ declare namespace sap {
 				Single = "Single",
 			}
 			/**
-			 * <p><p>Shared DOM Reference IDs of the table.</p><p>Contains IDs of shared DOM references, which should be accessible to inheriting controls via getDomRef() function.</p></p>
+			 * <p><p>Shared DOM Reference IDs of the table.</p><p>Contains IDs of shared DOM references, which should be accessible to inheriting controls via getDomRef() function.</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'SharedDomRef'.</p></p>
 			 */
 			export enum SharedDomRef {
 				/**
@@ -1052,7 +1005,7 @@ declare namespace sap {
 				VerticalScrollBar = "VerticalScrollBar",
 			}
 			/**
-			 * <p><p>Sort order of a column</p></p>
+			 * <p><p>Sort order of a column</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'SortOrder'.</p></p>
 			 */
 			export enum SortOrder {
 				/**
@@ -1065,9 +1018,9 @@ declare namespace sap {
 				Descending = "Descending",
 			}
 			/**
-			 * <p><p> Provides a comprehensive set of features for displaying and dealing with vast amounts of data. The Table control supports desktop PCs and tablet devices. On tablets, special consideration should be given to the number of visible columns and rows due to the limited performance of some devices. </p> <p> In order to keep the document DOM as lean as possible, the Table control reuses its DOM elements of the rows. When the user scrolls, only the row contexts are changed but the rendered controls remain the same. This allows the Table control to handle huge amounts of data. Nevertheless, restrictions apply regarding the number of displayed columns. Keep the number as low as possible to improve performance. Due to the nature of tables, the used control for column templates also has a big influence on the performance. </p> <p> The Table control relies completely on data binding, and its supported feature set is tightly coupled to the data model and binding being used. </p><br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/148892ff9aea4a18b912829791e38f3e">Tables: Which One Should I Choose?</a></li></ul></p>
+			 * <p><p> Provides a comprehensive set of features for displaying and dealing with vast amounts of data. The Table control supports desktop PCs and tablet devices. On tablets, special consideration should be given to the number of visible columns and rows due to the limited performance of some devices. </p> <p> In order to keep the document DOM as lean as possible, the Table control reuses its DOM elements of the rows. When the user scrolls, only the row contexts are changed but the rendered controls remain the same. This allows the Table control to handle huge amounts of data. Nevertheless, restrictions apply regarding the number of displayed columns. Keep the number as low as possible to improve performance. Due to the nature of tables, the used control for column templates also has a big influence on the performance. Because of the described reuse of the controls during scrolling, all data-related changes must be based on bindings. Static changes, such as calling mutator functions or defining a one-time binding, must be avoided. </p> <p> The Table control relies completely on data binding, and its supported feature set is tightly coupled to the data model and binding being used. </p><br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/148892ff9aea4a18b912829791e38f3e">Tables: Which One Should I Choose?</a></li></ul></p>
 			 */
-			export class Table extends sap.ui.core.Control {
+			export class _Table extends sap.ui.core.Control {
 				/**
 				 * <p>Constructor for a new Table.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 				 * @param {string} sId <p>id for the new control, generated automatically if no id is given</p>
@@ -1093,157 +1046,122 @@ declare namespace sap {
 				 */
 				addExtension(oExtension: sap.ui.core.Control): this;
 				/**
-				 * <p>Adds some plugin to the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p>
-				 * @param {sap.ui.table.plugins.SelectionPlugin} oPlugin <p>The plugin to add; if empty, nothing is inserted</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				addPlugin(oPlugin: sap.ui.table.plugins.SelectionPlugin): this;
-				/**
 				 * <p>Adds some row to the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p>
 				 * @param {sap.ui.table.Row} oRow <p>The row to add; if empty, nothing is inserted</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				addRow(oRow: sap.ui.table.Row): this;
 				/**
-				 * <p>Adds the given selection interval to the selection. In case of a single selection, only <code>iIndexTo</code> is added to the selection.</p>
+				 * <p>Adds the given selection interval to the selection. In case of a single selection, only <code>iIndexTo</code> is added to the selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 				 * @param {number} iIndexTo <p>Index up to which to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				addSelectionInterval(iIndexFrom: number, iIndexTo: number): this;
 				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/beforeOpenContextMenu">beforeOpenContextMenu</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>Fired when the user requests the context menu for a table cell.</p>
+				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/beforeOpenContextMenu">beforeOpenContextMenu</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>Fired when the <a target="_self" href="api/sap.ui.table.Table#methods/setContextMenu">context menu</a> is opened. When the context menu is opened, the binding context of the row is set to the context menu.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachBeforeOpenContextMenu(oData: any, fnFunction: any, oListener?: any): this;
+				attachBeforeOpenContextMenu(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/busyStateChanged">busyStateChanged</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event gets fired when the busy state of the table changes. It should only be used by composite controls.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachBusyStateChanged(oData: any, fnFunction: any, oListener?: any): this;
+				protected attachBusyStateChanged(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/cellClick">cellClick</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when the user clicks a cell of the table (experimental!).</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachCellClick(oData: any, fnFunction: any, oListener?: any): this;
+				attachCellClick(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/columnFreeze">columnFreeze</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when a column of the table should be freezed</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachColumnFreeze(oData: any, fnFunction: any, oListener?: any): this;
+				attachColumnFreeze(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/columnMove">columnMove</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when a table column is moved.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachColumnMove(oData: any, fnFunction: any, oListener?: any): this;
+				attachColumnMove(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/columnResize">columnResize</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when a table column is resized.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachColumnResize(oData: any, fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/columnSelect">columnSelect</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when a column of the table has been selected</p>
-				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				attachColumnSelect(oData: any, fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/columnVisibility">columnVisibility</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when the visibility of a table column is changed.</p>
-				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				attachColumnVisibility(oData: any, fnFunction: any, oListener?: any): this;
+				attachColumnResize(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/customFilter">customFilter</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event is triggered when the custom filter item of the column menu is pressed. The column on which the event was triggered is passed as parameter.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachCustomFilter(oData: any, fnFunction: any, oListener?: any): this;
+				attachCustomFilter(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/filter">filter</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event is fired before a filter is applied to a column, if the table is filtered via <a target="_self" href="api/sap.ui.table.Table#methods/filter">sap.ui.table.Table#filter</a> call or user interaction with the column header.</p><p>Filters that are directly applied to the table binding will not fire this event.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachFilter(oData: any, fnFunction: any, oListener?: any): this;
+				attachFilter(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/firstVisibleRowChanged">firstVisibleRowChanged</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event gets fired when the first visible row is changed. It should only be used by composite controls. The event even is fired when setFirstVisibleRow is called programmatically.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachFirstVisibleRowChanged(oData: any, fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/group">group</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when the table is grouped (experimental!).</p>
-				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				attachGroup(oData: any, fnFunction: any, oListener?: any): this;
+				protected attachFirstVisibleRowChanged(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/paste">paste</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event gets fired when the user pastes content from the clipboard to the table. Pasting can be done with the standard keyboard shortcut, if the focus is inside the table.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachPaste(oData: any, fnFunction: any, oListener?: any): this;
+				attachPaste(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
-				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/rowSelectionChange">rowSelectionChange</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>fired when the row selection of the table has been changed (the event parameters can be used to determine selection changes - to find out the selected rows you should better use the table selection API)</p><p><b>Note:</b> If a selection plugin is applied to the table, this event won't be fired.</p>
+				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/rowSelectionChange">rowSelectionChange</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>Fired if the row selection of the table has been changed.</p><p>The event parameters can be used to determine selection changes. To find the selected rows, you should use <a target="_self" href="api/sap.ui.table.Table#methods/getSelectedIndices">sap.ui.table.Table#getSelectedIndices</a> or the related function of the used selection plugin if it exists.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead. <b>Note:</b> If a selection plugin is used with the table, this event won't be fired.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachRowSelectionChange(oData: any, fnFunction: any, oListener?: any): this;
+				attachRowSelectionChange(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/rowsUpdated">rowsUpdated</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event is fired after the table rows have been updated due to rendering, a model update, or a user interaction, for example.</p><p><b>Note</b>: This event is fired often and must not be used for performance-critical tasks.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachRowsUpdated(oData: any, fnFunction: any, oListener?: any): this;
+				attachRowsUpdated(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.Table#events/sort">sort</a> event of this <code>sap.ui.table.Table</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.Table</code> itself.</p><p>This event is fired before a sort order is applied to a column, if the table is sorted via <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a> call or user interaction with the column header.</p><p>Sorters that are directly applied to the table binding will not fire this event.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.Table</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachSort(oData: any, fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Triggers automatic resizing of a column to the widest content.</p>
-				 * @param {number} iColIndex <p>The index of the column in the list of visible columns.</p>
-				 */
-				autoResizeColumn(iColIndex: number): void;
+				attachSort(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Binds aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a> to model data.</p><p>See <a target="_self" href="api/sap.ui.base.ManagedObject#methods/bindAggregation">ManagedObject.bindAggregation</a> for a detailed description of the possible properties of <code>oBindingInfo</code>.</p>
 				 * @param {sap.ui.base.ManagedObject.AggregationBindingInfo} oBindingInfo <p>The binding information</p>
@@ -1257,7 +1175,7 @@ declare namespace sap {
 				 */
 				bindRows(oBindingInfo: sap.ui.base.ManagedObject.AggregationBindingInfo): this;
 				/**
-				 * <p>Removes complete selection.</p>
+				 * <p>Removes complete selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				clearSelection(): this;
@@ -1287,15 +1205,15 @@ declare namespace sap {
 				 */
 				destroyNoData(): this;
 				/**
-				 * <p>Destroys all the plugins in the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				destroyPlugins(): this;
-				/**
 				 * <p>Destroys the rowActionTemplate in the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRowActionTemplate">rowActionTemplate</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				destroyRowActionTemplate(): this;
+				/**
+				 * <p>Destroys the rowMode in the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRowMode">rowMode</a>.</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				destroyRowMode(): this;
 				/**
 				 * <p>Destroys all the rows in the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1308,116 +1226,95 @@ declare namespace sap {
 				destroyRowSettingsTemplate(): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/beforeOpenContextMenu">beforeOpenContextMenu</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachBeforeOpenContextMenu(fnFunction: any, oListener?: any): this;
+				detachBeforeOpenContextMenu(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/busyStateChanged">busyStateChanged</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachBusyStateChanged(fnFunction: any, oListener?: any): this;
+				protected detachBusyStateChanged(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/cellClick">cellClick</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachCellClick(fnFunction: any, oListener?: any): this;
+				detachCellClick(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/columnFreeze">columnFreeze</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachColumnFreeze(fnFunction: any, oListener?: any): this;
+				detachColumnFreeze(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/columnMove">columnMove</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachColumnMove(fnFunction: any, oListener?: any): this;
+				detachColumnMove(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/columnResize">columnResize</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachColumnResize(fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/columnSelect">columnSelect</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				detachColumnSelect(fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/columnVisibility">columnVisibility</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				detachColumnVisibility(fnFunction: any, oListener?: any): this;
+				detachColumnResize(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/customFilter">customFilter</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachCustomFilter(fnFunction: any, oListener?: any): this;
+				detachCustomFilter(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/filter">filter</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachFilter(fnFunction: any, oListener?: any): this;
+				detachFilter(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/firstVisibleRowChanged">firstVisibleRowChanged</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachFirstVisibleRowChanged(fnFunction: any, oListener?: any): this;
-				/**
-				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/group">group</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				detachGroup(fnFunction: any, oListener?: any): this;
+				protected detachFirstVisibleRowChanged(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/paste">paste</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachPaste(fnFunction: any, oListener?: any): this;
+				detachPaste(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/rowSelectionChange">rowSelectionChange</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachRowSelectionChange(fnFunction: any, oListener?: any): this;
+				detachRowSelectionChange(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/rowsUpdated">rowsUpdated</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachRowsUpdated(fnFunction: any, oListener?: any): this;
+				detachRowsUpdated(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.Table#events/sort">sort</a> event of this <code>sap.ui.table.Table</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachSort(fnFunction: any, oListener?: any): this;
+				detachSort(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Filters a column by a value. If no filter value is passed, the filter value equals an empty string, and the filter for this column is removed.</p>
 				 * @param {sap.ui.table.Column} oColumn <p>Column to be filtered</p>
@@ -1461,18 +1358,6 @@ declare namespace sap {
 				 */
 				protected fireColumnResize(mParameters?: any): boolean;
 				/**
-				 * <p>Fires event <a target="_self" href="api/sap.ui.table.Table#events/columnSelect">columnSelect</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
-				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
-				 * @returns boolean <p>Whether or not to prevent the default action</p>
-				 */
-				protected fireColumnSelect(mParameters?: any): boolean;
-				/**
-				 * <p>Fires event <a target="_self" href="api/sap.ui.table.Table#events/columnVisibility">columnVisibility</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
-				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
-				 * @returns boolean <p>Whether or not to prevent the default action</p>
-				 */
-				protected fireColumnVisibility(mParameters?: any): boolean;
-				/**
 				 * <p>Fires event <a target="_self" href="api/sap.ui.table.Table#events/customFilter">customFilter</a> to attached listeners.</p>
 				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1490,12 +1375,6 @@ declare namespace sap {
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				protected fireFirstVisibleRowChanged(mParameters?: any): this;
-				/**
-				 * <p>Fires event <a target="_self" href="api/sap.ui.table.Table#events/group">group</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
-				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
-				 * @returns boolean <p>Whether or not to prevent the default action</p>
-				 */
-				protected fireGroup(mParameters?: any): boolean;
 				/**
 				 * <p>Fires event <a target="_self" href="api/sap.ui.table.Table#events/paste">paste</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
 				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1521,7 +1400,7 @@ declare namespace sap {
 				 */
 				protected fireSort(mParameters?: any): boolean;
 				/**
-				 * <p>Sets the focus to the stored focus DOM reference.</p><p>If {@param oFocusInfo.targetInfo} is of type {@type sap.ui.core.message.Message}, the focus will be set as accurately as possible according to the information provided by {@type sap.ui.core.message.Message}.</p>
+				 * <p>Sets the focus to the stored focus DOM reference.</p><p>If <code>oFocusInfo.targetInfo</code> is of type <a target="_self" href="api/sap.ui.core.message.Message">sap.ui.core.message.Message</a>, the focus will be set as accurately as possible according to the information provided by <a target="_self" href="api/sap.ui.core.message.Message">sap.ui.core.message.Message</a>.</p>
 				 * @param {any} oFocusInfo <p>Options for setting the focus</p>
 				 */
 				focus(oFocusInfo?: any): void;
@@ -1534,7 +1413,7 @@ declare namespace sap {
 				 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.table.Table#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @returns sap.ui.core.ID[] 
 				 */
-				getAriaLabelledBy(): sap.ui.core.ID[];
+				getAriaLabelledBy(): any;
 				/**
 				 * <p>Get the binding object for a specific aggregation/property.</p>
 				 * @param {string} sName <p>Name of the property or aggregation</p>
@@ -1555,11 +1434,11 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a>.</p><p>Columns of the Table</p>
 				 * @returns sap.ui.table.Column[] 
 				 */
-				getColumns(): sap.ui.table.Column[];
+				getColumns(): any;
 				/**
-				 * <p>Returns the context of a row by its index. Please note that for server-based models like OData, the supplied index might not have been loaded yet. If the context is not available at the client, the binding will trigger a backend request and request this single context. Although this API looks synchronous it may not return a context but load it and fire a change event on the binding.</p><p>For server-based models you should consider to only make this API call when the index is within the currently visible scroll area.</p>
+				 * <p>Returns the context of a row by its index. Please note that for server-based models like OData, the supplied index might not have been loaded yet. If the context is not available at the client, the binding may trigger a backend request and request this single context. Although this API looks synchronous it may not return a context but load it and fire a change event on the binding.</p><p>For server-based models you should consider to only make this API call when the index is within the currently visible scroll area.</p>
 				 * @param {number} iIndex <p>Index of the row to return the context from.</p>
-				 * @returns sap.ui.model.Context|null <p>The context at this index or <code>null</code></p>
+				 * @returns sap.ui.model.Context | null <p>The context at this index if available</p>
 				 */
 				getContextByIndex(iIndex: number): sap.ui.model.Context | null;
 				/**
@@ -1571,12 +1450,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <code>dragDropConfig</code> which defines the drag-and-drop configuration.</p><p>The following restrictions apply: <ul> <li>Columns cannot be configured to be draggable.</li> <li>The following rows are not draggable: <ul> <li>Empty rows</li> <li>Group header rows</li> <li>Sum rows</li> </ul> </li> <li>Columns cannot be configured to be droppable.</li> <li>The following rows are not droppable: <ul> <li>The dragged row itself</li> <li>Empty rows</li> <li>Group header rows</li> <li>Sum rows</li> </ul> </li> </ul></p>
 				 * @returns sap.ui.core.dnd.DragDropBase[] 
 				 */
-				getDragDropConfig(): sap.ui.core.dnd.DragDropBase[];
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEditable">editable</a>.</p><p>Flag whether the controls of the Table are editable or not (currently this only controls the background color in certain themes!)</p><p>Default value is <code>true</code>.</p>
-				 * @returns boolean <p>Value of property <code>editable</code></p>
-				 */
-				getEditable(): boolean;
+				getDragDropConfig(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableBusyIndicator">enableBusyIndicator</a>.</p><p>If set to <code>true</code>, the table changes its busy state, resulting in showing or hiding the busy indicator. The table will switch to busy as soon as data is retrieved to be displayed in the currently visible rows. This happens, for example, during scrolling, filtering, or sorting. As soon as the data has been retrieved, the table switches back to not busy. The busy state of the table can still be set manually by calling <a target="_self" href="api/sap.ui.core.Control#methods/setBusy">sap.ui.core.Control#setBusy</a>.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>enableBusyIndicator</code></p>
@@ -1593,7 +1467,9 @@ declare namespace sap {
 				 */
 				getEnableColumnFreeze(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableColumnReordering">enableColumnReordering</a>.</p><p>Flag to enable or disable column reordering</p><p>Default value is <code>true</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableColumnReordering">enableColumnReordering</a>.</p><p>Flag to enable or disable column reordering</p><p><b>Note</b>: Column reordering is possible via drag&drop and keyboard shortcuts. Single-pointer alternative is not provided out-of-the-box and should be implemented on application side. For example the <a target="_self" href="api/sap.m.p13n.Engine">sap.m.p13n.Engine</a> can be used, see the following sample: <a target="_blank" rel="noopener noreferrer" href="https://ui5.sap.com/#/entity/sap.ui.table.Table/sample/sap.m.sample.p13n.EngineGridTable">Personalization for grid table</a>
+							<img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
+							title="Information published on SAP site" class="sapUISDKExternalLink"/>.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>enableColumnReordering</code></p>
 				 */
 				getEnableColumnReordering(): boolean;
@@ -1603,11 +1479,6 @@ declare namespace sap {
 				 */
 				getEnableCustomFilter(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>Default value is <code>false</code>.</p>
-				 * @returns boolean <p>Value of property <code>enableGrouping</code></p>
-				 */
-				getEnableGrouping(): boolean;
-				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableSelectAll">enableSelectAll</a>.</p><p>Specifies if a select all button should be displayed in the top left corner. This button is only displayed if the row selector is visible and the selection mode is set to any kind of multi selection.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>enableSelectAll</code></p>
 				 */
@@ -1616,54 +1487,29 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getExtension">extension</a>.</p><p>Extension section of the Table. If not set, no extension area will be rendered. Note: In case a <code>sap.m.Toolbar</code> is used as header the CSS class sapMTBHeader-CTX should be applied on this toolbar.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getExtension(): sap.ui.core.Control[];
+				getExtension(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getFirstVisibleRow">firstVisibleRow</a>.</p><p>First visible row.</p><p>Default value is <code>0</code>.</p>
 				 * @returns number <p>Value of property <code>firstVisibleRow</code></p>
 				 */
 				getFirstVisibleRow(): number;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>Number of rows that are fix on the bottom. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>Default value is <code>0</code>.</p>
-				 * @returns number <p>Value of property <code>fixedBottomRowCount</code></p>
-				 */
-				getFixedBottomRowCount(): number;
-				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedColumnCount">fixedColumnCount</a>.</p><p>Number of columns that are fixed on the left. Only columns which are not fixed can be scrolled horizontally.</p><p><b>Note</b> <ul> <li>Fixed columns need a defined width for the feature to work.</li> <li>The aggregated width of all fixed columns must not exceed the table width. Otherwise the table ignores the value of the property and adapts the behavior in an appropriate way to ensure that the user is still able to scroll horizontally.</li> </ul></p><p>Default value is <code>0</code>.</p>
 				 * @returns number <p>Value of property <code>fixedColumnCount</code></p>
 				 */
 				getFixedColumnCount(): number;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>Default value is <code>0</code>.</p>
-				 * @returns number <p>Value of property <code>fixedRowCount</code></p>
-				 */
-				getFixedRowCount(): number;
-				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getFooter">footer</a>.</p><p>Control or text of footer section of the Table (if not set it will be hidden)</p>
-				 * @returns sap.ui.core.Control|string 
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getFooter">footer</a>.</p><p>Control or text of footer section of the Table (if not set it will be hidden).</p><p><b>Note:</b> The <code>altType</code> string is deprecated as of version 1.118. Use a <code>Control</code> instead.</p>
+				 * @returns sap.ui.core.Control | string 
 				 */
 				getFooter(): sap.ui.core.Control | string;
 				/**
-				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>, or <code>null</code>.</p>
-				 * @returns sap.ui.core.ID 
-				 */
-				getGroupBy(): sap.ui.core.ID;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getMinAutoRowCount">minAutoRowCount</a>.</p><p>This property is used to set the minimum count of visible rows when the property visibleRowCountMode is set to Auto or Interactive. For any other visibleRowCountMode, it is ignored.</p><p>Default value is <code>5</code>.</p>
-				 * @returns number <p>Value of property <code>minAutoRowCount</code></p>
-				 */
-				getMinAutoRowCount(): number;
-				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getNoData">noData</a>.</p><p>The value for the noData aggregation can be either a string value or a control instance. The control is shown, in case there is no data for the Table available. In case of a string value this will simply replace the no data text.</p>
-				 * @returns sap.ui.core.Control|string 
+				 * @returns sap.ui.core.Control | string 
 				 */
 				getNoData(): sap.ui.core.Control | string;
 				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p><p>Plugin section of the table. Multiple plugins are possible, but always only <b>one</b> of a certain type.</p><p>The following restrictions apply: <ul> <li>If a selection plugin is applied to the table, the table's selection API must not be used. Instead, use the API of the plugin.</li> <li>Only one MultiSelectionPlugin can be applied. No other plugins can be applied.</li> </ul></p>
-				 * @returns sap.ui.table.plugins.SelectionPlugin[] 
-				 */
-				getPlugins(): sap.ui.table.plugins.SelectionPlugin[];
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getRowActionCount">rowActionCount</a>.</p><p>Number of row actions made visible which determines the width of the row action column. The values <code>0</code>, <code>1</code> and <code>2</code> are possible.</p><p>Default value is <code>0</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getRowActionCount">rowActionCount</a>.</p><p>Number of row actions made visible, hence this property also determines the width of the row action column. The maximum number of visible row actions is 3. If the <code>rowActionTemplate</code> contains more <code>rowActionItems</code>, they are shown in an overflow menu.</p><p>Default value is <code>0</code>.</p>
 				 * @returns number <p>Value of property <code>rowActionCount</code></p>
 				 */
 				getRowActionCount(): number;
@@ -1673,40 +1519,40 @@ declare namespace sap {
 				 */
 				getRowActionTemplate(): sap.ui.table.RowAction;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getRowHeight">rowHeight</a>.</p><p>Row height in pixel.</p><p>In the table's header, it defines the minimum height of the row, but it cannot be less than the default height based on the content density configuration. The actual height can increase based on the content.</p><p>In the table's body, it defines the height of the row content. The actual row height is also influenced by other factors, such as the border width. If the <code>visibleRowCountMode</code> property is set to <a target="_self" href="api/sap.ui.table.VisibleRowCountMode">Fixed</a> or <a target="_self" href="api/sap.ui.table.VisibleRowCountMode">Interactive</a>, the value defines the minimum height, and the actual height can increase based on the content. If the mode is <a target="_self" href="api/sap.ui.table.VisibleRowCountMode">Auto</a>, the value defines the actual height, and any content that doesn't fit is cut off.</p><p>If no value is set (includes 0), a default height is applied based on the content density configuration. In any <code>visibleRowCountMode</code>, the actual height can increase based on the content.</p>
-				 * @returns number <p>Value of property <code>rowHeight</code></p>
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRowMode">rowMode</a>.</p><p>Defines how the table handles the rows. By default, the table operates in <a target="_self" href="api/sap.ui.table.rowmodes.Type">Fixed</a> mode.</p>
+				 * @returns sap.ui.table.rowmodes.RowMode | sap.ui.table.rowmodes.Type 
 				 */
-				getRowHeight(): number;
+				getRowMode(): sap.ui.table.rowmodes.RowMode | sap.ui.table.rowmodes.Type;
 				/**
-				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p><p>This aggregation is managed by the table itself. It can only be used with data binding, is read-only, and does not support templates or factories.</p><p>Rows are created and rendered only for a subset of the available data and reused for performance reasons. When scrolling, only the binding contexts are updated to show the correct section of the data. This makes it possible to bind the rows to large data sets. But you must not change rows and their children programmatically, as these changes might get lost when the table updates the rows the next time. Also, properties must not be set to static values, as these would not change when scrolling.</p><p>The cells of rows can be defined with the <a target="_self" href="api/sap.ui.table.Column#methods/setTemplate">template</a> aggregation of the columns in the <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a> aggregation of the table. The actions of rows can be defined with the <a target="_self" href="api/sap.ui.table.Table#methods/setRowActionTemplate">rowActionTemplate</a> aggregation of the table. Furthermore, row-specific settings can be defined with the <a target="_self" href="api/sap.ui.table.Table#methods/setRowSettingsTemplate">rowSettingsTemplate</a> aggregation of the table.</p>
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p><p>This aggregation is managed by the table itself. It can only be used with data binding, is read-only, and does not support templates or factories.</p><p>Rows are created and rendered only for a subset of the available data and reused for performance reasons. When scrolling, only the binding contexts are updated to show the correct section of the data. This makes it possible to bind the rows to large data sets. But you must not change rows and their children programmatically, as these changes might get lost when the table updates the rows the next time. Also, properties must not be set to static values, as these would not change when scrolling.</p><p>The cells of rows can be defined with the <a target="_self" href="api/sap.ui.table.Column#methods/setTemplate">template</a> aggregation of the columns in the <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a> aggregation of the table. The actions of rows can be defined with the <a target="_self" href="api/sap.ui.table.Table#methods/setRowActionTemplate">rowActionTemplate</a> aggregation of the table. Furthermore, row-specific settings can be defined with the <a target="_self" href="api/sap.ui.table.Table#methods/setRowSettingsTemplate">rowSettingsTemplate</a> aggregation of the table.</p><p><b>Note:</b> During the binding of rows, the (exact) count needs to be available in the table and has to be requested. If the count is not requested, this may lead to unexpected behavior in the table, such as scrolling, accessibility, or keyboard issues. Please refer to the documentation of the used model for information on requesting the count, for example, <a target="_self" href="api/sap.ui.model.odata.v2.ODataModel">sap.ui.model.odata.v2.ODataModel</a> or <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p>
 				 * @returns sap.ui.table.Row[] 
 				 */
-				getRows(): sap.ui.table.Row[];
+				getRows(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRowSettingsTemplate">rowSettingsTemplate</a>.</p><p>Template for row settings. A template is decoupled from the row or table. Each time the template's properties or aggregations are changed, the template has to be applied again via <code>setRowSettingsTemplate</code> for the changes to take effect.</p>
 				 * @returns sap.ui.table.RowSettings 
 				 */
 				getRowSettingsTemplate(): sap.ui.table.RowSettings;
 				/**
-				 * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getScrollThreshold">scrollThreshold</a>.</p><p>Defines how many additional data records are requested from the back-end system when the user scrolls vertically in the table. The <code>scrollThreshold</code> is always added to the number of rows. If the number of rows is 10 and the <code>scrollThreshold</code> is 100, 110 records will be fetched during scrolling. The threshold that is applied to requests that are not initiated by scrolling can be configured with the <code>threshold</code> property. If the <code>scrollThreshold</code> is lower than the number of rows in the scrollable area (number of rows minus number of fixed rows), this number is used as the <code>scrollThreshold</code>. If the value is 0, no threshold is applied during scrolling. The value -1 applies the same value as the <code>threshold</code> property. <br/> <b>Note:</b> This property only takes effect if it is set to a positive integer value.</p><p>The value of the <code>scrollThreshold</code> should be higher than the <code>threshold</code> value to avoid unnecessary requests.</p><p>For <code>AnalyticalTable</code> and <code>TreeTable</code>, the <code>scrollThreshold</code> property must be higher than the <code>threshold</code> property to take effect.</p><p>Default value is <code>-1</code>.</p>
+				 * @returns number <p>Value of property <code>scrollThreshold</code></p>
+				 */
+				getScrollThreshold(): number;
+				/**
+				 * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns number[] <p>Selected indices</p>
 				 */
-				getSelectedIndices(): number[];
+				getSelectedIndices(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getSelectionBehavior">selectionBehavior</a>.</p><p>Selection behavior of the Table. This property defines whether the row selector is displayed and whether the row, the row selector or both can be clicked to select a row. <b>Note:</b> Since the group header visualization relies on the row selectors, the row selectors are always shown if the grouping functionality (depends on table type) is enabled, even if <code>sap.ui.table.SelectionBehavior.RowOnly</code> is set.</p><p>Default value is <code>RowSelector</code>.</p>
 				 * @returns sap.ui.table.SelectionBehavior <p>Value of property <code>selectionBehavior</code></p>
 				 */
 				getSelectionBehavior(): sap.ui.table.SelectionBehavior;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getSelectionMode">selectionMode</a>.</p><p>Selection mode of the Table. This property controls whether single or multiple rows can be selected and how the selection can be extended. It may also influence the visual appearance. When the selection mode is changed, the current selection is removed. <b>Note:</b> Since the group header visualization relies on the row selectors, the row selectors are always shown if the grouping functionality (depends on table type) is enabled, even if <code>sap.ui.table.SelectionMode.None</code> is set. <b>Note:</b> If a selection plugin is applied to the table, the selection mode is controlled by the plugin.</p><p>Default value is <code>MultiToggle</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getSelectionMode">selectionMode</a>.</p><p>Selection mode of the Table. This property controls whether single or multiple rows can be selected and how the selection can be extended. It may also influence the visual appearance. When the selection mode is changed, the current selection is removed. <b>Note:</b> Since the group header visualization relies on the row selectors, the row selectors are always shown if the grouping functionality (depends on table type) is enabled, even if <code>sap.ui.table.SelectionMode.None</code> is set. <b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead. <b>Note:</b> If a selection plugin is used with the table, the selection mode is controlled by the plugin.</p><p>Default value is <code>MultiToggle</code>.</p>
 				 * @returns sap.ui.table.SelectionMode <p>Value of property <code>selectionMode</code></p>
 				 */
 				getSelectionMode(): sap.ui.table.SelectionMode;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getShowColumnVisibilityMenu">showColumnVisibilityMenu</a>.</p><p>Flag to show or hide the column visibility menu. This menu will get displayed in each generated column header menu. It allows to show or hide columns</p><p>Default value is <code>false</code>.</p>
-				 * @returns boolean <p>Value of property <code>showColumnVisibilityMenu</code></p>
-				 */
-				getShowColumnVisibilityMenu(): boolean;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a>.</p><p>Flag whether to show the no data overlay or not once the table is empty. If set to false the table will just show a grid of empty cells</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>showNoData</code></p>
@@ -1718,25 +1564,15 @@ declare namespace sap {
 				 */
 				getShowOverlay(): boolean;
 				/**
-				 * <p>Gets the sorted columns in the order in which sorting was performed through the <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a> method and menus. Does not reflect sorting at binding level or the columns sort visualization set with <a target="_self" href="api/sap.ui.table.Column#methods/setSorted">sap.ui.table.Column#setSorted</a> and <a target="_self" href="api/sap.ui.table.Column#methods/setSortOrder">sap.ui.table.Column#setSortOrder</a>.<br><br>References: <ul><li>sap.ui.table.Table#sort</li></ul></p>
+				 * <p>Gets the sorted columns in the order in which sorting was performed through the <a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a> method and menus. Does not reflect sorting at binding level or the columns sort visualization set with <a target="_self" href="api/sap.ui.table.Column#methods/setSortOrder">sap.ui.table.Column#setSortOrder</a>.<br><br>References: <ul><li><a target="_self" href="api/sap.ui.table.Table#methods/sort">sap.ui.table.Table#sort</a></li></ul></p>
 				 * @returns sap.ui.table.Column[] <p>Array of sorted columns</p>
 				 */
-				getSortedColumns(): sap.ui.table.Column[];
+				getSortedColumns(): any;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a>.</p><p>Defines how many additional (not yet visible) data records from the back-end system are pre-fetched to enable smooth scrolling. The threshold is always added to the <code>visibleRowCount</code>. If the <code>visibleRowCount</code> is 10 and the <code>threshold</code> is 100, there will be 110 records fetched with the initial load. If the <code>threshold</code> is lower than the number of rows in the scrollable area (<code>visibleRowCount</code> minus number of fixed rows), this number is used as the <code>threshold</code>. If the value is 0, thresholding is disabled.</p><p>Default value is <code>100</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a>.</p><p>Defines how many additional (not yet visible) data records from the back-end system are pre-fetched to enable smooth scrolling. The threshold is always added to the number of rows. If the number of rows is 10 and the <code>threshold</code> is 100, 110 records will be fetched with the initial load. This property affects requests triggered by changes in the binding, for example, initial loading, sorting, filtering, etc. The threshold that is applied during scrolling can be configured with the <code>scrollThreshold</code> property. If the <code>threshold</code> is lower than the number of rows in the scrollable area (<code>visibleRowCount</code> minus number of fixed rows), this number is used as the <code>threshold</code>. If the value is 0, thresholding is disabled.</p><p>Default value is <code>100</code>.</p>
 				 * @returns number <p>Value of property <code>threshold</code></p>
 				 */
 				getThreshold(): number;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getVisibleRowCount">visibleRowCount</a>.</p><p>Number of visible rows of the table.</p><p>Default value is <code>10</code>.</p>
-				 * @returns number <p>Value of property <code>visibleRowCount</code></p>
-				 */
-				getVisibleRowCount(): number;
-				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getVisibleRowCountMode">visibleRowCountMode</a>.</p><p>Defines how the table handles the visible rows in the table.</p><p>In the <code>"Fixed"</code> mode, the table always has as many rows as defined in the <code>visibleRowCount</code> property.</p><p>In the <code>"Auto"</code> mode, the <code>visibleRowCount</code> property is changed by the table automatically. It will then adjust its row count to the space it is allowed to cover (limited by the surrounding container), but it cannot have less than defined in the <code>minAutoRowCount</code> property. The <code>visibleRowCount</code> property cannot be set manually. </p><h3>Restrictions</h3><p> <ul> <li>All rows need to have the same height.</li> <li>The table must be rendered without siblings in its parent DOM element. The only exception is if the parent element is a CSS flex container, and the table is a CSS flex item allowed to grow and shrink.</li> </ul></p><p>In the <code>"Interactive"</code> mode, the table has as many rows as defined in the <code>visibleRowCount</code> property after rendering. The user can change the <code>visibleRowCount</code> by dragging a resizer.</p><p>Default value is <code>Fixed</code>.</p>
-				 * @returns sap.ui.table.VisibleRowCountMode <p>Value of property <code>visibleRowCountMode</code></p>
-				 */
-				getVisibleRowCountMode(): sap.ui.table.VisibleRowCountMode;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getWidth">width</a>.</p><p>Width of the Table.</p><p>Default value is <code>'auto'</code>.</p>
 				 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
@@ -1754,12 +1590,6 @@ declare namespace sap {
 				 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
 				 */
 				indexOfExtension(oExtension: sap.ui.core.Control): number;
-				/**
-				 * <p>Checks for the provided <code>sap.ui.table.plugins.SelectionPlugin</code> in the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>. and returns its index if found or -1 otherwise.</p>
-				 * @param {sap.ui.table.plugins.SelectionPlugin} oPlugin <p>The plugin whose index is looked for</p>
-				 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
-				 */
-				indexOfPlugin(oPlugin: sap.ui.table.plugins.SelectionPlugin): number;
 				/**
 				 * <p>Checks for the provided <code>sap.ui.table.Row</code> in the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>. and returns its index if found or -1 otherwise.</p>
 				 * @param {sap.ui.table.Row} oRow <p>The row whose index is looked for</p>
@@ -1781,13 +1611,6 @@ declare namespace sap {
 				 */
 				insertExtension(oExtension: sap.ui.core.Control, iIndex: number): this;
 				/**
-				 * <p>Inserts a plugin into the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p>
-				 * @param {sap.ui.table.plugins.SelectionPlugin} oPlugin <p>The plugin to insert; if empty, nothing is inserted</p>
-				 * @param {number} iIndex <p>The <code>0</code>-based index the plugin should be inserted at; for a negative value of <code>iIndex</code>, the plugin is inserted at position 0; for a value greater than the current size of the aggregation, the plugin is inserted at the last position</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				insertPlugin(oPlugin: sap.ui.table.plugins.SelectionPlugin, iIndex: number): this;
-				/**
 				 * <p>Inserts a row into the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p>
 				 * @param {sap.ui.table.Row} oRow <p>The row to insert; if empty, nothing is inserted</p>
 				 * @param {number} iIndex <p>The <code>0</code>-based index the row should be inserted at; for a negative value of <code>iIndex</code>, the row is inserted at position 0; for a value greater than the current size of the aggregation, the row is inserted at the last position</p>
@@ -1795,7 +1618,7 @@ declare namespace sap {
 				 */
 				insertRow(oRow: sap.ui.table.Row, iIndex: number): this;
 				/**
-				 * <p>Checks whether an index is selected.</p>
+				 * <p>Checks whether an index is selected.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndex <p>Index to check for selection</p>
 				 * @returns boolean <p>Whether the index is selected</p>
 				 */
@@ -1804,66 +1627,55 @@ declare namespace sap {
 				 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.table.Table#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllAriaLabelledBy(): sap.ui.core.ID[];
+				removeAllAriaLabelledBy(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.table.Column[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllColumns(): sap.ui.table.Column[];
+				removeAllColumns(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getExtension">extension</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllExtension(): sap.ui.core.Control[];
-				/**
-				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-				 * @returns sap.ui.table.plugins.SelectionPlugin[] <p>An array of the removed elements (might be empty)</p>
-				 */
-				removeAllPlugins(): sap.ui.table.plugins.SelectionPlugin[];
+				removeAllExtension(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.table.Row[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllRows(): sap.ui.table.Row[];
+				removeAllRows(): any;
 				/**
 				 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.table.Table#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-				 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
+				 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
 				 */
 				removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
 				/**
 				 * <p>Removes a column from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a>.</p>
 				 * @param {number | string | sap.ui.table.Column} vColumn <p>The column to remove or its index or id</p>
-				 * @returns sap.ui.table.Column|null <p>The removed column or <code>null</code></p>
+				 * @returns sap.ui.table.Column | null <p>The removed column or <code>null</code></p>
 				 */
 				removeColumn(vColumn: number | string | sap.ui.table.Column): sap.ui.table.Column | null;
 				/**
 				 * <p>Removes a extension from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getExtension">extension</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vExtension <p>The extension to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed extension or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed extension or <code>null</code></p>
 				 */
 				removeExtension(vExtension: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
-				 * <p>Removes a plugin from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p>
-				 * @param {number | string | sap.ui.table.plugins.SelectionPlugin} vPlugin <p>The plugin to remove or its index or id</p>
-				 * @returns sap.ui.table.plugins.SelectionPlugin|null <p>The removed plugin or <code>null</code></p>
-				 */
-				removePlugin(vPlugin: number | string | sap.ui.table.plugins.SelectionPlugin): sap.ui.table.plugins.SelectionPlugin | null;
-				/**
 				 * <p>Removes a row from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getRows">rows</a>.</p>
 				 * @param {number | string | sap.ui.table.Row} vRow <p>The row to remove or its index or id</p>
-				 * @returns sap.ui.table.Row|null <p>The removed row or <code>null</code></p>
+				 * @returns sap.ui.table.Row | null <p>The removed row or <code>null</code></p>
 				 */
 				removeRow(vRow: number | string | sap.ui.table.Row): sap.ui.table.Row | null;
 				/**
-				 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p>
+				 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the deselection should start</p>
 				 * @param {number} iIndexTo <p>Index up to which to deselect</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				removeSelectionInterval(iIndexFrom: number, iIndexTo: number): this;
 				/**
-				 * <p>Adds all rows to the selection. Please note that for server based models like OData the indices which are considered to be selected might not be available at the client yet. Calling getContextByIndex might not return a result but trigger a roundtrip to request this single entity.</p>
+				 * <p>Adds all rows to the selection. Please note that for server based models like OData the indices which are considered to be selected might not be available at the client yet. Calling getContextByIndex might not return a result but trigger a roundtrip to request this single entity.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				selectAll(): this;
@@ -1892,12 +1704,6 @@ declare namespace sap {
 				 */
 				setContextMenu(oContextMenu: sap.ui.core.IContextMenu): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEditable">editable</a>.</p><p>Flag whether the controls of the Table are editable or not (currently this only controls the background color in certain themes!)</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-				 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setEditable(bEditable?: boolean): this;
-				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableBusyIndicator">enableBusyIndicator</a>.</p><p>If set to <code>true</code>, the table changes its busy state, resulting in showing or hiding the busy indicator. The table will switch to busy as soon as data is retrieved to be displayed in the currently visible rows. This happens, for example, during scrolling, filtering, or sorting. As soon as the data has been retrieved, the table switches back to not busy. The busy state of the table can still be set manually by calling <a target="_self" href="api/sap.ui.core.Control#methods/setBusy">sap.ui.core.Control#setBusy</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 				 * @param {boolean} bEnableBusyIndicator <p>New value for property <code>enableBusyIndicator</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1916,7 +1722,9 @@ declare namespace sap {
 				 */
 				setEnableColumnFreeze(bEnableColumnFreeze?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableColumnReordering">enableColumnReordering</a>.</p><p>Flag to enable or disable column reordering</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableColumnReordering">enableColumnReordering</a>.</p><p>Flag to enable or disable column reordering</p><p><b>Note</b>: Column reordering is possible via drag&drop and keyboard shortcuts. Single-pointer alternative is not provided out-of-the-box and should be implemented on application side. For example the <a target="_self" href="api/sap.m.p13n.Engine">sap.m.p13n.Engine</a> can be used, see the following sample: <a target="_blank" rel="noopener noreferrer" href="https://ui5.sap.com/#/entity/sap.ui.table.Table/sample/sap.m.sample.p13n.EngineGridTable">Personalization for grid table</a>
+							<img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
+							title="Information published on SAP site" class="sapUISDKExternalLink"/>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bEnableColumnReordering <p>New value for property <code>enableColumnReordering</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -1927,12 +1735,6 @@ declare namespace sap {
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setEnableCustomFilter(bEnableCustomFilter?: boolean): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-				 * @param {boolean} bEnableGrouping <p>New value for property <code>enableGrouping</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setEnableGrouping(bEnableGrouping?: boolean): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableSelectAll">enableSelectAll</a>.</p><p>Specifies if a select all button should be displayed in the top left corner. This button is only displayed if the row selector is visible and the selection mode is set to any kind of multi selection.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bEnableSelectAll <p>New value for property <code>enableSelectAll</code></p>
@@ -1946,23 +1748,11 @@ declare namespace sap {
 				 */
 				setFirstVisibleRow(iFirstVisibleRow?: number): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>Number of rows that are fix on the bottom. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-				 * @param {number} iFixedBottomRowCount <p>New value for property <code>fixedBottomRowCount</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setFixedBottomRowCount(iFixedBottomRowCount?: number): this;
-				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedColumnCount">fixedColumnCount</a>.</p><p>Number of columns that are fixed on the left. Only columns which are not fixed can be scrolled horizontally.</p><p><b>Note</b> <ul> <li>Fixed columns need a defined width for the feature to work.</li> <li>The aggregated width of all fixed columns must not exceed the table width. Otherwise the table ignores the value of the property and adapts the behavior in an appropriate way to ensure that the user is still able to scroll horizontally.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
 				 * @param {number} iFixedColumnCount <p>New value for property <code>fixedColumnCount</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setFixedColumnCount(iFixedColumnCount?: number): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-				 * @param {number} iFixedRowCount <p>New value for property <code>fixedRowCount</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setFixedRowCount(iFixedRowCount?: number): this;
 				/**
 				 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.table.Table#methods/getFooter">footer</a>.</p>
 				 * @param {sap.ui.core.Control | string} vFooter <p>The footer to set</p>
@@ -1970,25 +1760,13 @@ declare namespace sap {
 				 */
 				setFooter(vFooter: sap.ui.core.Control | string): this;
 				/**
-				 * <p>Sets the associated <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>.</p>
-				 * @param {sap.ui.core.ID | sap.ui.table.Column} oGroupBy <p>ID of an element which becomes the new target of this groupBy association; alternatively, an element instance may be given</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setGroupBy(oGroupBy: sap.ui.core.ID | sap.ui.table.Column): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getMinAutoRowCount">minAutoRowCount</a>.</p><p>This property is used to set the minimum count of visible rows when the property visibleRowCountMode is set to Auto or Interactive. For any other visibleRowCountMode, it is ignored.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>5</code>.</p>
-				 * @param {number} iMinAutoRowCount <p>New value for property <code>minAutoRowCount</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setMinAutoRowCount(iMinAutoRowCount?: number): this;
-				/**
 				 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.table.Table#methods/getNoData">noData</a>.</p>
 				 * @param {sap.ui.core.Control | string} vNoData <p>The noData to set</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setNoData(vNoData: sap.ui.core.Control | string): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getRowActionCount">rowActionCount</a>.</p><p>Number of row actions made visible which determines the width of the row action column. The values <code>0</code>, <code>1</code> and <code>2</code> are possible.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getRowActionCount">rowActionCount</a>.</p><p>Number of row actions made visible, hence this property also determines the width of the row action column. The maximum number of visible row actions is 3. If the <code>rowActionTemplate</code> contains more <code>rowActionItems</code>, they are shown in an overflow menu.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
 				 * @param {number} iRowActionCount <p>New value for property <code>rowActionCount</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -2000,11 +1778,11 @@ declare namespace sap {
 				 */
 				setRowActionTemplate(oRowActionTemplate: sap.ui.table.RowAction): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getRowHeight">rowHeight</a>.</p><p>Row height in pixel.</p><p>In the table's header, it defines the minimum height of the row, but it cannot be less than the default height based on the content density configuration. The actual height can increase based on the content.</p><p>In the table's body, it defines the height of the row content. The actual row height is also influenced by other factors, such as the border width. If the <code>visibleRowCountMode</code> property is set to <a target="_self" href="api/sap.ui.table.VisibleRowCountMode">Fixed</a> or <a target="_self" href="api/sap.ui.table.VisibleRowCountMode">Interactive</a>, the value defines the minimum height, and the actual height can increase based on the content. If the mode is <a target="_self" href="api/sap.ui.table.VisibleRowCountMode">Auto</a>, the value defines the actual height, and any content that doesn't fit is cut off.</p><p>If no value is set (includes 0), a default height is applied based on the content density configuration. In any <code>visibleRowCountMode</code>, the actual height can increase based on the content.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-				 * @param {number} iRowHeight <p>New value for property <code>rowHeight</code></p>
+				 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.table.Table#methods/getRowMode">rowMode</a>.</p>
+				 * @param {sap.ui.table.rowmodes.RowMode | sap.ui.table.rowmodes.Type} vRowMode <p>The rowMode to set</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				setRowHeight(iRowHeight?: number): this;
+				setRowMode(vRowMode: sap.ui.table.rowmodes.RowMode | sap.ui.table.rowmodes.Type): this;
 				/**
 				 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.table.Table#methods/getRowSettingsTemplate">rowSettingsTemplate</a>.</p>
 				 * @param {sap.ui.table.RowSettings} oRowSettingsTemplate <p>The rowSettingsTemplate to set</p>
@@ -2012,7 +1790,13 @@ declare namespace sap {
 				 */
 				setRowSettingsTemplate(oRowSettingsTemplate: sap.ui.table.RowSettings): this;
 				/**
-				 * <p>Sets the selected index. The previous selection is removed.</p>
+				 * <p>Sets the threshold value, which will be added to all data requests initiated by scrolling if the <code>Table</code> is bound against an OData service.</p>
+				 * @param {number} iThreshold <p>The threshold for scrolling</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setScrollThreshold(iThreshold: number): this;
+				/**
+				 * <p>Sets the selected index. The previous selection is removed.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndex <p>The index to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -2024,24 +1808,18 @@ declare namespace sap {
 				 */
 				setSelectionBehavior(sSelectionBehavior?: sap.ui.table.SelectionBehavior): this;
 				/**
-				 * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p>
+				 * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 				 * @param {number} iIndexTo <p>Index up to which to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setSelectionInterval(iIndexFrom: number, iIndexTo: number): this;
 				/**
-				 * <p>Sets the selection mode. The current selection is lost.</p>
+				 * <p>Sets the selection mode. The current selection is lost.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {sap.ui.table.SelectionMode} sSelectionMode <p>the selection mode, see sap.ui.table.SelectionMode</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setSelectionMode(sSelectionMode: sap.ui.table.SelectionMode): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getShowColumnVisibilityMenu">showColumnVisibilityMenu</a>.</p><p>Flag to show or hide the column visibility menu. This menu will get displayed in each generated column header menu. It allows to show or hide columns</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-				 * @param {boolean} bShowColumnVisibilityMenu <p>New value for property <code>showColumnVisibilityMenu</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setShowColumnVisibilityMenu(bShowColumnVisibilityMenu?: boolean): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a>.</p><p>Flag whether to show the no data overlay or not once the table is empty. If set to false the table will just show a grid of empty cells</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bShowNoData <p>New value for property <code>showNoData</code></p>
@@ -2067,30 +1845,18 @@ declare namespace sap {
 				 */
 				setTooltip(vTooltip: string | sap.ui.core.TooltipBase): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getVisibleRowCount">visibleRowCount</a>.</p><p>Number of visible rows of the table.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10</code>.</p>
-				 * @param {number} iVisibleRowCount <p>New value for property <code>visibleRowCount</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setVisibleRowCount(iVisibleRowCount?: number): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getVisibleRowCountMode">visibleRowCountMode</a>.</p><p>Defines how the table handles the visible rows in the table.</p><p>In the <code>"Fixed"</code> mode, the table always has as many rows as defined in the <code>visibleRowCount</code> property.</p><p>In the <code>"Auto"</code> mode, the <code>visibleRowCount</code> property is changed by the table automatically. It will then adjust its row count to the space it is allowed to cover (limited by the surrounding container), but it cannot have less than defined in the <code>minAutoRowCount</code> property. The <code>visibleRowCount</code> property cannot be set manually. </p><h3>Restrictions</h3><p> <ul> <li>All rows need to have the same height.</li> <li>The table must be rendered without siblings in its parent DOM element. The only exception is if the parent element is a CSS flex container, and the table is a CSS flex item allowed to grow and shrink.</li> </ul></p><p>In the <code>"Interactive"</code> mode, the table has as many rows as defined in the <code>visibleRowCount</code> property after rendering. The user can change the <code>visibleRowCount</code> by dragging a resizer.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Fixed</code>.</p>
-				 * @param {sap.ui.table.VisibleRowCountMode} sVisibleRowCountMode <p>New value for property <code>visibleRowCountMode</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setVisibleRowCountMode(sVisibleRowCountMode?: sap.ui.table.VisibleRowCountMode): this;
-				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getWidth">width</a>.</p><p>Width of the Table.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
 				 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setWidth(sWidth?: sap.ui.core.CSSSize): this;
 				/**
-				 * <p>Sorts the given column ascending or descending.</p>
-				 * @param {sap.ui.table.Column | undefined} oColumn <p>Column to be sorted or undefined to clear sorting</p>
-				 * @param {sap.ui.table.SortOrder} oSortOrder <p>Sort order of the column (if undefined the default will be ascending)</p>
-				 * @param {boolean} bAdd <p>Set to true to add the new sort criterion to the existing sort criteria</p>
+				 * <p>Changes or removes sorting from the table.</p>
+				 * @param {sap.ui.table.Column} oColumn <p>Column to be sorted or undefined to clear sorting</p>
+				 * @param {sap.ui.core.SortOrder} sSortOrder <p>Sort order of the column</p>
+				 * @param {boolean} bAdd <p>Set to <code>true</code> to add the new sort criterion to the existing sort criteria, otherwise to replace it. If the sort order is <code>sap.ui.core.SortOrder.None</code>, this parameter has no effect, and only the sort criterion for this column is removed from the sort criteria.</p>
 				 */
-				sort(oColumn: sap.ui.table.Column | undefined, oSortOrder: sap.ui.table.SortOrder, bAdd: boolean): void;
+				sort(oColumn?: sap.ui.table.Column, sSortOrder?: sap.ui.core.SortOrder, bAdd?: boolean): void;
 				/**
 				 * <p>Unbinds aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getColumns">columns</a> from model data.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2101,6 +1867,57 @@ declare namespace sap {
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				unbindRows(): this;
+
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEditable">editable</a>.</p><p>Flag whether the controls of the Table are editable or not (currently this only controls the background color in certain themes!)</p><p>Default value is <code>true</code>.</p>
+				 * @returns boolean <p>Value of property <code>editable</code></p>
+				 */
+				getEditable(): boolean;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEditable">editable</a>.</p><p>Flag whether the controls of the Table are editable or not (currently this only controls the background color in certain themes!)</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+				 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setEditable(bEditable?: boolean): this;
+				/**
+				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p><p>Plugin section of the table. Multiple plugins are possible, but always only <b>one</b> of a certain type.</p><p>The following restrictions apply: <ul> <li>If a selection plugin is applied to the table, the table's selection API must not be used. Instead, use the API of the plugin.</li> <li>Only one MultiSelectionPlugin can be applied. No other plugins can be applied.</li> </ul></p>
+				 * @returns sap.ui.table.plugins.SelectionPlugin[] 
+				 */
+				getPlugins(): sap.ui.table.plugins.SelectionPlugin[];
+				/**
+				 * <p>Adds some plugin to the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p>
+				 * @param {sap.ui.table.plugins.SelectionPlugin} oPlugin <p>The plugin to add; if empty, nothing is inserted</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				addPlugin(oPlugin: sap.ui.table.plugins.SelectionPlugin): this;
+				/**
+				 * <p>Removes a plugin from the aggregation <a target="_self" href="api/sap.ui.table.Table#methods/getPlugins">plugins</a>.</p>
+				 * @param {number | string | sap.ui.table.plugins.SelectionPlugin} vPlugin <p>The plugin to remove or its index or id</p>
+				 * @returns sap.ui.table.plugins.SelectionPlugin|null <p>The removed plugin or <code>null</code></p>
+				 */
+				removePlugin(vPlugin: number | string | sap.ui.table.plugins.SelectionPlugin): sap.ui.table.plugins.SelectionPlugin | null;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getVisibleRowCount">visibleRowCount</a>.</p><p>Number of visible rows of the table.</p><p>Default value is <code>10</code>.</p>
+				 * @returns number <p>Value of property <code>visibleRowCount</code></p>
+				 */
+				getVisibleRowCount(): number;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getVisibleRowCount">visibleRowCount</a>.</p><p>Number of visible rows of the table.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10</code>.</p>
+				 * @param {number} iVisibleRowCount <p>New value for property <code>visibleRowCount</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setVisibleRowCount(iVisibleRowCount?: number): this;
+				/**
+				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>, or <code>null</code>.</p>
+				 * @returns sap.ui.core.ID 
+				 */
+				getGroupBy(): sap.ui.core.ID;
+				/**
+				 * <p>Sets the associated <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>.</p>
+				 * @param {sap.ui.core.ID | sap.ui.table.Column} oGroupBy <p>ID of an element which becomes the new target of this groupBy association; alternatively, an element instance may be given</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setGroupBy(oGroupBy: sap.ui.core.ID | sap.ui.table.Column): this;
 			}
 			/**
 			 * <p>The TablePersoController can be used to connect a table with a persistence service.</p>
@@ -2139,9 +1956,9 @@ declare namespace sap {
 				getShowResetAll(): boolean;
 				/**
 				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.table.TablePersoController#methods/getTable">table</a>, or <code>null</code>.</p>
-				 * @returns sap.ui.core.ID 
+				 * @returns sap.ui.core.ID | null 
 				 */
-				getTable(): sap.ui.core.ID;
+				getTable(): sap.ui.core.ID | null;
 				/**
 				 * <p>Opens the personalization dialog for the Table to modify the visibility and the order of the columns.</p><p><i>Using this functionality will require to load the sap.m library because the personalization dialog is only available in this library for now.</i></p>
 				 * @param {any} mSettings 
@@ -2195,7 +2012,7 @@ declare namespace sap {
 				setTable(oTable: sap.ui.core.ID | sap.ui.table.Table): this;
 			}
 			/**
-			 * <p>The TreeTable control provides a comprehensive set of features to display hierarchical data.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/148892ff9aea4a18b912829791e38f3e">Tables: Which One Should I Choose?</a></li></ul></p>
+			 * <p>The TreeTable control provides a comprehensive set of features to display hierarchical data. The control can be used in combination with <a target="_self" href="api/sap.ui.model.json.JSONModel">JSONModel</a> and <a target="_self" href="api/sap.ui.model.odata.v2.ODataModel">ODataModel V2</a>. For a tree-table-like behavior with OData V4 services, use the <a target="_self" href="api/sap.ui.table.Table">Table</a> control with the <a target="_self" href="api/sap.ui.table.plugins.ODataV4Hierarchy">ODataV4Hierarchy</a> plugin.<br><br><span>Documentation links:</span><ul><li><a target="_self" href="topic/148892ff9aea4a18b912829791e38f3e">Tables: Which One Should I Choose?</a></li></ul></p>
 			 */
 			export class TreeTable extends sap.ui.table.Table {
 				/**
@@ -2205,7 +2022,7 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
-				 * <p>Adds the given selection interval to the selection. In case of a single selection, only <code>iIndexTo</code> is added to the selection.</p>
+				 * <p>Adds the given selection interval to the selection. In case of a single selection, only <code>iIndexTo</code> is added to the selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 				 * @param {number} iIndexTo <p>Index up to which to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2221,17 +2038,17 @@ declare namespace sap {
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.TreeTable#events/toggleOpenState">toggleOpenState</a> event of this <code>sap.ui.table.TreeTable</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.TreeTable</code> itself.</p><p>Fired when a row has been expanded or collapsed by user interaction. Only available in hierarchical mode.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.TreeTable</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachToggleOpenState(oData: any, fnFunction: any, oListener?: any): this;
+				attachToggleOpenState(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Collapses one or more rows.</p>
-				 * @param {number | number[]} vRowIndex <p>A single index or an array of indices of the rows to be collapsed</p>
+				 * @param {any} vRowIndex <p>A single index or an array of indices of the rows to be collapsed</p>
 				 * @returns this <p><code>this</code> to allow method chaining</p>
 				 */
-				collapse(vRowIndex: number | number[]): this;
+				collapse(vRowIndex: any): this;
 				/**
 				 * <p>Collapses all nodes (and lower if collapseRecursive is activated)</p>
 				 * @returns this <p><code>this</code> to allow method chaining</p>
@@ -2239,17 +2056,17 @@ declare namespace sap {
 				collapseAll(): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.TreeTable#events/toggleOpenState">toggleOpenState</a> event of this <code>sap.ui.table.TreeTable</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachToggleOpenState(fnFunction: any, oListener?: any): this;
+				detachToggleOpenState(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Expands one or more rows.</p>
-				 * @param {number | number[]} vRowIndex <p>A single index or an array of indices of the rows to be expanded</p>
+				 * @param {any} vRowIndex <p>A single index or an array of indices of the rows to be expanded</p>
 				 * @returns this <p><code>this</code> to allow method chaining</p>
 				 */
-				expand(vRowIndex: number | number[]): this;
+				expand(vRowIndex: any): this;
 				/**
 				 * <p>Expands all nodes starting from the root level to the given level 'iLevel'.</p><p>Only supported with ODataModel v2, when running in OperationMode.Client. Fully supported for <code>sap.ui.model.ClientTreeBinding</code>, e.g. if you are using a <code>sap.ui.model.json.JSONModel</code>.</p><p>Please also see <code>sap.ui.model.odata.OperationMode</code>.</p>
 				 * @param {number} iLevel <p>the level to which the trees shall be expanded</p>
@@ -2263,30 +2080,20 @@ declare namespace sap {
 				 */
 				protected fireToggleOpenState(mParameters?: any): this;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>Default value is <code>false</code>.</p>
-				 * @returns boolean <p>Value of property <code>enableGrouping</code></p>
-				 */
-				getEnableGrouping(): boolean;
-				/**
-				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>, or <code>null</code>.</p>
-				 * @returns sap.ui.core.ID 
-				 */
-				getGroupBy(): sap.ui.core.ID;
-				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.TreeTable#methods/getGroupHeaderProperty">groupHeaderProperty</a>.</p><p>The property name of the rows data which will be displayed as a group header if the group mode is enabled</p>
 				 * @returns string <p>Value of property <code>groupHeaderProperty</code></p>
 				 */
 				getGroupHeaderProperty(): string;
 				/**
-				 * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p>
+				 * <p>Zero-based indices of selected items, wrapped in an array. An empty array means "no selection".</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns number[] <p>Selected indices</p>
 				 */
-				getSelectedIndices(): number[];
+				getSelectedIndices(): any;
 				/**
 				 * <p>Returns an array containing the row indices of all selected tree nodes (ordered ascending).</p><p>Please be aware of the following: Due to performance/network traffic reasons, the getSelectedIndices function returns only all indices of actually selected rows/tree nodes. Unknown rows/nodes (as in "not yet loaded" to the client), will not be returned.</p>
 				 * @returns number[] <p>an array containing all selected indices</p>
 				 */
-				getSelectedIndices(): number[];
+				getSelectedIndices(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.TreeTable#methods/getUseGroupMode">useGroupMode</a>.</p><p>If group mode is enabled nodes with subitems are rendered as if they were group headers. This can be used to do the grouping for an OData service on the backend and visualize this in a table.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>useGroupMode</code></p>
@@ -2299,7 +2106,7 @@ declare namespace sap {
 				 */
 				isExpanded(iRowIndex: number): boolean;
 				/**
-				 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p>
+				 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the deselection should start</p>
 				 * @param {number} iIndexTo <p>Index up to which to deselect</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2313,7 +2120,7 @@ declare namespace sap {
 				 */
 				removeSelectionInterval(iIndexFrom: number, iIndexTo: number): this;
 				/**
-				 * <p>Adds all rows to the selection. Please note that for server based models like OData the indices which are considered to be selected might not be available at the client yet. Calling getContextByIndex might not return a result but trigger a roundtrip to request this single entity.</p>
+				 * <p>Adds all rows to the selection. Please note that for server based models like OData the indices which are considered to be selected might not be available at the client yet. Calling getContextByIndex might not return a result but trigger a roundtrip to request this single entity.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				selectAll(): this;
@@ -2323,29 +2130,11 @@ declare namespace sap {
 				 */
 				selectAll(): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getEnableGrouping">enableGrouping</a>.</p><p>Enables or disables grouping. If grouping is enabled, the table is grouped by the column which is defined in the <code>groupBy</code> association.</p><p>The following restrictions apply: <ul> <li>Only client models are supported (e.g. <a target="_self" href="api/sap.ui.model.json.JSONModel">sap.ui.model.json.JSONModel</a>). Grouping does not work with OData models.</li> <li>The table can only be grouped by <b>one</b> column at a time. Grouping by another column will remove the current grouping.</li> <li>For the grouping to work correctly, <a target="_self" href="api/sap.ui.table.Column#methods/getSortProperty">sortProperty</a> must be set for the grouped column.</li> <li>If grouping has been done, sorting and filtering is not possible. Any existing sorting and filtering rules do no longer apply. The UI is not updated accordingly (e.g. menu items, sort and filter icons).</li> <li>The column, by which the table is grouped, is not visible. It will become visible again only if the table is grouped by another column or grouping is disabled.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-				 * @param {boolean} bEnableGrouping <p>New value for property <code>enableGrouping</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setEnableGrouping(bEnableGrouping?: boolean): this;
-				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.Table#methods/getFixedRowCount">fixedRowCount</a>.</p><p>Number of rows that are fix on the top. When you use a vertical scrollbar, only the rows which are not fixed, will scroll.</p><p>This property is only supported if the <code>rows</code> aggregation is bound to a <a target="_self" href="api/sap.ui.model.ClientModel">client model</a>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-				 * @param {number} iFixedRowCount <p>New value for property <code>fixedRowCount</code></p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setFixedRowCount(iFixedRowCount?: number): this;
-				/**
 				 * <p>Setter for property <code>fixedRowCount</code>.</p><p><b>This property is not supportd for the TreeTable and will be ignored!</b></p><p>Default value is <code>0</code></p>
 				 * @param {number} iRowCount <p>New value for property <code>fixedRowCount</code></p>
 				 * @returns this <p><code>this</code> to allow method chaining</p>
 				 */
 				setFixedRowCount(iRowCount: number): this;
-				/**
-				 * <p>Sets the associated <a target="_self" href="api/sap.ui.table.Table#methods/getGroupBy">groupBy</a>.</p>
-				 * @param {sap.ui.core.ID | sap.ui.table.Column} oGroupBy <p>ID of an element which becomes the new target of this groupBy association; alternatively, an element instance may be given</p>
-				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-				 */
-				setGroupBy(oGroupBy: sap.ui.core.ID | sap.ui.table.Column): this;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.TreeTable#methods/getGroupHeaderProperty">groupHeaderProperty</a>.</p><p>The property name of the rows data which will be displayed as a group header if the group mode is enabled</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {string} sGroupHeaderProperty <p>New value for property <code>groupHeaderProperty</code></p>
@@ -2353,7 +2142,7 @@ declare namespace sap {
 				 */
 				setGroupHeaderProperty(sGroupHeaderProperty?: string): this;
 				/**
-				 * <p>Sets the selected index. The previous selection is removed.</p>
+				 * <p>Sets the selected index. The previous selection is removed.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndex <p>The index to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -2365,7 +2154,7 @@ declare namespace sap {
 				 */
 				setSelectedIndex(iRowIndex: number): this;
 				/**
-				 * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p>
+				 * <p>Sets the given selection interval as selection. In case of a single selection, only <code>iIndexTo</code> is selected.</p><p><b>Note:</b> The built-in selection API has limited functionality, especially when it is combined with paging (e.g. OData). Therefore, it is recommended to use a selection plugin instead.</p>
 				 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 				 * @param {number} iIndexTo <p>Index up to which to select</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2392,7 +2181,7 @@ declare namespace sap {
 				setUseGroupMode(bUseGroupMode?: boolean): this;
 			}
 			/**
-			 * <p><p>VisibleRowCountMode of the table</p></p>
+			 * <p><p>VisibleRowCountMode of the table</p><p>This enum is part of the 'sap/ui/table/library' module export and must be accessed by the property 'VisibleRowCountMode'.</p></p>
 			 */
 			export enum VisibleRowCountMode {
 				/**
@@ -2404,7 +2193,7 @@ declare namespace sap {
 				 */
 				Fixed = "Fixed",
 				/**
-				 * <p>The user can change the <code>visibleRowCount</code> by dragging a resizer.</p>
+				 * <p>The user can change the <code>visibleRowCount</code> by dragging a resizer.</p><p>The following restrictions apply: <ul> <li>The functionality targets only the mouse interaction (drag and drop). There is no keyboard alternative available. An accessible alternative must be provided by applications, for example, by giving the user the possibility to enter the number of required rows in an input field.</li> <li>The resize interaction is not optimized for touch devices from a design and interaction perspective. We do not recommend to use this mode in such scenarios.</li> </ul></p>
 				 */
 				Interactive = "Interactive",
 			}
@@ -2428,9 +2217,19 @@ declare namespace sap {
 			 */
 			namespace plugins {
 				/**
-				 * <p>Implements a plugin to enable a special multi-selection behavior: <ul> <li>No Select All checkbox, select all can only be done via range selection</li> <li>Dedicated Deselect All button to clear the selection</li> <li>The number of indices which can be selected in a range is defined by the <code>limit</code> property by the application. If the user tries to select more indices, the selection is automatically limited, and the table scrolls to the last selected index.</li> <li>The plugin makes sure that the corresponding binding contexts up to the given limit are available, by requesting them from the binding.</li> <li>Multiple consecutive selections are possible</li> </ul></p><p>This plugin is intended for the multi-selection mode, but also supports single selection for ease of use. When this plugin is applied to the table, the table's selection mode is automatically set to MultiToggle and cannot be changed.</p>
+				 * <p>Implements a plugin to enable a special multi-selection behavior: <ul> <li>Select All checkbox for selecting rows up to the set limit.<br>If the number of selected rows is smaller than the limit, all these rows can be selected at once with a single operation. If there are more rows than the limit, the first x rows are selected until the limit x has been reached.</li> <li>Dedicated Deselect All button for removing the selection</li> <li>The number of indices which can be selected in a range is defined by the <code>limit</code> property. If the user tries to select more indices, the selection is automatically limited, and the table scrolls to the last selected index.</li> <li>The plugin makes sure that the corresponding binding contexts up to the given limit are available, by requesting them from the binding.</li> <li>Multiple consecutive selections are possible</li> </ul></p><p>This plugin is intended for server-side models and multi-selection mode. Range selections, including Select All, only work properly if the count is known. Make sure the model/binding is configured to request the count from the service. For ease of use, client-side models and single selection are also supported.</p><p>With ODataV4, use the <a target="_self" href="api/sap.ui.table.plugins.ODataV4MultiSelection">ODataV4MultiSelection</a> plugin or the <a target="_self" href="api/sap.ui.table.plugins.ODataV4SingleSelection">ODataV4SingleSelection</a> plugin instead of this one.</p>
 				 */
 				export class MultiSelectionPlugin extends sap.ui.table.plugins.SelectionPlugin {
+					/**
+					 * <p>Searches a plugin of the corresponding type in the aggregations of the given <code>Table</code> instance. The first plugin that is found is returned.</p>
+					 * @param {sap.ui.table.Table} oTable <p>The <code>Table</code> instance to check for</p>
+					 * @returns sap.ui.core.Element | undefined <p>The found plugin instance or <code>undefined</code> if not found</p>
+					 */
+					static findOn(oTable: sap.ui.table.Table): sap.ui.core.Element | undefined;
+					/**
+					 * <p>Constructs an instance of sap.ui.table.plugins.MultiSelectionPlugin.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
 					/**
 					 * <p>Adds the given selection interval to the selection and requests the corresponding binding contexts. In single-selection mode it requests the context and sets the selected index to <code>iIndexTo</code>.</p><p>If the number of indices in the range is greater than the value of the <code>limit</code> property, only n=limit indices, starting from <code>iIndexFrom</code>, are selected. The table is scrolled to display the index last selected.</p>
 					 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
@@ -2442,19 +2241,19 @@ declare namespace sap {
 					/**
 					 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself.</p><p>This event is fired when the selection is changed.</p>
 					 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-					 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 					 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					attachSelectionChange(oData: any, fnFunction: any, oListener?: any): this;
+					attachSelectionChange(oData: any, fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.MultiSelectionPlugin</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.plugins.MultiSelectionPlugin</code> itself.</p><p>This event is fired when the selection is changed.</p>
 					 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-					 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 					 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.plugins.MultiSelectionPlugin</code> itself</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					attachSelectionChange(oData: any, fnFunction: any, oListener?: any): this;
+					attachSelectionChange(oData: any, fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Removes the complete selection.</p>
 					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
@@ -2462,18 +2261,18 @@ declare namespace sap {
 					clearSelection(oEventPayload?: any): void;
 					/**
 					 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-					 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 					 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					detachSelectionChange(fnFunction: any, oListener?: any): this;
+					detachSelectionChange(fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.MultiSelectionPlugin</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-					 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 					 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					detachSelectionChange(fnFunction: any, oListener?: any): this;
+					detachSelectionChange(fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Fires event <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> to attached listeners.</p>
 					 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2492,7 +2291,7 @@ declare namespace sap {
 					 */
 					getEnableNotification(): boolean;
 					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul> In other cases, we recommend to set the limit to at least double the value of the <a target="_self" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a> property of the related <code>sap.ui.table.Table</code> control.</p><p>Default value is <code>200</code>.</p>
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button.</p><p><b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul></p><p>In other cases, we recommend to set the limit to at least double the value of the <a target="_self" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a> property of the related <code>sap.ui.table.Table</code> control.</p><p>Default value is <code>200</code>.</p>
 					 * @returns number <p>Value of property <code>limit</code></p>
 					 */
 					getLimit(): number;
@@ -2500,7 +2299,7 @@ declare namespace sap {
 					 * <p>Zero-based indices of selected indices, wrapped in an array. An empty array means nothing has been selected.</p>
 					 * @returns number[] <p>An array containing all selected indices</p>
 					 */
-					getSelectedIndices(): number[];
+					getSelectedIndices(): any;
 					/**
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getSelectionMode">selectionMode</a>.</p><p>Selection mode of the plugin. This property controls whether single or multiple rows can be selected. It also influences the visual appearance. When the selection mode is changed, the current selection is removed.</p><p>Default value is <code>MultiToggle</code>.</p>
 					 * @returns sap.ui.table.SelectionMode <p>Value of property <code>selectionMode</code></p>
@@ -2537,7 +2336,7 @@ declare namespace sap {
 					 */
 					setEnableNotification(bEnableNotification?: boolean): this;
 					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button. <b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul> In other cases, we recommend to set the limit to at least double the value of the <a target="_self" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a> property of the related <code>sap.ui.table.Table</code> control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#methods/getLimit">limit</a>.</p><p>Number of indices which can be selected in a range. Accepts positive integer values. If set to 0, the limit is disabled, and the Select All checkbox appears instead of the Deselect All button.</p><p><b>Note:</b> To avoid severe performance problems, the limit should only be set to 0 in the following cases: <ul> <li>With client-side models</li> <li>With server-side models if they are used in client mode</li> <li>If the entity set is small</li> </ul></p><p>In other cases, we recommend to set the limit to at least double the value of the <a target="_self" href="api/sap.ui.table.Table#methods/getThreshold">threshold</a> property of the related <code>sap.ui.table.Table</code> control.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>200</code>.</p>
 					 * @param {number} iLimit <p>New value for property <code>limit</code></p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
@@ -2571,30 +2370,184 @@ declare namespace sap {
 					setShowHeaderSelector(bShowHeaderSelector?: boolean): this;
 				}
 				/**
-				 * <p>Implements the selection methods for a table.</p>
+				 * <p>Integrates the information about the data structure of the <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding">sap.ui.model.odata.v4.ODataListBinding</a> and the table. The table is enabled to visualize grouped data with summary rows. Works only in combination with a <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p><p>For details about data aggregation, see <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/setAggregation">sap.ui.model.odata.v4.ODataListBinding#setAggregation</a>.</p><p>In combination with the <a target="_self" href="api/sap.ui.table.Table">Table</a> control, this plugin offers a UI for OData V4 that is similar to the one the <a target="_self" href="api/sap.ui.table.AnalyticalTable">AnalyticalTable</a> offers for OData V2.</p>
+				 */
+				export class ODataV4Aggregation extends sap.ui.core.Element {
+					/**
+					 * <p>Searches a plugin of the corresponding type in the aggregations of the given <code>Table</code> instance. The first plugin that is found is returned.</p>
+					 * @param {sap.ui.table.Table} oTable <p>The <code>Table</code> instance to check for</p>
+					 * @returns sap.ui.core.Element | undefined <p>The found plugin instance or <code>undefined</code> if not found</p>
+					 */
+					static findOn(oTable: sap.ui.table.Table): sap.ui.core.Element | undefined;
+					/**
+					 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 */
+					constructor();
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.ODataV4Aggregation#methods/getEnabled">enabled</a>.</p><p>Indicates whether this plugin is enabled.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>enabled</code></p>
+					 */
+					getEnabled(): boolean;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.ODataV4Aggregation#methods/getGroupHeaderFormatter">groupHeaderFormatter</a>.</p><p>Provides a custom group header title.</p><p>This function is called for each group header row in the table. It receives the binding context of the row and the group level property path according to <code>groupLevels</code> in <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/setAggregation">sap.ui.model.odata.v4.ODataListBinding#setAggregation</a>). The function must return a string that is used as the title of the group header row.</p><p>Function signature: <code>groupHeaderFormatter(oContext: sap.ui.model.odata.v4.Context, sPropertyPath: string): string</code></p>
+					 * @returns Function <p>Value of property <code>groupHeaderFormatter</code></p>
+					 */
+					getGroupHeaderFormatter(): Function;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.ODataV4Aggregation#methods/getEnabled">enabled</a>.</p><p>Indicates whether this plugin is enabled.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEnabled(bEnabled?: boolean): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.ODataV4Aggregation#methods/getGroupHeaderFormatter">groupHeaderFormatter</a>.</p><p>Provides a custom group header title.</p><p>This function is called for each group header row in the table. It receives the binding context of the row and the group level property path according to <code>groupLevels</code> in <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/setAggregation">sap.ui.model.odata.v4.ODataListBinding#setAggregation</a>). The function must return a string that is used as the title of the group header row.</p><p>Function signature: <code>groupHeaderFormatter(oContext: sap.ui.model.odata.v4.Context, sPropertyPath: string): string</code></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+					 * @param {Function} fnGroupHeaderFormatter <p>New value for property <code>groupHeaderFormatter</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setGroupHeaderFormatter(fnGroupHeaderFormatter: Function): this;
+				}
+				/**
+				 * <p>Integrates the information about the data structure of the <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding">sap.ui.model.odata.v4.ODataListBinding</a> and the table. The table is enabled to visualize hierarchical data. Works only in combination with a <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p><p>For details about hierarchies, see <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding#methods/setAggregation">sap.ui.model.odata.v4.ODataListBinding#setAggregation</a>.</p><p>In combination with the <a target="_self" href="api/sap.ui.table.Table">Table</a> control, this plugin offers a UI for OData V4 that is similar to the one the <a target="_self" href="api/sap.ui.table.TreeTable">TreeTable</a> offers for other models.</p>
+				 */
+				export class ODataV4Hierarchy extends sap.ui.core.Element {
+					/**
+					 * <p>Searches a plugin of the corresponding type in the aggregations of the given <code>Table</code> instance. The first plugin that is found is returned.</p>
+					 * @param {sap.ui.table.Table} oTable <p>The <code>Table</code> instance to check for</p>
+					 * @returns sap.ui.core.Element | undefined <p>The found plugin instance or <code>undefined</code> if not found</p>
+					 */
+					static findOn(oTable: sap.ui.table.Table): sap.ui.core.Element | undefined;
+					/**
+					 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 */
+					constructor();
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.ODataV4Hierarchy#methods/getEnabled">enabled</a>.</p><p>Indicates whether this plugin is enabled.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>enabled</code></p>
+					 */
+					getEnabled(): boolean;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.ODataV4Hierarchy#methods/getEnabled">enabled</a>.</p><p>Indicates whether this plugin is enabled.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEnabled(bEnabled?: boolean): this;
+				}
+				/**
+				 * <p>Integrates the selection of the <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding">sap.ui.model.odata.v4.ODataListBinding</a> and the table. Works only in combination with a <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>.</p><p>The selection of a context that is not selectable is not allowed. The following contexts are not selectable: <ul> <li>Header context</li> <li>Contexts that represent group headers</li> <li>Contexts that contain totals</li> </ul></p><p>All binding-related limitations also apply in the context of this plugin. For details, see <a target="_self" href="api/sap.ui.model.odata.v4.Context#methods/setSelected">sap.ui.model.odata.v4.Context#setSelected</a> and <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>.</p>
+				 */
+				export class ODataV4MultiSelection extends sap.ui.table.plugins.SelectionPlugin {
+					/**
+					 * <p>Searches a plugin of the corresponding type in the aggregations of the given <code>Table</code> instance. The first plugin that is found is returned.</p>
+					 * @param {sap.ui.table.Table} oTable <p>The <code>Table</code> instance to check for</p>
+					 * @returns sap.ui.core.Element | undefined <p>The found plugin instance or <code>undefined</code> if not found</p>
+					 */
+					static findOn(oTable: sap.ui.table.Table): sap.ui.core.Element | undefined;
+					/**
+					 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 */
+					constructor();
+					/**
+					 * <p>Clears the selection.</p>
+					 */
+					clearSelection(): void;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.ODataV4MultiSelection#methods/getEnableNotification">enableNotification</a>.</p><p>Enables notifications that are displayed once a selection has been limited.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>enableNotification</code></p>
+					 */
+					getEnableNotification(): boolean;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.ODataV4MultiSelection#methods/getHideHeaderSelector">hideHeaderSelector</a>.</p><p>Hide the header selector.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>hideHeaderSelector</code></p>
+					 */
+					getHideHeaderSelector(): boolean;
+					/**
+					 * <p>Returns the selected contexts.</p>
+					 * @returns sap.ui.model.odata.v4.Context[] <p>The selected contexts</p>
+					 */
+					getSelectedContexts(): any;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.ODataV4MultiSelection#methods/getEnableNotification">enableNotification</a>.</p><p>Enables notifications that are displayed once a selection has been limited.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bEnableNotification <p>New value for property <code>enableNotification</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEnableNotification(bEnableNotification?: boolean): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.ODataV4MultiSelection#methods/getHideHeaderSelector">hideHeaderSelector</a>.</p><p>Hide the header selector.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bHideHeaderSelector <p>New value for property <code>hideHeaderSelector</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setHideHeaderSelector(bHideHeaderSelector?: boolean): this;
+				}
+				/**
+				 * <p>Integrates the selection of the <a target="_self" href="api/sap.ui.model.odata.v4.ODataListBinding">sap.ui.model.odata.v4.ODataListBinding</a> and the table. Works only in combination with a <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel">sap.ui.model.odata.v4.ODataModel</a>. The selection of multiple contexts is not allowed. Only one context can be selected at a time.</p><p>The selection of a context that is not selectable is not allowed. The following contexts are not selectable: <ul> <li>Header context</li> <li>Contexts that represent group headers</li> <li>Contexts that contain totals</li> </ul></p><p>All binding-related limitations also apply in the context of this plugin. For details, see <a target="_self" href="api/sap.ui.model.odata.v4.Context#methods/setSelected">sap.ui.model.odata.v4.Context#setSelected</a> and <a target="_self" href="api/sap.ui.model.odata.v4.ODataModel#methods/bindList">sap.ui.model.odata.v4.ODataModel#bindList</a>.</p>
+				 */
+				export class ODataV4SingleSelection extends sap.ui.table.plugins.SelectionPlugin {
+					/**
+					 * <p>Searches a plugin of the corresponding type in the aggregations of the given <code>Table</code> instance. The first plugin that is found is returned.</p>
+					 * @param {sap.ui.table.Table} oTable <p>The <code>Table</code> instance to check for</p>
+					 * @returns sap.ui.core.Element | undefined <p>The found plugin instance or <code>undefined</code> if not found</p>
+					 */
+					static findOn(oTable: sap.ui.table.Table): sap.ui.core.Element | undefined;
+					/**
+					 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#constructor">sap.ui.table.plugins.SelectionPlugin</a> can be used.</p>
+					 */
+					constructor();
+					/**
+					 * <p>Clears the selection.</p>
+					 */
+					clearSelection(): void;
+					/**
+					 * <p>Returns the selected context.</p>
+					 * @returns sap.ui.model.odata.v4.Context <p>The selected context</p>
+					 */
+					getSelectedContext(): sap.ui.model.odata.v4.Context;
+				}
+				/**
+				 * <p>Base class for the selection plugins. A selection plugin is responsible for the selection behavior of the table. It handles the selection state and provides information about the selection state to the table. The subclass is also responsible for firing the <code>selectionChange</code> event when the selection is changed.</p><p>Do not add more than one selection plugin to a table.</p>
 				 */
 				export abstract class SelectionPlugin extends sap.ui.core.Element {
 					/**
+					 * <p>Searches a plugin of the corresponding type in the aggregations of the given <code>Table</code> instance. The first plugin that is found is returned.</p>
+					 * @param {sap.ui.table.Table} oTable <p>The <code>Table</code> instance to check for</p>
+					 * @returns sap.ui.core.Element | undefined <p>The found plugin instance or <code>undefined</code> if not found</p>
+					 */
+					static findOn(oTable: sap.ui.table.Table): sap.ui.core.Element | undefined;
+					/**
+					 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
 					 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself.</p><p>This event is fired when the selection is changed.</p>
 					 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-					 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 					 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.table.plugins.SelectionPlugin</code> itself</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					attachSelectionChange(oData: any, fnFunction: any, oListener?: any): this;
+					attachSelectionChange(oData: any, fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> event of this <code>sap.ui.table.plugins.SelectionPlugin</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-					 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 					 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					detachSelectionChange(fnFunction: any, oListener?: any): this;
+					detachSelectionChange(fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Fires event <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#events/selectionChange">selectionChange</a> to attached listeners.</p>
 					 * @param {any} mParameters <p>Parameters to pass along with the event</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
 					protected fireSelectionChange(mParameters?: any): this;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#methods/getEnabled">enabled</a>.</p><p>Indicates whether this plugin is enabled.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>enabled</code></p>
+					 */
+					getEnabled(): boolean;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.plugins.SelectionPlugin#methods/getEnabled">enabled</a>.</p><p>Indicates whether this plugin is enabled.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEnabled(bEnabled?: boolean): this;
 				}
 			}
 		}
@@ -2607,123 +2560,230 @@ declare namespace sap {
 			 */
 			namespace rowmodes {
 				/**
-				 * <p>TODO: Class description</p>
+				 * <p>The number of rows displayed in the table is calculated based on the space it is allowed to cover (limited by the surrounding container). The table must be rendered without siblings in the DOM. The only exception is if the table's parent element is a flexbox, and the table is a flex item allowed to grow and shrink. The number of rows to be displayed can only be determined after the layout has been completed. The data can already be requested before that. To avoid multiple data requests, the amount of initially requested data is based on the maximum number of potentially displayed rows, which takes the window size into consideration, for example.</p>
 				 */
-				export class AutoRowMode extends sap.ui.table.rowmodes.RowMode {
+				export class Auto extends sap.ui.table.rowmodes.RowMode {
 					/**
-					 * <p>Constructor for a new auto row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * <p>Constructor for a new <code>Auto</code> row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 					 * @param {string} sId <p>id for the new control, generated automatically if no id is given</p>
 					 * @param {any} mSettings <p>initial settings for the new control</p>
 					 */
 					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>The number of rows in the fixed area at the bottom. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>fixedBottomRowCount</code></p>
+					 */
+					getFixedBottomRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>The number of rows in the fixed area at the top. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>fixedTopRowCount</code></p>
+					 */
+					getFixedTopRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getMaxRowCount">maxRowCount</a>.</p><p>The maximum number of displayed rows. The <code>minRowCount</code> is ignored if the maximum is lower than the minimum.</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>maxRowCount</code></p>
+					 */
+					getMaxRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getMinRowCount">minRowCount</a>.</p><p>The minimum number of displayed rows.</p><p>Default value is <code>5</code>.</p>
+					 * @returns number <p>Value of property <code>minRowCount</code></p>
+					 */
+					getMinRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getRowContentHeight">rowContentHeight</a>.</p><p>The row content height in pixel. The actual row height is also influenced by other factors, such as the border width. If no value is set (includes 0), a default height is applied based on the content density configuration.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>rowContentHeight</code></p>
+					 */
+					getRowContentHeight(): number;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>The number of rows in the fixed area at the bottom. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iFixedBottomRowCount <p>New value for property <code>fixedBottomRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setFixedBottomRowCount(iFixedBottomRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>The number of rows in the fixed area at the top. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iFixedTopRowCount <p>New value for property <code>fixedTopRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setFixedTopRowCount(iFixedTopRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getMaxRowCount">maxRowCount</a>.</p><p>The maximum number of displayed rows. The <code>minRowCount</code> is ignored if the maximum is lower than the minimum.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iMaxRowCount <p>New value for property <code>maxRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setMaxRowCount(iMaxRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getMinRowCount">minRowCount</a>.</p><p>The minimum number of displayed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>5</code>.</p>
+					 * @param {number} iMinRowCount <p>New value for property <code>minRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setMinRowCount(iMinRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Auto#methods/getRowContentHeight">rowContentHeight</a>.</p><p>The row content height in pixel. The actual row height is also influenced by other factors, such as the border width. If no value is set (includes 0), a default height is applied based on the content density configuration.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iRowContentHeight <p>New value for property <code>rowContentHeight</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setRowContentHeight(iRowContentHeight?: number): this;
 				}
 				/**
-				 * <p>TODO: Class description</p>
+				 * <p>A fixed number of rows is displayed in the table.</p>
 				 */
-				export class FixedRowMode extends sap.ui.table.rowmodes.RowMode {
+				export class Fixed extends sap.ui.table.rowmodes.RowMode {
 					/**
-					 * <p>Constructor for a new fixed row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * <p>Constructor for a new <code>Fixed</code> row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 					 * @param {string} sId <p>id for the new control, generated automatically if no id is given</p>
 					 * @param {any} mSettings <p>initial settings for the new control</p>
 					 */
 					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>The number of rows in the fixed area at the bottom. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>fixedBottomRowCount</code></p>
+					 */
+					getFixedBottomRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>The number of rows in the fixed area at the top. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>fixedTopRowCount</code></p>
+					 */
+					getFixedTopRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getRowContentHeight">rowContentHeight</a>.</p><p>The row content height in pixel. The actual row height is also influenced by other factors, such as the border width. If no value is set (includes 0), a default height is applied based on the content density configuration.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>rowContentHeight</code></p>
+					 */
+					getRowContentHeight(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getRowCount">rowCount</a>.</p><p>The number of rows displayed in the table. The number of rows in the scrollable area is reduced by the number of fixed rows.</p><p>Default value is <code>10</code>.</p>
+					 * @returns number <p>Value of property <code>rowCount</code></p>
+					 */
+					getRowCount(): number;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>The number of rows in the fixed area at the bottom. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iFixedBottomRowCount <p>New value for property <code>fixedBottomRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setFixedBottomRowCount(iFixedBottomRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>The number of rows in the fixed area at the top. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iFixedTopRowCount <p>New value for property <code>fixedTopRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setFixedTopRowCount(iFixedTopRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getRowContentHeight">rowContentHeight</a>.</p><p>The row content height in pixel. The actual row height is also influenced by other factors, such as the border width. If no value is set (includes 0), a default height is applied based on the content density configuration.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iRowContentHeight <p>New value for property <code>rowContentHeight</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setRowContentHeight(iRowContentHeight?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Fixed#methods/getRowCount">rowCount</a>.</p><p>The number of rows displayed in the table. The number of rows in the scrollable area is reduced by the number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10</code>.</p>
+					 * @param {number} iRowCount <p>New value for property <code>rowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setRowCount(iRowCount?: number): this;
 				}
 				/**
-				 * <p>TODO: Class description</p>
+				 * <p>The user can change the number of displayed rows by dragging a resizer. The resizer is focusable and allows resizing via keyboard shortcuts and context menu. Double clicking the bar performs a quick resize that toggles between the minimum, the default, and the maximum row count.</p>
 				 */
-				export class InteractiveRowMode extends sap.ui.table.rowmodes.RowMode {
+				export class Interactive extends sap.ui.table.rowmodes.RowMode {
 					/**
-					 * <p>Constructor for a new interactive row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * <p>Constructor for a new <code>Interactive</code> row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
 					 * @param {string} sId <p>id for the new control, generated automatically if no id is given</p>
 					 * @param {any} mSettings <p>initial settings for the new control</p>
 					 */
 					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>The number of rows in the fixed area at the bottom. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>fixedBottomRowCount</code></p>
+					 */
+					getFixedBottomRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>The number of rows in the fixed area at the top. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>fixedTopRowCount</code></p>
+					 */
+					getFixedTopRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getMaxRowCount">maxRowCount</a>.</p><p>The maximum number of displayed rows. If not set, the maximum number of rows is determined by the viewport height of the device.</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>maxRowCount</code></p>
+					 */
+					getMaxRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getMinRowCount">minRowCount</a>.</p><p>The minimum number of displayed rows.</p><p>Default value is <code>5</code>.</p>
+					 * @returns number <p>Value of property <code>minRowCount</code></p>
+					 */
+					getMinRowCount(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getRowContentHeight">rowContentHeight</a>.</p><p>The row content height in pixel. The actual row height is also influenced by other factors, such as the border width. If no value is set (includes 0), a default height is applied based on the content density configuration.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>rowContentHeight</code></p>
+					 */
+					getRowContentHeight(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getRowCount">rowCount</a>.</p><p>The number of rows displayed in the table. The number of rows in the scrollable area is reduced by the number of fixed rows.</p><p>Default value is <code>10</code>.</p>
+					 * @returns number <p>Value of property <code>rowCount</code></p>
+					 */
+					getRowCount(): number;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getFixedBottomRowCount">fixedBottomRowCount</a>.</p><p>The number of rows in the fixed area at the bottom. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iFixedBottomRowCount <p>New value for property <code>fixedBottomRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setFixedBottomRowCount(iFixedBottomRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getFixedTopRowCount">fixedTopRowCount</a>.</p><p>The number of rows in the fixed area at the top. If the number of fixed rows exceeds the number of displayed rows, the number of fixed rows is reduced. The table may limit the possible number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iFixedTopRowCount <p>New value for property <code>fixedTopRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setFixedTopRowCount(iFixedTopRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getMaxRowCount">maxRowCount</a>.</p><p>The maximum number of displayed rows. If not set, the maximum number of rows is determined by the viewport height of the device.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iMaxRowCount <p>New value for property <code>maxRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setMaxRowCount(iMaxRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getMinRowCount">minRowCount</a>.</p><p>The minimum number of displayed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>5</code>.</p>
+					 * @param {number} iMinRowCount <p>New value for property <code>minRowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setMinRowCount(iMinRowCount?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getRowContentHeight">rowContentHeight</a>.</p><p>The row content height in pixel. The actual row height is also influenced by other factors, such as the border width. If no value is set (includes 0), a default height is applied based on the content density configuration.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iRowContentHeight <p>New value for property <code>rowContentHeight</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setRowContentHeight(iRowContentHeight?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.table.rowmodes.Interactive#methods/getRowCount">rowCount</a>.</p><p>The number of rows displayed in the table. The number of rows in the scrollable area is reduced by the number of fixed rows.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>10</code>.</p>
+					 * @param {number} iRowCount <p>New value for property <code>rowCount</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setRowCount(iRowCount?: number): this;
 				}
 				/**
-				 * <p>TODO: Class description</p>
+				 * <p>Base class for row modes. Note: Do not create subclasses.</p>
 				 */
 				export abstract class RowMode extends sap.ui.core.Element {
 					/**
-					 * <p>Constructor for a new row mode.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.core.Element#constructor">sap.ui.core.Element</a> can be used.</p>
+					 * <p>Constructor for a new <code>RowMode</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.core.Element#constructor">sap.ui.core.Element</a> can be used.</p>
 					 * @param {string} sId <p>id for the new control, generated automatically if no id is given</p>
 					 * @param {any} mSettings <p>initial settings for the new control</p>
 					 */
 					constructor(sId?: string, mSettings?: any);
+				}
+				/**
+				 * <p><p>Defines the row mode.</p></p>
+				 */
+				export enum Type {
 					/**
-					 * <p>Computes standardized row counts. - The fixed row counts are reduced to fit into the row count. First the number of fixed bottom rows and, if that is not enough, the number of fixed top rows is reduced. - Makes sure there is at least one scrollable row between fixed rows. - Takes the row count constraints into account.<br><br>References: <ul><li>#getRowCountConstraints</li></ul></p>
-					 * @param {number} iCount <p>The row count.</p>
-					 * @param {number} iFixedTop <p>The fixed top row count.</p>
-					 * @param {number} iFixedBottom <p>The fixed bottom row count.</p>
-					 * @returns any <p>The standardized counts</p>
+					 * <p>Equivalent to the default configuration of <a target="_self" href="api/sap.ui.table.rowmodes.Auto">sap.ui.table.rowmodes.Auto</a></p>
 					 */
-					protected computeStandardizedRowCounts(iCount: number, iFixedTop: number, iFixedBottom: number): any;
+					Auto = "Auto",
 					/**
-					 * <p>Disables the "NoData" text of the table. The table will no longer show this text, even if its property <a target="_self" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a> is set to <code>true</code>. The text is hidden if it is currently shown. Has no effect for the text that is shown when the table has no visible columns.</p>
+					 * <p>Equivalent to the default configuration of <a target="_self" href="api/sap.ui.table.rowmodes.Fixed">sap.ui.table.rowmodes.Fixed</a></p>
 					 */
-					protected disableNoData(): void;
+					Fixed = "Fixed",
 					/**
-					 * <p>Enables the "NoData" text of the table. Whether the text is shown depends on the state of the table and its <a target="_self" href="api/sap.ui.table.Table#methods/getShowNoData">showNoData</a> property.</p>
+					 * <p>Equivalent to the default configuration of <a target="_self" href="api/sap.ui.table.rowmodes.Interactive">sap.ui.table.rowmodes.Interactive</a></p>
 					 */
-					protected enableNoData(): void;
-					/**
-					 * <p>Gets the base row content height of this mode. This number is a pixel value and affects the base row height of the table. Returns 0 if this mode does not support setting the row content height.<br><br>References: <ul><li><a target="_self" href="api/sap.ui.table.rowmodes.RowMode#methods/getBaseRowHeightOfTable">sap.ui.table.rowmodes.RowMode#getBaseRowHeightOfTable</a></li></ul></p>
-					 * @returns number <p>The base row content height in pixels.</p>
-					 */
-					protected getBaseRowContentHeight(): number;
-					/**
-					 * <p>Gets the base row height of the table. This number is a pixel value and serves as the base for layout and row count calculations. The table considers the base row content height of this mode. If the base row content height is 0, the table applies a default row content height. Returns 0 if this mode is not child of a table.<br><br>References: <ul><li><a target="_self" href="api/sap.ui.table.rowmodes.RowMode#methods/getBaseRowContentHeight">sap.ui.table.rowmodes.RowMode#getBaseRowContentHeight</a></li></ul></p>
-					 * @returns number <p>The base row height in pixels.</p>
-					 */
-					protected getBaseRowHeightOfTable(): number;
-					/**
-					 * <p>Gets the computed row counts. The computed count can differ from the configured count and is the leading number when it comes to managing the rows aggregation of the table and rendering the rows. The sum of <code>scrollable</code>, <code>fixedTop</code> and <code>fixedBottom</code> is equal to <code>count</code>.</p>
-					 * @returns any <p>The computed counts</p>
-					 */
-					protected getComputedRowCounts(): any;
-					/**
-					 * <p>Gets the number of contexts that should be requested at least from the rows aggregation binding of the table.</p>
-					 * @returns number <p>The minimum request length</p>
-					 */
-					protected getMinRequestLength(): number;
-					/**
-					 * <p>Gets the CSS styles that are applied to the DOM container of the rows.</p>
-					 * @returns any <p>The styles the row container should have</p>
-					 */
-					protected getRowContainerStyles(): any;
-					/**
-					 * <p>Gets the constraints on the row counts in the table. These are soft constraints and the subclass may ignore them, for example if it does not support fixed rows.</p><p>Description of the constraints: <ul> <li> <code>fixedTop</code>: The value <code>true</code> means that there should be exactly one fixed top row and <code>false</code> means that fixed top rows should be disabled. By default, there are no constraint for the fixed top rows. </li> <li> <code>fixedBottom</code>: The value <code>true</code> means that there should be exactly one fixed bottom row and <code>false</code> means that fixed bottom rows should be disabled. By default, there are no constraint for the fixed bottom rows. </li> </ul></p>
-					 * @returns any <p>The row count constraints</p>
-					 */
-					protected getRowCountConstraints(): any | any | undefined;
-					/**
-					 * <p>Gets the parent table.</p>
-					 * @returns sap.ui.table.Table|null <p>The instance of the table or <code>null</code>.</p>
-					 */
-					protected getTable(): sap.ui.table.Table | null;
-					/**
-					 * <p>Gets the CSS styles that are applied to the table's bottom placeholder DOM element. This element can be used to visually reserve space for rows. If <code>undefined</code> is returned during rendering, this element will not be rendered.</p>
-					 * @returns any <p>The styles the table's bottom placeholder should have</p>
-					 */
-					protected getTableBottomPlaceholderStyles(): any | undefined;
-					/**
-					 * <p>Gets the CSS styles that are applied to the table's DOM root element.</p>
-					 * @returns any <p>The styles the table should have</p>
-					 */
-					protected getTableStyles(): any;
-					/**
-					 * <p>Gets total row count of the table. Returns 0 if this mode is not child of a table.</p>
-					 * @returns number <p>The total row count.</p>
-					 */
-					protected getTotalRowCountOfTable(): number;
-					/**
-					 * <p>Checks whether the "NoData" text of the table is disabled.</p>
-					 * @returns boolean <p>Whether the "NoData" text is disabled</p>
-					 */
-					protected isNoDataDisabled(): boolean;
-					/**
-					 * <p>Updates the table's rows aggregation according to the current computed row count, and updates the rows binding contexts.</p>
-					 */
-					protected updateTable(): void;
+					Interactive = "Interactive",
 				}
 			}
 		}

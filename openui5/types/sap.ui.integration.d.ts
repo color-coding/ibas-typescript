@@ -22,20 +22,31 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
+                 * <p>Adds some actionDefinition to the aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>.</p>
+                 * @param {sap.ui.integration.ActionDefinition} oActionDefinition <p>The actionDefinition to add; if empty, nothing is inserted</p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                addActionDefinition(oActionDefinition: sap.ui.integration.ActionDefinition): this;
+                /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.ActionDefinition#events/press">press</a> event of this <code>sap.ui.integration.ActionDefinition</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.ActionDefinition</code> itself.</p><p>Fired when the action button is pressed.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.ActionDefinition</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachPress(oData: any, fnFunction: any, oListener?: any): this;
+                attachPress(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * <p>Destroys all the actionDefinitions in the aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>.</p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                destroyActionDefinitions(): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.ActionDefinition#events/press">press</a> event of this <code>sap.ui.integration.ActionDefinition</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachPress(fnFunction: any, oListener?: any): this;
+                detachPress(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Fires event <a target="_self" href="api/sap.ui.integration.ActionDefinition#events/press">press</a> to attached listeners.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -43,10 +54,10 @@ declare namespace sap {
                  */
                 protected firePress(mParameters?: any): this;
                 /**
-                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getButtonType">buttonType</a>.</p><p>The type of the action button.</p><p>Default value is <code>Transparent</code>.</p>
-                 * @returns sap.m.ButtonType <p>Value of property <code>buttonType</code></p>
+                 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>.</p><p>Action Definitions which will appear as nested items in the menu. <b>Note</b>: The parent action definition will not fire a press anymore, it will only be used to hold the subitem.</p>
+                 * @returns sap.ui.integration.ActionDefinition[] 
                  */
-                getButtonType(): sap.m.ButtonType;
+                getActionDefinitions(): any;
                 /**
                  * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getEnabled">enabled</a>.</p><p>Indicates whether the user can interact with the action button or not. <b>Note</b>: Disabled controls cannot be focused and they are out of the navigation tab-chain.</p><p>Default value is <code>true</code>.</p>
                  * @returns boolean <p>Value of property <code>enabled</code></p>
@@ -63,6 +74,11 @@ declare namespace sap {
                  */
                 getParameters(): any;
                 /**
+                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getStartsSection">startsSection</a>.</p><p>Defines whether a visual separator should be rendered before the item. <b>Note</b>: If an item is invisible its separator is also not displayed.</p><p>Default value is <code>false</code>.</p>
+                 * @returns boolean <p>Value of property <code>startsSection</code></p>
+                 */
+                getStartsSection(): boolean;
+                /**
                  * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getText">text</a>.</p><p>The text of the action button.</p><p>Default value is <code>empty string</code>.</p>
                  * @returns string <p>Value of property <code>text</code></p>
                  */
@@ -78,11 +94,29 @@ declare namespace sap {
                  */
                 getVisible(): boolean;
                 /**
-                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getButtonType">buttonType</a>.</p><p>The type of the action button.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Transparent</code>.</p>
-                 * @param {sap.m.ButtonType} sButtonType <p>New value for property <code>buttonType</code></p>
+                 * <p>Checks for the provided <code>sap.ui.integration.ActionDefinition</code> in the aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>. and returns its index if found or -1 otherwise.</p>
+                 * @param {sap.ui.integration.ActionDefinition} oActionDefinition <p>The actionDefinition whose index is looked for</p>
+                 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+                 */
+                indexOfActionDefinition(oActionDefinition: sap.ui.integration.ActionDefinition): number;
+                /**
+                 * <p>Inserts a actionDefinition into the aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>.</p>
+                 * @param {sap.ui.integration.ActionDefinition} oActionDefinition <p>The actionDefinition to insert; if empty, nothing is inserted</p>
+                 * @param {number} iIndex <p>The <code>0</code>-based index the actionDefinition should be inserted at; for a negative value of <code>iIndex</code>, the actionDefinition is inserted at position 0; for a value greater than the current size of the aggregation, the actionDefinition is inserted at the last position</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setButtonType(sButtonType?: sap.m.ButtonType): this;
+                insertActionDefinition(oActionDefinition: sap.ui.integration.ActionDefinition, iIndex: number): this;
+                /**
+                 * <p>Removes a actionDefinition from the aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>.</p>
+                 * @param {number | string | sap.ui.integration.ActionDefinition} vActionDefinition <p>The actionDefinition to remove or its index or id</p>
+                 * @returns sap.ui.integration.ActionDefinition | null <p>The removed actionDefinition or <code>null</code></p>
+                 */
+                removeActionDefinition(vActionDefinition: number | string | sap.ui.integration.ActionDefinition): sap.ui.integration.ActionDefinition | null;
+                /**
+                 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getActionDefinitions">actionDefinitions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+                 * @returns sap.ui.integration.ActionDefinition[] <p>An array of the removed elements (might be empty)</p>
+                 */
+                removeAllActionDefinitions(): any;
                 /**
                  * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getEnabled">enabled</a>.</p><p>Indicates whether the user can interact with the action button or not. <b>Note</b>: Disabled controls cannot be focused and they are out of the navigation tab-chain.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
                  * @param {boolean} bEnabled <p>New value for property <code>enabled</code></p>
@@ -101,6 +135,12 @@ declare namespace sap {
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 setParameters(oParameters: any): this;
+                /**
+                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getStartsSection">startsSection</a>.</p><p>Defines whether a visual separator should be rendered before the item. <b>Note</b>: If an item is invisible its separator is also not displayed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                 * @param {boolean} bStartsSection <p>New value for property <code>startsSection</code></p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setStartsSection(bStartsSection?: boolean): this;
                 /**
                  * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.ActionDefinition#methods/getText">text</a>.</p><p>The text of the action button.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                  * @param {string} sText <p>New value for property <code>text</code></p>
@@ -121,7 +161,7 @@ declare namespace sap {
                 setVisible(bVisible?: boolean): this;
             }
             /**
-             * <p><p>Defines the layout type of the List card attributes.</p></p>
+             * <p><p>Defines the layout type of the List Card attributes.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'AttributesLayoutType'.</p></p>
              */
             export enum AttributesLayoutType {
                 /**
@@ -134,7 +174,44 @@ declare namespace sap {
                 TwoColumns = "TwoColumns",
             }
             /**
-             * <p><p>Enumeration of possible card action types.</p></p>
+             * <p><p>Settings for blocking message that occurred in a <a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></p></p>
+             */
+            export interface BlockingMessageSettings {
+                /**
+                 * <p>Blocking message type</p>
+                 */
+                type: any;
+                /**
+                 * <p>Illustration type</p>
+                 */
+                illustrationType: any;
+                /**
+                 * <p>Illustration size</p>
+                 */
+                illustrationSize?: any;
+                /**
+                 * <p>Title</p>
+                 */
+                title: any;
+                /**
+                 * <p>Description</p>
+                 */
+                description?: any;
+                /**
+                 * <p>Path to a custom image to be shown on the place of the regular illustration. Relative to the card base URL.</p>
+                 */
+                imageSrc?: any;
+                /**
+                 * <p>Response object in case of a network error</p>
+                 */
+                httpResponse?: any;
+                /**
+                 * <p>A list of buttons placed below the description as additional content. Experimental since 1.121</p>
+                 */
+                additionalContent?: any;
+            }
+            /**
+             * <p><p>Enumeration of possible card action types.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardActionType'.</p></p>
              */
             export enum CardActionType {
                 /**
@@ -167,7 +244,7 @@ declare namespace sap {
                 Submit = "Submit",
             }
             /**
-             * <p><p>Defines the areas in a card.</p></p>
+             * <p><p>Defines the areas in a card.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardArea'.</p></p>
              */
             export enum CardArea {
                 /**
@@ -184,7 +261,24 @@ declare namespace sap {
                 Header = "Header",
             }
             /**
-             * <p><p>Possible data modes for <code><a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></code>.</p></p>
+             * <p><p>Card blocking message types.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardBlockingMessageType'.</p></p>
+             */
+            export enum CardBlockingMessageType {
+                /**
+                 * <p>An error occurred in the card.</p>
+                 */
+                Error = "Error",
+                /**
+                 * <p>Information message.</p>
+                 */
+                Information = "Information",
+                /**
+                 * <p>There is no data to be displayed.</p>
+                 */
+                NoData = "NoData",
+            }
+            /**
+             * <p><p>Possible data modes for <code><a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></code>.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardDataMode'.</p></p>
              */
             export enum CardDataMode {
                 /**
@@ -199,6 +293,64 @@ declare namespace sap {
                  * <p>When in this mode, the card cannot make requests.</p>
                  */
                 Inactive = "Inactive",
+            }
+            /**
+             * <p><p>Possible designs for <code><a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></code>.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardDesign'.</p></p>
+             */
+            export enum CardDesign {
+                /**
+                 * <p>When in this mode, the card has a solid background.</p>
+                 */
+                Solid = "Solid",
+                /**
+                 * <p>When in this mode, the card background is transparent.</p>
+                 */
+                Transparent = "Transparent",
+            }
+            /**
+             * <p><p>Possible variants for <code><a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></code> rendering and behavior.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardDisplayVariant'.</p></p>
+             */
+            export enum CardDisplayVariant {
+                /**
+                 * <p>The CompactHeader card variant.</p>
+                 */
+                CompactHeader = "CompactHeader",
+                /**
+                 * <p>The large card variant.</p>
+                 */
+                Large = "Large",
+                /**
+                 * <p>The small card variant.</p>
+                 */
+                Small = "Small",
+                /**
+                 * <p>The SmallHeader card variant.</p>
+                 */
+                SmallHeader = "SmallHeader",
+                /**
+                 * <p>The standard card variant.</p>
+                 */
+                Standard = "Standard",
+                /**
+                 * <p>The SmallHeader card variant.</p>
+                 */
+                StandardHeader = "StandardHeader",
+                /**
+                 * <p>Card renders and behaves like a tile of size 2x1.</p>
+                 */
+                TileFlat = "TileFlat",
+                /**
+                 * <p>Card renders and behaves like a tile of size 4x1.</p>
+                 */
+                TileFlatWide = "TileFlatWide",
+                /**
+                 * <p>Card renders and behaves like a tile of size 2x2.</p>
+                 */
+                TileStandard = "TileStandard",
+                /**
+                 * <p>Card renders and behaves like a tile of size 4x2.</p>
+                 */
+                TileStandardWide = "TileStandardWide",
             }
             /**
              * <p><p>An object type that represents card menu action properties.</p></p>
@@ -240,6 +392,94 @@ declare namespace sap {
                  * <p>The parameters of the action.</p>
                  */
                 parameters: any;
+                /**
+                 * <p>If visual separator should be rendered before the item.</p>
+                 */
+                startsSection: any;
+                /**
+                 * <p>The nested actions.</p>
+                 */
+                actions: any;
+            }
+            /**
+             * <p><p>Card message strip types.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardMessageType'.</p></p>
+             */
+            export enum CardMessageType {
+                /**
+                 * <p>Message is an error</p>
+                 */
+                Error = "Error",
+                /**
+                 * <p>Message should be just an information</p>
+                 */
+                Information = "Information",
+                /**
+                 * <p>Informs the user that the content is busy at that moment with a loading operation. Blocks the content from interaction.</p>
+                 */
+                Loading = "Loading",
+                /**
+                 * <p>Message has no specific level</p>
+                 */
+                None = "None",
+                /**
+                 * <p>Message is a success message</p>
+                 */
+                Success = "Success",
+                /**
+                 * <p>Message is an informative brief toast message. For this type the default behavior is to auto close.</p>
+                 */
+                Toast = "Toast",
+                /**
+                 * <p>Message is a warning</p>
+                 */
+                Warning = "Warning",
+            }
+            /**
+             * <p><p>Determines the overflow behaviour of the card.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardOverflow'.</p></p>
+             */
+            export enum CardOverflow {
+                /**
+                 * <p>The overflowing part of the card is hidden.</p><p><b>Note</b>: If the "Default" option is used, the card must be allowed to grow in height as much as it needs to avoid overflowing. Use a layout which allows this.</p>
+                 */
+                Default = "Default",
+                /**
+                 * <p>The overflowing part of the card is hidden, but a 'Show More' button is displayed in the footer. By pressing the button, the full content will be displayed.</p><p><b>Note</b>: If this option is used, the "minHeight" setting for cards of type Analytical, AnalyticsCloud and WebPage will be ignored.</p><p><b>Disclaimer</b>: This feature is not suitable for object cards with forms. It might lead to undesired user interaction.</p>
+                 */
+                ShowMore = "ShowMore",
+            }
+            /**
+             * <p><p>Preview modes for <code><a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a></code>. Helpful in scenarios when the end user is choosing or configuring a card.</p><p>This enum is part of the 'sap/ui/integration/library' module export and must be accessed by the property 'CardPreviewMode'.</p></p>
+             */
+            export enum CardPreviewMode {
+                /**
+                 * <p>Card displays abstract preview. No data requests are made.</p>
+                 */
+                Abstract = "Abstract",
+                /**
+                 * <p>Card displays mocked data, loaded using a data request as configured in the manifest.</p>
+                 */
+                MockData = "MockData",
+                /**
+                 * <p>Card displays real data.</p>
+                 */
+                Off = "Off",
+            }
+            /**
+             * <p><p>Settings for card request error.</p><p><b>Note:</b> For backward compatibility, the object can also be accessed as an array with the properties in the order - message, response, and responseText.</p></p>
+             */
+            export interface CardRequestError {
+                /**
+                 * <p>The error message</p>
+                 */
+                message: any;
+                /**
+                 * <p>The response object</p>
+                 */
+                response: any;
+                /**
+                 * <p>The response text</p>
+                 */
+                responseText: any;
             }
             /**
              * <p>Brings JavaScript capabilities for an <a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a> where custom logic can be implemented.</p>
@@ -268,20 +508,28 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Extension#events/action">action</a> event of this <code>sap.ui.integration.Extension</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Extension</code> itself.</p><p>Fired when an action is triggered in the card.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Extension#events/action">action</a> event of this <code>sap.ui.integration.Extension</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Extension</code> itself.</p><p>Fired when an action is triggered in the card.</p><p>When an action is triggered in the card it can be handled on several places by "action" event handlers. In consecutive order those places are: <code>Extension</code>, <code>Card</code>, <code>Host</code>. Each of them can prevent the next one to handle the action by calling <code>oEvent.preventDefault()</code>.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.Extension</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachAction(oData: any, fnFunction: any, oListener?: any): this;
+                attachAction(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.Extension#events/action">action</a> event of this <code>sap.ui.integration.Extension</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachAction(fnFunction: any, oListener?: any): this;
+                detachAction(fnFunction: Function, oListener?: any): this;
+                /**
+                 * <p>Starts the process of fetching a resource from the network, returning a promise that is fulfilled once the response is available. Use this method to override the default behavior when fetching network resources. Mimics the browser native Fetch API.</p>
+                 * @param {string} sResource <p>This defines the resource that you wish to fetch.</p>
+                 * @param {any} mOptions <p>An object containing any custom settings that you want to apply to the request.</p>
+                 * @param {any} mRequestSettings <p>The map of request settings defined in the card manifest. Use this only for reading, they can not be modified.</p>
+                 * @returns any <p>A <code>Promise</code> that resolves to a <code>Response</code> object.</p>
+                 */
+                fetch(sResource: string, mOptions: any, mRequestSettings: any): any;
                 /**
                  * <p>Fires event <a target="_self" href="api/sap.ui.integration.Extension#events/action">action</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -294,7 +542,7 @@ declare namespace sap {
                  */
                 getCard(): sap.ui.integration.widgets.CardFacade;
                 /**
-                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.Extension#methods/getFormatters">formatters</a>.</p><p>The formatters, which can be used in the manifest.</p>
+                 * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.Extension#methods/getFormatters">formatters</a>.</p><p>The formatters that can be used in the manifest.</p>
                  * @returns any <p>Value of property <code>formatters</code></p>
                  */
                 getFormatters(): any;
@@ -304,9 +552,15 @@ declare namespace sap {
                  */
                 loadDependencies(): Promise<any>;
                 /**
-                 * <p>Called when the card is ready.</p>
+                 * <p>Called after the card is initialized.</p>
                  */
                 onCardReady(): void;
+                /**
+                 * <p>Sets current value of property <a target="_self" href="api/sap.ui.integration.Extension#methods/setFormatters">formatters</a>.</p><p>The formatters that can be used in the manifest. When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * @param {any} aFormatters <p>New value of property <code>formatters</code></p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                setFormatters(aFormatters?: any): this;
             }
             /**
              * <p>Provides application-level functions and services to an integration card.</p><p>Examples may include, but are not limited to options like: share a card, remove a card.</p>
@@ -319,76 +573,80 @@ declare namespace sap {
                  */
                 constructor(sId?: string, mSettings?: any);
                 /**
-                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Host#events/action">action</a> event of this <code>sap.ui.integration.Host</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Host</code> itself.</p><p>Fired when an action is triggered.</p>
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Host#events/action">action</a> event of this <code>sap.ui.integration.Host</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Host</code> itself.</p><p>Fired when an action is triggered.</p><p>When an action is triggered in the card it can be handled on several places by "action" event handlers. In consecutive order those places are: <code>Extension</code>, <code>Card</code>, <code>Host</code>. Each of them can prevent the next one to handle the action by calling <code>oEvent.preventDefault()</code>.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.Host</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachAction(oData: any, fnFunction: any, oListener?: any): this;
+                attachAction(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Host#events/cardConfigurationChange">cardConfigurationChange</a> event of this <code>sap.ui.integration.Host</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Host</code> itself.</p><p>Fired when some card configuration settings are changed as a result of user interaction. For example - filter value is changed.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.Host</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachCardConfigurationChange(oData: any, fnFunction: any, oListener?: any): this;
+                attachCardConfigurationChange(oData: any, fnFunction: Function, oListener?: any): this;
+                /**
+                 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Host#events/cardInitialized">cardInitialized</a> event of this <code>sap.ui.integration.Host</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Host</code> itself.</p><p>Fired when the card is initially ready for the first time. Will not be fired for consecutive refreshes or data changes.</p>
+                 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.Host</code> itself</p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                attachCardInitialized(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Host#events/cardStateChanged">cardStateChanged</a> event of this <code>sap.ui.integration.Host</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Host</code> itself.</p><p>Fired when the state of a card is changed. For example - the card is ready, new page is selected inside the card, a filter is changed or data is refreshed.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.Host</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachCardStateChanged(oData: any, fnFunction: any, oListener?: any): this;
+                attachCardStateChanged(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.Host#events/message">message</a> event of this <code>sap.ui.integration.Host</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.Host</code> itself.</p><p>Fired when a message from channels like navigator.serviceWorker is received.</p>
                  * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                  * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.Host</code> itself</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                attachMessage(oData: any, fnFunction: any, oListener?: any): this;
-                /**
-                 * <p>This functions is called when a CSRF token has expired.</p>
-                 * @param {any} mCSRFTokenConfig <p>The CSRF token configuration.</p>
-                 */
-                csrfTokenExpired(mCSRFTokenConfig: any): void;
-                /**
-                 * <p>This functions is called when a CSRF token is fetched.</p>
-                 * @param {any} mCSRFTokenConfig <p>The CSRF token configuration.</p>
-                 * @param {Promise<any>} pCSRFTokenValuePromise <p>A promise which resolves the CSRF token to its value.</p>
-                 */
-                csrfTokenFetched(mCSRFTokenConfig: any, pCSRFTokenValuePromise: Promise<any>): void;
+                attachMessage(oData: any, fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.Host#events/action">action</a> event of this <code>sap.ui.integration.Host</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachAction(fnFunction: any, oListener?: any): this;
+                detachAction(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.Host#events/cardConfigurationChange">cardConfigurationChange</a> event of this <code>sap.ui.integration.Host</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachCardConfigurationChange(fnFunction: any, oListener?: any): this;
+                detachCardConfigurationChange(fnFunction: Function, oListener?: any): this;
+                /**
+                 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.Host#events/cardInitialized">cardInitialized</a> event of this <code>sap.ui.integration.Host</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {any} oListener <p>Context object on which the given function had to be called</p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                detachCardInitialized(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.Host#events/cardStateChanged">cardStateChanged</a> event of this <code>sap.ui.integration.Host</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachCardStateChanged(fnFunction: any, oListener?: any): this;
+                detachCardStateChanged(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.Host#events/message">message</a> event of this <code>sap.ui.integration.Host</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                  * @param {any} oListener <p>Context object on which the given function had to be called</p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                detachMessage(fnFunction: any, oListener?: any): this;
+                detachMessage(fnFunction: Function, oListener?: any): this;
                 /**
                  * <p>Fires event <a target="_self" href="api/sap.ui.integration.Host#events/action">action</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -401,6 +659,12 @@ declare namespace sap {
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
                 protected fireCardConfigurationChange(mParameters?: any): this;
+                /**
+                 * <p>Fires event <a target="_self" href="api/sap.ui.integration.Host#events/cardInitialized">cardInitialized</a> to attached listeners.</p>
+                 * @param {any} mParameters <p>Parameters to pass along with the event</p>
+                 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                 */
+                protected fireCardInitialized(mParameters?: any): this;
                 /**
                  * <p>Fires event <a target="_self" href="api/sap.ui.integration.Host#events/cardStateChanged">cardStateChanged</a> to attached listeners.</p>
                  * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -417,36 +681,30 @@ declare namespace sap {
                  * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.Host#methods/getActions">actions</a>.</p><p>The actions configuration.</p>
                  * @returns sap.ui.integration.CardMenuAction[] <p>Value of property <code>actions</code></p>
                  */
-                getActions(): sap.ui.integration.CardMenuAction[];
+                getActions(): any;
                 /**
                  * <p>Returns the context object for the Card Editor design-time environment Contexts can be used to configure Cards with information available in the host environment. Each entry in the list should contain design-time information. A label, placeholder, and description should be provided.</p><p>Example Context Structure: { "sap.workzone": { "currentUser: { "id": { "label": "Id of the Work Zone user", "placeholder": "Work Zone user id", "description": "The value will change based on the logged on user" } } } ... }</p><p>The context information and texts should be translated as they appear in the design-time UI of the Card Editor.</p>
-                 * @returns Promise<any> <p>A promise which contains the context structure.</p>
+                 * @returns any <p>A promise which contains the context structure.</p>
                  */
-                getContexts(): Promise<any>;
+                getContexts(): any;
                 /**
                  * <p>Resolves the value for a given path in the context of the host Contexts can be used to configure Cards with information available in the host environment.</p><p>Example Context Structure: { "sap.workzone": { "currentUser: { "id": { "label": "Id of the Work Zone user", "placeholder": "Work Zone user id", "description": "The value will change based on the logged on user" } } } ... }</p><p>Example path to the current user id of the context sPath = "sap.workzone/currentUser/id" parameter: { userId: { value: "{context>sap.workzone/currentUser/id}" resolves to UserId } }</p>
                  * @param {string} sPath <p>The path to a context</p>
-                 * @returns Promise<any> <p>A promise which resolves with the value of this context.</p>
+                 * @returns any <p>A promise which resolves with the value of this context.</p>
                  */
-                getContextValue(sPath: string): Promise<any>;
-                /**
-                 * <p>Resolves the CSRF token and returns a Promise with its value.</p>
-                 * @param {any} mCSRFTokenConfig <p>The CSRF token configuration.</p>
-                 * @returns Promise<any> <p>A promise which resolves the CSRF token to its value.</p>
-                 */
-                getCsrfToken(mCSRFTokenConfig: any): Promise<any>;
+                getContextValue(sPath: string): any;
                 /**
                  * <p>Resolves the destination and returns its URL.</p>
                  * @param {string} sDestinationName <p>The name of the destination.</p>
-                 * @param {sap.ui.integration.widgets.Card} oCard <p>The card that depends on the destination. Most often the name which is used in the SAP Cloud Platform.</p>
-                 * @returns Promise<any> <p>A promise which resolves with the URL of the destination.</p>
+                 * @param {sap.ui.integration.widgets.Card} oCard <p>The card that depends on the destination.</p>
+                 * @returns any <p>A promise which resolves with the URL of the destination.</p>
                  */
-                getDestination(sDestinationName: string, oCard: sap.ui.integration.widgets.Card): Promise<any>;
+                getDestination(sDestinationName: string, oCard: sap.ui.integration.widgets.Card): any;
                 /**
                  * <p>Returns the list of destinations for the Card Editor design-time environment List entries are objects that contain at least the name. { "name": "DestinationName" }</p>
-                 * @returns Promise<any> <p>A promise which resolves with the list of destinations.</p>
+                 * @returns any <p>A promise which resolves with the list of destinations.</p>
                  */
-                getDestinations(): Promise<any>;
+                getDestinations(): any;
                 /**
                  * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.Host#methods/getResolveDestination">resolveDestination</a>.</p><p>A function that resolves the given destination name to a URL.</p><p>The Card calls this function when it needs to send a request to a destination. Function returns the URL to which the request is sent.</p><p>If a card depends on a destination, but this callback is not implemented, an error will be logged.</p><p>The callback receives <code>destinationName</code> as parameter and returns a string with the URL. Or alternatively the callback may return a <code>Promise</code> with the URL as an argument.</p>
                  * @returns Function <p>Value of property <code>resolveDestination</code></p>
@@ -454,16 +712,16 @@ declare namespace sap {
                 getResolveDestination(): Function;
                 /**
                  * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.Host#methods/getActions">actions</a>.</p><p>The actions configuration.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-                 * @param {sap.ui.integration.CardMenuAction[]} sActions <p>New value for property <code>actions</code></p>
+                 * @param {any} sActions <p>New value for property <code>actions</code></p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setActions(sActions: sap.ui.integration.CardMenuAction[]): this;
+                setActions(sActions: any): this;
                 /**
-                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.Host#methods/getResolveDestination">resolveDestination</a>.</p><p>A function that resolves the given destination name to a URL.</p><p>The Card calls this function when it needs to send a request to a destination. Function returns the URL to which the request is sent.</p><p>If a card depends on a destination, but this callback is not implemented, an error will be logged.</p><p>The callback receives <code>destinationName</code> as parameter and returns a string with the URL. Or alternatively the callback may return a <code>Promise</code> with the URL as an argument.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.Host#methods/setResolveDestination">resolveDestination</a>.</p><p>A function that resolves the given destination name to a URL. The Card calls this function when it needs to send a request to a destination. Function returns the URL to which the request is sent. If a card depends on a destination, but this callback is not implemented, an error will be logged. The callback receives <code>destinationName</code> as parameter and returns a string with the URL. Or alternatively the callback may return a <code>Promise</code> with the URL as an argument.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                  * @param {Function} fnResolveDestination <p>New value for property <code>resolveDestination</code></p>
                  * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                  */
-                setResolveDestination(fnResolveDestination: Function): this;
+                setResolveDestination(fnResolveDestination?: Function): this;
             }
         }
     }
@@ -659,10 +917,10 @@ declare namespace sap {
                         namespace IsStringList {
                             /**
                              * <p>Validator function</p>
-                             * @param {string[]} aValue <p>Strings to validate</p>
+                             * @param {any} aValue <p>Strings to validate</p>
                              * @returns boolean <p>Validation result</p>
                              */
-                            function validate(aValue: string[]): boolean;
+                            function validate(aValue: any): boolean;
                         }
                     }
                 }
@@ -903,19 +1161,27 @@ declare namespace sap {
                                 "role": {
                                     "label": "Role",
                                     "path": "role",
-                                    "type": "enum",
-                                    "enum": ["Developer", "Key User", "End User"]
+                                    "type": "select",
+                                    "items": [
+                                        { "key": "Developer" },
+                                        { "key": "Key User" },
+                                        { "key": "End User" }
+                                    ]
                                 },
                                 "department": {
                                     "label": "Department",
                                     "path": "department",
-                                    "type": "enum",
-                                    "enum": ["Sales", "HR", "Development"],
+                                    "type": "select",
+                                    "items": [
+                                        { "key": "Sales" },
+                                        { "key": "HR" },
+                                        { "key": "Development" }
+                                    ]
                                     "visible": "{= ${context>/role} === 'Key User'}"
                                 }
                             },
                             "propertyEditors": {
-                                "enum" : "sap/ui/integration/designtime/baseEditor/propertyEditors/enumStringEditor/EnumStringEditor",
+                                "select": "sap/ui/integration/designtime/baseEditor/propertyEditor/selectEditor/SelectEditor",
                                 "string" : "sap/ui/integration/designtime/baseEditor/propertyEditors/stringEditor/StringEditor"
                             }
                         });
@@ -1108,7 +1374,7 @@ declare namespace sap {
                              */
                             export class CodeEditor extends sap.ui.integration.designtime.baseEditor.propertyEditor.BasePropertyEditor {
                                 /**
-                                 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.integration.designtime.baseEditor.propertyEditor.BasePropertyEditor#constructor">sap.ui.integration.designtime.baseEditor.propertyEditor.BasePropertyEditor</a> can be used.</p>
+                                 * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                                  */
                                 constructor();
                             }
@@ -1716,13 +1982,6 @@ declare namespace sap {
                 export interface EditorFacade {
                 }
                 /**
-                 */
-                export class EditorResourceBundles {
-                    /**
-                     */
-                    constructor();
-                }
-                /**
                  * <p>Brings JavaScript capabilities for an <a target="_self" href="api/sap.ui.integration.editor.Editor">sap.ui.integration.editor.Editor</a> where custom logic can be implemented.</p>
                  */
                 export class Extension extends sap.ui.integration.Extension {
@@ -1848,7 +2107,7 @@ declare namespace sap {
                      */
                     export class StringField extends sap.ui.integration.editor.fields.BaseField {
                         /**
-                         * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.integration.editor.fields.BaseField#constructor">sap.ui.integration.editor.fields.BaseField</a> can be used.</p>
+                         * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
                          */
                         constructor();
                     }
@@ -1913,6 +2172,15 @@ declare namespace sap {
                             constructor();
                         }
                         /**
+                         * <p>Image Select</p>
+                         */
+                        export class ImageSelect extends sap.ui.integration.editor.fields.viz.IconSelect {
+                            /**
+                             * <p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+                             */
+                            constructor();
+                        }
+                        /**
                          */
                         export class ShapeSelect extends sap.ui.integration.editor.fields.viz.VizBase {
                             /**
@@ -1940,24 +2208,6 @@ declare namespace sap {
         namespace integration {
             /**
              */
-            namespace services {
-                /**
-                 */
-                export class Service {
-                    /**
-                     * <p>Base class for all services. To inherit use the extend method <code>Service.extend</code></p>
-                     */
-                    constructor();
-                }
-            }
-        }
-    }
-}
-declare namespace sap {
-    namespace ui {
-        namespace integration {
-            /**
-             */
             namespace util {
                 /**
                  * <p>Fetches and provides CSRF tokens for data requests. Tokens are shared between cards per user session.</p>
@@ -1965,29 +2215,12 @@ declare namespace sap {
                 export class CsrfTokenHandler extends sap.ui.base.Object {
                     /**
                      * <p>Constructor for a new <code>CsrfTokenHandler</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.base.Object#constructor">sap.ui.base.Object</a> can be used.</p>
-                     * @param {sap.ui.integration.Host} oHost <p>The Host which will be used for resolve CSRF tokens.</p>
-                     * @param {any} oConfiguration <p>The CSRF configuration from the manifest.</p>
+                     * @param {any} mSettings <p>Token handler settings</p>
                      */
-                    constructor(oHost: sap.ui.integration.Host, oConfiguration: any);
-                    /**
-                     * <p>Deletes a token based on a data configuration object which contains a CSRF placeholder in its headers property.</p>
-                     * @param {any} oDataConfig <p>Data configuration object</p>
-                     */
-                    resetTokenByRequest(oDataConfig: any): void;
-                    /**
-                     * <p>Resolves CSRF placeholders to actual values within a data configuration object.</p>
-                     * @param {any} oDataConfig <p>Data configuration object</p>
-                     * @returns Promise<any> <p>A promise which resolves with the data configuration object containing resolved CSRF token values</p>
-                     */
-                    resolveToken(oDataConfig: any): Promise<any>;
-                    /**
-                     * <p>Saves a reference to the DataProviderFactory to create own data requests. Those CSRF placeholders may contain destinations placeholders which need to be resolved prior to making the request.</p>
-                     * @param {sap.ui.integration.util.DataProviderFactory} oDataProviderFactory <p>the factory</p>
-                     */
-                    setDataProviderFactory(oDataProviderFactory: sap.ui.integration.util.DataProviderFactory): void;
+                    constructor(mSettings: any);
                 }
                 /**
-                 * <p>Provides data for the card, card header and card content by reading the "data" part of the card manifest. Hides the complexity of working with different data providers like: - static JSON data - data services which implements the interface <code>sap.ui.integration.services.Data</code> class - AJAX calls like <code>sap.ui.integration.cards.Data</code> class Allows for an extensible way to add more data providers.</p>
+                 * <p>Provides data for the card, card header and card content by reading the "data" part of the card manifest. Hides the complexity of working with different data providers like: - static JSON data - AJAX calls like <code>sap.ui.integration.cards.Data</code> class Allows for an extensible way to add more data providers.</p>
                  */
                 export class DataProvider extends sap.ui.base.ManagedObject {
                     /**
@@ -2004,7 +2237,7 @@ declare namespace sap {
                 /**
                  * <p>A factory class which creates a data provider based on data settings and stores the created instance. When destroyed, all data providers created by this class are also destroyed.</p>
                  */
-                export class DataProviderFactory extends sap.ui.base.Object {
+                export class DataProviderFactory extends sap.ui.base.EventProvider {
                     /**
                      */
                     constructor();
@@ -2046,8 +2279,8 @@ declare namespace sap {
                 export class Card extends sap.f.CardBase {
                     /**
                      * <p>Constructor for a new <code>Card</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-                     * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-                     * @param {any} mSettings <p>Initial settings for the new control</p>
+                     * @param {string} sId <p>ID for the new control. ID generated automatically if no ID is provided.</p>
+                     * @param {any} mSettings <p>Initial settings for the new control.</p>
                      */
                     constructor(sId?: string, mSettings?: any);
                     /**
@@ -2057,45 +2290,37 @@ declare namespace sap {
                      */
                     addActionDefinition(oActionDefinition: sap.ui.integration.ActionDefinition): this;
                     /**
-                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/action">action</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.widgets.Card</code> itself.</p><p>Fired when an action is triggered on the card.</p>
+                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/action">action</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.widgets.Card</code> itself.</p><p>Fired when an action is triggered on the card.</p><p>When an action is triggered in the card it can be handled on several places by "action" event handlers. In consecutive order those places are: <code>Extension</code>, <code>Card</code>, <code>Host</code>. Each of them can prevent the next one to handle the action by calling <code>oEvent.preventDefault()</code>.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.widgets.Card</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachAction(oData: any, fnFunction: any, oListener?: any): this;
+                    attachAction(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/configurationChange">configurationChange</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.widgets.Card</code> itself.</p><p>Fired when some configuration settings are changed as a result of user interaction. For example - filter value is changed.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.widgets.Card</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachConfigurationChange(oData: any, fnFunction: any, oListener?: any): this;
-                    /**
-                     * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/manifestApplied">manifestApplied</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.widgets.Card</code> itself.</p><p>Fired when card utilities (like <code>DataProviderFactory</code>) and the card elements (like header) are created and initialized.</p><p>Note: The card's content may not be available yet because it may depend on other resources to load.</p>
-                     * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
-                     * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.widgets.Card</code> itself</p>
-                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-                     */
-                    attachManifestApplied(oData: any, fnFunction: any, oListener?: any): this;
+                    attachConfigurationChange(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/manifestReady">manifestReady</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.widgets.Card</code> itself.</p><p>Fired when the manifest is loaded.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.widgets.Card</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachManifestReady(oData: any, fnFunction: any, oListener?: any): this;
+                    attachManifestReady(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/stateChanged">stateChanged</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.integration.widgets.Card</code> itself.</p><p>Fired when the state of the card is changed. For example - the card is ready, new page is selected, a filter is changed or data is refreshed.</p>
                      * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-                     * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
                      * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.integration.widgets.Card</code> itself</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    attachStateChanged(oData: any, fnFunction: any, oListener?: any): this;
+                    attachStateChanged(oData: any, fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Destroys all the actionDefinitions in the aggregation <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getActionDefinitions">actionDefinitions</a>.</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2103,39 +2328,32 @@ declare namespace sap {
                     destroyActionDefinitions(): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/action">action</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachAction(fnFunction: any, oListener?: any): this;
+                    detachAction(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/configurationChange">configurationChange</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachConfigurationChange(fnFunction: any, oListener?: any): this;
-                    /**
-                     * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/manifestApplied">manifestApplied</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
-                     * @param {any} oListener <p>Context object on which the given function had to be called</p>
-                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-                     */
-                    detachManifestApplied(fnFunction: any, oListener?: any): this;
+                    detachConfigurationChange(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/manifestReady">manifestReady</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachManifestReady(fnFunction: any, oListener?: any): this;
+                    detachManifestReady(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.integration.widgets.Card#events/stateChanged">stateChanged</a> event of this <code>sap.ui.integration.widgets.Card</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-                     * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+                     * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
                      * @param {any} oListener <p>Context object on which the given function had to be called</p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    detachStateChanged(fnFunction: any, oListener?: any): this;
+                    detachStateChanged(fnFunction: Function, oListener?: any): this;
                     /**
                      * <p>Fires event <a target="_self" href="api/sap.ui.integration.widgets.Card#events/action">action</a> to attached listeners.</p><p>Listeners may prevent the default action of this event by calling the <code>preventDefault</code> method on the event object. The return value of this method indicates whether the default action should be executed.</p>
                      * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2148,12 +2366,6 @@ declare namespace sap {
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     protected fireConfigurationChange(mParameters?: any): this;
-                    /**
-                     * <p>Fires event <a target="_self" href="api/sap.ui.integration.widgets.Card#events/manifestApplied">manifestApplied</a> to attached listeners.</p>
-                     * @param {any} mParameters <p>Parameters to pass along with the event</p>
-                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-                     */
-                    protected fireManifestApplied(mParameters?: any): this;
                     /**
                      * <p>Fires event <a target="_self" href="api/sap.ui.integration.widgets.Card#events/manifestReady">manifestReady</a> to attached listeners.</p>
                      * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2170,22 +2382,32 @@ declare namespace sap {
                      * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getActionDefinitions">actionDefinitions</a>.</p><p>Actions definitions from which actions in the header menu of the card are created. <b>Note</b>: This aggregation is destroyed when the property <code>manifest</code> changes.</p>
                      * @returns sap.ui.integration.ActionDefinition[] 
                      */
-                    getActionDefinitions(): sap.ui.integration.ActionDefinition[];
+                    getActionDefinitions(): any;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getBaseUrl">baseUrl</a>.</p><p>Defines the base URL of the Card Manifest. It should be used when manifest property is an object instead of a URL.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getBaseUrl">baseUrl</a>.</p><p>Defines the base URL of the card manifest. It must be provided when the manifest is an object and not a URL. The base URL is used to load relatively referenced resources.</p><p>If the base URL is not defined and the manifest URL is defined, the manifest URL is used as the base URL. <ul> <li>If both the manifest URL and the base URL are defined, the base URL is used.</li> <li>If neither the manifest URL nor the base URL is defined, relative resources will not load correctly.</li> </ul></p>
                      * @returns sap.ui.core.URI <p>Value of property <code>baseUrl</code></p>
                      */
                     getBaseUrl(): sap.ui.core.URI;
+                    /**
+                     * <p>Get information about the blocking message in the card.</p>
+                     * @returns sap.ui.integration.BlockingMessageSettings | null <p>Information about the message or <code>null</code>, if such isn't shown.</p>
+                     */
+                    getBlockingMessage(): sap.ui.integration.BlockingMessageSettings | null;
                     /**
                      * <p>Gets values of manifest parameters combined with the parameters from <code>parameters</code> property.</p><p><b>Notes</b></p><p>- Use this method when the manifest is ready. Check <code>manifestReady</code> event.</p><p>- Use when developing a Component card.</p>
                      * @returns any <p>Object containing parameters in format <code>{parameterKey: parameterValue}</code>.</p>
                      */
                     getCombinedParameters(): any;
                     /**
-                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getDataMode">dataMode</a>.</p><p>Defines the state of the <code>Card</code>. When set to <code>Inactive</code>, the <code>Card</code> doesn't make requests.</p><p>Default value is <code>Active</code>.</p>
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getDataMode">dataMode</a>.</p><p>Defines the state of the <code>Card</code>. When set to <code>Inactive</code>, the <code>Card</code> doesn't make requests.</p><p>Default value is <code>Auto</code>.</p>
                      * @returns sap.ui.integration.CardDataMode <p>Value of property <code>dataMode</code></p>
                      */
                     getDataMode(): sap.ui.integration.CardDataMode;
+                    /**
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getDesign">design</a>.</p><p>Defines the design of the <code>Card</code>.</p><p>Default value is <code>Solid</code>.</p>
+                     * @returns sap.ui.integration.CardDesign <p>Value of property <code>design</code></p>
+                     */
+                    getDesign(): sap.ui.integration.CardDesign;
                     /**
                      * <p>Returns the DOM Element that should get the focus.</p>
                      * @returns HTMLElement <p>Returns the DOM Element that should get the focus</p>
@@ -2193,9 +2415,9 @@ declare namespace sap {
                     protected getFocusDomRef(): HTMLElement;
                     /**
                      * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getHost">host</a>, or <code>null</code>.</p>
-                     * @returns sap.ui.core.ID 
+                     * @returns sap.ui.core.ID | null 
                      */
-                    getHost(): sap.ui.core.ID;
+                    getHost(): sap.ui.core.ID | null;
                     /**
                      * <p>Gets the instance of the <code>host</code> association.</p>
                      * @returns sap.ui.integration.Host <p>The host object associated with this card.</p>
@@ -2203,7 +2425,7 @@ declare namespace sap {
                     getHostInstance(): sap.ui.integration.Host;
                     /**
                      * <p>Overwrites getter for card manifest.</p>
-                     * @returns string|Object <p>Cloned of the parameters.</p>
+                     * @returns string | any <p>Cloned of the parameters.</p>
                      */
                     getManifest(): string | any;
                     /**
@@ -2229,10 +2451,10 @@ declare namespace sap {
                             "/sap.card/content/maxItems": 8
                         }
                     ]
-                    </pre></p>
+                    </pre></p><p>Disclaimer: this API might be removed when a permanent solution for flexibility changes is implemented.</p><p>Default value is <code>[]</code>.</p>
                      * @returns object[] <p>Value of property <code>manifestChanges</code></p>
                      */
-                    getManifestChanges(): object[];
+                    getManifestChanges(): any;
                     /**
                      * <p>Returns a value from the Manifest based on the specified path.</p><p><b>Note</b> Use this method when the manifest is ready. Check <code>manifestReady</code> event.</p>
                      * @param {string} sPath <p>The path to return a value for.</p>
@@ -2240,23 +2462,51 @@ declare namespace sap {
                      */
                     getManifestEntry(sPath: string): any;
                     /**
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getOverflow">overflow</a>.</p><p>Allows to control the overflow behaviour of the card.</p><p><b>Note</b>: If the "Default" option is used, the card must be allowed to grow in height as much as it needs to avoid overflowing. Use a layout which allows this.</p><p>Default value is <code>Default</code>.</p>
+                     * @returns sap.ui.integration.CardOverflow <p>Value of property <code>overflow</code></p>
+                     */
+                    getOverflow(): sap.ui.integration.CardOverflow;
+                    /**
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getParameters">parameters</a>.</p><p>Overrides the default values of the parameters, which are defined in the manifest. The value is an object containing parameters in format <code>{parameterKey: parameterValue}</code>.</p>
+                     * @returns any <p>Value of property <code>parameters</code></p>
+                     */
+                    getParameters(): any;
+                    /**
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getPreviewMode">previewMode</a>.</p><p>Preview mode of the <code>Card</code>. Helpful in scenarios when the end user is choosing or configuring a card. <ul> <li>When set to "MockData", the card data is loaded, using a data request, as configured in the "data/mockData" in the manifest. If such configuration is missing, then the Abstract mode will be used instead.</li> <li>When set to "Abstract", the card shows abstract placeholder without loading data.</li> <li>When set to "Off", the card displays real data.</li> </ul></p><p>Default value is <code>Off</code>.</p>
+                     * @returns sap.ui.integration.CardPreviewMode <p>Value of property <code>previewMode</code></p>
+                     */
+                    getPreviewMode(): sap.ui.integration.CardPreviewMode;
+                    /**
                      * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getReferenceId">referenceId</a>.</p><p>Optional property which can be used by the host to reference the card. It will be forwarded to any children cards. Does not affect the card behavior.</p><p>Default value is <code>empty string</code>.</p>
                      * @returns string <p>Value of property <code>referenceId</code></p>
                      */
                     getReferenceId(): string;
                     /**
-                     * <p>Gets translated text from the i18n properties files configured for this card.</p><p>For more details see <a target="_self" href="api/module:sap/base/i18n/ResourceBundle#methods/getText">module:sap/base/i18n/ResourceBundle#getText</a>.</p>
+                     * <p>Gets translated text from the i18n properties files configured for this card.</p><p>This method uses <code>ResourceBundle.getText()</code>. For more details see <a target="_self" href="api/module:sap/base/i18n/ResourceBundle#methods/getText">module:sap/base/i18n/ResourceBundle#getText</a>.</p>
                      * @param {string} sKey <p>Key to retrieve the text for</p>
-                     * @param {string[]} aArgs <p>List of parameter values which should replace the placeholders "{<i>n</i>}" (<i>n</i> is the index) in the found locale-specific string value. Note that the replacement is done whenever <code>aArgs</code> is given, no matter whether the text contains placeholders or not and no matter whether <code>aArgs</code> contains a value for <i>n</i> or not.</p>
+                     * @param {any} aArgs <p>List of parameter values which should replace the placeholders "{<i>n</i>}" (<i>n</i> is the index) in the found locale-specific string value. Note that the replacement is done whenever <code>aArgs</code> is given, no matter whether the text contains placeholders or not and no matter whether <code>aArgs</code> contains a value for <i>n</i> or not.</p>
                      * @param {boolean} bIgnoreKeyFallback <p>If set, <code>undefined</code> is returned instead of the key string, when the key is not found in any bundle or fallback bundle.</p>
-                     * @returns string <p>The value belonging to the key, if found; otherwise the key itself or <code>undefined</code> depending on <code>bIgnoreKeyFallback</code>.</p>
+                     * @returns string | undefined <p>The value belonging to the key, if found; otherwise, it returns the key itself or <code>undefined</code> depending on <code>bIgnoreKeyFallback</code>.</p>
                      */
-                    getTranslatedText(sKey: string, aArgs?: string[], bIgnoreKeyFallback?: boolean): string;
+                    getTranslatedText(sKey: string, aArgs?: any, bIgnoreKeyFallback?: boolean): string | undefined;
+                    /**
+                     * <p>Gets current value of property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getUseProgressiveDisclosure">useProgressiveDisclosure</a>.</p><p>If the card should change depending on its size. This property is temporary. Should be used to enable the feature for cards where it is needed.</p><p>Default value is <code>false</code>.</p>
+                     * @returns boolean <p>Value of property <code>useProgressiveDisclosure</code></p>
+                     */
+                    getUseProgressiveDisclosure(): boolean;
+                    /**
+                     * <p>Hide the blocking message that is shown in the card by <code>showBlockingMessage</code> call.</p>
+                     */
+                    hideBlockingMessage(): void;
                     /**
                      * <p>Hides the loading placeholders on the whole card, or a particular section of the card.</p>
                      * @param {sap.ui.integration.CardArea} eCardArea <p>Area of the card to show the loading placeholders on. Possible options are 'Header', 'Content', 'Filters'. Leave empty to hide loading placeholders on all areas of the card.</p>
                      */
                     hideLoadingPlaceholders(eCardArea?: sap.ui.integration.CardArea): void;
+                    /**
+                     * <p>Hides the message previously shown by showMessage.</p>
+                     */
+                    hideMessage(): void;
                     /**
                      * <p>Checks for the provided <code>sap.ui.integration.ActionDefinition</code> in the aggregation <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getActionDefinitions">actionDefinitions</a>. and returns its index if found or -1 otherwise.</p>
                      * @param {sap.ui.integration.ActionDefinition} oActionDefinition <p>The actionDefinition whose index is looked for</p>
@@ -2276,9 +2526,9 @@ declare namespace sap {
                     isReady(): boolean;
                     /**
                      * <p>Loads the module designtime/Card.designtime or the module given in "sap.card": { "designtime": "designtime/Own.designtime" } This file should contain the designtime configuration for the card.</p><p>Returns a promise that resolves with an object { designtime: the designtime modules response manifest: the complete manifest json } The promise is rejected if the module cannot be loaded with an object: { error: "Card.designtime not found" }</p>
-                     * @returns Promise<any> <p>Promise resolves after the designtime configuration is loaded.</p>
+                     * @returns any <p>Promise resolves after the designtime configuration is loaded.</p>
                      */
-                    loadDesigntime(): Promise<any>;
+                    loadDesigntime(): any;
                     /**
                      * <p>Refreshes the card by re-applying the manifest settings and triggering all data requests.</p>
                      */
@@ -2290,28 +2540,30 @@ declare namespace sap {
                     /**
                      * <p>Removes a actionDefinition from the aggregation <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getActionDefinitions">actionDefinitions</a>.</p>
                      * @param {number | string | sap.ui.integration.ActionDefinition} vActionDefinition <p>The actionDefinition to remove or its index or id</p>
-                     * @returns sap.ui.integration.ActionDefinition|null <p>The removed actionDefinition or <code>null</code></p>
+                     * @returns sap.ui.integration.ActionDefinition | null <p>The removed actionDefinition or <code>null</code></p>
                      */
                     removeActionDefinition(vActionDefinition: number | string | sap.ui.integration.ActionDefinition): sap.ui.integration.ActionDefinition | null;
                     /**
                      * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getActionDefinitions">actionDefinitions</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
                      * @returns sap.ui.integration.ActionDefinition[] <p>An array of the removed elements (might be empty)</p>
                      */
-                    removeAllActionDefinitions(): sap.ui.integration.ActionDefinition[];
+                    removeAllActionDefinitions(): any;
                     /**
-                     * <p>Performs an HTTP request using the given configuration.</p>
+                     * <p>Performs an asynchronous network request using the specified request settings, enabling dynamic bindings to card configurations, such as CSRF tokens, destinations, and parameters. If the request is successful, it returns a Promise that resolves with the response data.</p><p>If an error occurs during the request, the Promise will reject with a <a target="_self" href="api/sap.ui.integration.CardRequestError">sap.ui.integration.CardRequestError</a>.</p><p>For more details on card data handling and request settings see [Card Explorer Data Section]<a target="_blank" rel="noopener noreferrer" href="https://ui5.sap.com/test-resources/sap/ui/integration/demokit/cardExplorer/webapp/index.html#/learn/features/data">https://ui5.sap.com/test-resources/sap/ui/integration/demokit/cardExplorer/webapp/index.html#/learn/features/data</a>
+                                <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
+                                title="Information published on SAP site" class="sapUISDKExternalLink"/>.</p>
                      * @param {any} oConfiguration <p>The configuration of the request.</p>
-                     * @returns Promise<any> <p>Resolves when the request is successful, rejects otherwise.</p>
+                     * @returns any <p>Resolves when the request is successful, rejects otherwise.</p>
                      */
-                    request(oConfiguration: any): Promise<any>;
+                    request(oConfiguration: any): any;
                     /**
                      * <p>Resolves the destination and returns its URL.</p>
                      * @param {string} sKey <p>The destination's key used in the configuration.</p>
-                     * @returns Promise<any> <p>A promise which resolves with the URL of the destination.</p>
+                     * @returns any <p>A promise which resolves with the URL of the destination.</p>
                      */
-                    resolveDestination(sKey: string): Promise<any>;
+                    resolveDestination(sKey: string): any;
                     /**
-                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getBaseUrl">baseUrl</a>.</p><p>Defines the base URL of the Card Manifest. It should be used when manifest property is an object instead of a URL.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getBaseUrl">baseUrl</a>.</p><p>Defines the base URL of the card manifest. It must be provided when the manifest is an object and not a URL. The base URL is used to load relatively referenced resources.</p><p>If the base URL is not defined and the manifest URL is defined, the manifest URL is used as the base URL. <ul> <li>If both the manifest URL and the base URL are defined, the base URL is used.</li> <li>If neither the manifest URL nor the base URL is defined, relative resources will not load correctly.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
                      * @param {sap.ui.core.URI} sBaseUrl <p>New value for property <code>baseUrl</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
@@ -2322,6 +2574,12 @@ declare namespace sap {
                      * @returns this <p>Pointer to the control instance to allow method chaining.</p>
                      */
                     setDataMode(sMode: sap.ui.integration.CardDataMode): this;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getDesign">design</a>.</p><p>Defines the design of the <code>Card</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Solid</code>.</p>
+                     * @param {sap.ui.integration.CardDesign} sDesign <p>New value for property <code>design</code></p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setDesign(sDesign?: sap.ui.integration.CardDesign): this;
                     /**
                      * <p>Sets the associated <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getHost">host</a>.</p>
                      * @param {sap.ui.core.ID | sap.ui.core.Control} oHost <p>ID of an element which becomes the new target of this host association; alternatively, an element instance may be given</p>
@@ -2357,17 +2615,46 @@ declare namespace sap {
                             "/sap.card/content/maxItems": 8
                         }
                     ]
-                    </pre></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-                     * @param {object[]} sManifestChanges <p>New value for property <code>manifestChanges</code></p>
+                    </pre></p><p>Disclaimer: this API might be removed when a permanent solution for flexibility changes is implemented.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>[]</code>.</p>
+                     * @param {any} sManifestChanges <p>New value for property <code>manifestChanges</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
-                    setManifestChanges(sManifestChanges: object[]): this;
+                    setManifestChanges(sManifestChanges?: any): this;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getOverflow">overflow</a>.</p><p>Allows to control the overflow behaviour of the card.</p><p><b>Note</b>: If the "Default" option is used, the card must be allowed to grow in height as much as it needs to avoid overflowing. Use a layout which allows this.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Default</code>.</p>
+                     * @param {sap.ui.integration.CardOverflow} sOverflow <p>New value for property <code>overflow</code></p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setOverflow(sOverflow?: sap.ui.integration.CardOverflow): this;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getParameters">parameters</a>.</p><p>Overrides the default values of the parameters, which are defined in the manifest. The value is an object containing parameters in format <code>{parameterKey: parameterValue}</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+                     * @param {any} oParameters <p>New value for property <code>parameters</code></p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setParameters(oParameters?: any): this;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getPreviewMode">previewMode</a>.</p><p>Preview mode of the <code>Card</code>. Helpful in scenarios when the end user is choosing or configuring a card. <ul> <li>When set to "MockData", the card data is loaded, using a data request, as configured in the "data/mockData" in the manifest. If such configuration is missing, then the Abstract mode will be used instead.</li> <li>When set to "Abstract", the card shows abstract placeholder without loading data.</li> <li>When set to "Off", the card displays real data.</li> </ul></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Off</code>.</p>
+                     * @param {sap.ui.integration.CardPreviewMode} sPreviewMode <p>New value for property <code>previewMode</code></p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setPreviewMode(sPreviewMode?: sap.ui.integration.CardPreviewMode): this;
                     /**
                      * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getReferenceId">referenceId</a>.</p><p>Optional property which can be used by the host to reference the card. It will be forwarded to any children cards. Does not affect the card behavior.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
                      * @param {string} sReferenceId <p>New value for property <code>referenceId</code></p>
                      * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
                      */
                     setReferenceId(sReferenceId?: string): this;
+                    /**
+                     * <p>Sets a new value for property <a target="_self" href="api/sap.ui.integration.widgets.Card#methods/getUseProgressiveDisclosure">useProgressiveDisclosure</a>.</p><p>If the card should change depending on its size. This property is temporary. Should be used to enable the feature for cards where it is needed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+                     * @param {boolean} bUseProgressiveDisclosure <p>New value for property <code>useProgressiveDisclosure</code></p>
+                     * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+                     */
+                    setUseProgressiveDisclosure(bUseProgressiveDisclosure?: boolean): this;
+                    /**
+                     * <p>Show blocking message in the card's content area. Should be used after the <code>manifestApplied</code> event or after the <code>cardReady</code> lifecycle hook in Component cards and Extensions.</p>
+                     * @param {sap.ui.integration.BlockingMessageSettings} oSettings <p>Blocking message settings</p>
+                     */
+                    showBlockingMessage(oSettings: sap.ui.integration.BlockingMessageSettings): void;
                     /**
                      * <p>Displays the loading placeholders on the whole card, or a particular area of the card. <b>Note:</b> Only areas that contain binding will receive a loading placeholder.</p>
                      * @param {sap.ui.integration.CardArea} eCardArea <p>Area of the card to show the loading placeholders on. Possible options are 'Header', 'Content', 'Filters'. Leave empty to show loading placeholders on all areas of the card.</p>
@@ -2376,9 +2663,10 @@ declare namespace sap {
                     /**
                      * <p>Displays a message strip above the content with the given text. There can be only 1 message displayed. If there is a previous message, it is removed. Can be used only after the <code>manifestApplied</code> event is fired.</p>
                      * @param {string} sMessage <p>The message.</p>
-                     * @param {sap.ui.core.MessageType} sType <p>Type of the message.</p>
+                     * @param {sap.ui.integration.CardMessageType} sType <p>Type of the message.</p>
+                     * @param {boolean} bAutoClose <p>Close the message automatically. Default is <code>false</code> for most message types. It is <code>true</code> for message type <code>Toast</code>. <b>Note</b> This property has no effect for message type <code>Loading</code>.</p>
                      */
-                    showMessage(sMessage: string, sType: sap.ui.core.MessageType): void;
+                    showMessage(sMessage: string, sType: sap.ui.integration.CardMessageType, bAutoClose: boolean): void;
                     /**
                      * <p>Triggers an action inside the card.</p><p>Use this method if you need to trigger an action programmatically from inside an <code>Extension</code> or from a Component card.</p><p>For other use cases use the manifest to define the actions. See <a target="_blank" rel="noopener noreferrer" href="https://ui5.sap.com/test-resources/sap/ui/integration/demokit/cardExplorer/webapp/index.html#/learn/features/cardActions">https://ui5.sap.com/test-resources/sap/ui/integration/demokit/cardExplorer/webapp/index.html#/learn/features/cardActions</a>
                                 <img src="./resources/sap/ui/documentation/sdk/images/link-sap.png"
@@ -2395,13 +2683,13 @@ declare namespace sap {
                      */
                     triggerAction(oAction: any): void;
                     /**
-                     * <p>Causes all of the controls within the Card that support validation to validate their data.</p>
-                     * @returns boolean <p>if all of the controls validated successfully; otherwise, false</p>
+                     * <p>Causes all the controls within the Card that support validation to validate their data.</p>
+                     * @returns boolean <p>if all the controls validated successfully; otherwise, false</p>
                      */
                     validateControls(): boolean;
                 }
                 /**
-                 * <p><p>Facade of the <a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a> control.</p></p>
+                 * <p><p>Facade of the <a target="_self" href="api/sap.ui.integration.widgets.Card">sap.ui.integration.widgets.Card</a> control.</p><p>This facade contains methods accessible within the card extension. The available methods represent a limited subset of all card methods, since not all card methods function as expected when called from within the extension.</p></p>
                  */
                 export interface CardFacade {
                 }

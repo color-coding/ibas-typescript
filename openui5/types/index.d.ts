@@ -17,10 +17,8 @@
 /// <reference path ="./sap.ui.support.d.ts" />
 /// <reference path ="./sap.ui.table.d.ts" />
 /// <reference path ="./sap.ui.unified.d.ts" />
-/// <reference path ="./sap.ui.suite.d.ts" />
-/// <reference path ="./sap.ui.webc.common.d.ts" />
-/// <reference path ="./sap.ui.webc.fiori.d.ts" />
-/// <reference path ="./sap.ui.webc.main.d.ts" />
+/// <reference path ="./sap.ui.mdc.d.ts" />
 /// <reference path ="./sap.uxap.d.ts" />
+/// <reference path ="./sap.lost.d.ts" />
 /// <reference path ="./jquery.d.ts" />
 /// <reference path ="./jquery.sap.d.ts" />

@@ -12,7 +12,7 @@ declare namespace sap {
 		 */
 		namespace layout {
 			/**
-			 * <p><p>Available Background Design.</p></p>
+			 * <p><p>Available Background Design.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'BackgroundDesign'.</p></p>
 			 */
 			export enum BackgroundDesign {
 				/**
@@ -29,7 +29,7 @@ declare namespace sap {
 				Transparent = "Transparent",
 			}
 			/**
-			 * <p><p>A string type that is used inside the BlockLayout to set predefined background color to the cells inside the control.</p></p>
+			 * <p><p>A string type that is used inside the BlockLayout to set predefined background color to the cells inside the control.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'BlockBackgroundType'.</p></p>
 			 */
 			export enum BlockBackgroundType {
 				/**
@@ -83,7 +83,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.BlockLayout#methods/getContent">content</a>.</p><p>The Rows to be included in the content of the control</p>
 				 * @returns sap.ui.layout.BlockLayoutRow[] 
 				 */
-				getContent(): sap.ui.layout.BlockLayoutRow[];
+				getContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.BlockLayout#methods/getKeepFontSize">keepFontSize</a>.</p><p>Keeps the font-size of the contents as is, independent from the screen size.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>keepFontSize</code></p>
@@ -106,11 +106,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.BlockLayout#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.layout.BlockLayoutRow[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.layout.BlockLayoutRow[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.BlockLayout#methods/getContent">content</a>.</p>
 				 * @param {number | string | sap.ui.layout.BlockLayoutRow} vContent <p>The content to remove or its index or id</p>
-				 * @returns sap.ui.layout.BlockLayoutRow|null <p>The removed content or <code>null</code></p>
+				 * @returns sap.ui.layout.BlockLayoutRow | null <p>The removed content or <code>null</code></p>
 				 */
 				removeContent(vContent: number | string | sap.ui.layout.BlockLayoutRow): sap.ui.layout.BlockLayoutRow | null;
 				/**
@@ -166,7 +166,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.BlockLayoutCell#methods/getContent">content</a>.</p><p>The content to be included inside the cell</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getContent(): sap.ui.core.Control[];
+				getContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.BlockLayoutCell#methods/getTitle">title</a>.</p><p>Defines the title of the cell. <b>Note:</b> When the <code>titleLink</code> aggregation is provided, the title of the cell will be replaced with the text from the <code>titleLink</code>.</p>
 				 * @returns string <p>Value of property <code>title</code></p>
@@ -209,11 +209,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.BlockLayoutCell#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.core.Control[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.BlockLayoutCell#methods/getContent">content</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 				 */
 				removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -260,7 +260,7 @@ declare namespace sap {
 				setWidth(iWidth: number): this;
 			}
 			/**
-			 * <p><p>A string type that is used inside the BlockLayoutCell to set a predefined set of colors for the cells.</p></p>
+			 * <p><p>A string type that is used inside the BlockLayoutCell to set a predefined set of colors for the cells.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'BlockLayoutCellColorSet'.</p></p>
 			 */
 			export enum BlockLayoutCellColorSet {
 				/**
@@ -309,7 +309,7 @@ declare namespace sap {
 				ColorSet9 = "ColorSet9",
 			}
 			/**
-			 * <p><p>A string type that is used inside the BlockLayoutCell to set a predefined set of color shades for the cells. The colors are defined with sap.ui.layout.BlockLayoutCellColorSet. And this is for the shades only.</p></p>
+			 * <p><p>A string type that is used inside the BlockLayoutCell to set a predefined set of color shades for the cells. The colors are defined with sap.ui.layout.BlockLayoutCellColorSet. And this is for the shades only.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'BlockLayoutCellColorShade'.</p></p>
 			 */
 			export enum BlockLayoutCellColorShade {
 				/**
@@ -429,12 +429,12 @@ declare namespace sap {
 				 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getAccentCells">accentCells</a>.</p>
 				 * @returns sap.ui.core.ID[] 
 				 */
-				getAccentCells(): sap.ui.core.ID[];
+				getAccentCells(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getContent">content</a>.</p><p>The content cells to be included in the row.</p>
 				 * @returns sap.ui.layout.BlockLayoutCell[] 
 				 */
-				getContent(): sap.ui.layout.BlockLayoutCell[];
+				getContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getRowColorSet">rowColorSet</a>.</p><p>Defines background type for that row. There might be several rows with the same type</p>
 				 * @returns sap.ui.layout.BlockRowColorSets <p>Value of property <code>rowColorSet</code></p>
@@ -461,23 +461,23 @@ declare namespace sap {
 				/**
 				 * <p>Removes an accentCell from the association named <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getAccentCells">accentCells</a>.</p>
 				 * @param {number | sap.ui.core.ID | sap.ui.layout.BlockLayoutCell} vAccentCell <p>The accentCell to be removed or its index or ID</p>
-				 * @returns sap.ui.core.ID|null <p>The removed accentCell or <code>null</code></p>
+				 * @returns sap.ui.core.ID | null <p>The removed accentCell or <code>null</code></p>
 				 */
 				removeAccentCell(vAccentCell: number | sap.ui.core.ID | sap.ui.layout.BlockLayoutCell): sap.ui.core.ID | null;
 				/**
 				 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getAccentCells">accentCells</a>.</p>
 				 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllAccentCells(): sap.ui.core.ID[];
+				removeAllAccentCells(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.layout.BlockLayoutCell[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.layout.BlockLayoutCell[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.BlockLayoutRow#methods/getContent">content</a>.</p>
 				 * @param {number | string | sap.ui.layout.BlockLayoutCell} vContent <p>The content to remove or its index or id</p>
-				 * @returns sap.ui.layout.BlockLayoutCell|null <p>The removed content or <code>null</code></p>
+				 * @returns sap.ui.layout.BlockLayoutCell | null <p>The removed content or <code>null</code></p>
 				 */
 				removeContent(vContent: number | string | sap.ui.layout.BlockLayoutCell): sap.ui.layout.BlockLayoutCell | null;
 				/**
@@ -494,7 +494,7 @@ declare namespace sap {
 				setScrollable(bScrollable?: boolean): this;
 			}
 			/**
-			 * <p><p>A string type that is used inside the BlockLayoutRow to set predefined set of colors the cells inside the control. Color sets depend on sap.ui.layout.BlockBackgroundType</p></p>
+			 * <p><p>A string type that is used inside the BlockLayoutRow to set predefined set of colors the cells inside the control. Color sets depend on sap.ui.layout.BlockBackgroundType</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'BlockRowColorSets'.</p></p>
 			 */
 			export enum BlockRowColorSets {
 				/**
@@ -515,7 +515,7 @@ declare namespace sap {
 				ColorSet4 = "ColorSet4",
 			}
 			/**
-			 * <p>Layout control that allows additional (side) content to be displayed dynamically.</p><h3>Overview</h3><p><code>DynamicSideContent</code> is a layout control that allows additional content to be displayed in a way that flexibly adapts to different screen sizes. The side content appears in a container next to or directly below the main content (it doesn't overlay). When the side content is triggered, the main content becomes narrower (if appearing side-by-side). The side content contains a separate scrollbar when appearing next to the main content.</p><h3>Usage</h3><p><i>When to use?</i></p><p>Use this control if you want to display relevant information that is not critical for users to complete a task. Users should have access to all the key functions and critical information in the app even if they do not see the side content. This is important because on smaller screen sizes it may be difficult to display the side content in a way that is easily accessible for the user.</p><p><i>When not to use?</i></p><p>Don't use it if you want to display navigation or critical information that prevents users from completing a task when they have no access to the side content.</p><h3>Responsive Behavior</h3><p>Screen width > 1440 px</p><p><ul><li>Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px each).</li> <li>If the application defines a trigger, the side content can be hidden.</li></ul></p><p>Screen width <= 1440 px and > 720px</p><p><ul><li>Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of 320px each). If the side content width falls below 320 px, it automatically slides under the main content, unless the app development team specifies that it should disappear.</li></ul></p><p>Screen width <= 720 px (for example on a mobile device)</p><p><ul><li>In this case, the side content automatically disappears from the screen (unless specified to stay under the content) and can be triggered from a pre-set trigger (specified within the app). When the side content is triggered, it replaces the main content. We recommend that you always place the trigger for the side content in the same location, such as in the app footer.</li></ul></p><p>A special case, allows for comparison mode between the main and side content. In this case, the screen is split into 50:50 percent for main vs. side content. The responsive behavior of the equal split is the same as in the standard view - the side content disappears on screen widths of less than 720 px and can only be viewed by triggering it.</p><p><b>Note:</b> If the control that has property sticky inside the <code>DynamicSideContent</code> the stickiness of that control will not work. <code>DynamicSideContent</code> has the overflow: auto style definition and this prevents the sticky elements of the control from becoming fixed at the top of the viewport. This applies for example to <a target="_self" href="api/sap.m.Table">sap.m.Table</a> and <a target="_self" href="api/sap.m.PlanningCalendar">sap.m.PlanningCalendar</a>.</p>
+			 * <p>Layout control that allows additional (side) content to be displayed dynamically.</p><h3>Overview</h3><p><code>DynamicSideContent</code> is a layout control that allows additional content to be displayed in a way that flexibly adapts to different screen sizes. The side content appears in a container next to or directly below the main content (it doesn't overlay). When the side content is triggered, the main content becomes narrower (if appearing side-by-side). The side content contains a separate scrollbar when appearing next to the main content.</p><h3>Usage</h3><p><i>When to use?</i></p><p>Use this control if you want to display relevant information that is not critical for users to complete a task. Users should have access to all the key functions and critical information in the app even if they do not see the side content. This is important because on smaller screen sizes it may be difficult to display the side content in a way that is easily accessible for the user.</p><p><i>When not to use?</i></p><p>Don't use it if you want to display navigation or critical information that prevents users from completing a task when they have no access to the side content.</p><h3>Responsive Behavior</h3><p>Screen width > 1440 px</p><p><ul><li>Main vs. side content ratio is 75 vs. 25 percent (with a minimum of 320px each).</li> <li>If the application defines a trigger, the side content can be hidden.</li></ul></p><p>Screen width <= 1440 px and > 720px</p><p><ul><li>Main vs. side content ratio is 66.666 vs. 33.333 percent (with a minimum of 320px each). If the side content width falls below 320 px, it automatically slides under the main content, unless the app development team specifies that it should disappear.</li></ul></p><p>Screen width <= 720 px (for example on a mobile device)</p><p><ul><li>In this case, the side content automatically disappears from the screen (unless specified to stay under the content) and can be triggered from a pre-set trigger (specified within the app). When the side content is triggered, it replaces the main content. We recommend that you always place the trigger for the side content in the same location, such as in the app footer.</li></ul></p><p>A special case, allows for comparison mode between the main and side content. In this case, the screen is split into 50:50 percent for main vs. side content. The responsive behavior of the equal split is the same as in the standard view - the side content disappears on screen widths of less than 720 px and can only be viewed by triggering it.</p><p><b>Note:</b> If there is a control that has property <code>sticky</code> inside the <code>DynamicSideContent</code> the stickiness of that control will not work. <code>DynamicSideContent</code> has the overflow: auto style definition and this prevents the sticky elements of the inside controls from becoming fixed at the top of the viewport. This applies for example to <a target="_self" href="api/sap.m.Table">sap.m.Table</a> and <a target="_self" href="api/sap.m.PlanningCalendar">sap.m.PlanningCalendar</a>.</p>
 			 */
 			export class DynamicSideContent extends sap.ui.core.Control {
 				/**
@@ -526,24 +526,24 @@ declare namespace sap {
 				constructor(sId?: string, mSettings?: any);
 				/**
 				 * <p>Adds a control to the main content area. Only the main content part in the aggregation is re-rendered.</p>
-				 * @param {any} oControl <p>Object to be added in the aggregation</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @param {sap.ui.core.Control} oControl <p>Object to be added in the aggregation</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
-				addMainContent(oControl: any): this;
+				addMainContent(oControl: sap.ui.core.Control): this;
 				/**
 				 * <p>Adds a control to the side content area. Only the side content part in the aggregation is re-rendered.</p>
-				 * @param {any} oControl <p>Object to be added in the aggregation</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @param {sap.ui.core.Control} oControl <p>Object to be added in the aggregation</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
-				addSideContent(oControl: any): this;
+				addSideContent(oControl: sap.ui.core.Control): this;
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.layout.DynamicSideContent#events/breakpointChanged">breakpointChanged</a> event of this <code>sap.ui.layout.DynamicSideContent</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.layout.DynamicSideContent</code> itself.</p><p>Fires when the current breakpoint has been changed.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.layout.DynamicSideContent</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachBreakpointChanged(oData: any, fnFunction: any, oListener?: any): this;
+				attachBreakpointChanged(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Destroys all the mainContent in the aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getMainContent">mainContent</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -556,11 +556,11 @@ declare namespace sap {
 				destroySideContent(): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.layout.DynamicSideContent#events/breakpointChanged">breakpointChanged</a> event of this <code>sap.ui.layout.DynamicSideContent</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachBreakpointChanged(fnFunction: any, oListener?: any): this;
+				detachBreakpointChanged(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Fires event <a target="_self" href="api/sap.ui.layout.DynamicSideContent#events/breakpointChanged">breakpointChanged</a> to attached listeners.</p>
 				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -568,7 +568,7 @@ declare namespace sap {
 				 */
 				protected fireBreakpointChanged(mParameters?: any): this;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getContainerQuery">containerQuery</a>.</p><p>If set to TRUE, then not the media Query (device screen size) but the size of the container, surrounding the control, defines the current range.</p><p>Default value is <code>false</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getContainerQuery">containerQuery</a>.</p><p>If set to <code>true</code>, then not the media Query (device screen size) but the size of the container, surrounding the control, defines the current range.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>containerQuery</code></p>
 				 */
 				getContainerQuery(): boolean;
@@ -578,7 +578,7 @@ declare namespace sap {
 				 */
 				getCurrentBreakpoint(): string;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getEqualSplit">equalSplit</a>.</p><p>Defines whether the control is in equal split mode. In this mode, the side and the main content take 50:50 percent of the container on all screen sizes except for phone, where the main and side contents are switching visibility using the toggle method.</p><p>Default value is <code>false</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getEqualSplit">equalSplit</a>.</p><p>Defines whether the control is in equal split mode. In this mode, the side and the main content take 50:50 percent of the container on all screen sizes except for phone, where the main and side contents are switching visibility using the toggle method.</p><p><b>Note:</b> setting this property overrides values set in <code>sideContentWidthM, sideContentWidthL, sideContentWidthXL</code>.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>equalSplit</code></p>
 				 */
 				getEqualSplit(): boolean;
@@ -586,13 +586,13 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getMainContent">mainContent</a>.</p><p>Main content controls.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getMainContent(): sap.ui.core.Control[];
+				getMainContent(): any;
 				/**
 				 * <p>Returns a scroll helper object used to handle scrolling.</p>
-				 * @param {any} oControl <p>The control instance that requested the scroll helper</p>
+				 * @param {sap.ui.core.Control} oControl <p>The control instance that requested the scroll helper</p>
 				 * @returns sap.ui.core.delegate.ScrollEnablement <p>The scroll helper instance</p>
 				 */
-				getScrollDelegate(oControl: any): sap.ui.core.delegate.ScrollEnablement;
+				getScrollDelegate(oControl: sap.ui.core.Control): sap.ui.core.delegate.ScrollEnablement;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getShowMainContent">showMainContent</a>.</p><p>Determines whether the main content is visible or hidden.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>showMainContent</code></p>
@@ -607,7 +607,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContent">sideContent</a>.</p><p>Side content controls.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getSideContent(): sap.ui.core.Control[];
+				getSideContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentFallDown">sideContentFallDown</a>.</p><p>Determines on which breakpoints the side content falls down below the main content.</p><p>Default value is <code>OnMinimumWidth</code>.</p>
 				 * @returns sap.ui.layout.SideContentFallDown <p>Value of property <code>sideContentFallDown</code></p>
@@ -623,6 +623,21 @@ declare namespace sap {
 				 * @returns sap.ui.layout.SideContentVisibility <p>Value of property <code>sideContentVisibility</code></p>
 				 */
 				getSideContentVisibility(): sap.ui.layout.SideContentVisibility;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentWidthL">sideContentWidthL</a>.</p><p>Sets the width of the side content for L breakpoint (screen width <= 1440 px and > 1024px).</p><p>Setting value to this property overrides the default width of the side content container in L breakpoint, except when an <code>equalSplit</code> property is set. The width of the main content container is calculated respectively.</p>
+				 * @returns sap.ui.core.CSSSize <p>Value of property <code>sideContentWidthL</code></p>
+				 */
+				getSideContentWidthL(): sap.ui.core.CSSSize;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentWidthM">sideContentWidthM</a>.</p><p>Sets the width of the side content for M breakpoint (screen width <= 1024 px and > 720px).</p><p>Setting value to this property overrides the default width of the side content container in M breakpoint, except when an <code>equalSplit</code> property is set. The width of the main content container is calculated respectively.</p>
+				 * @returns sap.ui.core.CSSSize <p>Value of property <code>sideContentWidthM</code></p>
+				 */
+				getSideContentWidthM(): sap.ui.core.CSSSize;
+				/**
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentWidthXL">sideContentWidthXL</a>.</p><p>Sets the width of the side content for XL breakpoint (screen width > 1440 px).</p><p>Setting value to this property overrides the default width of the side content container in XL breakpoint, except when an <code>equalSplit</code> property is set. The width of the main content container is calculated respectively.</p>
+				 * @returns sap.ui.core.CSSSize <p>Value of property <code>sideContentWidthXL</code></p>
+				 */
+				getSideContentWidthXL(): sap.ui.core.CSSSize;
 				/**
 				 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getMainContent">mainContent</a>. and returns its index if found or -1 otherwise.</p>
 				 * @param {sap.ui.core.Control} oMainContent <p>The mainContent whose index is looked for</p>
@@ -663,26 +678,26 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getMainContent">mainContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllMainContent(): sap.ui.core.Control[];
+				removeAllMainContent(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContent">sideContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllSideContent(): sap.ui.core.Control[];
+				removeAllSideContent(): any;
 				/**
 				 * <p>Removes a mainContent from the aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getMainContent">mainContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vMainContent <p>The mainContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed mainContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed mainContent or <code>null</code></p>
 				 */
 				removeMainContent(vMainContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
 				 * <p>Removes a sideContent from the aggregation <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContent">sideContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vSideContent <p>The sideContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed sideContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed sideContent or <code>null</code></p>
 				 */
 				removeSideContent(vSideContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getContainerQuery">containerQuery</a>.</p><p>If set to TRUE, then not the media Query (device screen size) but the size of the container, surrounding the control, defines the current range.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getContainerQuery">containerQuery</a>.</p><p>If set to <code>true</code>, then not the media Query (device screen size) but the size of the container, surrounding the control, defines the current range.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
 				 * @param {boolean} bContainerQuery <p>New value for property <code>containerQuery</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -690,21 +705,21 @@ declare namespace sap {
 				/**
 				 * <p>Sets or unsets the page in equalSplit mode.</p>
 				 * @param {boolean} bState <p>Determines if the page is set to equalSplit mode</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
 				setEqualSplit(bState?: boolean): this;
 				/**
 				 * <p>Sets the showMainContent property.</p>
 				 * @param {boolean} bVisible <p>Determines if the main content part is visible</p>
 				 * @param {boolean} bSuppressVisualUpdate <p>Determines if the visual state is updated</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
 				setShowMainContent(bVisible: boolean, bSuppressVisualUpdate: boolean): this;
 				/**
 				 * <p>Sets the showSideContent property.</p>
 				 * @param {boolean} bVisible <p>Determines if the side content part is visible</p>
 				 * @param {boolean} bSuppressVisualUpdate <p>Determines if the visual state is updated</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
 				setShowSideContent(bVisible: boolean, bSuppressVisualUpdate: boolean): this;
 				/**
@@ -723,12 +738,30 @@ declare namespace sap {
 				 * <p>Sets the sideContentVisibility property.</p>
 				 * @param {sap.ui.layout.SideContentVisibility} sVisibility <p>Determines on which breakpoints the side content is visible.</p>
 				 * @param {boolean} bSuppressVisualUpdate <p>Determines if the visual state is updated</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
 				setSideContentVisibility(sVisibility: sap.ui.layout.SideContentVisibility, bSuppressVisualUpdate: boolean): this;
 				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentWidthL">sideContentWidthL</a>.</p><p>Sets the width of the side content for L breakpoint (screen width <= 1440 px and > 1024px).</p><p>Setting value to this property overrides the default width of the side content container in L breakpoint, except when an <code>equalSplit</code> property is set. The width of the main content container is calculated respectively.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * @param {sap.ui.core.CSSSize} sSideContentWidthL <p>New value for property <code>sideContentWidthL</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setSideContentWidthL(sSideContentWidthL?: sap.ui.core.CSSSize): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentWidthM">sideContentWidthM</a>.</p><p>Sets the width of the side content for M breakpoint (screen width <= 1024 px and > 720px).</p><p>Setting value to this property overrides the default width of the side content container in M breakpoint, except when an <code>equalSplit</code> property is set. The width of the main content container is calculated respectively.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * @param {sap.ui.core.CSSSize} sSideContentWidthM <p>New value for property <code>sideContentWidthM</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setSideContentWidthM(sSideContentWidthM?: sap.ui.core.CSSSize): this;
+				/**
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.DynamicSideContent#methods/getSideContentWidthXL">sideContentWidthXL</a>.</p><p>Sets the width of the side content for XL breakpoint (screen width > 1440 px).</p><p>Setting value to this property overrides the default width of the side content container in XL breakpoint, except when an <code>equalSplit</code> property is set. The width of the main content container is calculated respectively.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * @param {sap.ui.core.CSSSize} sSideContentWidthXL <p>New value for property <code>sideContentWidthXL</code></p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+				 */
+				setSideContentWidthXL(sSideContentWidthXL?: sap.ui.core.CSSSize): this;
+				/**
 				 * <p>Used for the toggle button functionality. When the control is on a phone screen size only, one control area is visible. This helper method is used to implement a button/switch for changing between the main and side content areas. Only works if the current breakpoint is "S".</p>
-				 * @returns this <p>this pointer for chaining</p>
+				 * @returns this <p>Reference to <code>this</code> for method chaining</p>
 				 */
 				toggle(): this;
 			}
@@ -762,7 +795,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.FixFlex#methods/getFixContent">fixContent</a>.</p><p>Controls in the fixed part of the layout.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getFixContent(): sap.ui.core.Control[];
+				getFixContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.FixFlex#methods/getFixContentSize">fixContentSize</a>.</p><p>Determines the height (if the vertical property is "true") or the width (if the vertical property is "false") of the fixed area. If left at the default value "auto", the fixed-size area will be as large as its content. In this case the content cannot use percentage sizes.</p><p>Default value is <code>"auto"</code>.</p>
 				 * @returns sap.ui.core.CSSSize <p>Value of property <code>fixContentSize</code></p>
@@ -805,11 +838,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.FixFlex#methods/getFixContent">fixContent</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllFixContent(): sap.ui.core.Control[];
+				removeAllFixContent(): any;
 				/**
 				 * <p>Removes a fixContent from the aggregation <a target="_self" href="api/sap.ui.layout.FixFlex#methods/getFixContent">fixContent</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vFixContent <p>The fixContent to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed fixContent or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed fixContent or <code>null</code></p>
 				 */
 				removeFixContent(vFixContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -871,7 +904,7 @@ declare namespace sap {
 				 */
 				destroyContent(): this;
 				/**
-				 * <p>Returns the <code>Grid</code> accessibility information.<br><br>References: <ul><li>sap.ui.core.Control#getAccessibilityInfo</li></ul></p>
+				 * <p>Returns the <code>Grid</code> accessibility information.<br><br>References: <ul><li><a target="_self" href="api/sap.ui.core.Control#methods/getAccessibilityInfo">sap.ui.core.Control#getAccessibilityInfo</a></li></ul></p>
 				 * @returns any <p>The <code>Grid</code> accessibility information</p>
 				 */
 				protected getAccessibilityInfo(): any;
@@ -879,7 +912,7 @@ declare namespace sap {
 				 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.Grid#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @returns sap.ui.core.ID[] 
 				 */
-				getAriaLabelledBy(): sap.ui.core.ID[];
+				getAriaLabelledBy(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.Grid#methods/getContainerQuery">containerQuery</a>.</p><p>If set to <code>true</code>, the current range (large, medium or small) is defined by the size of the container surrounding the <code>Grid</code> instead of the device screen size (media Query).</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>containerQuery</code></p>
@@ -889,14 +922,14 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.Grid#methods/getContent">content</a>.</p><p>Controls that are placed into Grid layout.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getContent(): sap.ui.core.Control[];
+				getContent(): any;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>"XL0 L0 M0 S0"</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>"XL0 L0 M0 S0"</code>.</p>
 				 * @returns sap.ui.layout.GridIndent <p>Value of property <code>defaultIndent</code></p>
 				 */
 				getDefaultIndent(): sap.ui.layout.GridIndent;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>"XL3 L3 M6 S12"</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>Default value is <code>"XL3 L3 M6 S12"</code>.</p>
 				 * @returns sap.ui.layout.GridSpan <p>Value of property <code>defaultSpan</code></p>
 				 */
 				getDefaultSpan(): sap.ui.layout.GridSpan;
@@ -937,22 +970,22 @@ declare namespace sap {
 				 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.Grid#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllAriaLabelledBy(): sap.ui.core.ID[];
+				removeAllAriaLabelledBy(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.Grid#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.core.Control[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.Grid#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-				 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
+				 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
 				 */
 				removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
 				/**
 				 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.Grid#methods/getContent">content</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 				 */
 				removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -962,13 +995,13 @@ declare namespace sap {
 				 */
 				setContainerQuery(bContainerQuery?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL0 L0 M0 S0"</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultIndent">defaultIndent</a>.</p><p>Optional. Defines default for the whole Grid numbers of empty columns before the current span begins. It can be defined for large, medium and small screens. Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 0 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL0 L0 M0 S0"</code>.</p>
 				 * @param {sap.ui.layout.GridIndent} sDefaultIndent <p>New value for property <code>defaultIndent</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setDefaultIndent(sDefaultIndent?: sap.ui.layout.GridIndent): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL3 L3 M6 S12"</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.Grid#methods/getDefaultSpan">defaultSpan</a>.</p><p>Optional. A string type that represents the span values of the <code>Grid</code> for large, medium and small screens. Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 12 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"XL3 L3 M6 S12"</code>.</p>
 				 * @param {sap.ui.layout.GridSpan} sDefaultSpan <p>New value for property <code>defaultSpan</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -1009,7 +1042,7 @@ declare namespace sap {
 				 */
 				constructor(sId?: string, mSettings?: any);
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.GridData#methods/getIndent">indent</a>.</p><p>A string type that represents the indent values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.GridData#methods/getIndent">indent</a>.</p><p>A string type that represents the indent values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p>
 				 * @returns sap.ui.layout.GridIndent <p>Value of property <code>indent</code></p>
 				 */
 				getIndent(): sap.ui.layout.GridIndent;
@@ -1069,7 +1102,7 @@ declare namespace sap {
 				 */
 				getMoveForward(): sap.ui.layout.GridIndent;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.GridData#methods/getSpan">span</a>.</p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.GridData#methods/getSpan">span</a>.</p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p>
 				 * @returns sap.ui.layout.GridSpan <p>Value of property <code>span</code></p>
 				 */
 				getSpan(): sap.ui.layout.GridSpan;
@@ -1114,7 +1147,7 @@ declare namespace sap {
 				 */
 				getVisibleXL(): boolean;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.GridData#methods/getIndent">indent</a>.</p><p>A string type that represents the indent values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.GridData#methods/getIndent">indent</a>.</p><p>A string type that represents the indent values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 11 that the container has to take, for example, <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {sap.ui.layout.GridIndent} sIndent <p>New value for property <code>indent</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -1186,7 +1219,7 @@ declare namespace sap {
 				 */
 				setMoveForward(sMoveForward?: sap.ui.layout.GridIndent): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.GridData#methods/getSpan">span</a>.</p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.GridData#methods/getSpan">span</a>.</p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
 				 * @param {sap.ui.layout.GridSpan} sSpan <p>New value for property <code>span</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
@@ -1241,7 +1274,7 @@ declare namespace sap {
 				setVisibleXL(bVisibleXL?: boolean): this;
 			}
 			/**
-			 * <p><p>The position of the <a target="_self" href="api/sap.ui.layout.Grid">sap.ui.layout.Grid</a>. Can be <code>Left</code> (default), <code>Center</code> or <code>Right</code>.</p></p>
+			 * <p><p>The position of the <a target="_self" href="api/sap.ui.layout.Grid">sap.ui.layout.Grid</a>. Can be <code>Left</code> (default), <code>Center</code> or <code>Right</code>.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'GridPosition'.</p></p>
 			 */
 			export enum GridPosition {
 				/**
@@ -1279,10 +1312,10 @@ declare namespace sap {
 				 */
 				destroyContent(): this;
 				/**
-				 * <p>References: <ul><li>sap.ui.core.Control#getAccessibilityInfo</li></ul></p>
-				 * @returns any <p>Current accessibility state of the control</p>
+				 * <p>References: <ul><li><a target="_self" href="api/sap.ui.core.Control#methods/getAccessibilityInfo">sap.ui.core.Control#getAccessibilityInfo</a></li></ul></p>
+				 * @returns sap.ui.core.AccessibilityInfo <p>Current accessibility state of the control</p>
 				 */
-				protected getAccessibilityInfo(): any;
+				protected getAccessibilityInfo(): sap.ui.core.AccessibilityInfo;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.HorizontalLayout#methods/getAllowWrapping">allowWrapping</a>.</p><p>Specifies whether the content inside the Layout shall be line-wrapped in the case that there is less horizontal space available than required.</p><p>Default value is <code>false</code>.</p>
 				 * @returns boolean <p>Value of property <code>allowWrapping</code></p>
@@ -1292,7 +1325,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.HorizontalLayout#methods/getContent">content</a>.</p><p>The controls inside this layout</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getContent(): sap.ui.core.Control[];
+				getContent(): any;
 				/**
 				 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.ui.layout.HorizontalLayout#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
 				 * @param {sap.ui.core.Control} oContent <p>The content whose index is looked for</p>
@@ -1310,11 +1343,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.HorizontalLayout#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.core.Control[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.HorizontalLayout#methods/getContent">content</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 				 */
 				removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -1343,11 +1376,11 @@ declare namespace sap {
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.layout.PaneContainer#events/resize">resize</a> event of this <code>sap.ui.layout.PaneContainer</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.layout.PaneContainer</code> itself.</p><p>Fired when contents are resized.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.layout.PaneContainer</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachResize(oData: any, fnFunction: any, oListener?: any): this;
+				attachResize(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Destroys all the panes in the aggregation <a target="_self" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1355,11 +1388,11 @@ declare namespace sap {
 				destroyPanes(): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.layout.PaneContainer#events/resize">resize</a> event of this <code>sap.ui.layout.PaneContainer</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachResize(fnFunction: any, oListener?: any): this;
+				detachResize(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Fires event <a target="_self" href="api/sap.ui.layout.PaneContainer#events/resize">resize</a> to attached listeners.</p>
 				 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -1380,7 +1413,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p><p>The panes to be split. The control will show n-1 splitter bars between n controls in this aggregation.</p>
 				 * @returns sap.ui.core.Element[] 
 				 */
-				getPanes(): sap.ui.core.Element[];
+				getPanes(): any;
 				/**
 				 * <p>Checks for the provided <code>sap.ui.core.Element</code> in the aggregation <a target="_self" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>. and returns its index if found or -1 otherwise.</p>
 				 * @param {sap.ui.core.Element} oPane <p>The pane whose index is looked for</p>
@@ -1388,23 +1421,23 @@ declare namespace sap {
 				 */
 				indexOfPane(oPane: sap.ui.core.Element): number;
 				/**
-				 * <p>Pane insertion</p>
-				 * @param {undefined} oObject 
-				 * @param {undefined} iIndex 
-				 * @returns sap.ui.base.ManagedObject 
+				 * <p>Inserts a pane into the aggregation <a target="_self" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p>
+				 * @param {sap.ui.core.Element} oPane <p>The pane to insert; if empty, nothing is inserted</p>
+				 * @param {number} iIndex <p>The <code>0</code>-based index the pane should be inserted at; for a negative value of <code>iIndex</code>, the pane is inserted at position 0; for a value greater than the current size of the aggregation, the pane is inserted at the last position</p>
+				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				insertPane(oObject: undefined, iIndex: undefined): sap.ui.base.ManagedObject;
+				insertPane(oPane: sap.ui.core.Element, iIndex: number): this;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Element[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllPanes(): sap.ui.core.Element[];
+				removeAllPanes(): any;
 				/**
-				 * <p>Pane removal</p>
-				 * @param {undefined} oObject 
-				 * @returns sap.ui.base.ManagedObject 
+				 * <p>Removes a pane from the aggregation <a target="_self" href="api/sap.ui.layout.PaneContainer#methods/getPanes">panes</a>.</p>
+				 * @param {number | string | sap.ui.core.Element} vPane <p>The pane to remove or its index or id</p>
+				 * @returns sap.ui.core.Element | null <p>The removed pane or <code>null</code></p>
 				 */
-				removePane(oObject: undefined): sap.ui.base.ManagedObject;
+				removePane(vPane: number | string | sap.ui.core.Element): sap.ui.core.Element | null;
 				/**
 				 * <p>Setter for property layoutData.</p>
 				 * @param {sap.ui.core.LayoutData} oLayoutData <p>The LayoutData object.</p>
@@ -1448,12 +1481,12 @@ declare namespace sap {
 				 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @returns sap.ui.core.ID[] 
 				 */
-				getAriaLabelledBy(): sap.ui.core.ID[];
+				getAriaLabelledBy(): any;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getContent">content</a>.</p><p>Added content that should be positioned. Every content item should have a ResponsiveFlowLayoutData attached, or otherwise, the default values are used.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getContent(): sap.ui.core.Control[];
+				getContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getResponsive">responsive</a>.</p><p>If set to false, all added controls will keep their width, or otherwise, the controls will be stretched to the possible width of a row.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>responsive</code></p>
@@ -1475,23 +1508,23 @@ declare namespace sap {
 				 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllAriaLabelledBy(): sap.ui.core.ID[];
+				removeAllAriaLabelledBy(): any;
 				/**
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.core.Control[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
 				 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-				 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
+				 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
 				 */
 				removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
 				/**
 				 * <p>Removes content. This function needs to be overridden to prevent any rendering while some content is still being added.</p>
-				 * @param {number | string | sap.ui.core.Control} oContent <p>The content that should be removed from the layout</p>
+				 * @param {number | sap.ui.core.ID | sap.ui.core.Control} oContent <p>The content that should be removed from the layout</p>
 				 */
-				removeContent(oContent: number | string | sap.ui.core.Control): void;
+				removeContent(oContent: number | sap.ui.core.ID | sap.ui.core.Control): void;
 				/**
 				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.ResponsiveFlowLayout#methods/getResponsive">responsive</a>.</p><p>If set to false, all added controls will keep their width, or otherwise, the controls will be stretched to the possible width of a row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
 				 * @param {boolean} bResponsive <p>New value for property <code>responsive</code></p>
@@ -1582,9 +1615,9 @@ declare namespace sap {
 				destroyRootPaneContainer(): this;
 				/**
 				 * <p>ID of the element which is the current target of the association <a target="_self" href="api/sap.ui.layout.ResponsiveSplitter#methods/getDefaultPane">defaultPane</a>, or <code>null</code>.</p>
-				 * @returns sap.ui.core.ID 
+				 * @returns sap.ui.core.ID | null 
 				 */
-				getDefaultPane(): sap.ui.core.ID;
+				getDefaultPane(): sap.ui.core.ID | null;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.ResponsiveSplitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>Default value is <code>'100%'</code>.</p>
 				 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
@@ -1626,7 +1659,7 @@ declare namespace sap {
 				setWidth(sWidth?: sap.ui.core.CSSSize): this;
 			}
 			/**
-			 * <p><p>Types of the DynamicSideContent FallDown options</p></p>
+			 * <p><p>Types of the DynamicSideContent FallDown options</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'SideContentFallDown'.</p></p>
 			 */
 			export enum SideContentFallDown {
 				/**
@@ -1647,7 +1680,7 @@ declare namespace sap {
 				OnMinimumWidth = "OnMinimumWidth",
 			}
 			/**
-			 * <p><p>The position of the side content - End (default) and Begin.</p></p>
+			 * <p><p>The position of the side content - End (default) and Begin.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'SideContentPosition'.</p></p>
 			 */
 			export enum SideContentPosition {
 				/**
@@ -1660,7 +1693,7 @@ declare namespace sap {
 				End = "End",
 			}
 			/**
-			 * <p><p>Types of the DynamicSideContent Visibility options</p></p>
+			 * <p><p>Types of the DynamicSideContent Visibility options</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'SideContentVisibility'.</p></p>
 			 */
 			export enum SideContentVisibility {
 				/**
@@ -1752,11 +1785,11 @@ declare namespace sap {
 				/**
 				 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.layout.Splitter#events/resize">resize</a> event of this <code>sap.ui.layout.Splitter</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.layout.Splitter</code> itself.</p><p>Event is fired when contents are resized.</p>
 				 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-				 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 				 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.layout.Splitter</code> itself</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				attachResize(oData: any, fnFunction: any, oListener?: any): this;
+				attachResize(oData: any, fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Destroys all the contentAreas in the aggregation <a target="_self" href="api/sap.ui.layout.Splitter#methods/getContentAreas">contentAreas</a>.</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -1764,11 +1797,11 @@ declare namespace sap {
 				destroyContentAreas(): this;
 				/**
 				 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.layout.Splitter#events/resize">resize</a> event of this <code>sap.ui.layout.Splitter</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-				 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+				 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 				 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
-				detachResize(fnFunction: any, oListener?: any): this;
+				detachResize(fnFunction: Function, oListener?: any): this;
 				/**
 				 * <p>Disables the resizing of the Splitter contents via keyboard. This changes the Splitter bars to non-focusable elements.</p>
 				 */
@@ -1787,7 +1820,7 @@ declare namespace sap {
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.Splitter#methods/getContentAreas">contentAreas</a>.</p><p>The content areas to be split. The control will show n-1 splitter bars between n controls in this aggregation.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getContentAreas(): sap.ui.core.Control[];
+				getContentAreas(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.Splitter#methods/getHeight">height</a>.</p><p>The height of the control</p><p>Default value is <code>'100%'</code>.</p>
 				 * @returns sap.ui.core.CSSSize <p>Value of property <code>height</code></p>
@@ -1820,11 +1853,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.Splitter#methods/getContentAreas">contentAreas</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContentAreas(): sap.ui.core.Control[];
+				removeAllContentAreas(): any;
 				/**
 				 * <p>Removes a contentArea from the aggregation <a target="_self" href="api/sap.ui.layout.Splitter#methods/getContentAreas">contentAreas</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vContentArea <p>The contentArea to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed contentArea or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed contentArea or <code>null</code></p>
 				 */
 				removeContentArea(vContentArea: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -1856,7 +1889,7 @@ declare namespace sap {
 				triggerResize(forceDirectly?: boolean): void;
 			}
 			/**
-			 * <p>Holds layout data for the splitter contents. Allowed size values are numeric values ending in "px" and "%" and the special case "auto". (The CSS value "auto" is used internally to recalculate the size of the content dynamically and is not directly set as style property.)</p>
+			 * <p>Holds layout data for the splitter contents.</p>
 			 */
 			export class SplitterLayoutData extends sap.ui.core.LayoutData {
 				/**
@@ -1876,7 +1909,7 @@ declare namespace sap {
 				 */
 				getResizable(): boolean;
 				/**
-				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>The size of the splitter content. This property is updated when the area is resized by the user.</p><p><b>Note:</b> Resizing areas in the sap.ui.layout.Splitter sets this property to "px" values, while resizing areas in the sap.ui.layout.ResponsiveSplitter sets it to % values.</p><p>Default value is <code>'auto'</code>.</p>
+				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>The size of the splitter content. This property is updated when the area is resized by the user. Allowed size values are numeric values ending in "px", "rem", "%" and "auto".</p><p>Default value is <code>'auto'</code>.</p>
 				 * @returns sap.ui.core.CSSSize <p>Value of property <code>size</code></p>
 				 */
 				getSize(): sap.ui.core.CSSSize;
@@ -1893,14 +1926,14 @@ declare namespace sap {
 				 */
 				setResizable(bResizable?: boolean): this;
 				/**
-				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>The size of the splitter content. This property is updated when the area is resized by the user.</p><p><b>Note:</b> Resizing areas in the sap.ui.layout.Splitter sets this property to "px" values, while resizing areas in the sap.ui.layout.ResponsiveSplitter sets it to % values.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
+				 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.SplitterLayoutData#methods/getSize">size</a>.</p><p>The size of the splitter content. This property is updated when the area is resized by the user. Allowed size values are numeric values ending in "px", "rem", "%" and "auto".</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
 				 * @param {sap.ui.core.CSSSize} sSize <p>New value for property <code>size</code></p>
 				 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 				 */
 				setSize(sSize?: sap.ui.core.CSSSize): this;
 			}
 			/**
-			 * <p>In this layout the content controls are rendered one below the other.</p>
+			 * <p>In this layout the content controls are rendered one below the other.</p><p><b>Note:</b> <code>VerticalLayout</code> is not a focusable element and therefore the inheritance of the <code>tooltip</code> property isn't supported.</p>
 			 */
 			export class VerticalLayout extends sap.ui.core.Control {
 				/**
@@ -1921,15 +1954,15 @@ declare namespace sap {
 				 */
 				destroyContent(): this;
 				/**
-				 * <p>References: <ul><li>sap.ui.core.Control#getAccessibilityInfo</li></ul></p>
-				 * @returns any <p>An object with the accessibilty infos for this control</p>
+				 * <p>References: <ul><li><a target="_self" href="api/sap.ui.core.Control#methods/getAccessibilityInfo">sap.ui.core.Control#getAccessibilityInfo</a></li></ul></p>
+				 * @returns sap.ui.core.AccessibilityInfo <p>An object with the accessibilty infos for this control</p>
 				 */
-				protected getAccessibilityInfo(): any;
+				protected getAccessibilityInfo(): sap.ui.core.AccessibilityInfo;
 				/**
 				 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.VerticalLayout#methods/getContent">content</a>.</p><p>Content controls within the layout.</p>
 				 * @returns sap.ui.core.Control[] 
 				 */
-				getContent(): sap.ui.core.Control[];
+				getContent(): any;
 				/**
 				 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.VerticalLayout#methods/getEnabled">enabled</a>.</p><p>If not enabled, all controls inside are not enabled automatically.</p><p>Default value is <code>true</code>.</p>
 				 * @returns boolean <p>Value of property <code>enabled</code></p>
@@ -1957,11 +1990,11 @@ declare namespace sap {
 				 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.VerticalLayout#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 				 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 				 */
-				removeAllContent(): sap.ui.core.Control[];
+				removeAllContent(): any;
 				/**
 				 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.VerticalLayout#methods/getContent">content</a>.</p>
 				 * @param {number | string | sap.ui.core.Control} vContent <p>The content to remove or its index or id</p>
-				 * @returns sap.ui.core.Control|null <p>The removed content or <code>null</code></p>
+				 * @returns sap.ui.core.Control | null <p>The removed content or <code>null</code></p>
 				 */
 				removeContent(vContent: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 				/**
@@ -1999,7 +2032,7 @@ declare namespace sap {
 							<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 							title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
 				 */
-				export type CSSGridGapShortHand = string;
+				export type CSSGridGapShortHand = sap.ui.core.CSSGapShortHand;
 			}
 		}
 	}
@@ -2035,9 +2068,1288 @@ declare namespace sap {
 declare namespace sap {
 	namespace ui {
 		namespace layout {
+			/**
+			 * <p><p>Modules for form-like controls.</p><p>Use <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> if you want to do the following: <ul> <li>Create a highly customized form</li> <li>Display a large amount of data in a form</li> <li>Create complex forms with multiple sections and different types of input fields</li> <li>Have granular control over the structure of a form</li> <li>Manage the responsiveness of the form yourself</li> </ul></p><p>Use <a target="_self" href="api/sap.ui.layout.form.SimpleForm">SimpleForm</a> if you want to do the following: <ul> <li>Use a very simple structure of a form in a straightforward way</li> <li>Create a form quickly and easily</li> <li>Use a form that is automatically responsive</li> </ul></p><p><b>Recommendations</b> <ul> <li>Do not nest layouts and forms as nesting can lead to undesired issues.</li> <li>Do not use other forms or layout controls. Using any other form or layout control (for example, <code>HBox</code>) as children of a <code>Form</code> can lead to issues with accessibility or the responsive design.</li> <li>Use the <code>ColumnLayout</code> as <code>Layout</code>, as its responsiveness uses the space available in the best way possible.</li> </ul></p></p>
+			 */
 			namespace form {
 				/**
-				 * <p><p>An <code>int</code> type that defines how many cells a control inside of a column of a <code>Form</code> control using the <code>ColumnLayout</code> control as layout can use.</p><p>Allowed values are numbers from 1 to 12 and -1. -1 means the value is calculated.</p></p>
+				 * <p>The <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a>-specific layout data for the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element.</p><p>Depending on its size, the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control is divided into 1, 2, 3 or 4 columns by the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> control. Using <code>ColumnContainerData</code>, the size of the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element can be influenced.</p>
+				 */
+				export class ColumnContainerData extends sap.ui.core.LayoutData {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.ColumnContainerData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsL">columnsL</a>.</p><p>Number of columns the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses if the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control has large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>Default value is <code>2</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnsL <p>Value of property <code>columnsL</code></p>
+					 */
+					getColumnsL(): sap.ui.layout.form.ColumnsL;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsM">columnsM</a>.</p><p>Number of columns the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses if the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control has medium size.</p><p>Default value is <code>1</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnsM <p>Value of property <code>columnsM</code></p>
+					 */
+					getColumnsM(): sap.ui.layout.form.ColumnsM;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses if the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control has extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>Default value is <code>2</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnsXL <p>Value of property <code>columnsXL</code></p>
+					 */
+					getColumnsXL(): sap.ui.layout.form.ColumnsXL;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsL">columnsL</a>.</p><p>Number of columns the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses if the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control has large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnsL} sColumnsL <p>New value for property <code>columnsL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsL(sColumnsL?: sap.ui.layout.form.ColumnsL): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsM">columnsM</a>.</p><p>Number of columns the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses if the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control has medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnsM} sColumnsM <p>New value for property <code>columnsM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsM(sColumnsM?: sap.ui.layout.form.ColumnsM): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses if the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control has extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnsXL} sColumnsXL <p>New value for property <code>columnsXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsXL(sColumnsXL?: sap.ui.layout.form.ColumnsXL): this;
+				}
+				/**
+				 * <p>The <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a>-specific layout data for the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> content fields.</p><p>One <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element contains 12 cells and has two sizes, small and large. Using <code>ColumnElementData</code>, the default calculation of the cells used for a field or label can be overwritten.</p>
+				 */
+				export class ColumnElementData extends sap.ui.core.LayoutData {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.ColumnElementData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsLarge">cellsLarge</a>.</p><p>Number of cells used by a field if the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element is large. The label is then beside the fields per default.</p><p>If set to <code>12</code>, the full size of the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element is used.</p><p>Default value is <code>8</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnCells <p>Value of property <code>cellsLarge</code></p>
+					 */
+					getCellsLarge(): sap.ui.layout.form.ColumnCells;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsSmall">cellsSmall</a>.</p><p>Number of cells used by a field if the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element is small. The label is then above the fields per default.</p><p>If set to <code>12</code>, the full size of the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> is used.</p><p>Default value is <code>12</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnCells <p>Value of property <code>cellsSmall</code></p>
+					 */
+					getCellsSmall(): sap.ui.layout.form.ColumnCells;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsLarge">cellsLarge</a>.</p><p>Number of cells used by a field if the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element is large. The label is then beside the fields per default.</p><p>If set to <code>12</code>, the full size of the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>8</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnCells} sCellsLarge <p>New value for property <code>cellsLarge</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setCellsLarge(sCellsLarge?: sap.ui.layout.form.ColumnCells): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsSmall">cellsSmall</a>.</p><p>Number of cells used by a field if the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element is small. The label is then above the fields per default.</p><p>If set to <code>12</code>, the full size of the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnCells} sCellsSmall <p>New value for property <code>cellsSmall</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setCellsSmall(sCellsSmall?: sap.ui.layout.form.ColumnCells): this;
+				}
+				/**
+				 * <p>The <code>ColumnLayout</code> control renders a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control in a column-based responsive way. Depending on its size, the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control is divided into one or more columns. (XL - max. 6 columns, L - max. 4 columns, M - max. 3 columns and S - 1 column.)</p><p>The <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements are spread out to the columns depending on the number of <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements and their size. For example, if there are 4 columns and 2 <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements, each <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element will use 2 columns. If there are 3 columns and 2 <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements, the larger one will use 2 columns, the smaller one 1 column. The size of a <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element will be determined based on the number of visible <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> elements assigned to it. If there are more <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements than columns, every <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element uses only one column. So the last row of the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control will not be fully used.</p><p>The default size of the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element can be overwritten by using <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData">ColumnContainerData</a> as <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">LayoutData</a>. If one <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element has <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData">ColumnContainerData</a> set, the size calculation of the other <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements might not lead to the expected result. In this case, use <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData">ColumnContainerData</a> also for the other <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> elements.</p><p>The <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> elements are spread out to the columns of a <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> element arranged in a newspaper-like order. The position of the labels and fields depends on the size of the used column. If there is enough space, the labels are beside the fields, otherwise above the fields.</p><p>The default size of a content control of a <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element can be overwritten using <a target="_self" href="api/sap.ui.layout.form.ColumnElementData">ColumnElementData</a> as <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">LayoutData</a>. If one control assigned to a <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element has <a target="_self" href="api/sap.ui.layout.form.ColumnElementData">ColumnElementData</a> set, the size calculation of the other controls assigned to the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element might not lead to the expected result. In this case, use <a target="_self" href="api/sap.ui.layout.form.ColumnElementData">ColumnElementData</a> for the other controls, assigned to the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> element, too.</p><p>The placement of the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> elements is made by the browser <code>column-count</code> logic. So this can be different in different browsers and lead in some cases to other results than might be expected.</p><p><b>Note:</b> This control cannot be used stand-alone, it just renders a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control, so it must be assigned to a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control using the <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> aggregation.</p>
+				 */
+				export class ColumnLayout extends sap.ui.layout.form.FormLayout {
+					/**
+					 * <p>Constructor for a new <code>sap.ui.layout.form.ColumnLayout</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>Default value is <code>2</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnsL <p>Value of property <code>columnsL</code></p>
+					 */
+					getColumnsL(): sap.ui.layout.form.ColumnsL;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>Default value is <code>1</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnsM <p>Value of property <code>columnsM</code></p>
+					 */
+					getColumnsM(): sap.ui.layout.form.ColumnsM;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>Default value is <code>2</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnsXL <p>Value of property <code>columnsXL</code></p>
+					 */
+					getColumnsXL(): sap.ui.layout.form.ColumnsXL;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getEmptyCellsLarge">emptyCellsLarge</a>.</p><p>Defines how many cells are empty at the end of a row. This could be used to keep the fields small on large screens.</p><p>Default value is <code>0</code>.</p>
+					 * @returns sap.ui.layout.form.EmptyCells <p>Value of property <code>emptyCellsLarge</code></p>
+					 */
+					getEmptyCellsLarge(): sap.ui.layout.form.EmptyCells;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getLabelCellsLarge">labelCellsLarge</a>.</p><p>Defines how many cells a label uses if the column is large.</p><p>Default value is <code>4</code>.</p>
+					 * @returns sap.ui.layout.form.ColumnCells <p>Value of property <code>labelCellsLarge</code></p>
+					 */
+					getLabelCellsLarge(): sap.ui.layout.form.ColumnCells;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnsL} sColumnsL <p>New value for property <code>columnsL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsL(sColumnsL?: sap.ui.layout.form.ColumnsL): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnsM} sColumnsM <p>New value for property <code>columnsM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsM(sColumnsM?: sap.ui.layout.form.ColumnsM): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnsXL} sColumnsXL <p>New value for property <code>columnsXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsXL(sColumnsXL?: sap.ui.layout.form.ColumnsXL): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getEmptyCellsLarge">emptyCellsLarge</a>.</p><p>Defines how many cells are empty at the end of a row. This could be used to keep the fields small on large screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {sap.ui.layout.form.EmptyCells} sEmptyCellsLarge <p>New value for property <code>emptyCellsLarge</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptyCellsLarge(sEmptyCellsLarge?: sap.ui.layout.form.EmptyCells): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getLabelCellsLarge">labelCellsLarge</a>.</p><p>Defines how many cells a label uses if the column is large.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
+					 * @param {sap.ui.layout.form.ColumnCells} sLabelCellsLarge <p>New value for property <code>labelCellsLarge</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelCellsLarge(sLabelCellsLarge?: sap.ui.layout.form.ColumnCells): this;
+				}
+				/**
+				 * <p>A <code>Form</code> control arranges labels and fields (like input fields) into groups and rows. There are different ways to visualize forms for different screen sizes.</p><p>A <code>Form</code> is structured into <code>FormContainers</code>. Each <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> consists of <code>FormElements</code>. The <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> consists of a label and the form fields. A <code>Form</code> doesn't render its content on its own. The rendering is done by the assigned <a target="_self" href="api/sap.ui.layout.form.FormLayout">FormLayout</a>. This is so that the rendering can be adopted to new UI requirements without changing the <code>Form</code> itself.</p><p>For the content of a <code>Form</code>, <a target="_self" href="api/sap.ui.core.VariantLayoutData">VariantLayoutData</a> are supported to allow simple switching of the <a target="_self" href="api/sap.ui.layout.form.FormLayout">FormLayout</a>. <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">LayoutData</a> on the content can be used to overwrite the default layout of the <code>Form</code>.</p><p>The <code>Form</code> (and its sub-controls) automatically add label and field assignment to enable screen reader support. It also adds keyboard support to navigate between the fields and groups inside the form.</p><p><b>Warning:</b> Do not put any layout or other container controls into the <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a>. Views are also not supported. This could damage the visual layout, keyboard support and screen-reader support.</p><p>If editable controls are used as content, the <a target="_self" href="api/sap.ui.layout.form.Form#methods/setEditable">editable</a> property must be set to <code>true</code>, otherwise to <code>false</code>. If the <a target="_self" href="api/sap.ui.layout.form.Form#methods/setEditable">editable</a> property is set incorrectly, there will be visual issues like wrong label alignment or wrong spacing between the controls. In addition to that, wrong screen reader announcements might occur.</p>
+				 */
+				export class Form extends sap.ui.core.Control {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.Form.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Adds some ariaLabelledBy into the association <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
+					/**
+					 * <p>Adds some formContainer to the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
+					 * @param {sap.ui.layout.form.FormContainer} oFormContainer <p>The formContainer to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addFormContainer(oFormContainer: sap.ui.layout.form.FormContainer): this;
+					/**
+					 * <p>Destroys all the formContainers in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyFormContainers(): this;
+					/**
+					 * <p>Destroys the layout in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyLayout(): this;
+					/**
+					 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">title</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyTitle(): this;
+					/**
+					 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">toolbar</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyToolbar(): this;
+					/**
+					 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @returns sap.ui.core.ID[] 
+					 */
+					getAriaLabelledBy(): any;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <a target="_self" href="api/sap.m.Input">Input</a> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly. In addition to that, wrong screen reader announcements might occur.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>editable</code></p>
+					 */
+					getEditable(): boolean;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p><p>Containers with the content of the form. A <code>FormContainer</code> represents a group inside the <code>Form</code>.</p>
+					 * @returns sap.ui.layout.form.FormContainer[] 
+					 */
+					getFormContainers(): any;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p><p>Layout of the <code>Form</code>. The assigned <code>Layout</code> renders the <code>Form</code>. We recommend using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> for rendering a <code>Form</code>, as its responsiveness allows the available space to be used in the best way possible.</p>
+					 * @returns sap.ui.layout.form.FormLayout 
+					 */
+					getLayout(): sap.ui.layout.form.FormLayout;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">title</a>.</p><p>Title of the <code>Form</code>. Can either be a <code>Title</code> element or a string. If a <code>Title</code> element it used, the style of the title can be set.</p><p><b>Note:</b> If a <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">Toolbar</a> is used, the <code>Title</code> is ignored.</p><p><b>Note:</b> If the title is provided as a string, the title is rendered with a theme-dependent default level. As the <code>Form</code> control cannot know the structure of the page, this might not fit the page structure. In this case, provide the title using a <code>Title</code> element and set its <a target="_self" href="api/sap.ui.core.Title#methods/setLevel">level</a> to the needed value.</p>
+					 * @returns sap.ui.core.Title | string 
+					 */
+					getTitle(): sap.ui.core.Title | string;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">toolbar</a>.</p><p>Toolbar of the <code>Form</code>.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">Title</a> is ignored. If a title is needed inside the <code>Toolbar</code> it must be added at content to the <code>Toolbar</code>. In this case, add the <code>Title</code> to the <a target="_self" href="api/sap.ui.layout.form.Form#methods/addAriaLabelledBy">ariaLabelledBy</a> association. Use the right title level to meet the visual requirements. This might be theme-dependent.</p>
+					 * @returns sap.ui.core.Toolbar 
+					 */
+					getToolbar(): sap.ui.core.Toolbar;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getWidth">width</a>.</p><p>Width of the <code>Form</code>.</p>
+					 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
+					 */
+					getWidth(): sap.ui.core.CSSSize;
+					/**
+					 * <p>Checks for the provided <code>sap.ui.layout.form.FormContainer</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>. and returns its index if found or -1 otherwise.</p>
+					 * @param {sap.ui.layout.form.FormContainer} oFormContainer <p>The formContainer whose index is looked for</p>
+					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+					 */
+					indexOfFormContainer(oFormContainer: sap.ui.layout.form.FormContainer): number;
+					/**
+					 * <p>Inserts a formContainer into the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
+					 * @param {sap.ui.layout.form.FormContainer} oFormContainer <p>The formContainer to insert; if empty, nothing is inserted</p>
+					 * @param {number} iIndex <p>The <code>0</code>-based index the formContainer should be inserted at; for a negative value of <code>iIndex</code>, the formContainer is inserted at position 0; for a value greater than the current size of the aggregation, the formContainer is inserted at the last position</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					insertFormContainer(oFormContainer: sap.ui.layout.form.FormContainer, iIndex: number): this;
+					/**
+					 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllAriaLabelledBy(): any;
+					/**
+					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+					 * @returns sap.ui.layout.form.FormContainer[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllFormContainers(): any;
+					/**
+					 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
+					 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
+					 */
+					removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
+					/**
+					 * <p>Removes a formContainer from the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
+					 * @param {number | string | sap.ui.layout.form.FormContainer} vFormContainer <p>The formContainer to remove or its index or id</p>
+					 * @returns sap.ui.layout.form.FormContainer | null <p>The removed formContainer or <code>null</code></p>
+					 */
+					removeFormContainer(vFormContainer: number | string | sap.ui.layout.form.FormContainer): sap.ui.layout.form.FormContainer | null;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <a target="_self" href="api/sap.m.Input">Input</a> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly. In addition to that, wrong screen reader announcements might occur.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEditable(bEditable?: boolean): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p>
+					 * @param {sap.ui.layout.form.FormLayout} oLayout <p>The layout to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLayout(oLayout: sap.ui.layout.form.FormLayout): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">title</a>.</p>
+					 * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setTitle(vTitle: sap.ui.core.Title | string): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">toolbar</a>.</p>
+					 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setToolbar(oToolbar: sap.ui.core.Toolbar): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getWidth">width</a>.</p><p>Width of the <code>Form</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+					 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setWidth(sWidth?: sap.ui.core.CSSSize): this;
+				}
+				/**
+				 * <p>A <code>FormContainer</code> represents a group inside a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a>. It consists of <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElements</a>. The rendering of the <code>FormContainer</code> is done by the <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">FormLayout</a> assigned to the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a>.</p>
+				 */
+				export class FormContainer extends sap.ui.core.Element {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.FormContainer.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Sets the editable state of the <code>FormContainer</code>.</p><p>This must only be called from the <code>Form</code>.</p><p>Labels inside of a <code>Form</code> must be invalidated if <code>editable</code> changed on <code>Form</code>.</p>
+					 * @param {boolean} bEditable <p>Editable state of the <code>Form</code></p>
+					 */
+					protected _setEditable(bEditable: boolean): void;
+					/**
+					 * <p>Adds some ariaLabelledBy into the association <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
+					/**
+					 * <p>Adds some formElement to the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
+					 * @param {sap.ui.layout.form.FormElement} oFormElement <p>The formElement to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addFormElement(oFormElement: sap.ui.layout.form.FormElement): this;
+					/**
+					 * <p>Destroys all the formElements in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyFormElements(): this;
+					/**
+					 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyTitle(): this;
+					/**
+					 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">toolbar</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyToolbar(): this;
+					/**
+					 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @returns sap.ui.core.ID[] 
+					 */
+					getAriaLabelledBy(): any;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpandable">expandable</a>.</p><p>Defines if the <code>FormContainer</code> is expandable.</p><p><b>Note:</b> The expander icon will only be shown if a <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">Title</a> is set for the <code>FormContainer</code>.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>expandable</code></p>
+					 */
+					getExpandable(): boolean;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpanded">expanded</a>.</p><p>Container is expanded.</p><p><b>Note:</b> This property only works if <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpandable">expandable</a> is set to <code>true</code>.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>expanded</code></p>
+					 */
+					getExpanded(): boolean;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p><p>The <code>FormElements</code> contain the content (labels and fields) of the <code>FormContainers</code>.</p>
+					 * @returns sap.ui.layout.form.FormElement[] 
+					 */
+					getFormElements(): any;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p><p>Title of the <code>FormContainer</code>. Can either be a <code>Title</code> element or a string. If a <code>Title</code> element is used, the style of the title can be set.</p><p><b>Note:</b> If a <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">Toolbar</a> is used, the <code>Title</code> is ignored.</p><p><b>Note:</b> If the title is provided as a string, the title is rendered with a theme-dependent default level. As the <code>Form</code> control cannot know the structure of the page, this might not fit the page structure. In this case provide the title using a <code>Title</code> element and set its <a target="_self" href="api/sap.ui.core.Title#methods/setLevel">level</a> to the needed value.</p>
+					 * @returns sap.ui.core.Title | string 
+					 */
+					getTitle(): sap.ui.core.Title | string;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">toolbar</a>.</p><p>Toolbar of the <code>FormContainer</code>.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">Title</a> is ignored. If a title is needed inside the <code>Toolbar</code> it must be added at content to the <code>Toolbar</code>. In this case add the <code>Title</code> to the <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/addAriaLabelledBy">ariaLabelledBy</a> association. Use the right title level to meet the visual requirements. This might be theme-dependent.</p>
+					 * @returns sap.ui.core.Toolbar 
+					 */
+					getToolbar(): sap.ui.core.Toolbar;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormContainer</code> is not rendered.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>visible</code></p>
+					 */
+					getVisible(): boolean;
+					/**
+					 * <p>Checks for the provided <code>sap.ui.layout.form.FormElement</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>. and returns its index if found or -1 otherwise.</p>
+					 * @param {sap.ui.layout.form.FormElement} oFormElement <p>The formElement whose index is looked for</p>
+					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+					 */
+					indexOfFormElement(oFormElement: sap.ui.layout.form.FormElement): number;
+					/**
+					 * <p>Inserts a formElement into the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
+					 * @param {sap.ui.layout.form.FormElement} oFormElement <p>The formElement to insert; if empty, nothing is inserted</p>
+					 * @param {number} iIndex <p>The <code>0</code>-based index the formElement should be inserted at; for a negative value of <code>iIndex</code>, the formElement is inserted at position 0; for a value greater than the current size of the aggregation, the formElement is inserted at the last position</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					insertFormElement(oFormElement: sap.ui.layout.form.FormElement, iIndex: number): this;
+					/**
+					 * <p>Determines if the <code>FormContainer</code> is visible or not. Per default it just returns the value of the <code>visible</code> property. But this might be overwritten by inherited elements.</p><p>For rendering by <code>FormLayouts</code> this function has to be used instead of <code>getVisible</code>.</p>
+					 * @returns boolean <p>If true, the <code>FormContainer</code> is visible, otherwise not</p>
+					 */
+					isVisible(): boolean;
+					/**
+					 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllAriaLabelledBy(): any;
+					/**
+					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+					 * @returns sap.ui.layout.form.FormElement[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllFormElements(): any;
+					/**
+					 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
+					 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
+					 */
+					removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
+					/**
+					 * <p>Removes a formElement from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
+					 * @param {number | string | sap.ui.layout.form.FormElement} vFormElement <p>The formElement to remove or its index or id</p>
+					 * @returns sap.ui.layout.form.FormElement | null <p>The removed formElement or <code>null</code></p>
+					 */
+					removeFormElement(vFormElement: number | string | sap.ui.layout.form.FormElement): sap.ui.layout.form.FormElement | null;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpandable">expandable</a>.</p><p>Defines if the <code>FormContainer</code> is expandable.</p><p><b>Note:</b> The expander icon will only be shown if a <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">Title</a> is set for the <code>FormContainer</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bExpandable <p>New value for property <code>expandable</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setExpandable(bExpandable?: boolean): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpanded">expanded</a>.</p><p>Container is expanded.</p><p><b>Note:</b> This property only works if <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpandable">expandable</a> is set to <code>true</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setExpanded(bExpanded?: boolean): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p>
+					 * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setTitle(vTitle: sap.ui.core.Title | string): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">toolbar</a>.</p>
+					 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setToolbar(oToolbar: sap.ui.core.Toolbar): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormContainer</code> is not rendered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setVisible(bVisible?: boolean): this;
+				}
+				/**
+				 * <p>A <code>FormElement</code> represents a row in a <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a>. A <code>FormElement</code> is a combination of one label and different controls associated to this label.</p>
+				 */
+				export class FormElement extends sap.ui.core.Element {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.FormElement.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Adds some field to the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
+					 * @param {sap.ui.core.Control} oField <p>The field to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addField(oField: sap.ui.core.Control): this;
+					/**
+					 * <p>Destroys all the fields in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyFields(): this;
+					/**
+					 * <p>Destroys the label in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getLabel">label</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyLabel(): this;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p><p>Form controls that belong together to be displayed in one row of a <code>Form</code>.</p><p><b>Warning:</b> Do not put any layout or other container controls in here. This could damage the visual layout, keyboard support and screen-reader support. Only form controls are allowed. Views are also not supported. Allowed controls implement the interface <a target="_self" href="api/sap.ui.core.IFormContent">sap.ui.core.IFormContent</a>.</p>
+					 * @returns sap.ui.core.Control[] 
+					 */
+					getFields(): any;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getLabel">label</a>.</p><p>Label of the fields. Can either be a <code>Label</code> control or a string. If a <code>Label</code> control is used, the properties of the <code>Label</code> can be set. If no assignment between <code>Label</code> and the fields is set via (<code>labelFor</code> property of the <code>Label</code>), it will be done automatically by the <code>FormElement</code>. In this case the <code>Label</code> is assigned to the fields of the <code>FormElement</code>.</p>
+					 * @returns sap.ui.core.Label | string 
+					 */
+					getLabel(): sap.ui.core.Label | string;
+					/**
+					 * <p>Returns the <code>Label</code> of the <code>FormElement</code>, even if the <code>Label</code> is assigned as string. The <code>FormLayout</code> needs the information of the label to render the <code>Form</code>.</p>
+					 * @returns sap.ui.core.Label <p><code>Label</code> control used to render the label</p>
+					 */
+					getLabelControl(): sap.ui.core.Label;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormElement</code> is not rendered.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>visible</code></p>
+					 */
+					getVisible(): boolean;
+					/**
+					 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>. and returns its index if found or -1 otherwise.</p>
+					 * @param {sap.ui.core.Control} oField <p>The field whose index is looked for</p>
+					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+					 */
+					indexOfField(oField: sap.ui.core.Control): number;
+					/**
+					 * <p>Inserts a field into the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
+					 * @param {sap.ui.core.Control} oField <p>The field to insert; if empty, nothing is inserted</p>
+					 * @param {number} iIndex <p>The <code>0</code>-based index the field should be inserted at; for a negative value of <code>iIndex</code>, the field is inserted at position 0; for a value greater than the current size of the aggregation, the field is inserted at the last position</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					insertField(oField: sap.ui.core.Control, iIndex: number): this;
+					/**
+					 * <p>Labels inside of a Form must be invalidated if "editable" changed on Form</p>
+					 */
+					protected invalidateLabel(): void;
+					/**
+					 * <p>Determines if the <code>FormElement</code> is visible or not. Per default it just returns the value of the <code>visible</code> property. But this might be overwritten by inherited elements.</p><p>For rendering by <code>FormLayouts</code> this function has to be used instead of <code>getVisible</code>.</p>
+					 * @returns boolean <p>If true, the <code>FormElement</code> is visible, otherwise not</p>
+					 */
+					isVisible(): boolean;
+					/**
+					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+					 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllFields(): any;
+					/**
+					 * <p>Removes a field from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
+					 * @param {number | string | sap.ui.core.Control} vField <p>The field to remove or its index or id</p>
+					 * @returns sap.ui.core.Control | null <p>The removed field or <code>null</code></p>
+					 */
+					removeField(vField: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getLabel">label</a>.</p>
+					 * @param {sap.ui.core.Label | string} vLabel <p>The label to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabel(vLabel: sap.ui.core.Label | string): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormElement</code> is not rendered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setVisible(bVisible?: boolean): this;
+				}
+				/**
+				 * <p>Base layout to render a <code>Form</code>. Other layouts to render a <code>Form</code> must inherit from this one.</p><p><b>Note:</b> This control must not be used to render a <code>Form</code> in productive applications as it does not fulfill any design guidelines and usability standards.</p>
+				 */
+				export class FormLayout extends sap.ui.core.Control {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.FormLayout.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormLayout#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>Form</code> content.</p><p><b>Note:</b> The visualization of the different options depends on the theme used.</p><p>Default value is <code>Translucent</code>.</p>
+					 * @returns sap.ui.layout.BackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
+					 */
+					getBackgroundDesign(): sap.ui.layout.BackgroundDesign;
+					/**
+					 * <p>In <a target="_self" href="api/sap.ui.layout.SemanticFormElement">SemanticFormElement</a>, delimiters are rendered. They should use only a small space. So <code>Layout</code>-dependent <code>LayoutData</code> are needed.</p><p>This function needs to be implemented by the specific <code>Layout</code>.</p>
+					 * @returns sap.ui.core.LayoutData | Promise<any> <p>LayoutData or promise retuning LayoutData</p>
+					 */
+					protected getLayoutDataForDelimiter(): sap.ui.core.LayoutData | Promise<any>;
+					/**
+					 * <p>In <a target="_self" href="api/sap.ui.layout.SemanticFormElement">SemanticFormElement</a>, delimiters are rendered. The fields should be rendered per default in a way, the field and the corresponding delimiter filling one row in phone mode. In desktop mode they should all be in one row.</p><p>This function needs to be implemented by the specific <code>Layout</code>.</p>
+					 * @param {number} iFields <p>Number of field in the <code>SemanticFormElement</code></p>
+					 * @param {number} iIndex <p>Index of field in the <code>SemanticFormElement</code></p>
+					 * @param {sap.ui.core.LayoutData} oLayoutData <p>existing <code>LayoutData</code> that might be just changed</p>
+					 * @returns sap.ui.core.LayoutData | Promise<any> <p>LayoutData or promise retuning LayoutData</p>
+					 */
+					protected getLayoutDataForSemanticField(iFields: number, iIndex: number, oLayoutData?: sap.ui.core.LayoutData): sap.ui.core.LayoutData | Promise<any>;
+					/**
+					 * <p>For <a target="_self" href="api/sap.ui.layout.SemanticFormElement">SemanticFormElement</a>, all text-based controls should be concatenated in display mode. If the <code>Layout</code> supports rendering of single controls, they are rendered divided by delimiters. If the <code>Layout</code> doesn't support this, one concatenated text is rendered. Here only text is supported, no links or other special rendering.</p><p>This function needs to be implemented by the specific <code>Layout</code>.</p>
+					 * @returns boolean <p><code>true</code> if layout allows to render single controls for <a target="_self" href="api/sap.ui.layout.SemanticFormElement">SemanticFormElement</a></p>
+					 */
+					protected renderControlsForSemanticElement(): boolean;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormLayout#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>Form</code> content.</p><p><b>Note:</b> The visualization of the different options depends on the theme used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Translucent</code>.</p>
+					 * @param {sap.ui.layout.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBackgroundDesign(sBackgroundDesign?: sap.ui.layout.BackgroundDesign): this;
+				}
+				/**
+				 * <p>The <code>GridLayout</code>-specific layout data for <code>FormContainers</code>.</p>
+				 */
+				export class GridContainerData extends sap.ui.core.LayoutData {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.GridContainerData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridContainerData#methods/getHalfGrid">halfGrid</a>.</p><p>If set, the container takes half the width of the <code>Form</code> (8 cells), if not it takes the full width (16 cells). If the <code>GridLayout</code> is set to <code>singleColumn</code>, the full width of the grid is only 8 cells. So containers are rendered only once per row.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>halfGrid</code></p>
+					 */
+					getHalfGrid(): boolean;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridContainerData#methods/getHalfGrid">halfGrid</a>.</p><p>If set, the container takes half the width of the <code>Form</code> (8 cells), if not it takes the full width (16 cells). If the <code>GridLayout</code> is set to <code>singleColumn</code>, the full width of the grid is only 8 cells. So containers are rendered only once per row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bHalfGrid <p>New value for property <code>halfGrid</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setHalfGrid(bHalfGrid?: boolean): this;
+				}
+				/**
+				 * <p>The <code>GridLayout</code>-specific layout data for <code>FormElement</code> fields.</p>
+				 */
+				export class GridElementData extends sap.ui.core.LayoutData {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.GridElementData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>Default value is <code>'auto'</code>.</p>
+					 * @returns sap.ui.layout.form.GridElementCells <p>Value of property <code>hCells</code></p>
+					 */
+					getHCells(): sap.ui.layout.form.GridElementCells;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getVCells">vCells</a>.</p><p>Number of cells in vertical direction.</p><p><b>Note:</b> This property has no effect on labels.</p><p>Default value is <code>1</code>.</p>
+					 * @returns number <p>Value of property <code>vCells</code></p>
+					 */
+					getVCells(): number;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
+					 * @param {sap.ui.layout.form.GridElementCells} sHCells <p>New value for property <code>hCells</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setHCells(sHCells?: sap.ui.layout.form.GridElementCells): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getVCells">vCells</a>.</p><p>Number of cells in vertical direction.</p><p><b>Note:</b> This property has no effect on labels.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+					 * @param {number} iVCells <p>New value for property <code>vCells</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setVCells(iVCells?: number): this;
+				}
+				/**
+				 * <p>This <code>FormLayout</code> renders a <code>Form</code> using an HTML-table based grid. This can be a 16 column grid or an 8 column grid. The grid is stable, so the alignment of the fields is the same for all screen sizes or widths of the <code>Form</code>. Only the width of the single grid columns depends on the available width.</p><p>To adjust the appearance inside the <code>GridLayout</code>, you can use <code>GridContainerData</code> for <code>FormContainers</code> and <code>GridElementData</code> for content fields.</p><p><b>Note:</b> If content fields have a <code>width</code> property this will be ignored, as the width of the controls is set by the grid cells.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
+				 */
+				export class GridLayout extends sap.ui.layout.form.FormLayout {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.GridLayout.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridLayout#methods/getSingleColumn">singleColumn</a>.</p><p>If set, the grid renders only one <code>FormContainer</code> per column. That means one <code>FormContainer</code> is below the other. The whole grid has 8 cells per row.</p><p>If not set, <code>FormContainer</code> can use the full width of the grid or two <code>FormContainers</code> can be placed beside each other. In this case the whole grid has 16 cells per row.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>singleColumn</code></p>
+					 */
+					getSingleColumn(): boolean;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridLayout#methods/getSingleColumn">singleColumn</a>.</p><p>If set, the grid renders only one <code>FormContainer</code> per column. That means one <code>FormContainer</code> is below the other. The whole grid has 8 cells per row.</p><p>If not set, <code>FormContainer</code> can use the full width of the grid or two <code>FormContainers</code> can be placed beside each other. In this case the whole grid has 16 cells per row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bSingleColumn <p>New value for property <code>singleColumn</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setSingleColumn(bSingleColumn?: boolean): this;
+				}
+				/**
+				 * <p>The <code>ResponsiveGridLayout</code> control renders a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> using a responsive grid. Internally the <a target="_self" href="api/sap.ui.layout.Grid">Grid</a> control is used for rendering. Using this layout, the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> is rendered in a responsive way. Depending on the available space, the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> are rendered in one or different columns and the labels are rendered in the same row as the fields or above the fields. This behavior can be influenced by the properties of this layout control.</p><p>On the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a>, labels and content fields, <a target="_self" href="api/sap.ui.layout.GridData">GridData</a> can be used to change the default rendering. <a target="_self" href="api/sap.ui.layout.GridData">GridData</a> is not supported for <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElements</a>.</p><p><b>Note:</b> If <a target="_self" href="api/sap.ui.layout.GridData">GridData</a> is used, this may result in a much more complex layout than the default one. This means that in some cases, the calculation for the other content may not bring the expected result. In such cases, <a target="_self" href="api/sap.ui.layout.GridData">GridData</a> should be used for all content controls to disable the default behavior.</p><p>This control cannot be used stand-alone, it just renders a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a>, so it must be assigned to a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> using the <code>layout</code> aggregation.</p>
+				 */
+				export class ResponsiveGridLayout extends sap.ui.layout.form.FormLayout {
+					/**
+					 * <p>Constructor for a new <code>sap.ui.layout.form.ResponsiveGridLayout</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> in one row. If only one <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> and multiple-column rows are used in the same <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> (because every <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> has its own <a target="_self" href="api/sap.ui.layout.Grid">Grid</a> inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> size. The number of <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> doesn't matter in this case.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>adjustLabelSpan</code></p>
+					 */
+					getAdjustLabelSpan(): boolean;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint (in pixel) between Medium size and Large size.</p><p>Default value is <code>1024</code>.</p>
+					 * @returns number <p>Value of property <code>breakpointL</code></p>
+					 */
+					getBreakpointL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint (in pixel) between Small size and Medium size.</p><p>Default value is <code>600</code>.</p>
+					 * @returns number <p>Value of property <code>breakpointM</code></p>
+					 */
+					getBreakpointM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint (in pixel) between large size and extra large (XL) size.</p><p>Default value is <code>1440</code>.</p>
+					 * @returns number <p>Value of property <code>breakpointXL</code></p>
+					 */
+					getBreakpointXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>Default value is <code>2</code>.</p>
+					 * @returns number <p>Value of property <code>columnsL</code></p>
+					 */
+					getColumnsL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>Default value is <code>1</code>.</p>
+					 * @returns number <p>Value of property <code>columnsM</code></p>
+					 */
+					getColumnsM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra large size.</p><p>The number of columns for extra large size must not be smaller than the number of columns for large size. <b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>columnsXL</code></p>
+					 */
+					getColumnsXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanL</code></p>
+					 */
+					getEmptySpanL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanM</code></p>
+					 */
+					getEmptySpanM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanS</code></p>
+					 */
+					getEmptySpanS(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used.</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanXL</code></p>
+					 */
+					getEmptySpanXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is in one line. If only 1 <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is in the line, then the <code>labelSpanM</code> value is used.</p><p>Default value is <code>4</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanL</code></p>
+					 */
+					getLabelSpanL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set this property is used for full-size <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a>. If more than one <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is in one line, <code>labelSpanL</code> is used.</p><p>Default value is <code>2</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanM</code></p>
+					 */
+					getLabelSpanM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p>Default value is <code>12</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanS</code></p>
+					 */
+					getLabelSpanS(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used.</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanXL</code></p>
+					 */
+					getLabelSpanXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> contains only one single <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> and this property is set, the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is displayed using the full size of the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a>. In this case the properties <code>columnsXL</code>, <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is displayed in the size of one column.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>singleContainerFullSize</code></p>
+					 */
+					getSingleContainerFullSize(): boolean;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> in one row. If only one <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> and multiple-column rows are used in the same <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> (because every <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> has its own <a target="_self" href="api/sap.ui.layout.Grid">Grid</a> inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> size. The number of <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a> doesn't matter in this case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bAdjustLabelSpan <p>New value for property <code>adjustLabelSpan</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setAdjustLabelSpan(bAdjustLabelSpan?: boolean): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint (in pixel) between Medium size and Large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1024</code>.</p>
+					 * @param {number} iBreakpointL <p>New value for property <code>breakpointL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBreakpointL(iBreakpointL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint (in pixel) between Small size and Medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>600</code>.</p>
+					 * @param {number} iBreakpointM <p>New value for property <code>breakpointM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBreakpointM(iBreakpointM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint (in pixel) between large size and extra large (XL) size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1440</code>.</p>
+					 * @param {number} iBreakpointXL <p>New value for property <code>breakpointXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBreakpointXL(iBreakpointXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {number} iColumnsL <p>New value for property <code>columnsL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsL(iColumnsL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+					 * @param {number} iColumnsM <p>New value for property <code>columnsM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsM(iColumnsM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra large size.</p><p>The number of columns for extra large size must not be smaller than the number of columns for large size. <b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iColumnsXL <p>New value for property <code>columnsXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsXL(iColumnsXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iEmptySpanL <p>New value for property <code>emptySpanL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanL(iEmptySpanL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iEmptySpanM <p>New value for property <code>emptySpanM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanM(iEmptySpanM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iEmptySpanS <p>New value for property <code>emptySpanS</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanS(iEmptySpanS?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iEmptySpanXL <p>New value for property <code>emptySpanXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanXL(iEmptySpanXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is in one line. If only 1 <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is in the line, then the <code>labelSpanM</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
+					 * @param {number} iLabelSpanL <p>New value for property <code>labelSpanL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanL(iLabelSpanL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set this property is used for full-size <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a>. If more than one <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is in one line, <code>labelSpanL</code> is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {number} iLabelSpanM <p>New value for property <code>labelSpanM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanM(iLabelSpanM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
+					 * @param {number} iLabelSpanS <p>New value for property <code>labelSpanS</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanS(iLabelSpanS?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iLabelSpanXL <p>New value for property <code>labelSpanXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanXL(iLabelSpanXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> contains only one single <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> and this property is set, the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is displayed using the full size of the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a>. In this case the properties <code>columnsXL</code>, <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a> is displayed in the size of one column.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bSingleContainerFullSize <p>New value for property <code>singleContainerFullSize</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setSingleContainerFullSize(bSingleContainerFullSize?: boolean): this;
+				}
+				/**
+				 * <p>The <code>ResponsiveLayout</code> renders a <code>Form</code> with a responsive layout. Internally the <code>ResponsiveFlowLayout</code> is used. The responsiveness of this layout tries to best use the available space. This means that the order of the <code>FormContainers</code>, labels and fields depends on the available space.</p><p>On the <code>FormContainers</code>, <code>FormElements</code>, labels and content fields, <code>ResponsiveFlowLayoutData</code> can be used to change the default rendering.</p><p>We suggest using the <code>ResponsiveGridLayout</code> instead of this layout because this is easier to consume and brings more stable responsive output.</p><p><b>Note:</b> If <code>ResponsiveFlowLayoutData</code> are used this may result in a much more complex layout than the default one. This means that in some cases, the calculation for the other content may not bring the expected result. In such cases, <code>ResponsiveFlowLayoutData</code> should be used for all content controls to disable the default behavior.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
+				 */
+				export class ResponsiveLayout extends sap.ui.layout.form.FormLayout {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.ResponsiveLayout.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.layout.form.FormLayout#constructor">sap.ui.layout.form.FormLayout</a> can be used.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+				}
+				/**
+				 * <p>A <code>SemanticFormElement</code> element is a special <a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a> that contains semantically connected fields. These field controls are divided by delimiter controls. In display mode, they are rendered as one condensed string, in edit mode as separate fields.</p><p>Only controls implementing the <a target="_self" href="api/sap.ui.core.ISemanticFormContent">ISemanticFormContent</a> interface are supported.</p><p><b>Note:</b> Please use the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> as <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> of the <a target="_self" href="api/sap.ui.layout.form.Form">Form</a>. For other layouts, the field arrangement might not be suitable in every case.</p>
+				 */
+				export class SemanticFormElement extends sap.ui.layout.form.FormElement {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.SemanticFormElement.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Adds some fieldLabel to the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
+					 * @param {sap.ui.core.Label} oFieldLabel <p>The fieldLabel to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addFieldLabel(oFieldLabel: sap.ui.core.Label): this;
+					/**
+					 * <p>Destroys all the fieldLabels in the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyFieldLabels(): this;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getDelimiter">delimiter</a>.</p><p>Delimiter symbol to separate the fields.</p><p>Default value is <code>"/"</code>.</p>
+					 * @returns string <p>Value of property <code>delimiter</code></p>
+					 */
+					getDelimiter(): string;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p><p>Labels of the individual fields.</p><p>These labels are not rendered directly. If the <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getLabel">label</a> aggregation of <code>SemanticFormElement</code> is not set, the texts of the labels are concatenated into the <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/setLabel">label</a> aggregation of <code>SemanticFormElement</code>. Otherwise the set <code>Label</code> is shown.</p><p><b>Note:</b> If this aggregation is used, a label is assigned to every single field of <code>SemanticFormElement</code>. The order of the labels and the fields must be the same.</p>
+					 * @returns sap.ui.core.Label[] 
+					 */
+					getFieldLabels(): any;
+					/**
+					 * <p>Checks for the provided <code>sap.ui.core.Label</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>. and returns its index if found or -1 otherwise.</p>
+					 * @param {sap.ui.core.Label} oFieldLabel <p>The fieldLabel whose index is looked for</p>
+					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+					 */
+					indexOfFieldLabel(oFieldLabel: sap.ui.core.Label): number;
+					/**
+					 * <p>Inserts a fieldLabel into the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
+					 * @param {sap.ui.core.Label} oFieldLabel <p>The fieldLabel to insert; if empty, nothing is inserted</p>
+					 * @param {number} iIndex <p>The <code>0</code>-based index the fieldLabel should be inserted at; for a negative value of <code>iIndex</code>, the fieldLabel is inserted at position 0; for a value greater than the current size of the aggregation, the fieldLabel is inserted at the last position</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					insertFieldLabel(oFieldLabel: sap.ui.core.Label, iIndex: number): this;
+					/**
+					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+					 * @returns sap.ui.core.Label[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllFieldLabels(): any;
+					/**
+					 * <p>Removes a fieldLabel from the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
+					 * @param {number | string | sap.ui.core.Label} vFieldLabel <p>The fieldLabel to remove or its index or id</p>
+					 * @returns sap.ui.core.Label | null <p>The removed fieldLabel or <code>null</code></p>
+					 */
+					removeFieldLabel(vFieldLabel: number | string | sap.ui.core.Label): sap.ui.core.Label | null;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getDelimiter">delimiter</a>.</p><p>Delimiter symbol to separate the fields.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"/"</code>.</p>
+					 * @param {string} sDelimiter <p>New value for property <code>delimiter</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setDelimiter(sDelimiter?: string): this;
+				}
+				/**
+				 * <p>The <code>SimpleForm</code> control provides an easy-to-use API to create simple forms. Inside a <code>SimpleForm</code> control, a <code><a target="_self" href="api/sap.ui.layout.form.Form">Form</a></code> control is created along with its <code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code> elements and <code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code> elements, but the complexity in the API is not exposed to the user. <ul> <li>A new <a target="_self" href="api/sap.ui.core.Title">Title</a> element or <code>Toolbar</code> control starts a new group (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>) in the form.</li> <li>A new <code>Label</code> control starts a new row (<code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code>) in the form.</li> <li>All other controls will be assigned to the row (<code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code>) that started with the last label.</li> </ul> Use <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">LayoutData</a> to influence the layout for special cases in the Input/Display controls.</p><p><b>Note:</b> If a more complex form is needed, use the <code><a target="_self" href="api/sap.ui.layout.form.Form">Form</a></code> control instead.</p>
+				 */
+				export class SimpleForm extends sap.ui.core.Control {
+					/**
+					 * <p>Constructor for a new sap.ui.layout.form.SimpleForm.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
+					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
+					 * @param {any} mSettings <p>Initial settings for the new control</p>
+					 */
+					constructor(sId?: string, mSettings?: any);
+					/**
+					 * <p>Adds some ariaLabelledBy into the association <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
+					/**
+					 * <p>Adds some content to the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
+					 * @param {sap.ui.core.Element} oContent <p>The content to add; if empty, nothing is inserted</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					addContent(oContent: sap.ui.core.Element): this;
+					/**
+					 * <p>Destroys all the content in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyContent(): this;
+					/**
+					 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyTitle(): this;
+					/**
+					 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">toolbar</a>.</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					destroyToolbar(): this;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <code>FormContainers</code> in one row. If only one <code>FormContainer</code> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <code>FormContainers</code> and multiple-column rows are used in the same <code>Form</code> (because every <code>FormContainer</code> has its own grid inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <code>Form</code> size. The number of <code>FormContainers</code> doesn't matter in this case.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>adjustLabelSpan</code></p>
+					 */
+					getAdjustLabelSpan(): boolean;
+					/**
+					 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @returns sap.ui.core.ID[] 
+					 */
+					getAriaLabelledBy(): any;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>SimpleForm</code> content.</p><p>The visualization of the different options depends on the used theme.</p><p>Default value is <code>Translucent</code>.</p>
+					 * @returns sap.ui.layout.BackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
+					 */
+					getBackgroundDesign(): sap.ui.layout.BackgroundDesign;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint between medium size and large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>1024</code>.</p>
+					 * @returns number <p>Value of property <code>breakpointL</code></p>
+					 */
+					getBreakpointL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint between small size and medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>600</code>.</p>
+					 * @returns number <p>Value of property <code>breakpointM</code></p>
+					 */
+					getBreakpointM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint between large size and extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>1440</code>.</p>
+					 * @returns number <p>Value of property <code>breakpointXL</code></p>
+					 */
+					getBreakpointXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsL">columnsL</a>.</p><p>Form columns for large size. The number of columns for large size must not be smaller than the number of columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>Default value is <code>2</code>.</p>
+					 * @returns number <p>Value of property <code>columnsL</code></p>
+					 */
+					getColumnsL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsM">columnsM</a>.</p><p>Form columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>Default value is <code>1</code>.</p>
+					 * @returns number <p>Value of property <code>columnsM</code></p>
+					 */
+					getColumnsM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsXL">columnsXL</a>.</p><p>Form columns for extra large size. The number of columns for extra large size must not be smaller than the number of columns for large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>columnsXL</code></p>
+					 */
+					getColumnsXL(): number;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p><p>The content of the form is structured in the following way: <ul> <li>Add a <a target="_self" href="api/sap.ui.core.Title">Title</a> element or <code>Toolbar</code> control to start a new group (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>).</li> <li>Add a <a target="_self" href="api/sap.m.Label">Label</a> control to start a new row (<code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code>).</li> <li>Add controls as input fields, text fields or other as needed.</li> <li>Use <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">LayoutData</a> to influence the layout for special cases in the single controls. For example, if a <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> is used as a layout, the form content is weighted using 4 cells for the labels and 8 cells for the field part, for large size. If there is only little space, the labels are above the fields and each field uses 12 cells. If your input controls should influence their width, you can add <a target="_self" href="api/sap.ui.layout.form.ColumnElementData">ColumnElementData</a> to them via the <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">setLayoutData</a> method. Ensure that the sum of the weights in the <a target="_self" href="api/sap.ui.layout.form.ColumnElementData">ColumnElementData</a> is not more than 12, as this is the total width of the input control part of each form row.</li> </ul> Example for a row where the <a target="_self" href="api/sap.m.Input">Input</a> uses 6 cells and the second <a target="_self" href="api/sap.m.Input">Input</a> uses 2 cells (using <a target="_self" href="api/sap.ui.layout.form.ColumnElementData">ColumnElementData</a>): <pre>
+					new sap.m.Label({text:"Label"});
+					new sap.m.Input({value:"6 cells", layoutData: new sap.ui.layout.form.ColumnElementData({cellsLarge: 6, cellsSmall: 8})}),
+					new sap.m.Input({value:"2 cells", layoutData: new sap.ui.layout.form.ColumnElementData({cellsLarge: 2, cellsSmall: 4})}),
+					</pre></p><p>For example, if a <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout">ResponsiveGridLayout</a> is used as a layout, there are 12 cells in one row. Depending on the screen size the labels use the defined <code>labelSpan</code>. The remaining cells are used for the fields (and <code>emptySpan</code> if defined). The available cells are distributed to all fields in the row. If one field should use a fixed number of cells you can add <a target="_self" href="api/sap.ui.layout.GridData">GridData</a> to them via the <a target="_self" href="api/sap.ui.core.Element#methods/setLayoutData">setLayoutData</a> method. If there are additional fields in the row they will get the remaining cells. </ul> Example for a row with two <a target="_self" href="api/sap.m.Input">Input</a> controls where one uses four cells on small screens, one cell on medium screens and 2 cells on larger screens (using <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout">ResponsiveGridLayout</a>): <pre>
+					new sap.m.Label({text:"Label"});
+					new sap.m.Input({value:"auto size"}),
+					new sap.m.Input({value:"fix size", layoutData: new sap.ui.layout.GridData({span: "XL1 L1 M2 S4"})}),
+					</pre></p><p><b>Warning:</b> Do not put any layout or other container controls in here. This could damage the visual layout, keyboard support and screen-reader support. Only labels, titles, toolbars and form controls are allowed. Views are also not supported. Allowed form controls implement the interface <a target="_self" href="api/sap.ui.core.IFormContent">sap.ui.core.IFormContent</a>.</p><p>If editable controls are used as content, the <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/setEditable">editable</a> property must be set to <code>true</code>, otherwise to <code>false</code>. If the <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/setEditable">editable</a> property is set incorrectly, there will be visual issues like wrong label alignment or wrong spacing between the controls. In addition to that, wrong screen reader announcements might occur.</p>
+					 * @returns sap.ui.core.Element[] 
+					 */
+					getContent(): any;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly. In addition to that, wrong screen reader announcements might occur.</p><p>Default value is <code>false</code>.</p>
+					 * @returns boolean <p>Value of property <code>editable</code></p>
+					 */
+					getEditable(): boolean;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the empty cells for large columns.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanL</code></p>
+					 */
+					getEmptySpanL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanM</code></p>
+					 */
+					getEmptySpanM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>0</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanS</code></p>
+					 */
+					getEmptySpanS(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>emptySpanXL</code></p>
+					 */
+					getEmptySpanXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p><b>Note:</b> This property is only used if <code>ResponsiveGridLayout</code> or <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the label size for large columns.</p><p>Default value is <code>4</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanL</code></p>
+					 */
+					getLabelSpanL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>2</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanM</code></p>
+					 */
+					getLabelSpanM(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>12</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanS</code></p>
+					 */
+					getLabelSpanS(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
+					 * @returns number <p>Value of property <code>labelSpanXL</code></p>
+					 */
+					getLabelSpanXL(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLayout">layout</a>.</p><p>The <code>FormLayout</code> that is used to render the <code>SimpleForm</code>.</p><p>We recommend using the <code>ColumnLayout</code> for rendering a <code>SimpleForm</code>, as its responsiveness uses the space available in the best way possible.</p><p><b>Note</b> If possible, set the <code>layout</code> before adding content to prevent calculations for the default layout.</p><p><b>Note</b> The <code>ResponsiveLayout</code> has been deprecated and must no longer be used.</p><p><b>Note</b> As of version 1.117, the <code>ResponsiveGridLayout</code> is used as default.</p><p>Default value is <code>ResponsiveGridLayout</code>.</p>
+					 * @returns sap.ui.layout.form.SimpleFormLayout <p>Value of property <code>layout</code></p>
+					 */
+					getLayout(): sap.ui.layout.form.SimpleFormLayout;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getMaxContainerCols">maxContainerCols</a>.</p><p>The maximum amount of groups (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) per row that is used before a new row is started.</p><p><b>Note:</b> If <code><a target="_self" href="api/sap.ui.layout.form.SimpleFormLayout">sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout</a></code> is used as <code>layout</code>, this property is not used. Please use the properties <code>ColumnsL</code> and <code>ColumnsM</code> in this case.</p><p>Default value is <code>2</code>.</p>
+					 * @returns number <p>Value of property <code>maxContainerCols</code></p>
+					 */
+					getMaxContainerCols(): number;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>true</code>.</p>
+					 * @returns boolean <p>Value of property <code>singleContainerFullSize</code></p>
+					 */
+					getSingleContainerFullSize(): boolean;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p><p>Title element of the <code>SimpleForm</code>. Can either be a <code>Title</code> element, or a string.</p><p><b>Note:</b> If a <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">Toolbar</a> is used, the <code>Title</code> is ignored.</p><p><b>Note:</b> If the title is provided as a string, the title is rendered with a theme-dependent default level. As the <code>Form</code> control cannot know the structure of the page, this might not fit the page structure. In this case, provide the title using a <code>Title</code> element and set its <a target="_self" href="api/sap.ui.core.Title#methods/setLevel">level</a> to the needed value.</p>
+					 * @returns sap.ui.core.Title | string 
+					 */
+					getTitle(): sap.ui.core.Title | string;
+					/**
+					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">toolbar</a>.</p><p>Toolbar of the <code>SimpleForm</code>.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">Title</a> is ignored. If a title is needed inside the <code>Toolbar</code> it must be added at content to the <code>Toolbar</code>. In this case, add the <code>Title</code> to the <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/addAriaLabelledBy">ariaLabelledBy</a> association. Use the right title level to meet the visual requirements. This might be theme-dependent.</p>
+					 * @returns sap.ui.core.Toolbar 
+					 */
+					getToolbar(): sap.ui.core.Toolbar;
+					/**
+					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getWidth">width</a>.</p><p>Width of the form.</p>
+					 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
+					 */
+					getWidth(): sap.ui.core.CSSSize;
+					/**
+					 * <p>Checks for the provided <code>sap.ui.core.Element</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
+					 * @param {sap.ui.core.Element} oContent <p>The content whose index is looked for</p>
+					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
+					 */
+					indexOfContent(oContent: sap.ui.core.Element): number;
+					/**
+					 * <p>Inserts a content into the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
+					 * @param {sap.ui.core.Element} oContent <p>The content to insert; if empty, nothing is inserted</p>
+					 * @param {number} iIndex <p>The <code>0</code>-based index the content should be inserted at; for a negative value of <code>iIndex</code>, the content is inserted at position 0; for a value greater than the current size of the aggregation, the content is inserted at the last position</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					insertContent(oContent: sap.ui.core.Element, iIndex: number): this;
+					/**
+					 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllAriaLabelledBy(): any;
+					/**
+					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
+					 * @returns sap.ui.core.Element[] <p>An array of the removed elements (might be empty)</p>
+					 */
+					removeAllContent(): any;
+					/**
+					 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
+					 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
+					 * @returns sap.ui.core.ID | null <p>The removed ariaLabelledBy or <code>null</code></p>
+					 */
+					removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
+					/**
+					 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
+					 * @param {number | string | sap.ui.core.Element} vContent <p>The content to remove or its index or id</p>
+					 * @returns sap.ui.core.Element | null <p>The removed content or <code>null</code></p>
+					 */
+					removeContent(vContent: number | string | sap.ui.core.Element): sap.ui.core.Element | null;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <code>FormContainers</code> in one row. If only one <code>FormContainer</code> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <code>FormContainers</code> and multiple-column rows are used in the same <code>Form</code> (because every <code>FormContainer</code> has its own grid inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <code>Form</code> size. The number of <code>FormContainers</code> doesn't matter in this case.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bAdjustLabelSpan <p>New value for property <code>adjustLabelSpan</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setAdjustLabelSpan(bAdjustLabelSpan?: boolean): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>SimpleForm</code> content.</p><p>The visualization of the different options depends on the used theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Translucent</code>.</p>
+					 * @param {sap.ui.layout.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBackgroundDesign(sBackgroundDesign?: sap.ui.layout.BackgroundDesign): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint between medium size and large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1024</code>.</p>
+					 * @param {number} iBreakpointL <p>New value for property <code>breakpointL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBreakpointL(iBreakpointL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint between small size and medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>600</code>.</p>
+					 * @param {number} iBreakpointM <p>New value for property <code>breakpointM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBreakpointM(iBreakpointM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint between large size and extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1440</code>.</p>
+					 * @param {number} iBreakpointXL <p>New value for property <code>breakpointXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setBreakpointXL(iBreakpointXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsL">columnsL</a>.</p><p>Form columns for large size. The number of columns for large size must not be smaller than the number of columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {number} iColumnsL <p>New value for property <code>columnsL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsL(iColumnsL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsM">columnsM</a>.</p><p>Form columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
+					 * @param {number} iColumnsM <p>New value for property <code>columnsM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsM(iColumnsM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsXL">columnsXL</a>.</p><p>Form columns for extra large size. The number of columns for extra large size must not be smaller than the number of columns for large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iColumnsXL <p>New value for property <code>columnsXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setColumnsXL(iColumnsXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly. In addition to that, wrong screen reader announcements might occur.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
+					 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEditable(bEditable?: boolean): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the empty cells for large columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iEmptySpanL <p>New value for property <code>emptySpanL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanL(iEmptySpanL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iEmptySpanM <p>New value for property <code>emptySpanM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanM(iEmptySpanM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
+					 * @param {number} iEmptySpanS <p>New value for property <code>emptySpanS</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanS(iEmptySpanS?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iEmptySpanXL <p>New value for property <code>emptySpanXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setEmptySpanXL(iEmptySpanXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p><b>Note:</b> This property is only used if <code>ResponsiveGridLayout</code> or <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the label size for large columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
+					 * @param {number} iLabelSpanL <p>New value for property <code>labelSpanL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanL(iLabelSpanL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {number} iLabelSpanM <p>New value for property <code>labelSpanM</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanM(iLabelSpanM?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
+					 * @param {number} iLabelSpanS <p>New value for property <code>labelSpanS</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanS(iLabelSpanS?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
+					 * @param {number} iLabelSpanXL <p>New value for property <code>labelSpanXL</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLabelSpanXL(iLabelSpanXL?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLayout">layout</a>.</p><p>The <code>FormLayout</code> that is used to render the <code>SimpleForm</code>.</p><p>We recommend using the <code>ColumnLayout</code> for rendering a <code>SimpleForm</code>, as its responsiveness uses the space available in the best way possible.</p><p><b>Note</b> If possible, set the <code>layout</code> before adding content to prevent calculations for the default layout.</p><p><b>Note</b> The <code>ResponsiveLayout</code> has been deprecated and must no longer be used.</p><p><b>Note</b> As of version 1.117, the <code>ResponsiveGridLayout</code> is used as default.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>ResponsiveGridLayout</code>.</p>
+					 * @param {sap.ui.layout.form.SimpleFormLayout} sLayout <p>New value for property <code>layout</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setLayout(sLayout?: sap.ui.layout.form.SimpleFormLayout): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getMaxContainerCols">maxContainerCols</a>.</p><p>The maximum amount of groups (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) per row that is used before a new row is started.</p><p><b>Note:</b> If <code><a target="_self" href="api/sap.ui.layout.form.SimpleFormLayout">sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout</a></code> is used as <code>layout</code>, this property is not used. Please use the properties <code>ColumnsL</code> and <code>ColumnsM</code> in this case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
+					 * @param {number} iMaxContainerCols <p>New value for property <code>maxContainerCols</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setMaxContainerCols(iMaxContainerCols?: number): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
+					 * @param {boolean} bSingleContainerFullSize <p>New value for property <code>singleContainerFullSize</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setSingleContainerFullSize(bSingleContainerFullSize?: boolean): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p>
+					 * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setTitle(vTitle: sap.ui.core.Title | string): this;
+					/**
+					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">toolbar</a>.</p>
+					 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setToolbar(oToolbar: sap.ui.core.Toolbar): this;
+					/**
+					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getWidth">width</a>.</p><p>Width of the form.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
+					 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
+					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
+					 */
+					setWidth(sWidth?: sap.ui.core.CSSSize): this;
+				}
+				/**
+				 * <p><p>Available <code>FormLayouts</code> used to render a <code>SimpleForm</code>.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'form.SimpleFormLayout'.</p></p>
+				 */
+				export enum SimpleFormLayout {
+					/**
+					 * <p>Uses the <code>ColumnLayout</code> layout to render the <code>SimpleForm</code> control</p>
+					 */
+					ColumnLayout = "ColumnLayout",
+					/**
+					 * <p>Uses the <code>GridLayout</code> layout to render the <code>SimpleForm</code> control<span class="sapUiDeprecated"><br>Deprecated as of version 1.67.0. as the <em>sap.ui.commons</em> library is deprecated, and the <em>GridLayout</em> must not be used in responsive applications. Please use <em>ResponsiveGridLayout</em> or <em>ColumnLayout</em> instead.</span></p>
+					 */
+					GridLayout = "GridLayout",
+					/**
+					 * <p>Uses the <code>ResponsiveGridLayout</code> layout to render the <code>SimpleForm</code> control</p>
+					 */
+					ResponsiveGridLayout = "ResponsiveGridLayout",
+					/**
+					 * <p>Uses the <code>ResponsiveLayout</code> layout to render the <code>SimpleForm</code> control<span class="sapUiDeprecated"><br>Deprecated as of version 1.93. replaced by <a target="_self" href="api/sap.ui.layout.form.SimpleFormLayout">ColumnLayout</a></span></p>
+					 */
+					ResponsiveLayout = "ResponsiveLayout",
+				}
+			}
+		}
+	}
+}
+declare namespace sap {
+	namespace ui {
+		namespace layout {
+			namespace form {
+				/**
+				 * <p><p>An <code>int</code> type that defines how many cells a control inside of a column of a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> control as <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> can use.</p><p>Allowed values are numbers from 1 to 12 and -1. -1 means the value is calculated.</p></p>
 				 */
 				export type ColumnCells = number;
 			}
@@ -2049,7 +3361,7 @@ declare namespace sap {
 		namespace layout {
 			namespace form {
 				/**
-				 * <p><p>An <code>int</code> type that defines how many columns a <code>Form</code> control using the <code>ColumnLayout</code> as layout can have if it has large size</p><p>Allowed values are numbers from 1 to 3.</p></p>
+				 * <p><p>An <code>int</code> type that defines how many columns a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> as <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> can have if it has large size</p><p>Allowed values are numbers from 1 to 4. <b>Note:</b> In versions lower than 1.122 only 3 columns are allowed.</p></p>
 				 */
 				export type ColumnsL = number;
 			}
@@ -2061,7 +3373,7 @@ declare namespace sap {
 		namespace layout {
 			namespace form {
 				/**
-				 * <p><p>An <code>int</code> type that defines how many columns a <code>Form</code> control using the <code>ColumnLayout</code> as layout can have if it has medium size</p><p>Allowed values are numbers from 1 to 2.</p></p>
+				 * <p><p>An <code>int</code> type that defines how many columns a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> as <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> can have if it has medium size</p><p>Allowed values are numbers from 1 to 3. <b>Note:</b> In versions lower than 1.122 only 2 columns are allowed.</p></p>
 				 */
 				export type ColumnsM = number;
 			}
@@ -2073,7 +3385,7 @@ declare namespace sap {
 		namespace layout {
 			namespace form {
 				/**
-				 * <p><p>An <code>int</code> type that defines how many columns a <code>Form</code> control using the <code>ColumnLayout</code> as layout can have if it has extra-large size</p><p>Allowed values are numbers from 1 to 6. <b>Note:</b> In versions lower than 1.89 only 4 columns are allowed.</p></p>
+				 * <p><p>An <code>int</code> type that defines how many columns a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> as <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> can have if it has extra-large size</p><p>Allowed values are numbers from 1 to 6. <b>Note:</b> In versions lower than 1.89 only 4 columns are allowed.</p></p>
 				 */
 				export type ColumnsXL = number;
 			}
@@ -2085,7 +3397,7 @@ declare namespace sap {
 		namespace layout {
 			namespace form {
 				/**
-				 * <p><p>An <code>int</code> type that defines how many cells beside the controls inside of a column of a <code>Form</code> control using the <code>ColumnLayout</code> control as layout are empty.</p><p>Allowed values are numbers from 0 to 11.</p></p>
+				 * <p><p>An <code>int</code> type that defines how many cells beside the controls inside of a column of a <a target="_self" href="api/sap.ui.layout.form.Form">Form</a> control using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> control as <a target="_self" href="api/sap.ui.layout.form.Form#methods/setLayout">layout</a> are empty.</p><p>Allowed values are numbers from 0 to 11.</p></p>
 				 */
 				export type EmptyCells = number;
 			}
@@ -2108,7 +3420,7 @@ declare namespace sap {
 	namespace ui {
 		namespace layout {
 			/**
-			 * <p><p>A string type that represents the indent values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 11 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p></p>
+			 * <p><p>A string type that represents the indent values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 11 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M11</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p></p>
 			 */
 			export type GridIndent = string;
 		}
@@ -2118,7 +3430,7 @@ declare namespace sap {
 	namespace ui {
 		namespace layout {
 			/**
-			 * <p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space Letters L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p></p>
+			 * <p><p>A string type that represents the span values of the <code>Grid</code> for large, medium and small screens.</p><p>Allowed values are separated by space with case insensitive Letters XL, L, M or S followed by number of columns from 1 to 12 that the container has to take, for example: <code>L2 M4 S6</code>, <code>M12</code>, <code>s10</code> or <code>l4 m4</code>.</p><p><b>Note:</b> The parameters must be provided in the order <large medium small>.</p></p>
 			 */
 			export type GridSpan = string;
 		}
@@ -2205,14 +3517,14 @@ declare namespace sap {
 					 * <p>Implements IGridConfigurable interface</p>
 					 * @returns HTMLElement[] <p>An array with the DOM elements</p>
 					 */
-					protected getGridDomRefs(): HTMLElement[];
+					protected getGridDomRefs(): any;
 					/**
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 								title="Information published on non SAP site" class="sapUISDKExternalLink"/> It is a shorthand for gridRowGap and gridColumnGap. If some of them is set, the gridGap value will have less priority and will be overwritten.</p><p>Default value is <code>empty string</code>.</p>
-					 * @returns sap.ui.layout.cssgrid.CSSGridGapShortHand <p>Value of property <code>gridGap</code></p>
+					 * @returns sap.ui.core.CSSGapShortHand <p>Value of property <code>gridGap</code></p>
 					 */
-					getGridGap(): sap.ui.layout.cssgrid.CSSGridGapShortHand;
+					getGridGap(): sap.ui.core.CSSGapShortHand;
 					/**
 					 * <p>Returns the layout configuration of the <code>CSSGrid</code>.</p>
 					 * @returns sap.ui.layout.cssgrid.GridBasicLayout <p>The grid layout</p>
@@ -2243,7 +3555,7 @@ declare namespace sap {
 					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getItems">items</a>.</p><p>The items contained by the control.</p>
 					 * @returns sap.ui.core.Control[] 
 					 */
-					getItems(): sap.ui.core.Control[];
+					getItems(): any;
 					/**
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getWidth">width</a>.</p><p>The width of the control</p><p>Default value is <code>"100%"</code>.</p>
 					 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
@@ -2266,11 +3578,11 @@ declare namespace sap {
 					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getItems">items</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
 					 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
 					 */
-					removeAllItems(): sap.ui.core.Control[];
+					removeAllItems(): any;
 					/**
 					 * <p>Removes a item from the aggregation <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getItems">items</a>.</p>
 					 * @param {number | string | sap.ui.core.Control} vItem <p>The item to remove or its index or id</p>
-					 * @returns sap.ui.core.Control|null <p>The removed item or <code>null</code></p>
+					 * @returns sap.ui.core.Control | null <p>The removed item or <code>null</code></p>
 					 */
 					removeItem(vItem: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
 					/**
@@ -2315,10 +3627,10 @@ declare namespace sap {
 					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 								title="Information published on non SAP site" class="sapUISDKExternalLink"/> It is a shorthand for gridRowGap and gridColumnGap. If some of them is set, the gridGap value will have less priority and will be overwritten.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
-					 * @param {sap.ui.layout.cssgrid.CSSGridGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
+					 * @param {sap.ui.core.CSSGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					setGridGap(sGridGap?: sap.ui.layout.cssgrid.CSSGridGapShortHand): this;
+					setGridGap(sGridGap?: sap.ui.core.CSSGapShortHand): this;
 					/**
 					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.cssgrid.CSSGrid#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2351,7 +3663,7 @@ declare namespace sap {
 					setWidth(sWidth?: sap.ui.core.CSSSize): this;
 				}
 				/**
-				 * <p><p>A string type that is used for CSS grid to control how the auto-placement algorithm works, specifying exactly how auto-placed items get flowed into the grid.</p><br><br>References: <ul><li><a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow</a>
+				 * <p><p>A string type that is used for CSS grid to control how the auto-placement algorithm works, specifying exactly how auto-placed items get flowed into the grid.</p><p>This enum is part of the 'sap/ui/layout/library' module export and must be accessed by the property 'cssgrid.CSSGridAutoFlow'.</p><br><br>References: <ul><li><a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow">https://developer.mozilla.org/en-US/docs/Web/CSS/grid-auto-flow</a>
 							<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 							title="Information published on non SAP site" class="sapUISDKExternalLink"/></li></ul></p>
 				 */
@@ -2415,9 +3727,9 @@ declare namespace sap {
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 								title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
-					 * @returns sap.ui.layout.cssgrid.CSSGridGapShortHand <p>Value of property <code>gridGap</code></p>
+					 * @returns sap.ui.core.CSSGapShortHand <p>Value of property <code>gridGap</code></p>
 					 */
-					getGridGap(): sap.ui.layout.cssgrid.CSSGridGapShortHand;
+					getGridGap(): sap.ui.core.CSSGapShortHand;
 					/**
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2475,10 +3787,10 @@ declare namespace sap {
 					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 								title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
-					 * @param {sap.ui.layout.cssgrid.CSSGridGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
+					 * @param {sap.ui.core.CSSGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					setGridGap(sGridGap?: sap.ui.layout.cssgrid.CSSGridGapShortHand): this;
+					setGridGap(sGridGap?: sap.ui.core.CSSGapShortHand): this;
 					/**
 					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.cssgrid.GridBasicLayout#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2685,9 +3997,9 @@ declare namespace sap {
 					protected _setGridLayout(oElement: HTMLElement, oGridSettings: sap.ui.layout.cssgrid.GridSettings): void;
 					/**
 					 * <p>Apply styles to the provided array of HTML elements or controls based on the currently active GridSettings</p>
-					 * @param {sap.ui.core.Control[] | HTMLElement[]} aElements <p>The elements or controls on which to apply the display:grid styles</p>
+					 * @param {any} aElements <p>The elements or controls on which to apply the display:grid styles</p>
 					 */
-					applyGridLayout(aElements: sap.ui.core.Control[] | HTMLElement[]): void;
+					applyGridLayout(aElements: any): void;
 					/**
 					 * <p>Should return the active GridSettings. Must be implemented by child classes.</p>
 					 * @returns sap.ui.layout.cssgrid.GridSettings 
@@ -2729,11 +4041,11 @@ declare namespace sap {
 					/**
 					 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.layout.cssgrid.GridResponsiveLayout#events/layoutChange">layoutChange</a> event of this <code>sap.ui.layout.cssgrid.GridResponsiveLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.layout.cssgrid.GridResponsiveLayout</code> itself.</p><p>Fired when the currently active GridSettings changes</p>
 					 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-					 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 					 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.layout.cssgrid.GridResponsiveLayout</code> itself</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					attachLayoutChange(oData: any, fnFunction: any, oListener?: any): this;
+					attachLayoutChange(oData: any, fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Destroys the layout in the aggregation <a target="_self" href="api/sap.ui.layout.cssgrid.GridResponsiveLayout#methods/getLayout">layout</a>.</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
@@ -2761,11 +4073,11 @@ declare namespace sap {
 					destroyLayoutXL(): this;
 					/**
 					 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.layout.cssgrid.GridResponsiveLayout#events/layoutChange">layoutChange</a> event of this <code>sap.ui.layout.cssgrid.GridResponsiveLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-					 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 					 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					detachLayoutChange(fnFunction: any, oListener?: any): this;
+					detachLayoutChange(fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Fires event <a target="_self" href="api/sap.ui.layout.cssgrid.GridResponsiveLayout#events/layoutChange">layoutChange</a> to attached listeners.</p>
 					 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -2881,9 +4193,9 @@ declare namespace sap {
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 								title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>Default value is <code>empty string</code>.</p>
-					 * @returns sap.ui.layout.cssgrid.CSSGridGapShortHand <p>Value of property <code>gridGap</code></p>
+					 * @returns sap.ui.core.CSSGapShortHand <p>Value of property <code>gridGap</code></p>
 					 */
-					getGridGap(): sap.ui.layout.cssgrid.CSSGridGapShortHand;
+					getGridGap(): sap.ui.core.CSSGapShortHand;
 					/**
 					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -2941,10 +4253,10 @@ declare namespace sap {
 					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridGap">gridGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-gap">MDN web docs: grid-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
 								title="Information published on non SAP site" class="sapUISDKExternalLink"/></p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>empty string</code>.</p>
-					 * @param {sap.ui.layout.cssgrid.CSSGridGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
+					 * @param {sap.ui.core.CSSGapShortHand} sGridGap <p>New value for property <code>gridGap</code></p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					setGridGap(sGridGap?: sap.ui.layout.cssgrid.CSSGridGapShortHand): this;
+					setGridGap(sGridGap?: sap.ui.core.CSSGapShortHand): this;
 					/**
 					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.cssgrid.GridSettings#methods/getGridRowGap">gridRowGap</a>.</p><p>Sets the value for the CSS display:grid property <a target="_blank" rel="noopener noreferrer" href="https://developer.mozilla.org/en-US/docs/Web/CSS/grid-row-gap">MDN web docs: grid-row-gap</a>
 								<img src="./resources/sap/ui/documentation/sdk/images/link-external.png"
@@ -3014,7 +4326,7 @@ declare namespace sap {
 					setRows(iRows?: number): this;
 				}
 				/**
-				 * <p>Represents a layout which displays variable number of columns, depending on available screen size. With that it achieves flexible layouts and line breaks for large, medium, and small-sized screens, such as desktop, tablet, and mobile.</p><p>Grid row's height is dynamically determined by the height of the highest grid element on this row.</p>
+				 * <p>Represents a layout which displays variable number of columns, depending on available screen size. With that it achieves flexible layouts and line breaks for large, medium, and small-sized screens, such as desktop, tablet, and mobile.</p><p>Grid row's height is dynamically determined by the height of the highest grid element on this row.</p><p>The control provides the following breakpoints and layout sizes: <ul> <li> "S" - screen width: up to 599px.</li> <li> "M" - screen width range: 600px - 1023px.</li> <li> "ML" - screen width range: 1024px - 1279px.</li> <li> "L" - screen width range: 1280px - 1439px.</li> <li> "XL" - screen width range: 1440px - 1679px.</li> <li> "XXL" - screen width range: 1680px - 1919px.</li> <li> "XXXL" - screen width range: 1920px and bigger.</li> </ul></p>
 				 */
 				export class ResponsiveColumnLayout extends sap.ui.layout.cssgrid.GridLayoutBase {
 					/**
@@ -3026,18 +4338,18 @@ declare namespace sap {
 					/**
 					 * <p>Attaches event handler <code>fnFunction</code> to the <a target="_self" href="api/sap.ui.layout.cssgrid.ResponsiveColumnLayout#events/layoutChange">layoutChange</a> event of this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code>.</p><p>When called, the context of the event handler (its <code>this</code>) will be bound to <code>oListener</code> if specified, otherwise it will be bound to this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code> itself.</p><p>Fired when the currently active layout changes</p>
 					 * @param {any} oData <p>An application-specific payload object that will be passed to the event handler along with the event object when firing the event</p>
-					 * @param {any} fnFunction <p>The function to be called when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called when the event occurs</p>
 					 * @param {any} oListener <p>Context object to call the event handler with. Defaults to this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code> itself</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					attachLayoutChange(oData: any, fnFunction: any, oListener?: any): this;
+					attachLayoutChange(oData: any, fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Detaches event handler <code>fnFunction</code> from the <a target="_self" href="api/sap.ui.layout.cssgrid.ResponsiveColumnLayout#events/layoutChange">layoutChange</a> event of this <code>sap.ui.layout.cssgrid.ResponsiveColumnLayout</code>.</p><p>The passed function and listener object must match the ones used for event registration.</p>
-					 * @param {any} fnFunction <p>The function to be called, when the event occurs</p>
+					 * @param {Function} fnFunction <p>The function to be called, when the event occurs</p>
 					 * @param {any} oListener <p>Context object on which the given function had to be called</p>
 					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
 					 */
-					detachLayoutChange(fnFunction: any, oListener?: any): this;
+					detachLayoutChange(fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Fires event <a target="_self" href="api/sap.ui.layout.cssgrid.ResponsiveColumnLayout#events/layoutChange">layoutChange</a> to attached listeners.</p>
 					 * @param {any} mParameters <p>Parameters to pass along with the event</p>
@@ -3053,1293 +4365,6 @@ declare namespace sap {
 					 * @returns boolean <p>If the Grid Layout is responsive.</p>
 					 */
 					isResponsive(): boolean;
-				}
-			}
-		}
-	}
-}
-declare namespace sap {
-	namespace ui {
-		namespace layout {
-			/**
-			 */
-			namespace form {
-				/**
-				 * <p>The <code>ColumnLayout</code>-specific layout data for the <code>FormContainer</code> element.</p><p>Depending on its size, the <code>Form</code> control is divided into 1, 2, 3 or 4 columns by the <code>ColumnLayout</code> control. Using <code>ColumnContainerData</code>, the size of the <code>FormContainer</code> element can be influenced.</p>
-				 */
-				export class ColumnContainerData extends sap.ui.core.LayoutData {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.ColumnContainerData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsL">columnsL</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>Default value is <code>2</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnsL <p>Value of property <code>columnsL</code></p>
-					 */
-					getColumnsL(): sap.ui.layout.form.ColumnsL;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsM">columnsM</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has medium size.</p><p>Default value is <code>1</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnsM <p>Value of property <code>columnsM</code></p>
-					 */
-					getColumnsM(): sap.ui.layout.form.ColumnsM;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>Default value is <code>2</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnsXL <p>Value of property <code>columnsXL</code></p>
-					 */
-					getColumnsXL(): sap.ui.layout.form.ColumnsXL;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsL">columnsL</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnsL} sColumnsL <p>New value for property <code>columnsL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsL(sColumnsL?: sap.ui.layout.form.ColumnsL): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsM">columnsM</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnsM} sColumnsM <p>New value for property <code>columnsM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsM(sColumnsM?: sap.ui.layout.form.ColumnsM): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnContainerData#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns the <code>FormContainer</code> element uses if the <code>Form</code> control has extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnsXL} sColumnsXL <p>New value for property <code>columnsXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsXL(sColumnsXL?: sap.ui.layout.form.ColumnsXL): this;
-				}
-				/**
-				 * <p>The <code>ColumnLayout</code>-specific layout data for the <code>FormElement</code> content fields.</p><p>One <code>FormElement</code> element contains 12 cells and has two sizes, small and large. Using <code>ColumnElementData</code>, the default calculation of the cells used for a field or label can be overwritten.</p>
-				 */
-				export class ColumnElementData extends sap.ui.core.LayoutData {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.ColumnElementData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsLarge">cellsLarge</a>.</p><p>Number of cells used by a field if the <code>FormElement</code> element is large. The label is then beside the fields per default.</p><p>If set to <code>12</code>, the full size of the <code>FormElement</code> element is used.</p><p>Default value is <code>8</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnCells <p>Value of property <code>cellsLarge</code></p>
-					 */
-					getCellsLarge(): sap.ui.layout.form.ColumnCells;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsSmall">cellsSmall</a>.</p><p>Number of cells used by a field if the <code>FormElement</code> element is small. The label is then above the fields per default.</p><p>If set to <code>12</code>, the full size of the <code>FormElement</code> is used.</p><p>Default value is <code>12</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnCells <p>Value of property <code>cellsSmall</code></p>
-					 */
-					getCellsSmall(): sap.ui.layout.form.ColumnCells;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsLarge">cellsLarge</a>.</p><p>Number of cells used by a field if the <code>FormElement</code> element is large. The label is then beside the fields per default.</p><p>If set to <code>12</code>, the full size of the <code>FormElement</code> element is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>8</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnCells} sCellsLarge <p>New value for property <code>cellsLarge</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setCellsLarge(sCellsLarge?: sap.ui.layout.form.ColumnCells): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnElementData#methods/getCellsSmall">cellsSmall</a>.</p><p>Number of cells used by a field if the <code>FormElement</code> element is small. The label is then above the fields per default.</p><p>If set to <code>12</code>, the full size of the <code>FormElement</code> is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnCells} sCellsSmall <p>New value for property <code>cellsSmall</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setCellsSmall(sCellsSmall?: sap.ui.layout.form.ColumnCells): this;
-				}
-				/**
-				 * <p>The <code>ColumnLayout</code> control renders a <code>Form</code> control in a column-based responsive way. Depending on its size, the <code>Form</code> control is divided into one or more columns. (XL - max. 4 columns, L - max. 3 columns, M - max. 2 columns and S - 1 column.)</p><p>The <code>FormContainer</code> elements are spread out to the columns depending on the number of <code>FormContainer</code> elements and their size. For example, if there are 4 columns and 2 <code>FormContainer</code> elements, each <code>FormContainer</code> element will use 2 columns. If there are 3 columns and 2 <code>FormContainer</code> elements, the larger one will use 2 columns, the smaller one 1 column. The size of a <code>FormContainer</code> element will be determined based on the number of visible <code>FormElement</code> elements assigned to it. If there are more <code>FormContainer</code> elements than columns, every <code>FormContainer</code> element uses only one column. So the last row of the <code>Form</code> control will not be fully used.</p><p>The default size of the <code>FormContainer</code> element can be overwritten by using <code>ColumnContainerData</code> as <code>LayoutData</code>. If one <code>FormContainer</code> element has <code>ColumnContainerData</code> set, the size calculation of the other <code>FormContainer</code> elements might not lead to the expected result. In this case, use <code>ColumnContainerData</code> also for the other <code>FormContainer</code> elements.</p><p>The <code>FormElement</code> elements are spread out to the columns of a <code>FormContainer</code> element arranged in a newspaper-like order. The position of the labels and fields depends on the size of the used column. If there is enough space, the labels are beside the fields, otherwise above the fields.</p><p>The default size of a content control of a <code>FormElement</code> element can be overwritten using <code>ColumnElementData</code> as <code>LayoutData</code>. If one control assigned to a <code>FormElement</code> element has <code>ColumnElementData</code> set, the size calculation of the other controls assigned to the <code>FormElement</code> element might not lead to the expected result. In this case, use <code>ColumnElementData</code> for the other controls, assigned to the <code>FormElement</code> element, too.</p><p>The placement of the <code>FormElement</code> elements is made by the browser <code>column-count</code> logic. So this can be different in different browsers and lead in some cases to other results than might be expected.</p><p><b>Note:</b> This control cannot be used stand-alone, it just renders a <code>Form</code> control, so it must be assigned to a <code>Form</code> control using the <code>layout</code> aggregation.</p>
-				 */
-				export class ColumnLayout extends sap.ui.layout.form.FormLayout {
-					/**
-					 * <p>Constructor for a new <code>sap.ui.layout.form.ColumnLayout</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>Default value is <code>2</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnsL <p>Value of property <code>columnsL</code></p>
-					 */
-					getColumnsL(): sap.ui.layout.form.ColumnsL;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>Default value is <code>1</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnsM <p>Value of property <code>columnsM</code></p>
-					 */
-					getColumnsM(): sap.ui.layout.form.ColumnsM;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>Default value is <code>2</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnsXL <p>Value of property <code>columnsXL</code></p>
-					 */
-					getColumnsXL(): sap.ui.layout.form.ColumnsXL;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getEmptyCellsLarge">emptyCellsLarge</a>.</p><p>Defines how many cells are empty at the end of a row. This could be used to keep the fields small on large screens.</p><p>Default value is <code>0</code>.</p>
-					 * @returns sap.ui.layout.form.EmptyCells <p>Value of property <code>emptyCellsLarge</code></p>
-					 */
-					getEmptyCellsLarge(): sap.ui.layout.form.EmptyCells;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getLabelCellsLarge">labelCellsLarge</a>.</p><p>Defines how many cells a label uses if the column is large.</p><p>Default value is <code>4</code>.</p>
-					 * @returns sap.ui.layout.form.ColumnCells <p>Value of property <code>labelCellsLarge</code></p>
-					 */
-					getLabelCellsLarge(): sap.ui.layout.form.ColumnCells;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnsL} sColumnsL <p>New value for property <code>columnsL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsL(sColumnsL?: sap.ui.layout.form.ColumnsL): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnsM} sColumnsM <p>New value for property <code>columnsM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsM(sColumnsM?: sap.ui.layout.form.ColumnsM): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra-large size.</p><p>The number of columns for extra-large size must not be smaller than the number of columns for large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnsXL} sColumnsXL <p>New value for property <code>columnsXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsXL(sColumnsXL?: sap.ui.layout.form.ColumnsXL): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getEmptyCellsLarge">emptyCellsLarge</a>.</p><p>Defines how many cells are empty at the end of a row. This could be used to keep the fields small on large screens.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {sap.ui.layout.form.EmptyCells} sEmptyCellsLarge <p>New value for property <code>emptyCellsLarge</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptyCellsLarge(sEmptyCellsLarge?: sap.ui.layout.form.EmptyCells): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ColumnLayout#methods/getLabelCellsLarge">labelCellsLarge</a>.</p><p>Defines how many cells a label uses if the column is large.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
-					 * @param {sap.ui.layout.form.ColumnCells} sLabelCellsLarge <p>New value for property <code>labelCellsLarge</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelCellsLarge(sLabelCellsLarge?: sap.ui.layout.form.ColumnCells): this;
-				}
-				/**
-				 * <p>A <code>Form</code> control arranges labels and fields (like input fields) into groups and rows. There are different ways to visualize forms for different screen sizes.</p><p>A <code>Form</code> is structured into <code>FormContainers</code>. Each <code>FormContainer</code> consists of <code>FormElements</code>. The <code>FormElements</code> consists of a label and the form fields. A <code>Form</code> doesn't render its content by itself. The rendering is done by the assigned <code>FormLayout</code>. This is so that the rendering can be adopted to new UI requirements without changing the <code>Form</code> itself.</p><p>For the content of a <code>Form</code>, <code>VariantLayoutData</code> are supported to allow simple switching of the <code>FormLayout</code>. <code>LayoutData</code> on the content can be used to overwrite the default layout of the <code>Form</code>.</p><p>The <code>Form</code> (and its sub-controls) automatically add label and field assignment to enable screen reader support. It also adds keyboard support to navigate between the fields and groups inside the form.</p><p><b>Warning:</b> Do not put any layout or other container controls into the <code>FormElement</code>. Views are also not supported. This could damage the visual layout, keyboard support and screen-reader support.</p><p>If editable controls are used as content, the <code>editable</code> property must be set to <code>true</code>, otherwise to <code>false</code>. If the <code>editable</code> property is set incorrectly, there will be visual issues like wrong label alignment or wrong spacing between the controls.</p>
-				 */
-				export class Form extends sap.ui.core.Control {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.Form.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Adds some ariaLabelledBy into the association <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
-					/**
-					 * <p>Adds some formContainer to the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
-					 * @param {sap.ui.layout.form.FormContainer} oFormContainer <p>The formContainer to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addFormContainer(oFormContainer: sap.ui.layout.form.FormContainer): this;
-					/**
-					 * <p>Destroys all the formContainers in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyFormContainers(): this;
-					/**
-					 * <p>Destroys the layout in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyLayout(): this;
-					/**
-					 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">title</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyTitle(): this;
-					/**
-					 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">toolbar</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyToolbar(): this;
-					/**
-					 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @returns sap.ui.core.ID[] 
-					 */
-					getAriaLabelledBy(): sap.ui.core.ID[];
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly.</p><p>Default value is <code>false</code>.</p>
-					 * @returns boolean <p>Value of property <code>editable</code></p>
-					 */
-					getEditable(): boolean;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p><p>Containers with the content of the form. A <code>FormContainer</code> represents a group inside the <code>Form</code>.</p>
-					 * @returns sap.ui.layout.form.FormContainer[] 
-					 */
-					getFormContainers(): sap.ui.layout.form.FormContainer[];
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p><p>Layout of the <code>Form</code>. The assigned <code>Layout</code> renders the <code>Form</code>. We recommend using the <a target="_self" href="api/sap.ui.layout.form.ColumnLayout">ColumnLayout</a> for rendering a <code>Form</code>, as its responsiveness allows the available space to be used in the best way possible.</p>
-					 * @returns sap.ui.layout.form.FormLayout 
-					 */
-					getLayout(): sap.ui.layout.form.FormLayout;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">title</a>.</p><p>Title of the <code>Form</code>. Can either be a <code>Title</code> element or a string. If a <code>Title</code> element it used, the style of the title can be set.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <code>Title</code> is ignored.</p><p><b>Note:</b> If the title is provided as a string, the title is rendered with a theme-dependent default level. As the <code>Form</code> control cannot know the structure of the page, this might not fit the page structure. In this case provide the title using a <code>Title</code> element and set its <a target="_self" href="api/sap.ui.core.Title#methods/setLevel">level</a> to the needed value.</p>
-					 * @returns sap.ui.core.Title|string 
-					 */
-					getTitle(): sap.ui.core.Title | string;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">toolbar</a>.</p><p>Toolbar of the <code>Form</code>.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <code>Title</code> is ignored. If a title is needed inside the <code>Toolbar</code> it must be added at content to the <code>Toolbar</code>. In this case add the <code>Title</code> to the <code>ariaLabelledBy</code> association. Use the right title level to meet the visual requirements. This might be theme-dependent.</p>
-					 * @returns sap.ui.core.Toolbar 
-					 */
-					getToolbar(): sap.ui.core.Toolbar;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getWidth">width</a>.</p><p>Width of the <code>Form</code>.</p>
-					 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
-					 */
-					getWidth(): sap.ui.core.CSSSize;
-					/**
-					 * <p>Checks for the provided <code>sap.ui.layout.form.FormContainer</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>. and returns its index if found or -1 otherwise.</p>
-					 * @param {sap.ui.layout.form.FormContainer} oFormContainer <p>The formContainer whose index is looked for</p>
-					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
-					 */
-					indexOfFormContainer(oFormContainer: sap.ui.layout.form.FormContainer): number;
-					/**
-					 * <p>Inserts a formContainer into the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
-					 * @param {sap.ui.layout.form.FormContainer} oFormContainer <p>The formContainer to insert; if empty, nothing is inserted</p>
-					 * @param {number} iIndex <p>The <code>0</code>-based index the formContainer should be inserted at; for a negative value of <code>iIndex</code>, the formContainer is inserted at position 0; for a value greater than the current size of the aggregation, the formContainer is inserted at the last position</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					insertFormContainer(oFormContainer: sap.ui.layout.form.FormContainer, iIndex: number): this;
-					/**
-					 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllAriaLabelledBy(): sap.ui.core.ID[];
-					/**
-					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-					 * @returns sap.ui.layout.form.FormContainer[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllFormContainers(): sap.ui.layout.form.FormContainer[];
-					/**
-					 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.form.Form#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-					 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
-					 */
-					removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
-					/**
-					 * <p>Removes a formContainer from the aggregation <a target="_self" href="api/sap.ui.layout.form.Form#methods/getFormContainers">formContainers</a>.</p>
-					 * @param {number | string | sap.ui.layout.form.FormContainer} vFormContainer <p>The formContainer to remove or its index or id</p>
-					 * @returns sap.ui.layout.form.FormContainer|null <p>The removed formContainer or <code>null</code></p>
-					 */
-					removeFormContainer(vFormContainer: number | string | sap.ui.layout.form.FormContainer): sap.ui.layout.form.FormContainer | null;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-					 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEditable(bEditable?: boolean): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.Form#methods/getLayout">layout</a>.</p>
-					 * @param {sap.ui.layout.form.FormLayout} oLayout <p>The layout to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLayout(oLayout: sap.ui.layout.form.FormLayout): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.Form#methods/getTitle">title</a>.</p>
-					 * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setTitle(vTitle: sap.ui.core.Title | string): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.Form#methods/getToolbar">toolbar</a>.</p>
-					 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setToolbar(oToolbar: sap.ui.core.Toolbar): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.Form#methods/getWidth">width</a>.</p><p>Width of the <code>Form</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-					 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setWidth(sWidth?: sap.ui.core.CSSSize): this;
-				}
-				/**
-				 * <p>A <code>FormContainer</code> represents a group inside a <code>Form</code>. It consists of <code>FormElements</code>. The rendering of the <code>FormContainer</code> is done by the <code>FormLayout</code> assigned to the <code>Form</code>.</p>
-				 */
-				export class FormContainer extends sap.ui.core.Element {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.FormContainer.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Sets the editable state of the <code>FormContainer</code>.</p><p>This must only be called from the <code>Form</code>.</p><p>Labels inside of a <code>Form</code> must be invalidated if <code>editable</code> changed on <code>Form</code>.</p>
-					 * @param {boolean} bEditable <p>Editable state of the <code>Form</code></p>
-					 */
-					protected _setEditable(bEditable: boolean): void;
-					/**
-					 * <p>Adds some ariaLabelledBy into the association <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
-					/**
-					 * <p>Adds some formElement to the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
-					 * @param {sap.ui.layout.form.FormElement} oFormElement <p>The formElement to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addFormElement(oFormElement: sap.ui.layout.form.FormElement): this;
-					/**
-					 * <p>Destroys all the formElements in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyFormElements(): this;
-					/**
-					 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyTitle(): this;
-					/**
-					 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">toolbar</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyToolbar(): this;
-					/**
-					 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @returns sap.ui.core.ID[] 
-					 */
-					getAriaLabelledBy(): sap.ui.core.ID[];
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpandable">expandable</a>.</p><p>Defines if the <code>FormContainer</code> is expandable.</p><p><b>Note:</b> The expander icon will only be shown if a <code>title</code> is set for the <code>FormContainer</code>.</p><p>Default value is <code>false</code>.</p>
-					 * @returns boolean <p>Value of property <code>expandable</code></p>
-					 */
-					getExpandable(): boolean;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpanded">expanded</a>.</p><p>Container is expanded.</p><p><b>Note:</b> This property only works if <code>expandable</code> is set to <code>true</code>.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>expanded</code></p>
-					 */
-					getExpanded(): boolean;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p><p>The <code>FormElements</code> contain the content (labels and fields) of the <code>FormContainers</code>.</p>
-					 * @returns sap.ui.layout.form.FormElement[] 
-					 */
-					getFormElements(): sap.ui.layout.form.FormElement[];
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p><p>Title of the <code>FormContainer</code>. Can either be a <code>Title</code> element or a string. If a <code>Title</code> element is used, the style of the title can be set.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <code>Title</code> is ignored.</p><p><b>Note:</b> If the title is provided as a string, the title is rendered with a theme-dependent default level. As the <code>Form</code> control cannot know the structure of the page, this might not fit the page structure. In this case provide the title using a <code>Title</code> element and set its <a target="_self" href="api/sap.ui.core.Title#methods/setLevel">level</a> to the needed value.</p>
-					 * @returns sap.ui.core.Title|string 
-					 */
-					getTitle(): sap.ui.core.Title | string;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">toolbar</a>.</p><p>Toolbar of the <code>FormContainer</code>.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <code>Title</code> is ignored. If a title is needed inside the <code>Toolbar</code> it must be added at content to the <code>Toolbar</code>. In this case add the <code>Title</code> to the <code>ariaLabelledBy</code> association. Use the right title level to meet the visual requirements. This might be theme-dependent.</p>
-					 * @returns sap.ui.core.Toolbar 
-					 */
-					getToolbar(): sap.ui.core.Toolbar;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormContainer</code> is not rendered.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>visible</code></p>
-					 */
-					getVisible(): boolean;
-					/**
-					 * <p>Checks for the provided <code>sap.ui.layout.form.FormElement</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>. and returns its index if found or -1 otherwise.</p>
-					 * @param {sap.ui.layout.form.FormElement} oFormElement <p>The formElement whose index is looked for</p>
-					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
-					 */
-					indexOfFormElement(oFormElement: sap.ui.layout.form.FormElement): number;
-					/**
-					 * <p>Inserts a formElement into the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
-					 * @param {sap.ui.layout.form.FormElement} oFormElement <p>The formElement to insert; if empty, nothing is inserted</p>
-					 * @param {number} iIndex <p>The <code>0</code>-based index the formElement should be inserted at; for a negative value of <code>iIndex</code>, the formElement is inserted at position 0; for a value greater than the current size of the aggregation, the formElement is inserted at the last position</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					insertFormElement(oFormElement: sap.ui.layout.form.FormElement, iIndex: number): this;
-					/**
-					 * <p>Determines if the <code>FormContainer</code> is visible or not. Per default it just returns the value of the <code>visible</code> property. But this might be overwritten by inherited elements.</p><p>For rendering by <code>FormLayouts</code> this function has to be used instead of <code>getVisible</code>.</p>
-					 * @returns boolean <p>If true, the <code>FormContainer</code> is visible, otherwise not</p>
-					 */
-					isVisible(): boolean;
-					/**
-					 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllAriaLabelledBy(): sap.ui.core.ID[];
-					/**
-					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-					 * @returns sap.ui.layout.form.FormElement[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllFormElements(): sap.ui.layout.form.FormElement[];
-					/**
-					 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-					 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
-					 */
-					removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
-					/**
-					 * <p>Removes a formElement from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getFormElements">formElements</a>.</p>
-					 * @param {number | string | sap.ui.layout.form.FormElement} vFormElement <p>The formElement to remove or its index or id</p>
-					 * @returns sap.ui.layout.form.FormElement|null <p>The removed formElement or <code>null</code></p>
-					 */
-					removeFormElement(vFormElement: number | string | sap.ui.layout.form.FormElement): sap.ui.layout.form.FormElement | null;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpandable">expandable</a>.</p><p>Defines if the <code>FormContainer</code> is expandable.</p><p><b>Note:</b> The expander icon will only be shown if a <code>title</code> is set for the <code>FormContainer</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-					 * @param {boolean} bExpandable <p>New value for property <code>expandable</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setExpandable(bExpandable?: boolean): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getExpanded">expanded</a>.</p><p>Container is expanded.</p><p><b>Note:</b> This property only works if <code>expandable</code> is set to <code>true</code>.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bExpanded <p>New value for property <code>expanded</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setExpanded(bExpanded?: boolean): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getTitle">title</a>.</p>
-					 * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setTitle(vTitle: sap.ui.core.Title | string): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getToolbar">toolbar</a>.</p>
-					 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setToolbar(oToolbar: sap.ui.core.Toolbar): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormContainer#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormContainer</code> is not rendered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setVisible(bVisible?: boolean): this;
-				}
-				/**
-				 * <p>A <code>FormElement</code> represents a row in a <code>FormContainer</code>. A <code>FormElement</code> is a combination of one label and different controls associated to this label.</p>
-				 */
-				export class FormElement extends sap.ui.core.Element {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.FormElement.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Sets the editable state of the <code>FormElement</code>.</p><p>This must only be called from the <code>Form</code> and it's <code>FormContainers</code>.</p><p>Labels inside of a <code>Form</code> must be invalidated if <code>editable</code> changed on <code>Form</code>.</p>
-					 * @param {boolean} bEditable <p>Editable state of the <code>Form</code></p>
-					 */
-					protected _setEditable(bEditable: boolean): void;
-					/**
-					 * <p>Adds some field to the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
-					 * @param {sap.ui.core.Control} oField <p>The field to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addField(oField: sap.ui.core.Control): this;
-					/**
-					 * <p>Destroys all the fields in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyFields(): this;
-					/**
-					 * <p>Destroys the label in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getLabel">label</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyLabel(): this;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p><p>Form controls that belong together to be displayed in one row of a <code>Form</code>.</p><p><b>Warning:</b> Do not put any layout or other container controls in here. This could damage the visual layout, keyboard support and screen-reader support. Only form controls are allowed. Views are also not supported. Allowed controls implement the interface <code>sap.ui.core.IFormContent</code>.</p>
-					 * @returns sap.ui.core.Control[] 
-					 */
-					getFields(): sap.ui.core.Control[];
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getLabel">label</a>.</p><p>Label of the fields. Can either be a <code>Label</code> control or a string. If a <code>Label</code> control is used, the properties of the <code>Label</code> can be set. If no assignment between <code>Label</code> and the fields is set via (<code>labelFor</code> property of the <code>Label</code>), it will be done automatically by the <code>FormElement</code>. In this case the <code>Label</code> is assigned to the fields of the <code>FormElement</code>.</p>
-					 * @returns sap.ui.core.Label|string 
-					 */
-					getLabel(): sap.ui.core.Label | string;
-					/**
-					 * <p>Returns the <code>Label</code> of the <code>FormElement</code>, even if the <code>Label</code> is assigned as string. The <code>FormLayout</code> needs the information of the label to render the <code>Form</code>.</p>
-					 * @returns sap.ui.core.Label <p><code>Label</code> control used to render the label</p>
-					 */
-					getLabelControl(): sap.ui.core.Label;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormElement</code> is not rendered.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>visible</code></p>
-					 */
-					getVisible(): boolean;
-					/**
-					 * <p>Checks for the provided <code>sap.ui.core.Control</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>. and returns its index if found or -1 otherwise.</p>
-					 * @param {sap.ui.core.Control} oField <p>The field whose index is looked for</p>
-					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
-					 */
-					indexOfField(oField: sap.ui.core.Control): number;
-					/**
-					 * <p>Inserts a field into the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
-					 * @param {sap.ui.core.Control} oField <p>The field to insert; if empty, nothing is inserted</p>
-					 * @param {number} iIndex <p>The <code>0</code>-based index the field should be inserted at; for a negative value of <code>iIndex</code>, the field is inserted at position 0; for a value greater than the current size of the aggregation, the field is inserted at the last position</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					insertField(oField: sap.ui.core.Control, iIndex: number): this;
-					/**
-					 * <p>Labels inside of a Form must be invalidated if "editable" changed on Form</p>
-					 */
-					protected invalidateLabel(): void;
-					/**
-					 * <p>Determines if the <code>FormElement</code> is visible or not. Per default it just returns the value of the <code>visible</code> property. But this might be overwritten by inherited elements.</p><p>For rendering by <code>FormLayouts</code> this function has to be used instead of <code>getVisible</code>.</p>
-					 * @returns boolean <p>If true, the <code>FormElement</code> is visible, otherwise not</p>
-					 */
-					isVisible(): boolean;
-					/**
-					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-					 * @returns sap.ui.core.Control[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllFields(): sap.ui.core.Control[];
-					/**
-					 * <p>Removes a field from the aggregation <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getFields">fields</a>.</p>
-					 * @param {number | string | sap.ui.core.Control} vField <p>The field to remove or its index or id</p>
-					 * @returns sap.ui.core.Control|null <p>The removed field or <code>null</code></p>
-					 */
-					removeField(vField: number | string | sap.ui.core.Control): sap.ui.core.Control | null;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getLabel">label</a>.</p>
-					 * @param {sap.ui.core.Label | string} vLabel <p>The label to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabel(vLabel: sap.ui.core.Label | string): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormElement#methods/getVisible">visible</a>.</p><p>If set to <code>false</code>, the <code>FormElement</code> is not rendered.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bVisible <p>New value for property <code>visible</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setVisible(bVisible?: boolean): this;
-				}
-				/**
-				 * <p>Base layout to render a <code>Form</code>. Other layouts to render a <code>Form</code> must inherit from this one.</p><p><b>Note:</b> This control must not be used to render a <code>Form</code> in productive applications as it does not fulfill any design guidelines and usability standards.</p>
-				 */
-				export class FormLayout extends sap.ui.core.Control {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.FormLayout.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.FormLayout#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>Form</code> content.</p><p><b>Note:</b> The visualization of the different options depends on the theme used.</p><p>Default value is <code>Translucent</code>.</p>
-					 * @returns sap.ui.layout.BackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
-					 */
-					getBackgroundDesign(): sap.ui.layout.BackgroundDesign;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.FormLayout#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>Form</code> content.</p><p><b>Note:</b> The visualization of the different options depends on the theme used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Translucent</code>.</p>
-					 * @param {sap.ui.layout.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBackgroundDesign(sBackgroundDesign?: sap.ui.layout.BackgroundDesign): this;
-				}
-				/**
-				 * <p>The <code>GridLayout</code>-specific layout data for <code>FormContainers</code>.</p>
-				 */
-				export class GridContainerData extends sap.ui.core.LayoutData {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.GridContainerData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridContainerData#methods/getHalfGrid">halfGrid</a>.</p><p>If set, the container takes half the width of the <code>Form</code> (8 cells), if not it takes the full width (16 cells). If the <code>GridLayout</code> is set to <code>singleColumn</code>, the full width of the grid is only 8 cells. So containers are rendered only once per row.</p><p>Default value is <code>false</code>.</p>
-					 * @returns boolean <p>Value of property <code>halfGrid</code></p>
-					 */
-					getHalfGrid(): boolean;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridContainerData#methods/getHalfGrid">halfGrid</a>.</p><p>If set, the container takes half the width of the <code>Form</code> (8 cells), if not it takes the full width (16 cells). If the <code>GridLayout</code> is set to <code>singleColumn</code>, the full width of the grid is only 8 cells. So containers are rendered only once per row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-					 * @param {boolean} bHalfGrid <p>New value for property <code>halfGrid</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setHalfGrid(bHalfGrid?: boolean): this;
-				}
-				/**
-				 * <p>The <code>GridLayout</code>-specific layout data for <code>FormElement</code> fields.</p>
-				 */
-				export class GridElementData extends sap.ui.core.LayoutData {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.GridElementData.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>Default value is <code>'auto'</code>.</p>
-					 * @returns sap.ui.layout.form.GridElementCells <p>Value of property <code>hCells</code></p>
-					 */
-					getHCells(): sap.ui.layout.form.GridElementCells;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getVCells">vCells</a>.</p><p>Number of cells in vertical direction.</p><p><b>Note:</b> This property has no effect on labels.</p><p>Default value is <code>1</code>.</p>
-					 * @returns number <p>Value of property <code>vCells</code></p>
-					 */
-					getVCells(): number;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getHCells">hCells</a>.</p><p>Number of cells in horizontal direction.</p><p>If set to <code>auto</code>, the size is determined by the number of fields and the available cells. For labels the auto size is 3 cells.</p><p>If set to <code>full</code>, only one field is allowed within the <code>FormElement</code>. It gets the full width of the row and the label is displayed above.</p><p><b>Note:</b> For labels, the full size setting has no effect.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>'auto'</code>.</p>
-					 * @param {sap.ui.layout.form.GridElementCells} sHCells <p>New value for property <code>hCells</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setHCells(sHCells?: sap.ui.layout.form.GridElementCells): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridElementData#methods/getVCells">vCells</a>.</p><p>Number of cells in vertical direction.</p><p><b>Note:</b> This property has no effect on labels.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
-					 * @param {number} iVCells <p>New value for property <code>vCells</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setVCells(iVCells?: number): this;
-				}
-				/**
-				 * <p>This <code>FormLayout</code> renders a <code>Form</code> using an HTML-table based grid. This can be a 16 column grid or an 8 column grid. The grid is stable, so the alignment of the fields is the same for all screen sizes or widths of the <code>Form</code>. Only the width of the single grid columns depends on the available width.</p><p>To adjust the appearance inside the <code>GridLayout</code>, you can use <code>GridContainerData</code> for <code>FormContainers</code> and <code>GridElementData</code> for content fields.</p><p><b>Note:</b> If content fields have a <code>width</code> property this will be ignored, as the width of the controls is set by the grid cells.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
-				 */
-				export class GridLayout extends sap.ui.layout.form.FormLayout {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.GridLayout.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.GridLayout#methods/getSingleColumn">singleColumn</a>.</p><p>If set, the grid renders only one <code>FormContainer</code> per column. That means one <code>FormContainer</code> is below the other. The whole grid has 8 cells per row.</p><p>If not set, <code>FormContainer</code> can use the full width of the grid or two <code>FormContainers</code> can be placed beside each other. In this case the whole grid has 16 cells per row.</p><p>Default value is <code>false</code>.</p>
-					 * @returns boolean <p>Value of property <code>singleColumn</code></p>
-					 */
-					getSingleColumn(): boolean;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.GridLayout#methods/getSingleColumn">singleColumn</a>.</p><p>If set, the grid renders only one <code>FormContainer</code> per column. That means one <code>FormContainer</code> is below the other. The whole grid has 8 cells per row.</p><p>If not set, <code>FormContainer</code> can use the full width of the grid or two <code>FormContainers</code> can be placed beside each other. In this case the whole grid has 16 cells per row.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>false</code>.</p>
-					 * @param {boolean} bSingleColumn <p>New value for property <code>singleColumn</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setSingleColumn(bSingleColumn?: boolean): this;
-				}
-				/**
-				 * <p>The <code>ResponsiveGridLayout</code> control renders a <code>Form</code> using a responsive grid. Internally the <code>Grid</code> control is used for rendering. Using this layout, the <code>Form</code> is rendered in a responsive way. Depending on the available space, the <code>FormContainers</code> are rendered in one or different columns and the labels are rendered in the same row as the fields or above the fields. This behavior can be influenced by the properties of this layout control.</p><p>On the <code>FormContainers</code>, labels and content fields, <code>GridData</code> can be used to change the default rendering. <code>GridData</code> is not supported for <code>FormElements</code>.</p><p><b>Note:</b> If <code>GridData</code> is used, this may result in a much more complex layout than the default one. This means that in some cases, the calculation for the other content may not bring the expected result. In such cases, <code>GridData</code> should be used for all content controls to disable the default behavior.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
-				 */
-				export class ResponsiveGridLayout extends sap.ui.layout.form.FormLayout {
-					/**
-					 * <p>Constructor for a new <code>sap.ui.layout.form.ResponsiveGridLayout</code>.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <code>FormContainers</code> in one row. If only one <code>FormContainer</code> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <code>FormContainers</code> and multiple-column rows are used in the same <code>Form</code> (because every <code>FormContainer</code> has its own <code>Grid</code> inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <code>Form</code> size. The number of <code>FormContainers</code> doesn't matter in this case.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>adjustLabelSpan</code></p>
-					 */
-					getAdjustLabelSpan(): boolean;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint (in pixel) between Medium size and Large size.</p><p>Default value is <code>1024</code>.</p>
-					 * @returns number <p>Value of property <code>breakpointL</code></p>
-					 */
-					getBreakpointL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint (in pixel) between Small size and Medium size.</p><p>Default value is <code>600</code>.</p>
-					 * @returns number <p>Value of property <code>breakpointM</code></p>
-					 */
-					getBreakpointM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint (in pixel) between large size and extra large (XL) size.</p><p>Default value is <code>1440</code>.</p>
-					 * @returns number <p>Value of property <code>breakpointXL</code></p>
-					 */
-					getBreakpointXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>Default value is <code>2</code>.</p>
-					 * @returns number <p>Value of property <code>columnsL</code></p>
-					 */
-					getColumnsL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>Default value is <code>1</code>.</p>
-					 * @returns number <p>Value of property <code>columnsM</code></p>
-					 */
-					getColumnsM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra large size.</p><p>The number of columns for extra large size must not be smaller than the number of columns for large size. <b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>columnsXL</code></p>
-					 */
-					getColumnsXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p>Default value is <code>0</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanL</code></p>
-					 */
-					getEmptySpanL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p>Default value is <code>0</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanM</code></p>
-					 */
-					getEmptySpanM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p>Default value is <code>0</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanS</code></p>
-					 */
-					getEmptySpanS(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used.</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanXL</code></p>
-					 */
-					getEmptySpanXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p>Default value is <code>4</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanL</code></p>
-					 */
-					getLabelSpanL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p>Default value is <code>2</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanM</code></p>
-					 */
-					getLabelSpanM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p>Default value is <code>12</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanS</code></p>
-					 */
-					getLabelSpanS(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used.</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanXL</code></p>
-					 */
-					getLabelSpanXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsXL</code>, <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>singleContainerFullSize</code></p>
-					 */
-					getSingleContainerFullSize(): boolean;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <code>FormContainers</code> in one row. If only one <code>FormContainer</code> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <code>FormContainers</code> and multiple-column rows are used in the same <code>Form</code> (because every <code>FormContainer</code> has its own <code>Grid</code> inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <code>Form</code> size. The number of <code>FormContainers</code> doesn't matter in this case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bAdjustLabelSpan <p>New value for property <code>adjustLabelSpan</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setAdjustLabelSpan(bAdjustLabelSpan?: boolean): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint (in pixel) between Medium size and Large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1024</code>.</p>
-					 * @param {number} iBreakpointL <p>New value for property <code>breakpointL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBreakpointL(iBreakpointL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint (in pixel) between Small size and Medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>600</code>.</p>
-					 * @param {number} iBreakpointM <p>New value for property <code>breakpointM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBreakpointM(iBreakpointM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint (in pixel) between large size and extra large (XL) size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1440</code>.</p>
-					 * @param {number} iBreakpointXL <p>New value for property <code>breakpointXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBreakpointXL(iBreakpointXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsL">columnsL</a>.</p><p>Number of columns for large size.</p><p>The number of columns for large size must not be smaller than the number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {number} iColumnsL <p>New value for property <code>columnsL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsL(iColumnsL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsM">columnsM</a>.</p><p>Number of columns for medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
-					 * @param {number} iColumnsM <p>New value for property <code>columnsM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsM(iColumnsM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getColumnsXL">columnsXL</a>.</p><p>Number of columns for extra large size.</p><p>The number of columns for extra large size must not be smaller than the number of columns for large size. <b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iColumnsXL <p>New value for property <code>columnsXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsXL(iColumnsXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {number} iEmptySpanL <p>New value for property <code>emptySpanL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanL(iEmptySpanL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {number} iEmptySpanM <p>New value for property <code>emptySpanM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanM(iEmptySpanM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {number} iEmptySpanS <p>New value for property <code>emptySpanS</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanS(iEmptySpanS?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iEmptySpanXL <p>New value for property <code>emptySpanXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanXL(iEmptySpanXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
-					 * @param {number} iLabelSpanL <p>New value for property <code>labelSpanL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanL(iLabelSpanL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {number} iLabelSpanM <p>New value for property <code>labelSpanM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanM(iLabelSpanM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
-					 * @param {number} iLabelSpanS <p>New value for property <code>labelSpanS</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanS(iLabelSpanS?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iLabelSpanXL <p>New value for property <code>labelSpanXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanXL(iLabelSpanXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.ResponsiveGridLayout#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsXL</code>, <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bSingleContainerFullSize <p>New value for property <code>singleContainerFullSize</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setSingleContainerFullSize(bSingleContainerFullSize?: boolean): this;
-				}
-				/**
-				 * <p>The <code>ResponsiveLayout</code> renders a <code>Form</code> with a responsive layout. Internally the <code>ResponsiveFlowLayout</code> is used. The responsiveness of this layout tries to best use the available space. This means that the order of the <code>FormContainers</code>, labels and fields depends on the available space.</p><p>On the <code>FormContainers</code>, <code>FormElements</code>, labels and content fields, <code>ResponsiveFlowLayoutData</code> can be used to change the default rendering.</p><p>We suggest using the <code>ResponsiveGridLayout</code> instead of this layout because this is easier to consume and brings more stable responsive output.</p><p><b>Note:</b> If <code>ResponsiveFlowLayoutData</code> are used this may result in a much more complex layout than the default one. This means that in some cases, the calculation for the other content may not bring the expected result. In such cases, <code>ResponsiveFlowLayoutData</code> should be used for all content controls to disable the default behavior.</p><p>This control cannot be used stand-alone, it just renders a <code>Form</code>, so it must be assigned to a <code>Form</code> using the <code>layout</code> aggregation.</p>
-				 */
-				export class ResponsiveLayout extends sap.ui.layout.form.FormLayout {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.ResponsiveLayout.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p><p>This class does not have its own settings, but all settings applicable to the base type <a target="_self" href="api/sap.ui.layout.form.FormLayout#constructor">sap.ui.layout.form.FormLayout</a> can be used.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-				}
-				/**
-				 * <p>A <code>SemanticFormElement</code> element is a special <code>FormElement</code> that contains semantically connected fields. These field controls are divided by delimiter controls. In display mode, they are rendered as one condensed string, in edit mode as separate fields.</p><p><b>Note:</b> Please use the <code>ColumnLayout</code> as <code>layout</code> of the <code>Form</code>. For other layouts, the field arrangement might not be suitable in every case.</p>
-				 */
-				export class SemanticFormElement extends sap.ui.layout.form.FormElement {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.SemanticFormElement.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Adds some fieldLabel to the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
-					 * @param {sap.ui.core.Label} oFieldLabel <p>The fieldLabel to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addFieldLabel(oFieldLabel: sap.ui.core.Label): this;
-					/**
-					 * <p>Destroys all the fieldLabels in the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyFieldLabels(): this;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getDelimiter">delimiter</a>.</p><p>Delimiter symbol to separate the fields.</p><p>Default value is <code>"/"</code>.</p>
-					 * @returns string <p>Value of property <code>delimiter</code></p>
-					 */
-					getDelimiter(): string;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p><p>Labels of the individual fields. Can either be a <code>Label</code> control or a string.</p><p>If a <code>Label</code> control is used, the properties of the <code>Label</code> can be set.</p><p>These labels are not rendered directly. If the <code>Label</code> property of <code>SemanticFormElement</code> is not set, the texts of the labels are concatenated into the <code>Label</code> property of <code>SemanticFormElement</code>. Otherwise the set <code>Label</code> is shown.</p><p><b>Note:</b> If this aggregation is used, a label is assigned to every single field of <code>SemanticFormElement</code>. The order of the labels and the fields must be the same.</p>
-					 * @returns sap.ui.core.Label[] 
-					 */
-					getFieldLabels(): sap.ui.core.Label[];
-					/**
-					 * <p>Checks for the provided <code>sap.ui.core.Label</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>. and returns its index if found or -1 otherwise.</p>
-					 * @param {sap.ui.core.Label} oFieldLabel <p>The fieldLabel whose index is looked for</p>
-					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
-					 */
-					indexOfFieldLabel(oFieldLabel: sap.ui.core.Label): number;
-					/**
-					 * <p>Inserts a fieldLabel into the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
-					 * @param {sap.ui.core.Label} oFieldLabel <p>The fieldLabel to insert; if empty, nothing is inserted</p>
-					 * @param {number} iIndex <p>The <code>0</code>-based index the fieldLabel should be inserted at; for a negative value of <code>iIndex</code>, the fieldLabel is inserted at position 0; for a value greater than the current size of the aggregation, the fieldLabel is inserted at the last position</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					insertFieldLabel(oFieldLabel: sap.ui.core.Label, iIndex: number): this;
-					/**
-					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-					 * @returns sap.ui.core.Label[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllFieldLabels(): sap.ui.core.Label[];
-					/**
-					 * <p>Removes a fieldLabel from the aggregation <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getFieldLabels">fieldLabels</a>.</p>
-					 * @param {number | string | sap.ui.core.Label} vFieldLabel <p>The fieldLabel to remove or its index or id</p>
-					 * @returns sap.ui.core.Label|null <p>The removed fieldLabel or <code>null</code></p>
-					 */
-					removeFieldLabel(vFieldLabel: number | string | sap.ui.core.Label): sap.ui.core.Label | null;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SemanticFormElement#methods/getDelimiter">delimiter</a>.</p><p>Delimiter symbol to separate the fields.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>"/"</code>.</p>
-					 * @param {string} sDelimiter <p>New value for property <code>delimiter</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setDelimiter(sDelimiter?: string): this;
-				}
-				/**
-				 * <p>The <code>SimpleForm</code> control provides an easy-to-use API to create simple forms. Inside a <code>SimpleForm</code> control, a <code><a target="_self" href="api/sap.ui.layout.form.Form">Form</a></code> control is created along with its <code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code> elements and <code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code> elements, but the complexity in the API is not exposed to the user. <ul> <li>A new <code>sap.ui.core.Title</code> element or <code>Toolbar</code> control starts a new group (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>) in the form.</li> <li>A new <code>Label</code> control starts a new row (<code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code>) in the form.</li> <li>All other controls will be assigned to the row (<code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code>) that started with the last label.</li> </ul> Use <code>LayoutData</code> to influence the layout for special cases in the Input/Display controls.</p><p><b>Note:</b> If a more complex form is needed, use the <code><a target="_self" href="api/sap.ui.layout.form.Form">Form</a></code> control instead.</p>
-				 */
-				export class SimpleForm extends sap.ui.core.Control {
-					/**
-					 * <p>Constructor for a new sap.ui.layout.form.SimpleForm.</p><p>Accepts an object literal <code>mSettings</code> that defines initial property values, aggregated and associated objects as well as event handlers. See <a target="_self" href="api/sap.ui.base.ManagedObject#constructor">sap.ui.base.ManagedObject#constructor</a> for a general description of the syntax of the settings object.</p>
-					 * @param {string} sId <p>ID for the new control, generated automatically if no ID is given</p>
-					 * @param {any} mSettings <p>Initial settings for the new control</p>
-					 */
-					constructor(sId?: string, mSettings?: any);
-					/**
-					 * <p>Adds some ariaLabelledBy into the association <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @param {sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addAriaLabelledBy(vAriaLabelledBy: sap.ui.core.ID | sap.ui.core.Control): this;
-					/**
-					 * <p>Adds some content to the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
-					 * @param {sap.ui.core.Element} oContent <p>The content to add; if empty, nothing is inserted</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					addContent(oContent: sap.ui.core.Element): this;
-					/**
-					 * <p>Destroys all the content in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyContent(): this;
-					/**
-					 * <p>Destroys the title in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyTitle(): this;
-					/**
-					 * <p>Destroys the toolbar in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">toolbar</a>.</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					destroyToolbar(): this;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <code>FormContainers</code> in one row. If only one <code>FormContainer</code> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <code>FormContainers</code> and multiple-column rows are used in the same <code>Form</code> (because every <code>FormContainer</code> has its own grid inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <code>Form</code> size. The number of <code>FormContainers</code> doesn't matter in this case.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>adjustLabelSpan</code></p>
-					 */
-					getAdjustLabelSpan(): boolean;
-					/**
-					 * <p>Returns array of IDs of the elements which are the current targets of the association <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @returns sap.ui.core.ID[] 
-					 */
-					getAriaLabelledBy(): sap.ui.core.ID[];
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>SimpleForm</code> content.</p><p>The visualization of the different options depends on the used theme.</p><p>Default value is <code>Translucent</code>.</p>
-					 * @returns sap.ui.layout.BackgroundDesign <p>Value of property <code>backgroundDesign</code></p>
-					 */
-					getBackgroundDesign(): sap.ui.layout.BackgroundDesign;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint between Medium size and Large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>1024</code>.</p>
-					 * @returns number <p>Value of property <code>breakpointL</code></p>
-					 */
-					getBreakpointL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint between Small size and Medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>600</code>.</p>
-					 * @returns number <p>Value of property <code>breakpointM</code></p>
-					 */
-					getBreakpointM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint between Medium size and Large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>1440</code>.</p>
-					 * @returns number <p>Value of property <code>breakpointXL</code></p>
-					 */
-					getBreakpointXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsL">columnsL</a>.</p><p>Form columns for large size. The number of columns for large size must not be smaller than the number of columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>Default value is <code>2</code>.</p>
-					 * @returns number <p>Value of property <code>columnsL</code></p>
-					 */
-					getColumnsL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsM">columnsM</a>.</p><p>Form columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>Default value is <code>1</code>.</p>
-					 * @returns number <p>Value of property <code>columnsM</code></p>
-					 */
-					getColumnsM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsXL">columnsXL</a>.</p><p>Form columns for extra large size. The number of columns for extra large size must not be smaller than the number of columns for large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>columnsXL</code></p>
-					 */
-					getColumnsXL(): number;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p><p>The content of the form is structured in the following way: <ul> <li>Add a <code>sap.ui.core.Title</code> element or <code>Toolbar</code> control to start a new group (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>).</li> <li>Add a <code>Label</code> control to start a new row (<code><a target="_self" href="api/sap.ui.layout.form.FormElement">FormElement</a></code>).</li> <li>Add controls as input fields, text fields or other as needed.</li> <li>Use <code>LayoutData</code> to influence the layout for special cases in the single controls. For example, if a <code>ColumnLayout</code> is used as a layout, the form content is weighted using 4 cells for the labels and 8 cells for the field part, for large size. If there is only little space, the labels are above the fields and each field uses 12 cells. If your input controls should influence their width, you can add <code>sap.ui.layout.ColumnElementData</code> to them via <code>setLayoutData</code> method. Ensure that the sum of the weights in the <code>ColumnElementData</code> is not more than 12, as this is the total width of the input control part of each form row.</li> </ul> Example for a row where the <code>Input</code> uses 6 cells and the second <code>Input</code> uses 2 cells (using <code>ColumnElementData</code>): <pre>
-					new sap.m.Label({text:"Label"});
-					new sap.m.Input({value:"6 cells", layoutData: new sap.ui.layout.ColumnElementData({cellsLarge: 6, cellsSmall: 8})}),
-					new sap.m.Input({value:"2 cells", layoutData: new sap.ui.layout.ColumnElementData({cellsLarge: 2, cellsSmall: 4})}),
-					</pre></p><p>For example, if a <code>ResponsiveGridLayout</code> is used as a layout, there are 12 cells in one row. Depending on the screen size the labels use the defined <code>labelSpan</code>. The remaining cells are used for the fields (and <code>emptySpan</code> if defined). The available cells are distributed to all fields in the row. If one field should use a fixed number of cells you can add <code>sap.ui.layout.GridData</code> to them via <code>setLayoutData</code> method. If there are additional fields in the row they will get the remaining cells. </ul> Example for a row with two <code>Input</code> controls where one uses four cells on small screens, one cell on medium screens and 2 cells on larger screens (using <code>ResponsiveGridLayout</code>): <pre>
-					new sap.m.Label({text:"Label"});
-					new sap.m.Input({value:"auto size"}),
-					new sap.m.Input({value:"fix size", layoutData: new sap.ui.layout.GridData({span: "XL1 L1 M2 S4"})}),
-					</pre></p><p><b>Warning:</b> Do not put any layout or other container controls in here. This could damage the visual layout, keyboard support and screen-reader support. Only labels, titles, toolbars and form controls are allowed. Views are also not supported. Allowed form controls implement the interface <code>sap.ui.core.IFormContent</code>.</p><p>If editable controls are used as content, the <code>editable</code> property must be set to <code>true</code>, otherwise to <code>false</code>. If the <code>editable</code> property is set incorrectly, there will be visual issues like wrong label alignment or wrong spacing between the controls.</p>
-					 * @returns sap.ui.core.Element[] 
-					 */
-					getContent(): sap.ui.core.Element[];
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly.</p>
-					 * @returns boolean <p>Value of property <code>editable</code></p>
-					 */
-					getEditable(): boolean;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the empty cells for large columns.</p><p>Default value is <code>0</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanL</code></p>
-					 */
-					getEmptySpanL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>0</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanM</code></p>
-					 */
-					getEmptySpanM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>0</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanS</code></p>
-					 */
-					getEmptySpanS(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>emptySpanXL</code></p>
-					 */
-					getEmptySpanXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelMinWidth">labelMinWidth</a>.</p><p>Specifies the min-width in pixels of the label in all form rows.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveLayout</code> is used as a layout.</p><p>Default value is <code>192</code>.</p>
-					 * @returns number <p>Value of property <code>labelMinWidth</code></p>
-					 */
-					getLabelMinWidth(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p><b>Note:</b> This property is only used if <code>ResponsiveGridLayout</code> or <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the label size for large columns.</p><p>Default value is <code>4</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanL</code></p>
-					 */
-					getLabelSpanL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>2</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanM</code></p>
-					 */
-					getLabelSpanM(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>12</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanS</code></p>
-					 */
-					getLabelSpanS(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used (from the backward compatibility reasons).</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>labelSpanXL</code></p>
-					 */
-					getLabelSpanXL(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLayout">layout</a>.</p><p>The <code>FormLayout</code> that is used to render the <code>SimpleForm</code>.</p><p>We recommend using the <code>ColumnLayout</code> for rendering a <code>SimpleForm</code>, as its responsiveness uses the space available in the best way possible.</p><p><b>Note</b> If possible, set the <code>layout</code> before adding content to prevent calculations for the default layout.</p><p><b>Note</b> The <code>ResponsiveLayout</code> has been deprecated and must no longer be used. For compatibility reasons the default could not be changed.</p><p>Default value is <code>ResponsiveLayout</code>.</p>
-					 * @returns sap.ui.layout.form.SimpleFormLayout <p>Value of property <code>layout</code></p>
-					 */
-					getLayout(): sap.ui.layout.form.SimpleFormLayout;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getMaxContainerCols">maxContainerCols</a>.</p><p>The maximum amount of groups (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) per row that is used before a new row is started.</p><p><b>Note:</b> If <code><a target="_self" href="api/sap.ui.layout.form.SimpleFormLayout">sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout</a></code> is used as <code>layout</code>, this property is not used. Please use the properties <code>ColumnsL</code> and <code>ColumnsM</code> in this case.</p><p>Default value is <code>2</code>.</p>
-					 * @returns number <p>Value of property <code>maxContainerCols</code></p>
-					 */
-					getMaxContainerCols(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getMinWidth">minWidth</a>.</p><p>The overall minimum width in pixels that is used for the <code>SimpleForm</code>.</p><p>If the available width is below the given <code>minWidth</code> the <code>SimpleForm</code> will create a new row for the next group (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>). The default value is -1, meaning that inner groups (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) will be stacked until <code>maxContainerCols</code> is reached, irrespective of whether a <code>width</code> is reached or the available parents width is reached.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveLayout</code> is used as a layout.</p><p>Default value is <code>-1</code>.</p>
-					 * @returns number <p>Value of property <code>minWidth</code></p>
-					 */
-					getMinWidth(): number;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>Default value is <code>true</code>.</p>
-					 * @returns boolean <p>Value of property <code>singleContainerFullSize</code></p>
-					 */
-					getSingleContainerFullSize(): boolean;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p><p>Title element of the <code>SimpleForm</code>. Can either be a <code>Title</code> element, or a string.</p>
-					 * @returns sap.ui.core.Title|string 
-					 */
-					getTitle(): sap.ui.core.Title | string;
-					/**
-					 * <p>Gets content of aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">toolbar</a>.</p><p>Toolbar of the <code>SimpleForm</code>.</p><p><b>Note:</b> If a <code>Toolbar</code> is used, the <code>Title</code> is ignored. If a title is needed inside the <code>Toolbar</code> it must be added at content to the <code>Toolbar</code>. In this case add the <code>Title</code> to the <code>ariaLabelledBy</code> association.</p>
-					 * @returns sap.ui.core.Toolbar 
-					 */
-					getToolbar(): sap.ui.core.Toolbar;
-					/**
-					 * <p>Gets current value of property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getWidth">width</a>.</p><p>Width of the form.</p>
-					 * @returns sap.ui.core.CSSSize <p>Value of property <code>width</code></p>
-					 */
-					getWidth(): sap.ui.core.CSSSize;
-					/**
-					 * <p>Checks for the provided <code>sap.ui.core.Element</code> in the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>. and returns its index if found or -1 otherwise.</p>
-					 * @param {sap.ui.core.Element} oContent <p>The content whose index is looked for</p>
-					 * @returns number <p>The index of the provided control in the aggregation if found, or -1 otherwise</p>
-					 */
-					indexOfContent(oContent: sap.ui.core.Element): number;
-					/**
-					 * <p>Inserts a content into the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
-					 * @param {sap.ui.core.Element} oContent <p>The content to insert; if empty, nothing is inserted</p>
-					 * @param {number} iIndex <p>The <code>0</code>-based index the content should be inserted at; for a negative value of <code>iIndex</code>, the content is inserted at position 0; for a value greater than the current size of the aggregation, the content is inserted at the last position</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					insertContent(oContent: sap.ui.core.Element, iIndex: number): this;
-					/**
-					 * <p>Removes all the controls in the association named <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @returns sap.ui.core.ID[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllAriaLabelledBy(): sap.ui.core.ID[];
-					/**
-					 * <p>Removes all the controls from the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p><p>Additionally, it unregisters them from the hosting UIArea.</p>
-					 * @returns sap.ui.core.Element[] <p>An array of the removed elements (might be empty)</p>
-					 */
-					removeAllContent(): sap.ui.core.Element[];
-					/**
-					 * <p>Removes an ariaLabelledBy from the association named <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAriaLabelledBy">ariaLabelledBy</a>.</p>
-					 * @param {number | sap.ui.core.ID | sap.ui.core.Control} vAriaLabelledBy <p>The ariaLabelledBy to be removed or its index or ID</p>
-					 * @returns sap.ui.core.ID|null <p>The removed ariaLabelledBy or <code>null</code></p>
-					 */
-					removeAriaLabelledBy(vAriaLabelledBy: number | sap.ui.core.ID | sap.ui.core.Control): sap.ui.core.ID | null;
-					/**
-					 * <p>Removes a content from the aggregation <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getContent">content</a>.</p>
-					 * @param {number | string | sap.ui.core.Element} vContent <p>The content to remove or its index or id</p>
-					 * @returns sap.ui.core.Element|null <p>The removed content or <code>null</code></p>
-					 */
-					removeContent(vContent: number | string | sap.ui.core.Element): sap.ui.core.Element | null;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getAdjustLabelSpan">adjustLabelSpan</a>.</p><p>If set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the number of <code>FormContainers</code> in one row. If only one <code>FormContainer</code> is displayed in one row, <code>labelSpanM</code> is used to define the size of the label. This is the same for medium and large <code>Forms</code>. This is done to align the labels on forms where full-size <code>FormContainers</code> and multiple-column rows are used in the same <code>Form</code> (because every <code>FormContainer</code> has its own grid inside).</p><p>If not set, the usage of <code>labelSpanL</code> and <code>labelSpanM</code> are dependent on the <code>Form</code> size. The number of <code>FormContainers</code> doesn't matter in this case.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bAdjustLabelSpan <p>New value for property <code>adjustLabelSpan</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setAdjustLabelSpan(bAdjustLabelSpan?: boolean): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBackgroundDesign">backgroundDesign</a>.</p><p>Specifies the background color of the <code>SimpleForm</code> content.</p><p>The visualization of the different options depends on the used theme.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>Translucent</code>.</p>
-					 * @param {sap.ui.layout.BackgroundDesign} sBackgroundDesign <p>New value for property <code>backgroundDesign</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBackgroundDesign(sBackgroundDesign?: sap.ui.layout.BackgroundDesign): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointL">breakpointL</a>.</p><p>Breakpoint between Medium size and Large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1024</code>.</p>
-					 * @param {number} iBreakpointL <p>New value for property <code>breakpointL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBreakpointL(iBreakpointL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointM">breakpointM</a>.</p><p>Breakpoint between Small size and Medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>600</code>.</p>
-					 * @param {number} iBreakpointM <p>New value for property <code>breakpointM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBreakpointM(iBreakpointM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getBreakpointXL">breakpointXL</a>.</p><p>Breakpoint between Medium size and Large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1440</code>.</p>
-					 * @param {number} iBreakpointXL <p>New value for property <code>breakpointXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setBreakpointXL(iBreakpointXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsL">columnsL</a>.</p><p>Form columns for large size. The number of columns for large size must not be smaller than the number of columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {number} iColumnsL <p>New value for property <code>columnsL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsL(iColumnsL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsM">columnsM</a>.</p><p>Form columns for medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>1</code>.</p>
-					 * @param {number} iColumnsM <p>New value for property <code>columnsM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsM(iColumnsM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getColumnsXL">columnsXL</a>.</p><p>Form columns for extra large size. The number of columns for extra large size must not be smaller than the number of columns for large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>columnsL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iColumnsXL <p>New value for property <code>columnsXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setColumnsXL(iColumnsXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEditable">editable</a>.</p><p>Applies a device-specific and theme-specific line height and label alignment to the form rows if the form has editable content. If set, all (not only the editable) rows of the form will get the line height of editable fields.</p><p>The labels inside the form will be rendered by default in the according mode.</p><p><b>Note:</b> The setting of this property does not change the content of the form. For example, <code>Input</code> controls in a form with <code>editable</code> set to false are still editable.</p><p><b>Warning:</b> If this property is wrongly set, this might lead to visual issues. The labels and fields might be misaligned, the labels might be rendered in the wrong mode, and the spacing between the single controls might be wrong. Also, controls that do not fit the mode might be rendered incorrectly.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-					 * @param {boolean} bEditable <p>New value for property <code>editable</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEditable(bEditable?: boolean): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanL">emptySpanL</a>.</p><p>Number of grid cells that are empty at the end of each line on large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> or a <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the empty cells for large columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {number} iEmptySpanL <p>New value for property <code>emptySpanL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanL(iEmptySpanL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanM">emptySpanM</a>.</p><p>Number of grid cells that are empty at the end of each line on medium size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {number} iEmptySpanM <p>New value for property <code>emptySpanM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanM(iEmptySpanM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanS">emptySpanS</a>.</p><p>Number of grid cells that are empty at the end of each line on small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>0</code>.</p>
-					 * @param {number} iEmptySpanS <p>New value for property <code>emptySpanS</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanS(iEmptySpanS?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getEmptySpanXL">emptySpanXL</a>.</p><p>Number of grid cells that are empty at the end of each line on extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>emptySpanL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iEmptySpanXL <p>New value for property <code>emptySpanXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setEmptySpanXL(iEmptySpanXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelMinWidth">labelMinWidth</a>.</p><p>Specifies the min-width in pixels of the label in all form rows.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>192</code>.</p>
-					 * @param {number} iLabelMinWidth <p>New value for property <code>labelMinWidth</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelMinWidth(iLabelMinWidth?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanL">labelSpanL</a>.</p><p>Default span for labels in large size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is only used if more than 1 <code>FormContainer</code> is in one line. If only 1 <code>FormContainer</code> is in the line, then the <code>labelSpanM</code> value is used.</p><p><b>Note:</b> This property is only used if <code>ResponsiveGridLayout</code> or <code>ColumnLayout</code> is used as a layout. If a <code>ColumnLayout</code> is used, this property defines the label size for large columns.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>4</code>.</p>
-					 * @param {number} iLabelSpanL <p>New value for property <code>labelSpanL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanL(iLabelSpanL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanM">labelSpanM</a>.</p><p>Default span for labels in medium size.</p><p><b>Note:</b> If <code>adjustLabelSpan</code> is set, this property is used for full-size <code>FormContainers</code>. If more than one <code>FormContainer</code> is in one line, <code>labelSpanL</code> is used.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {number} iLabelSpanM <p>New value for property <code>labelSpanM</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanM(iLabelSpanM?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanS">labelSpanS</a>.</p><p>Default span for labels in small size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>12</code>.</p>
-					 * @param {number} iLabelSpanS <p>New value for property <code>labelSpanS</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanS(iLabelSpanS?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLabelSpanXL">labelSpanXL</a>.</p><p>Default span for labels in extra large size.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout. If the default value -1 is not overwritten with the meaningful one then the <code>labelSpanL</code> value is used (from the backward compatibility reasons).</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iLabelSpanXL <p>New value for property <code>labelSpanXL</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLabelSpanXL(iLabelSpanXL?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getLayout">layout</a>.</p><p>The <code>FormLayout</code> that is used to render the <code>SimpleForm</code>.</p><p>We recommend using the <code>ColumnLayout</code> for rendering a <code>SimpleForm</code>, as its responsiveness uses the space available in the best way possible.</p><p><b>Note</b> If possible, set the <code>layout</code> before adding content to prevent calculations for the default layout.</p><p><b>Note</b> The <code>ResponsiveLayout</code> has been deprecated and must no longer be used. For compatibility reasons the default could not be changed.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>ResponsiveLayout</code>.</p>
-					 * @param {sap.ui.layout.form.SimpleFormLayout} sLayout <p>New value for property <code>layout</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setLayout(sLayout?: sap.ui.layout.form.SimpleFormLayout): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getMaxContainerCols">maxContainerCols</a>.</p><p>The maximum amount of groups (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) per row that is used before a new row is started.</p><p><b>Note:</b> If <code><a target="_self" href="api/sap.ui.layout.form.SimpleFormLayout">sap.ui.layout.form.SimpleFormLayout.ResponsiveGridLayout</a></code> is used as <code>layout</code>, this property is not used. Please use the properties <code>ColumnsL</code> and <code>ColumnsM</code> in this case.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>2</code>.</p>
-					 * @param {number} iMaxContainerCols <p>New value for property <code>maxContainerCols</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setMaxContainerCols(iMaxContainerCols?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getMinWidth">minWidth</a>.</p><p>The overall minimum width in pixels that is used for the <code>SimpleForm</code>.</p><p>If the available width is below the given <code>minWidth</code> the <code>SimpleForm</code> will create a new row for the next group (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainer</a></code>). The default value is -1, meaning that inner groups (<code><a target="_self" href="api/sap.ui.layout.form.FormContainer">FormContainers</a></code>) will be stacked until <code>maxContainerCols</code> is reached, irrespective of whether a <code>width</code> is reached or the available parents width is reached.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>-1</code>.</p>
-					 * @param {number} iMinWidth <p>New value for property <code>minWidth</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setMinWidth(iMinWidth?: number): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getSingleContainerFullSize">singleContainerFullSize</a>.</p><p>If the <code>Form</code> contains only one single <code>FormContainer</code> and this property is set, the <code>FormContainer</code> is displayed using the full size of the <code>Form</code>. In this case the properties <code>columnsL</code> and <code>columnsM</code> are ignored.</p><p>In all other cases the <code>FormContainer</code> is displayed in the size of one column.</p><p><b>Note:</b> This property is only used if a <code>ResponsiveGridLayout</code> is used as a layout.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p><p>Default value is <code>true</code>.</p>
-					 * @param {boolean} bSingleContainerFullSize <p>New value for property <code>singleContainerFullSize</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setSingleContainerFullSize(bSingleContainerFullSize?: boolean): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getTitle">title</a>.</p>
-					 * @param {sap.ui.core.Title | string} vTitle <p>The title to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setTitle(vTitle: sap.ui.core.Title | string): this;
-					/**
-					 * <p>Sets the aggregated <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getToolbar">toolbar</a>.</p>
-					 * @param {sap.ui.core.Toolbar} oToolbar <p>The toolbar to set</p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setToolbar(oToolbar: sap.ui.core.Toolbar): this;
-					/**
-					 * <p>Sets a new value for property <a target="_self" href="api/sap.ui.layout.form.SimpleForm#methods/getWidth">width</a>.</p><p>Width of the form.</p><p>When called with a value of <code>null</code> or <code>undefined</code>, the default value of the property will be restored.</p>
-					 * @param {sap.ui.core.CSSSize} sWidth <p>New value for property <code>width</code></p>
-					 * @returns this <p>Reference to <code>this</code> in order to allow method chaining</p>
-					 */
-					setWidth(sWidth?: sap.ui.core.CSSSize): this;
-				}
-				/**
-				 * <p><p>Available <code>FormLayouts</code> used to render a <code>SimpleForm</code>.</p></p>
-				 */
-				export enum SimpleFormLayout {
-					/**
-					 * <p>Uses the <code>ColumnLayout</code> layout to render the <code>SimpleForm</code> control</p>
-					 */
-					ColumnLayout = "ColumnLayout",
-					/**
-					 * <p>Uses the <code>GridLayout</code> layout to render the <code>SimpleForm</code> control<span class="sapUiDeprecated"><br>Deprecated as of version 1.67.0. as the <em>sap.ui.commons</em> library is deprecated, and the <em>GridLayout</em> must not be used in responsive applications. Please use <em>ResponsiveGridLayout</em> or <em>ColumnLayout</em> instead.</span></p>
-					 */
-					GridLayout = "GridLayout",
-					/**
-					 * <p>Uses the <code>ResponsiveGridLayout</code> layout to render the <code>SimpleForm</code> control</p>
-					 */
-					ResponsiveGridLayout = "ResponsiveGridLayout",
-					/**
-					 * <p>Uses the <code>ResponsiveLayout</code> layout to render the <code>SimpleForm</code> control<span class="sapUiDeprecated"><br>Deprecated as of version 1.93. replaced by <a target="_self" href="api/sap.ui.layout.form.SimpleFormLayout">ColumnLayout</a></span></p>
-					 */
-					ResponsiveLayout = "ResponsiveLayout",
 				}
 			}
 		}
