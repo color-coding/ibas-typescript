@@ -518,7 +518,7 @@ namespace sap {
                 }
             });
 
-            function createRowSettings(type: "Document" | "DocumentLine"): sap.ui.table.RowSettings {
+            function createRowSettings(type: "Document" | "DocumentLine" | "MasterData"): sap.ui.table.RowSettings {
                 if (type === "Document") {
                     return new sap.ui.table.RowSettings("", {
                         highlight: {
@@ -564,6 +564,32 @@ namespace sap {
                             ],
                             formatter(lineStatus: ibas.emDocumentStatus, canceled: ibas.emYesNo, deleted: ibas.emYesNo): sap.ui.core.ValueState {
                                 return data.status(lineStatus, undefined, canceled, deleted);
+                            }
+                        }
+                    });
+                } else if (type === "MasterData") {
+                    return new sap.ui.table.RowSettings("", {
+                        highlight: {
+                            parts: [
+                                {
+                                    path: "activated",
+                                    type: new data.YesNo(),
+                                },
+                                {
+                                    path: "deleted",
+                                    type: new data.YesNo(),
+                                },
+                                {
+                                    path: "approvalStatus",
+                                    type: new data.ApprovalStatus(),
+                                },
+                            ],
+                            formatter(activated: ibas.emYesNo, deleted: ibas.emYesNo, approvalStatus: ibas.emApprovalStatus): sap.ui.core.ValueState {
+                                // tslint:disable-next-line: triple-equals
+                                if (activated == ibas.emYesNo.NO) {
+                                    return sap.ui.core.ValueState.Error;
+                                }
+                                return data.status(ibas.emDocumentStatus.RELEASED, approvalStatus, undefined, deleted);
                             }
                         }
                     });
@@ -633,6 +659,8 @@ namespace sap {
                                 mSettings.rowSettingsTemplate = createRowSettings("Document");
                             } else if (mSettings.dataInfo.prototype instanceof ibas.BODocumentLine) {
                                 mSettings.rowSettingsTemplate = createRowSettings("DocumentLine");
+                            } else if (mSettings.dataInfo.prototype instanceof ibas.BOMasterData) {
+                                mSettings.rowSettingsTemplate = createRowSettings("MasterData");
                             }
                         }
                     }
@@ -701,6 +729,8 @@ namespace sap {
                                                         this.setRowSettingsTemplate(createRowSettings("Document"));
                                                     } else if (boInfo.type === "DocumentLine") {
                                                         this.setRowSettingsTemplate(createRowSettings("DocumentLine"));
+                                                    } else if (boInfo.type === "MasterData") {
+                                                        this.setRowSettingsTemplate(createRowSettings("MasterData"));
                                                     }
                                                 }
                                                 this.updatePropertyColumns(boInfo);

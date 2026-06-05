@@ -1,6 +1,7 @@
 {
   "sys_bo_not_registered": "业务对象[{0}]没有注册",
   "sys_bo_type_invalid": "业务对象[{0}]的注册类型无效",
+  "sys_bo_tag_deleted": "标记删除",
   "sys_cannot_create_mapping_type_instance": "无法创建映射类型实例",
   "sys_cannot_converted_to_type": "不能把[{1}]转换到类型[{0}]",
   "sys_data_converter_parsing_faild": "数据转换者的解析失败",

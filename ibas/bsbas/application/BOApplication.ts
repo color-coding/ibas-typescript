@@ -316,8 +316,10 @@ namespace ibas {
         protected viewShowed(): void {
             // 修改标题
             if (!objects.isNull(this.editData)) {
-                let data: IApprovalData = <IApprovalData><any>this.editData;
-                if (!objects.isNull(data.approvalStatus)
+                let data: any = <any>this.editData;
+                if (data.referenced === emYesNo.YES && data.deleted === emYesNo.YES) {
+                    this.view.title = strings.format("{0} · {1}", this.description, i18n.prop("sys_bo_tag_deleted"));
+                } else if (!objects.isNull(data.approvalStatus)
                     && data.approvalStatus !== emApprovalStatus.UNAFFECTED) {
                     this.view.title = strings.format("{0} · {1}", this.description, enums.describe(emApprovalStatus, data.approvalStatus));
                 } else {
@@ -461,8 +463,10 @@ namespace ibas {
         protected viewShowed(): void {
             // 修改标题
             if (!objects.isNull(this.viewData)) {
-                let data: IApprovalData = <IApprovalData><any>this.viewData;
-                if (!objects.isNull(data.approvalStatus)
+                let data: any = <any>this.viewData;
+                if (data.referenced === emYesNo.YES && data.deleted === emYesNo.YES) {
+                    this.view.title = strings.format("{0} · {1}", this.description, i18n.prop("sys_bo_tag_deleted"));
+                } else if (!objects.isNull(data.approvalStatus)
                     && data.approvalStatus !== emApprovalStatus.UNAFFECTED) {
                     this.view.title = strings.format("{0} · {1}", this.description, enums.describe(emApprovalStatus, data.approvalStatus));
                 } else {
