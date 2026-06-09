@@ -154,7 +154,7 @@ namespace shell {
                                 })
                             ),
                             new sap.m.Label("", {
-                                text: ibas.i18n.prop("shell_plantform")
+                                text: ibas.i18n.prop("shell_platform")
                             }),
                             new sap.m.VBox("", {
                                 fitContainer: true,

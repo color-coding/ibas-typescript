@@ -100,21 +100,21 @@ namespace ibas {
     export class JudgmentLinkItem implements IJudgmentLinkItem {
 
         constructor() {
-            this.relationship = emJudmentOperation.AND;
+            this.relationship = emJudgmentOperation.AND;
             this.openBracket = 0;
-            this.operation = emJudmentOperation.EQUAL;
+            this.operation = emJudgmentOperation.EQUAL;
             this.closeBracket = 0;
         }
         /** 关系（and、or） */
-        relationship: emJudmentOperation;
+        relationship: emJudgmentOperation;
         /** 开括号 */
         openBracket: number;
         /** 左取值 */
-        leftOperter: IValueOperator;
+        leftOperator: IValueOperator;
         /** 比较方式 */
-        operation: emJudmentOperation;
+        operation: emJudgmentOperation;
         /** 右取值 */
-        rightOperter: IValueOperator;
+        rightOperator: IValueOperator;
         /** 闭括号 */
         closeBracket: number;
         /** 输出字符串 */
@@ -122,16 +122,16 @@ namespace ibas {
             let stringBuilder: StringBuilder = new StringBuilder();
             stringBuilder.map(null, "");
             stringBuilder.map(undefined, "");
-            stringBuilder.append(enums.toString(emJudmentOperation, this.relationship));
+            stringBuilder.append(enums.toString(emJudgmentOperation, this.relationship));
             stringBuilder.append(" ");
             for (let index: number = 0; index < this.openBracket; index++) {
                 stringBuilder.append("(");
             }
-            stringBuilder.append(this.leftOperter.getValue());
+            stringBuilder.append(this.leftOperator.getValue());
             stringBuilder.append(" ");
-            stringBuilder.append(enums.toString(emJudmentOperation, this.operation));
+            stringBuilder.append(enums.toString(emJudgmentOperation, this.operation));
             stringBuilder.append(" ");
-            stringBuilder.append(this.rightOperter.getValue());
+            stringBuilder.append(this.rightOperator.getValue());
             for (let index: number = 0; index < this.closeBracket; index++) {
                 stringBuilder.append(")");
             }
@@ -177,7 +177,7 @@ namespace ibas {
             }
             if (!done) {
                 // 未标记完成，存在不匹配的括号
-                throw new Error(i18n.prop("sys_invaild_judgment_link_bracket", bracket));
+                throw new Error(i18n.prop("sys_invalid_judgment_link_bracket", bracket));
             }
             return currentJudgmentItems;
         }
@@ -199,13 +199,13 @@ namespace ibas {
             // 设置所以条件的比较值
             for (let item of this.judgmentItems) {
                 // 左值
-                if (item.leftOperter instanceof PropertyValueOperator) {
-                    let operator: IPropertyValueOperator = <IPropertyValueOperator>item.leftOperter;
+                if (item.leftOperator instanceof PropertyValueOperator) {
+                    let operator: IPropertyValueOperator = <IPropertyValueOperator>item.leftOperator;
                     operator.setValue(value);
                 }
                 // 右值
-                if (item.rightOperter instanceof PropertyValueOperator) {
-                    let operator: IPropertyValueOperator = <IPropertyValueOperator>item.rightOperter;
+                if (item.rightOperator instanceof PropertyValueOperator) {
+                    let operator: IPropertyValueOperator = <IPropertyValueOperator>item.rightOperator;
                     operator.setValue(value);
                 }
             }
@@ -242,7 +242,7 @@ namespace ibas {
                     // 第一个表达式
                     rootJudExp = judgment.expression.create<boolean>("boolean");
                     rootJudExp.leftValue = currentValue;
-                    rootJudExp.operation = emJudmentOperation.AND;
+                    rootJudExp.operation = emJudgmentOperation.AND;
                     rootJudExp.rightValue = true;
                 } else {
                     // 后续表达式
@@ -265,10 +265,10 @@ namespace ibas {
          * @param judgeItem 判断项
          */
         protected createExpression(judgeItem: IJudgmentLinkItem): IJudgmentExpression<any> {
-            let expression: IJudgmentExpression<any> = judgment.expression.create(judgeItem.leftOperter.valueType());
-            expression.leftValue = judgeItem.leftOperter.getValue();
+            let expression: IJudgmentExpression<any> = judgment.expression.create(judgeItem.leftOperator.valueType());
+            expression.leftValue = judgeItem.leftOperator.getValue();
             expression.operation = judgeItem.operation;
-            expression.rightValue = judgeItem.rightOperter.getValue();
+            expression.rightValue = judgeItem.rightOperator.getValue();
             return expression;
         }
     }
@@ -294,17 +294,17 @@ namespace ibas {
             // 设置所以条件的比较值
             for (let item of this.judgmentItems) {
                 // 左值
-                if (item.leftOperter instanceof PropertyValueOperator) {
-                    let operator: IPropertyValueOperator = item.leftOperter;
+                if (item.leftOperator instanceof PropertyValueOperator) {
+                    let operator: IPropertyValueOperator = item.leftOperator;
                     operator.setValue(value);
                 }
                 // 右值
-                if (item.rightOperter instanceof PropertyValueOperator) {
-                    let operator: IPropertyValueOperator = item.rightOperter;
+                if (item.rightOperator instanceof PropertyValueOperator) {
+                    let operator: IPropertyValueOperator = item.rightOperator;
                     operator.setValue(value);
-                } else if (item.rightOperter instanceof ValueOperatorEx) {
-                    let operator: IValueOperatorEx = item.rightOperter;
-                    operator.converter = judgment.converter.create(item.leftOperter.valueType());
+                } else if (item.rightOperator instanceof ValueOperatorEx) {
+                    let operator: IValueOperatorEx = item.rightOperator;
+                    operator.converter = judgment.converter.create(item.leftOperator.valueType());
                 }
                 jItems.add(item);
             }
@@ -329,17 +329,17 @@ namespace ibas {
          * @param judgeItem 判断项
          */
         protected createExpression(judgeItem: IJudgmentLinkItem): IJudgmentExpression<any> {
-            if (judgeItem.operation === emJudmentOperation.BEGIN_WITH
-                || judgeItem.operation === emJudmentOperation.END_WITH
-                || judgeItem.operation === emJudmentOperation.NOT_BEGIN_WITH
-                || judgeItem.operation === emJudmentOperation.NOT_END_WITH
-                || judgeItem.operation === emJudmentOperation.CONTAIN
-                || judgeItem.operation === emJudmentOperation.NOT_CONTAIN) {
+            if (judgeItem.operation === emJudgmentOperation.BEGIN_WITH
+                || judgeItem.operation === emJudgmentOperation.END_WITH
+                || judgeItem.operation === emJudgmentOperation.NOT_BEGIN_WITH
+                || judgeItem.operation === emJudgmentOperation.NOT_END_WITH
+                || judgeItem.operation === emJudgmentOperation.CONTAIN
+                || judgeItem.operation === emJudgmentOperation.NOT_CONTAIN) {
                 // 此操作均为字符串独有操作
                 let expression: IJudgmentExpression<string> = judgment.expression.create("string");
-                expression.leftValue = strings.valueOf(judgeItem.leftOperter.getValue());
+                expression.leftValue = strings.valueOf(judgeItem.leftOperator.getValue());
                 expression.operation = judgeItem.operation;
-                expression.rightValue = strings.valueOf(judgeItem.rightOperter.getValue());
+                expression.rightValue = strings.valueOf(judgeItem.rightOperator.getValue());
                 return expression;
             }
             return super.createExpression(judgeItem);
@@ -361,7 +361,7 @@ namespace ibas {
                 jItem.openBracket = item.bracketOpen;
                 jItem.closeBracket = item.bracketClose;
                 if (item.relationship === emConditionRelationship.NONE) {
-                    jItem.relationship = emJudmentOperation.AND;
+                    jItem.relationship = emJudgmentOperation.AND;
                 } else {
                     jItem.relationship = judgment.convert.relationship(item.relationship);
                 }
@@ -369,23 +369,23 @@ namespace ibas {
                 // 左边取值
                 let operator: IPropertyValueOperator = new PropertyValueOperator();
                 operator.propertyName = item.alias;
-                jItem.leftOperter = operator;
+                jItem.leftOperator = operator;
                 // 右边取值
                 if (!strings.isEmpty(item.comparedAlias)) {
                     // 与属性比较
                     operator = new PropertyValueOperator();
                     operator.propertyName = item.comparedAlias;
-                    jItem.rightOperter = operator;
+                    jItem.rightOperator = operator;
                 } else {
                     // 与值比较
                     let operator: IValueOperator = new ValueOperatorEx();
                     operator.setValue(item.value);
-                    jItem.rightOperter = operator;
+                    jItem.rightOperator = operator;
                 }
                 jLinkItems.add(jItem);
             }
             if (jLinkItems.length === 0) {
-                throw new Error(i18n.prop("sys_invaild_judgment_link_conditions"));
+                throw new Error(i18n.prop("sys_invalid_judgment_link_conditions"));
             }
             super.judgmentItems = jLinkItems;
             return this;

@@ -357,7 +357,7 @@ namespace ibas {
         next(lastBO: BusinessObject<any>): ICriteria {
             if (lastBO != null) {
                 let sortType: emSortType = emSortType.ASCENDING;
-                let operation: emConditionOperation = emConditionOperation.GRATER_THAN;
+                let operation: emConditionOperation = emConditionOperation.GREATER_THAN;
                 if (this.sorts.length > 0) {
                     sortType = this.sorts[0].sortType;
                 }
@@ -388,7 +388,7 @@ namespace ibas {
                     sortType = this.sorts[0].sortType;
                 }
                 if (sortType === emSortType.DESCENDING) {
-                    operation = emConditionOperation.GRATER_THAN;
+                    operation = emConditionOperation.GREATER_THAN;
                 }
                 let boCriteria: ICriteria = this.boCriteria(firstBO, operation);
                 if (boCriteria == null) {
@@ -705,9 +705,9 @@ namespace ibas {
                     return "like";
                 case emConditionOperation.EQUAL:
                     return "=";
-                case emConditionOperation.GRATER_EQUAL:
+                case emConditionOperation.GREATER_EQUAL:
                     return ">=";
-                case emConditionOperation.GRATER_THAN:
+                case emConditionOperation.GREATER_THAN:
                     return ">";
                 case emConditionOperation.IS_NULL:
                     return "is null";

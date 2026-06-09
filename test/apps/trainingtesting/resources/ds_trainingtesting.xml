@@ -2,7 +2,7 @@
 <!DOCTYPE DomainModel>
 <Domain Name="TrainingTesting" ShortName="TT">
   <Model Name="Material" Description="物料主数据" ModelType="MasterData" Mapped="${Company}_TT_OITM">
-    <Property Name="Code" Description="物料编号" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Code" PrimaryKey="Yes" UniqueKey="Yes"/>
+    <Property Name="Code" Description="物料编号" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Code" UniqueKey="Yes"/>
     <Property Name="Name" Description="物料名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name"/>
     <Property Name="OnOrder" Description="订购数量" DataType="Decimal" DataSubType="Quantity" EditSize="8" Mapped="OnOrder"/>
     <Property Name="UOM" Description="单位" DataType="Alphanumeric" DataSubType="Default" EditSize="8" Mapped="UOM"/>
@@ -29,7 +29,7 @@
   </Model>
   <BusinessObject MappedModel="Material" ShortName="${Company}_TT_MATERIALS"/>
   <Model Name="Customer" Description="客户主数据" ModelType="MasterData" Mapped="${Company}_TT_OCUS">
-    <Property Name="Code" Description="客户编号" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Code" PrimaryKey="Yes" UniqueKey="Yes"/>
+    <Property Name="Code" Description="客户编号" DataType="Alphanumeric" DataSubType="Default" EditSize="20" Mapped="Code" UniqueKey="Yes"/>
     <Property Name="Name" Description="客户名称" DataType="Alphanumeric" DataSubType="Default" EditSize="100" Mapped="Name"/>
     <Property Name="DocEntry" Description="编号" DataType="Numeric" DataSubType="Default" EditSize="8" Mapped="DocEntry" PrimaryKey="Yes"/>
     <Property Name="ObjectCode" Description="类型" DataType="Alphanumeric" DataSubType="Default" EditSize="30" Mapped="Object"/>
@@ -156,6 +156,7 @@
   </Model>
   <BusinessObject MappedModel="SalesOrder" ShortName="${Company}_TT_SALESORDER">
     <RelatedBO Relation="OneToMany" MappedModel="SalesOrderItem">
-      <RelatedBO Relation="OneToMany" MappedModel="BatchItem"/></RelatedBO>
+      <RelatedBO Relation="OneToMany" MappedModel="BatchItem"/>
+    </RelatedBO>
   </BusinessObject>
 </Domain>

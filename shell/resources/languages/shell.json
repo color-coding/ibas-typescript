@@ -1,6 +1,6 @@
 {
     "shell_name": "Intelligent Business Application System",
-    "shell_copyright": "© 2016-2025 Color-Coding Studio",
+    "shell_copyright": "© 2016-2026 Color-Coding Studio",
     "shell_license": "© Color-Coding Studio, licensed under the Apache License, Version 2.0.",
     "shell_icon": "sap-icon://blur",
     "shell_app_main": "Main",
@@ -14,7 +14,7 @@
     "shell_user": "User",
     "shell_password": "Password",
     "shell_language": "Language",
-    "shell_plantform": "Platform",
+    "shell_platform": "Platform",
     "shell_login": "Login",
     "shell_logging_system": "Logging into the system",
     "shell_user_not_found": "User not found",
@@ -81,7 +81,7 @@
     "shell_waiting": "Waiting",
     "shell_browse": "Browse",
     "shell_check": "Check",
-    "shell_sucessful": "Operation successful",
+    "shell_successful": "Operation successful",
     "shell_batch": "Batch",
     "shell_all": "All",
     "shell_my": "My",
@@ -134,5 +134,10 @@
     "shell_multiple_data_save_continue": "Save [{0}] data in total?",
     "shell_delete_continue": "Please confirm deletion?",
     "shell_switched_user_functions": "Switched to user functions",
-    "shell_exit_continue": "Please confirm exit?"
+    "shell_exit_continue": "Please confirm exit?",
+    "shell_verification_code": "Verification Code",
+    "shell_please_input_results": "Please input results",
+    "shell_query_input_tip": "Search",
+    "shell_data_referenced": "Data [{0}] has been referenced",
+    "shell_others": "Others"
 }

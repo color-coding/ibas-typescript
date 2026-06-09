@@ -30,11 +30,11 @@ namespace ibas {
         /** 等于(=) */
         EQUAL,
         /** 大于(>) */
-        GRATER_THAN,
+        GREATER_THAN,
         /** 小于(<) */
         LESS_THAN,
         /** 大于等于(>=) */
-        GRATER_EQUAL,
+        GREATER_EQUAL,
         /** 小于等于(<=) */
         LESS_EQUAL,
         /** 不等于(<>) */
@@ -166,7 +166,7 @@ namespace ibas {
     /**
      * 判断操作
      */
-    export enum emJudmentOperation {
+    export enum emJudgmentOperation {
         /**
          * 等于
          */
@@ -178,7 +178,7 @@ namespace ibas {
         /**
          * 大于
          */
-        GRATER_THAN,
+        GREATER_THAN,
         /**
          * 小于
          */
@@ -186,7 +186,7 @@ namespace ibas {
         /**
          * 大于等于
          */
-        GRATER_EQUAL,
+        GREATER_EQUAL,
         /**
          * 小于等于
          */

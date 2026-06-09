@@ -472,7 +472,7 @@ namespace ibas {
                 }
                 let tType: any = boFactory.classOf(dType);
                 if (objects.isNull(tType)) {
-                    throw new Error(i18n.prop("sys_invaild_mapping_type", dType));
+                    throw new Error(i18n.prop("sys_invalid_mapping_type", dType));
                 }
                 let newData: any = new tType;
                 if (objects.isNull(newData)) {
@@ -532,9 +532,9 @@ namespace ibas {
                             if (userField.valueType === emDbFieldType.DATE) {
                                 userField.value = dates.valueOf(remote.Value);
                             } else if (userField.valueType === emDbFieldType.NUMERIC) {
-                                userField.value = parseInt(remote.Value, 0);
+                                userField.value = remote.Value ? parseInt(remote.Value, 0) : 0;
                             } else if (userField.valueType === emDbFieldType.DECIMAL) {
-                                userField.value = parseFloat(remote.Value);
+                                userField.value = remote.Value ? parseFloat(remote.Value) : 0;
                             } else {
                                 userField.value = remote.Value;
                             }

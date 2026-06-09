@@ -1,70 +1,424 @@
-﻿<!DOCTYPE html>
-<html>
+<!DOCTYPE html>
+<html lang="en">
 
 <head>
-    <title>ibas diagnosis</title>
     <meta charset="utf-8" />
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <script type="text/javascript" src="./assets/js/jquery.min.js"></script>
-    <link type="text/css" rel="stylesheet" href="./assets/css/plans.css" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ibas diagnosis</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+            background: #f5f6f8;
+            color: #1f2329;
+            line-height: 1.6;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 760px;
+            margin: 0 auto;
+        }
+
+        .header {
+            margin-bottom: 32px;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            font-weight: 600;
+            margin-bottom: 8px;
+        }
+
+        .header p {
+            color: #646a73;
+            font-size: 15px;
+        }
+
+        .summary {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            background: #fff;
+            border: 1px solid #e5e6eb;
+            border-radius: 8px;
+            padding: 20px 24px;
+            margin-bottom: 24px;
+        }
+
+        .summary .badge {
+            flex-shrink: 0;
+            width: 48px;
+            height: 48px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 700;
+            color: #fff;
+        }
+
+        .summary.pass .badge {
+            background: #00b42a;
+        }
+
+        .summary.fail .badge {
+            background: #f53f3f;
+        }
+
+        .summary .text h2 {
+            font-size: 18px;
+            font-weight: 600;
+            margin-bottom: 2px;
+        }
+
+        .summary .text p {
+            color: #646a73;
+            font-size: 14px;
+        }
+
+        .section {
+            background: #fff;
+            border: 1px solid #e5e6eb;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #646a73;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            padding: 16px 24px;
+            border-bottom: 1px solid #e5e6eb;
+            background: #fafbfc;
+        }
+
+        .item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 12px 24px;
+            border-bottom: 1px solid #f2f3f5;
+        }
+
+        .item:last-child {
+            border-bottom: none;
+        }
+
+        .item .name {
+            font-size: 14px;
+            font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace;
+        }
+
+        .item .status {
+            flex-shrink: 0;
+            font-size: 13px;
+            font-weight: 600;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .item .status::before {
+            content: "";
+            display: inline-block;
+            width: 8px;
+            height: 8px;
+            border-radius: 50%;
+        }
+
+        .status.pass {
+            color: #00b42a;
+        }
+
+        .status.pass::before {
+            background: #00b42a;
+        }
+
+        .status.fail {
+            color: #f53f3f;
+        }
+
+        .status.fail::before {
+            background: #f53f3f;
+        }
+
+        .browsers {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(160px, 1fr));
+            gap: 16px;
+            margin-top: 8px;
+        }
+
+        .browser {
+            background: #fff;
+            border: 1px solid #e5e6eb;
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .browser .name {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 4px;
+        }
+
+        .browser .ver {
+            font-size: 13px;
+            color: #8f959e;
+            margin-bottom: 12px;
+        }
+
+        .browser a {
+            display: inline-block;
+            font-size: 13px;
+            color: #165dff;
+            text-decoration: none;
+            padding: 6px 16px;
+            border: 1px solid #165dff;
+            border-radius: 4px;
+        }
+
+        .browser a:hover {
+            background: #165dff;
+            color: #fff;
+        }
+
+        .footer {
+            text-align: center;
+            margin-top: 24px;
+        }
+
+        .footer a {
+            display: inline-block;
+            font-size: 14px;
+            color: #fff;
+            background: #165dff;
+            text-decoration: none;
+            padding: 10px 32px;
+            border-radius: 4px;
+        }
+
+        .footer a:hover {
+            background: #0e42d2;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
 </head>
 
-<body id="content">
-    <div id="browsers" class="plans">
-        <div class="title">
-            <h1>Oops! An error has occured.</h1>
-            <h4>Please check if the browser supports.</h4>
-            <a href="javascript:history.go(-1)">Try again.</a>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Browser Compatibility Check</h1>
+            <p>Diagnosing whether the current browser supports the JavaScript and HTML features required by this application.</p>
         </div>
-        <div class="plan">
-            <h3 class="plan-title">Edge</h3>
-            <p class="plan-price">16+</p>
-            <ul class="plan-features">
-            </ul>
-            <a href="https://www.microsoft.com/windows/microsoft-edge" class="plan-button">Download</a>
+
+        <div id="summary" class="summary hidden">
+            <div class="badge" id="summaryBadge"></div>
+            <div class="text">
+                <h2 id="summaryTitle"></h2>
+                <p id="summaryDesc"></p>
+            </div>
         </div>
-        <div class="plan plan-highlight">
-            <p class="plan-recommended">Recommended</p>
-            <h3 class="plan-title">Chrome</h3>
-            <p class="plan-price">55+</p>
-            <ul class="plan-features">
-            </ul>
-            <a href="https://www.google.com/chrome/" class="plan-button">Download</a>
+
+        <div id="resultSection" class="section">
+            <div class="section-title">Detection Results</div>
+            <div id="results"></div>
         </div>
-        <div class="plan">
-            <h3 class="plan-title">Firefox</h3>
-            <p class="plan-price">57+</p>
-            <ul class="plan-features">
-            </ul>
-            <a href="https://www.mozilla.org/firefox/" class="plan-button">Download</a>
+
+        <div id="browserSection" class="hidden">
+            <div class="section-title">Recommended Browsers</div>
+            <div class="browsers">
+                <div class="browser">
+                    <div class="name">Chrome</div>
+                    <div class="ver">55+</div>
+                    <a href="https://www.google.com/chrome/" target="_blank" rel="noopener">Download</a>
+                </div>
+                <div class="browser">
+                    <div class="name">Edge</div>
+                    <div class="ver">79+</div>
+                    <a href="https://www.microsoft.com/windows/microsoft-edge" target="_blank" rel="noopener">Download</a>
+                </div>
+                <div class="browser">
+                    <div class="name">Firefox</div>
+                    <div class="ver">53+</div>
+                    <a href="https://www.mozilla.org/firefox/" target="_blank" rel="noopener">Download</a>
+                </div>
+                <div class="browser">
+                    <div class="name">Safari</div>
+                    <div class="ver">11+</div>
+                    <a href="https://www.apple.com/safari/" target="_blank" rel="noopener">Download</a>
+                </div>
+            </div>
         </div>
-        <div class="plan">
-            <h3 class="plan-title">Safari</h3>
-            <p class="plan-price">11+</p>
-            <ul class="plan-features">
-            </ul>
-            <a href="https://www.apple.com/safari/" class="plan-button">Download</a>
-        </div>
-        <div class="plan">
-            <h3 class="plan-title">Opera</h3>
-            <p class="plan-price">40+</p>
-            <ul class="plan-features">
-            </ul>
-            <a href="https://www.opera.com/" class="plan-button">Download</a>
-        </div>
-        <div class="plan">
-            <p class="plan-recommended" style="background: #707070;">Unavailable</p>
-            <h4 class="plan-title" style="color: #707070;">Internet
-                <br>Explorer
-            </h4>
-            <p class="plan-price" style="margin-bottom: 39px;"></p>
-            <ul class="plan-features">
-            </ul>
-            <a href="#" class="plan-button" style="background: #707070; border-bottom: 2px solid #707070;">Download</a>
+
+        <div class="footer">
+            <a href="javascript:history.go(-1)">Try Again</a>
         </div>
     </div>
 
+    <script>
+        (function () {
+            "use strict";
+
+            // 待检测的特性
+            var checks = [
+                {
+                    group: "ES6+ JavaScript",
+                    items: [
+                        ["class / extends", function () {
+                            try { eval("class A {} class B extends A {}"); return true; } catch (e) { return false; }
+                        }],
+                        ["let / const", function () {
+                            try { eval("let a = 1; const b = 2;"); return true; } catch (e) { return false; }
+                        }],
+                        ["Arrow Functions", function () {
+                            try { eval("var f = (x) => x + 1;"); return true; } catch (e) { return false; }
+                        }],
+                        ["for...of", function () {
+                            try { eval("for (var i of [1, 2]) {}"); return true; } catch (e) { return false; }
+                        }],
+                        ["Template Literals", function () {
+                            try { eval("var s = `a${1}b`;"); return true; } catch (e) { return false; }
+                        }],
+                        ["Symbol", function () {
+                            return typeof Symbol === "function";
+                        }],
+                        ["Map / Set", function () {
+                            return typeof Map === "function" && typeof Set === "function";
+                        }],
+                        ["Spread Operator", function () {
+                            try { eval("var a = [1, 2]; var b = [0, ...a];"); return true; } catch (e) { return false; }
+                        }],
+                        ["Default Parameters", function () {
+                            try { eval("function f(a = 1) { return a; }"); return true; } catch (e) { return false; }
+                        }],
+                        ["String.startsWith / endsWith", function () {
+                            return typeof String.prototype.startsWith === "function" && typeof String.prototype.endsWith === "function";
+                        }],
+                        ["Promise", function () {
+                            return typeof Promise === "function";
+                        }],
+                        ["Proxy", function () {
+                            return typeof Proxy === "function";
+                        }],
+                        ["globalThis", function () {
+                            return typeof globalThis === "object";
+                        }]
+                    ]
+                },
+                {
+                    group: "Browser APIs",
+                    items: [
+                        ["fetch", function () {
+                            return typeof fetch === "function";
+                        }],
+                        ["XMLHttpRequest", function () {
+                            return typeof XMLHttpRequest === "function";
+                        }],
+                        ["localStorage", function () {
+                            try { return typeof localStorage !== "undefined"; } catch (e) { return false; }
+                        }],
+                        ["Web Worker", function () {
+                            return typeof Worker === "function";
+                        }],
+                        ["Blob", function () {
+                            return typeof Blob === "function";
+                        }],
+                        ["FileReader", function () {
+                            return typeof FileReader === "function";
+                        }],
+                        ["URL.createObjectURL", function () {
+                            return typeof URL !== "undefined" && typeof URL.createObjectURL === "function";
+                        }],
+                        ["JSON", function () {
+                            return typeof JSON === "object" && typeof JSON.parse === "function";
+                        }],
+                        ["console", function () {
+                            return typeof console === "object" && typeof console.log === "function";
+                        }],
+                        ["crypto.subtle", function () {
+                            return typeof crypto !== "undefined" && typeof crypto.subtle !== "undefined";
+                        }],
+                        ["CustomEvent", function () {
+                            return typeof CustomEvent === "function";
+                        }],
+                        ["requestAnimationFrame", function () {
+                            return typeof requestAnimationFrame === "function";
+                        }]
+                    ]
+                }
+            ];
+
+            var results = document.getElementById("results");
+            var allPass = true;
+            var failCount = 0;
+
+            checks.forEach(function (group) {
+                var groupDiv = document.createElement("div");
+                groupDiv.style.padding = "8px 24px";
+                groupDiv.style.background = "#fafbfc";
+                groupDiv.style.borderTop = "1px solid #f2f3f5";
+                groupDiv.style.borderBottom = "1px solid #f2f3f5";
+                groupDiv.style.fontSize = "12px";
+                groupDiv.style.fontWeight = "600";
+                groupDiv.style.color = "#8f959e";
+                groupDiv.style.textTransform = "uppercase";
+                groupDiv.style.letterSpacing = "0.5px";
+                groupDiv.textContent = group.group;
+                results.appendChild(groupDiv);
+
+                group.items.forEach(function (item) {
+                    var name = item[0];
+                    var fn = item[1];
+                    var pass = false;
+                    try { pass = fn(); } catch (e) { pass = false; }
+                    if (!pass) { allPass = false; failCount++; }
+
+                    var row = document.createElement("div");
+                    row.className = "item";
+                    row.innerHTML = '<span class="name">' + name + "</span>" +
+                        '<span class="status ' + (pass ? "pass" : "fail") + '">' + (pass ? "Supported" : "Not Supported") + "</span>";
+                    results.appendChild(row);
+                });
+            });
+
+            // 显示总结
+            var summary = document.getElementById("summary");
+            var badge = document.getElementById("summaryBadge");
+            var title = document.getElementById("summaryTitle");
+            var desc = document.getElementById("summaryDesc");
+
+            summary.classList.remove("hidden");
+            if (allPass) {
+                summary.classList.add("pass");
+                badge.textContent = "✓";
+                title.textContent = "All Features Supported";
+                desc.textContent = navigator.userAgent;
+            } else {
+                summary.classList.add("fail");
+                badge.textContent = "!";
+                title.textContent = failCount + " Feature(s) Not Supported";
+                desc.textContent = "Please upgrade your browser to the latest version.";
+                document.getElementById("browserSection").classList.remove("hidden");
+            }
+        })();
+    </script>
 </body>
 
 </html>

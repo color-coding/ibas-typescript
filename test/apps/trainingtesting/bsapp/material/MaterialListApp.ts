@@ -143,7 +143,7 @@ namespace trainingtesting {
                                 that.messages(ibas.emMessageType.ERROR, error.message);
                             } else {
                                 that.messages(ibas.emMessageType.SUCCESS,
-                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_sucessful"));
+                                    ibas.i18n.prop("shell_data_delete") + ibas.i18n.prop("shell_successful"));
                             }
                             that.busy(false);
                         });

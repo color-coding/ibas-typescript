@@ -110,7 +110,7 @@ namespace ibas {
         get<T>(): T {
             let key: string, defalut: T, type: any;
             if (arguments.length === 0) {
-                throw new Error(strings.format("invaild param."));
+                throw new Error(strings.format("invalid param."));
             }
             // 配置项参数
             key = arguments[0];

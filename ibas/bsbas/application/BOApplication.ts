@@ -516,6 +516,8 @@ namespace ibas {
                                     criteria.conditions.add(item);
                                 }
                             }
+                        } else {
+                            criteria = String(caller.linkValue);
                         }
                         this.fetchData(criteria);
                         // 退出后续

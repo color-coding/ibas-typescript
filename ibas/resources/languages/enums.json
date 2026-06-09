@@ -9,9 +9,9 @@
     {
         "em_conditionoperation_none": "None",
         "em_conditionoperation_equal": "Equal to",
-        "em_conditionoperation_grater_than": "Greater than",
+        "em_conditionoperation_greater_than": "Greater than",
         "em_conditionoperation_less_than": "Less than",
-        "em_conditionoperation_grater_equal": "Greater than or equal to",
+        "em_conditionoperation_greater_equal": "Greater than or equal to",
         "em_conditionoperation_less_equal": "Less than or equal to",
         "em_conditionoperation_not_equal": "Not equal to",
         "em_conditionoperation_contain": "Contains",
@@ -76,9 +76,9 @@
     {
         "em_judmentoperation_equal": "Equal to",
         "em_judmentoperation_not_equal": "Not equal to",
-        "em_judmentoperation_grater_than": "Greater than",
+        "em_judmentoperation_greater_than": "Greater than",
         "em_judmentoperation_less_than": "Less than",
-        "em_judmentoperation_grater_equal": "Greater than or equal to",
+        "em_judmentoperation_greater_equal": "Greater than or equal to",
         "em_judmentoperation_less_equal": "Less than or equal to",
         "em_judmentoperation_begin_with": "Begins with",
         "em_judmentoperation_not_begin_with": "Does not begin with",

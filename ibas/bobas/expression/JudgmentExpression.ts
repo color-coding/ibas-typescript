@@ -13,45 +13,45 @@ namespace ibas {
     /** 数据转换 */
     export namespace judgment {
         export namespace convert {
-            export function operation(value: emConditionOperation): emJudmentOperation {
+            export function operation(value: emConditionOperation): emJudgmentOperation {
                 if (objects.isNull(value)) {
                     throw new Error(i18n.prop("sys_invalid_parameter", "value"));
                 }
                 if (value === emConditionOperation.CONTAIN) {
-                    return emJudmentOperation.CONTAIN;
+                    return emJudgmentOperation.CONTAIN;
                 } else if (value === emConditionOperation.NOT_CONTAIN) {
-                    return emJudmentOperation.NOT_CONTAIN;
+                    return emJudgmentOperation.NOT_CONTAIN;
                 } else if (value === emConditionOperation.EQUAL) {
-                    return emJudmentOperation.EQUAL;
+                    return emJudgmentOperation.EQUAL;
                 } else if (value === emConditionOperation.NOT_EQUAL) {
-                    return emJudmentOperation.NOT_EQUAL;
-                } else if (value === emConditionOperation.GRATER_EQUAL) {
-                    return emJudmentOperation.GRATER_EQUAL;
-                } else if (value === emConditionOperation.GRATER_THAN) {
-                    return emJudmentOperation.GRATER_THAN;
+                    return emJudgmentOperation.NOT_EQUAL;
+                } else if (value === emConditionOperation.GREATER_EQUAL) {
+                    return emJudgmentOperation.GREATER_EQUAL;
+                } else if (value === emConditionOperation.GREATER_THAN) {
+                    return emJudgmentOperation.GREATER_THAN;
                 } else if (value === emConditionOperation.LESS_EQUAL) {
-                    return emJudmentOperation.LESS_EQUAL;
+                    return emJudgmentOperation.LESS_EQUAL;
                 } else if (value === emConditionOperation.LESS_THAN) {
-                    return emJudmentOperation.LESS_THAN;
+                    return emJudgmentOperation.LESS_THAN;
                 } else if (value === emConditionOperation.START) {
-                    return emJudmentOperation.BEGIN_WITH;
+                    return emJudgmentOperation.BEGIN_WITH;
                 } else if (value === emConditionOperation.END) {
-                    return emJudmentOperation.END_WITH;
+                    return emJudgmentOperation.END_WITH;
                 } else if (value === emConditionOperation.IS_NULL) {
-                    return emJudmentOperation.IS_NULL;
+                    return emJudgmentOperation.IS_NULL;
                 } else if (value === emConditionOperation.NOT_NULL) {
-                    return emJudmentOperation.NOT_NULL;
+                    return emJudgmentOperation.NOT_NULL;
                 }
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
-            export function relationship(value: emConditionRelationship): emJudmentOperation {
+            export function relationship(value: emConditionRelationship): emJudgmentOperation {
                 if (objects.isNull(value)) {
                     throw new Error(i18n.prop("sys_invalid_parameter", "value"));
                 }
                 if (value === emConditionRelationship.AND) {
-                    return emJudmentOperation.AND;
+                    return emJudgmentOperation.AND;
                 } else if (value === emConditionRelationship.OR) {
-                    return emJudmentOperation.OR;
+                    return emJudgmentOperation.OR;
                 }
                 throw new Error(i18n.prop("sys_unrecognized_data"));
             }
@@ -97,7 +97,7 @@ namespace ibas {
         /**
          * 操作
          */
-        operation: emJudmentOperation;
+        operation: emJudgmentOperation;
         /**
          * 字符串输出
          */
@@ -110,7 +110,7 @@ namespace ibas {
             builder.append(" ");
             builder.append(this.leftValue);
             builder.append(" ");
-            builder.append(enums.toString(emJudmentOperation, this.operation));
+            builder.append(enums.toString(emJudgmentOperation, this.operation));
             builder.append(" ");
             builder.append(this.rightValue);
             builder.append("}");
@@ -122,37 +122,37 @@ namespace ibas {
      */
     export class JudgmentExpressionBoolean extends JudgmentExpression<boolean> {
         result(): boolean {
-            if (this.operation === emJudmentOperation.EQUAL) {
+            if (this.operation === emJudgmentOperation.EQUAL) {
                 // 等
                 if (this.leftValue === this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.NOT_EQUAL) {
                 // 不等
                 if (this.leftValue !== this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.AND) {
+            } else if (this.operation === emJudgmentOperation.AND) {
                 // 且
                 if (this.leftValue && this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.OR) {
+            } else if (this.operation === emJudgmentOperation.OR) {
                 // 或
                 if (this.leftValue || this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.IS_NULL) {
+            } else if (this.operation === emJudgmentOperation.IS_NULL) {
                 // 空值
                 if (objects.isNull(this.leftValue)) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+            } else if (this.operation === emJudgmentOperation.NOT_NULL) {
                 // 非空值
                 if (objects.isNull(this.leftValue)) {
                     return false;
@@ -168,7 +168,7 @@ namespace ibas {
      */
     export class JudgmentExpressionDate extends JudgmentExpression<Date> {
         result(): boolean {
-            if (this.operation === emJudmentOperation.EQUAL) {
+            if (this.operation === emJudgmentOperation.EQUAL) {
                 // 等于
                 // 左值为空
                 if (objects.isNull(this.leftValue)) {
@@ -182,7 +182,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.NOT_EQUAL) {
                 // 不等于
                 // 左值为空
                 if (objects.isNull(this.leftValue)) {
@@ -196,7 +196,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.GRATER_THAN) {
+            } else if (this.operation === emJudgmentOperation.GREATER_THAN) {
                 // 大于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -207,7 +207,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.LESS_THAN) {
+            } else if (this.operation === emJudgmentOperation.LESS_THAN) {
                 // 小于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -218,7 +218,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.GRATER_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.GREATER_EQUAL) {
                 // 大于等于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -229,7 +229,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.LESS_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.LESS_EQUAL) {
                 // 小于等于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -240,13 +240,13 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.IS_NULL) {
+            } else if (this.operation === emJudgmentOperation.IS_NULL) {
                 // 空值
                 if (objects.isNull(this.leftValue)) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+            } else if (this.operation === emJudgmentOperation.NOT_NULL) {
                 // 非空值
                 if (objects.isNull(this.leftValue)) {
                     return false;
@@ -261,7 +261,7 @@ namespace ibas {
      */
     export class JudgmentExpressionNumber extends JudgmentExpression<number> {
         result(): boolean {
-            if (this.operation === emJudmentOperation.EQUAL) {
+            if (this.operation === emJudgmentOperation.EQUAL) {
                 // 等于
                 // 左值为空
                 if (objects.isNull(this.leftValue)) {
@@ -275,7 +275,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.NOT_EQUAL) {
                 // 不等于
                 // 左值为空
                 if (objects.isNull(this.leftValue)) {
@@ -289,7 +289,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.GRATER_THAN) {
+            } else if (this.operation === emJudgmentOperation.GREATER_THAN) {
                 // 大于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -300,7 +300,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.LESS_THAN) {
+            } else if (this.operation === emJudgmentOperation.LESS_THAN) {
                 // 小于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -311,7 +311,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.GRATER_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.GREATER_EQUAL) {
                 // 大于等于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -322,7 +322,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.LESS_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.LESS_EQUAL) {
                 // 小于等于
                 // 左值为空或右值为空
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
@@ -333,13 +333,13 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.IS_NULL) {
+            } else if (this.operation === emJudgmentOperation.IS_NULL) {
                 // 空值
                 if (objects.isNull(this.leftValue)) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+            } else if (this.operation === emJudgmentOperation.NOT_NULL) {
                 // 非空值
                 if (objects.isNull(this.leftValue)) {
                     return false;
@@ -354,27 +354,27 @@ namespace ibas {
      */
     export class JudgmentExpressionEnum extends JudgmentExpression<number> {
         result(): boolean {
-            if (this.operation === emJudmentOperation.EQUAL) {
+            if (this.operation === emJudgmentOperation.EQUAL) {
                 // 等于
                 // 比较左右值
                 if (this.leftValue === this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.NOT_EQUAL) {
                 // 不等于
                 // 比较左右值
                 if (this.leftValue !== this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.IS_NULL) {
+            } else if (this.operation === emJudgmentOperation.IS_NULL) {
                 // 空值
                 if (objects.isNull(this.leftValue)) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+            } else if (this.operation === emJudgmentOperation.NOT_NULL) {
                 // 非空值
                 if (objects.isNull(this.leftValue)) {
                     return false;
@@ -388,21 +388,21 @@ namespace ibas {
      */
     export class JudgmentExpressionString extends JudgmentExpression<string> {
         result(): boolean {
-            if (this.operation === emJudmentOperation.EQUAL) {
+            if (this.operation === emJudgmentOperation.EQUAL) {
                 // 等于
                 // 比较左右值
                 if (this.leftValue === this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_EQUAL) {
+            } else if (this.operation === emJudgmentOperation.NOT_EQUAL) {
                 // 不等于
                 // 比较左右值
                 if (this.leftValue !== this.rightValue) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.BEGIN_WITH) {
+            } else if (this.operation === emJudgmentOperation.BEGIN_WITH) {
                 // 开始与
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                     return false;
@@ -411,7 +411,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.END_WITH) {
+            } else if (this.operation === emJudgmentOperation.END_WITH) {
                 // 结束于
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                     return false;
@@ -420,7 +420,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_BEGIN_WITH) {
+            } else if (this.operation === emJudgmentOperation.NOT_BEGIN_WITH) {
                 // 非开始于
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                     return false;
@@ -429,7 +429,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_END_WITH) {
+            } else if (this.operation === emJudgmentOperation.NOT_END_WITH) {
                 // 非结束于
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                     return false;
@@ -438,7 +438,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.CONTAIN) {
+            } else if (this.operation === emJudgmentOperation.CONTAIN) {
                 // 包含
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                     return false;
@@ -447,7 +447,7 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_CONTAIN) {
+            } else if (this.operation === emJudgmentOperation.NOT_CONTAIN) {
                 // 不包含
                 if (objects.isNull(this.leftValue) || objects.isNull(this.rightValue)) {
                     return false;
@@ -456,13 +456,13 @@ namespace ibas {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.IS_NULL) {
+            } else if (this.operation === emJudgmentOperation.IS_NULL) {
                 // 空值
                 if (objects.isNull(this.leftValue)) {
                     return true;
                 }
                 return false;
-            } else if (this.operation === emJudmentOperation.NOT_NULL) {
+            } else if (this.operation === emJudgmentOperation.NOT_NULL) {
                 // 非空值
                 if (objects.isNull(this.leftValue)) {
                     return false;
