@@ -2234,7 +2234,7 @@ declare namespace sap {
 					 * <p>Adds the given selection interval to the selection and requests the corresponding binding contexts. In single-selection mode it requests the context and sets the selected index to <code>iIndexTo</code>.</p><p>If the number of indices in the range is greater than the value of the <code>limit</code> property, only n=limit indices, starting from <code>iIndexFrom</code>, are selected. The table is scrolled to display the index last selected.</p>
 					 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 					 * @param {number} iIndexTo <p>Index up to which to select</p>
-					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transfered to the event in the <code>customPayload</code> parameter</p>
 					 * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
 					 */
 					addSelectionInterval(iIndexFrom: number, iIndexTo: number, oEventPayload?: any): Promise<any>;
@@ -2256,7 +2256,7 @@ declare namespace sap {
 					attachSelectionChange(oData: any, fnFunction: Function, oListener?: any): this;
 					/**
 					 * <p>Removes the complete selection.</p>
-					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transfered to the event in the <code>customPayload</code> parameter</p>
 					 */
 					clearSelection(oEventPayload?: any): void;
 					/**
@@ -2320,12 +2320,12 @@ declare namespace sap {
 					 * <p>Removes the given selection interval from the selection. In case of single selection, only <code>iIndexTo</code> is removed from the selection.</p>
 					 * @param {number} iIndexFrom <p>Index from which the deselection starts</p>
 					 * @param {number} iIndexTo <p>Index up to which to deselect</p>
-					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transfered to the event in the <code>customPayload</code> parameter</p>
 					 */
 					removeSelectionInterval(iIndexFrom: number, iIndexTo: number, oEventPayload?: any): void;
 					/**
 					 * <p>Requests the binding contexts and adds all indices to the selection if the limit is disabled or the binding length is smaller then the limit.</p>
-					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transfered to the event in the <code>customPayload</code> parameter</p>
 					 * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
 					 */
 					selectAll(oEventPayload?: any): Promise<any>;
@@ -2344,7 +2344,7 @@ declare namespace sap {
 					/**
 					 * <p>Requests the context and sets the selected index to <code>iIndex</code>.</p>
 					 * @param {number} iIndex <p>The index to select</p>
-					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transfered to the event in the <code>customPayload</code> parameter</p>
 					 * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
 					 */
 					setSelectedIndex(iIndex: number, oEventPayload?: any): Promise<any>;
@@ -2352,7 +2352,7 @@ declare namespace sap {
 					 * <p>Sets the given selection interval as the selection and requests the corresponding binding contexts. In single-selection mode it requests the context and sets the selected index to <code>iIndexTo</code>.</p><p>If the number of indices in the range is greater than the value of the <code>limit</code> property, only n=limit indices, starting from <code>iIndexFrom</code>, are selected. The table is scrolled to display the index last selected.</p>
 					 * @param {number} iIndexFrom <p>Index from which the selection starts</p>
 					 * @param {number} iIndexTo <p>Index up to which to select</p>
-					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transferred to the event in the <code>customPayload</code> parameter</p>
+					 * @param {any} oEventPayload <p>If the function call triggers a <a target="_self" href="api/sap.ui.table.plugins.MultiSelectionPlugin#events/selectionChange">selectionChange</a> event, this object is transfered to the event in the <code>customPayload</code> parameter</p>
 					 * @returns Promise<any> <p>A Promise that resolves after the selection has been completed or is rejected with an error</p>
 					 */
 					setSelectionInterval(iIndexFrom: number, iIndexTo: number, oEventPayload?: any): Promise<any>;

@@ -444,6 +444,7 @@ namespace sap {
                         if (this.getSelectedKey() !== value) {
                             this.setProperty("selectedKey", value);
                             this.setProperty("bindingValue", value);
+                            this.destroyTooltip();
                             if (ibas.strings.isEmpty(value)) {
                                 this.updateDomValue("");
                             } else {
@@ -510,6 +511,9 @@ namespace sap {
                             }
                         }
                     }
+                    if (criteria.conditions.length === 0) {
+                        return;
+                    }
                     repository.batchFetch(this.getRepository(), this.getDataInfo(), criteria,
                         (values) => {
                             let item: sap.ui.core.ListItem = null;
@@ -542,14 +546,17 @@ namespace sap {
                                     text: textBudilder.toString(),
                                 });
                             }
-                            let editable: boolean = this.getEditable();
-                            if (editable === false) {
-                                this.setEditable(true);
-                            }
-                            this.setSelectedItem(item);
-                            this.updateDomValue(item.getText());
-                            if (editable === false) {
-                                this.setEditable(editable);
+                            // tslint:disable-next-line: triple-equals
+                            if (value === this.getProperty("bindingValue") || value == this.getProperty("bindingValue")) {
+                                let editable: boolean = this.getEditable();
+                                if (editable === false) {
+                                    this.setEditable(true);
+                                }
+                                this.setSelectedItem(item);
+                                this.updateDomValue(item.getText());
+                                if (editable === false) {
+                                    this.setEditable(editable);
+                                }
                             }
                         }
                     );

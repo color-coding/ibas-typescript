@@ -729,7 +729,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 比例 */
-                        columnRatio: { type: "string", defaultValue: "1:2" },
+                        columnRatio: { type: "string", defaultValue: "2:3" },
                     },
                     events: {}
                 },

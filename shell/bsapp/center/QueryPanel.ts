@@ -128,7 +128,7 @@ namespace shell {
                                 if (opRslt.resultCode !== 0) {
                                     throw new Error(opRslt.message);
                                 }
-                                that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_sucessful"));
+                                that.messages(ibas.emMessageType.SUCCESS, ibas.i18n.prop("shell_successful"));
                                 // 操作成功，刷新数据，关闭界面
                                 if (ibas.objects.isNull(that.editQuery.criteria)) {
                                     // 没查询，表示删除

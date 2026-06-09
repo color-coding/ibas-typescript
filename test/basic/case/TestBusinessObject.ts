@@ -73,7 +73,7 @@ namespace test {
             let condition: ibas.ICondition = criteria.conditions.create();
             ibas.logger.log(ibas.emMessageLevel.DEBUG, "test: type of {0}", typeof (condition));
             condition.alias = "docEntry";
-            condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+            condition.operation = ibas.emConditionOperation.GREATER_EQUAL;
             condition.value = "1";
             condition = criteria.conditions.create();
             condition.alias = "docEntry";
@@ -176,7 +176,7 @@ namespace test {
                 let criteria: ibas.ICriteria = new ibas.Criteria();
                 let condition: ibas.ICondition = criteria.conditions.create();
                 condition.alias = "docEntry";
-                condition.operation = ibas.emConditionOperation.GRATER_EQUAL;
+                condition.operation = ibas.emConditionOperation.GREATER_EQUAL;
                 condition.value = cOrder.docEntry.toString();
                 localRepository.fetch(SalesOrder.name, {
                     criteria: criteria,

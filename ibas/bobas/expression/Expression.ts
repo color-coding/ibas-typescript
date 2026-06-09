@@ -36,7 +36,7 @@ namespace ibas {
         /**
          * 操作
          */
-        operation: emJudmentOperation;
+        operation: emJudgmentOperation;
     }
     /**
      * 值转换者
@@ -75,15 +75,15 @@ namespace ibas {
      */
     export interface IJudgmentLinkItem {
         /** 关系（and、or） */
-        relationship: emJudmentOperation;
+        relationship: emJudgmentOperation;
         /** 开括号 */
         openBracket: number;
         /** 左取值 */
-        leftOperter: IValueOperator;
+        leftOperator: IValueOperator;
         /** 比较方式 */
-        operation: emJudmentOperation;
+        operation: emJudgmentOperation;
         /** 右取值 */
-        rightOperter: IValueOperator;
+        rightOperator: IValueOperator;
         /** 闭括号 */
         closeBracket: number;
     }

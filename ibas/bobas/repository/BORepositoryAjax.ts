@@ -51,7 +51,7 @@ namespace ibas {
                             if (objects.isNull(opRslt)) {
                                 opRslt = new OperationResult();
                                 opRslt.resultCode = 20000;
-                                opRslt.message = i18n.prop("sys_data_converter_parsing_faild");
+                                opRslt.message = i18n.prop("sys_data_converter_parsing_failed");
                                 logger.log(emMessageLevel.WARN, "repository: call method [{1}] faild, {0}", opRslt.message, method);
                             } else if (!ibas.objects.instanceOf(opRslt, OperationMessage)) {
                                 opRslt = new OperationResult().addResults(opRslt);

@@ -344,13 +344,13 @@ namespace sap {
                                     }
                                     for (let property of data.properties) {
                                         if (ibas.strings.equalsIgnoreCase(propertyName, property.name)) {
+                                            let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                            keyBudilder.map(null, "");
+                                            keyBudilder.map(undefined, "");
+                                            let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
+                                            textBudilder.map(null, "");
+                                            textBudilder.map(undefined, "");
                                             if (property.values instanceof Array) {
-                                                let keyBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                                keyBudilder.map(null, "");
-                                                keyBudilder.map(undefined, "");
-                                                let textBudilder: ibas.StringBuilder = new ibas.StringBuilder();
-                                                textBudilder.map(null, "");
-                                                textBudilder.map(undefined, "");
                                                 for (let item of property.values) {
                                                     if (ibas.strings.equals(item.value, value)) {
                                                         keyBudilder.append(item.value);
@@ -371,10 +371,15 @@ namespace sap {
                                                         continue;
                                                     }
                                                 }
-                                                // tslint:disable-next-line: triple-equals
-                                                if (value === this.getProperty("bindingValue") || value == this.getProperty("bindingValue")) {
+                                            }
+                                            // tslint:disable-next-line: triple-equals
+                                            if (value === this.getProperty("bindingValue") || value == this.getProperty("bindingValue")) {
+                                                if (textBudilder.length > 0) {
                                                     this.setText(textBudilder.toString());
                                                     this.setTooltip(ibas.strings.format("{0} - {1}", keyBudilder.toString(), textBudilder.toString()));
+                                                } else {
+                                                    this.setText(value);
+                                                    this.setTooltip(value);
                                                 }
                                             } break;
                                         }
