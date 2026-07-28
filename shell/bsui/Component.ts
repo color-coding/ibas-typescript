@@ -371,6 +371,21 @@ namespace shell {
                     }
                 },
                 onAfterRendering(this: TabContainer): void {
+                    let domRef: any = (<any>this).getDomRef();
+                    if (domRef && !domRef.getAttribute("data-ctx-menu-marked")) {
+                        domRef.setAttribute("data-ctx-menu-marked", "true");
+                        // 右键已选中的tab时，阻止触发重复选中事件
+                        domRef.addEventListener("mousedown", function (event: MouseEvent): void {
+                            if (event.button !== 2) {
+                                return;
+                            }
+                            let oTarget: any = event.target;
+                            let oStripItem: any = oTarget && oTarget.closest ? oTarget.closest(".sapMTabStripItem") : null;
+                            if (oStripItem && oStripItem.classList.contains("sapMTabStripItemSelected")) {
+                                event.stopPropagation();
+                            }
+                        }, true);
+                    }
                 },
                 _rerenderContent(this: TabContainer, oContent: any): void {
                     // 重写，复杂界面展示前出现等待框
