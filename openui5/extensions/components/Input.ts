@@ -47,6 +47,8 @@ namespace sap {
                         valueHelpOnly: { type: "boolean", defaultValue: true },
                         /** 显示值链接钮 */
                         showValueLink: { type: "boolean", defaultValue: false },
+                        /** 禁止浏览器自动填充 */
+                        disableAutofill: { type: "boolean", defaultValue: false },
                     },
                     events: {
                         "valueLinkRequest": {
@@ -69,6 +71,15 @@ namespace sap {
                 },
                 onAfterRendering(this: Input): void {
                     (<any>sap.m.Input.prototype).onAfterRendering.apply(this, arguments);
+                    const control: any = this;
+                    if (control.getDisableAutofill()
+                        && this.getType() === sap.m.InputType.Password) {
+                        const dom: HTMLElement = control.getDomRef();
+                        const input: HTMLInputElement = dom?.querySelector("input") as HTMLInputElement;
+                        if (input) {
+                            input.setAttribute("autocomplete", "new-password");
+                        }
+                    }
                     if (this.getShowValueLink()) {
                         let icons: any = this.getAggregation("_beginIcon", null);
                         if (!ibas.objects.isNull(icons)) {
