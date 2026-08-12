@@ -586,7 +586,8 @@ namespace sap {
                             ],
                             formatter(activated: ibas.emYesNo, deleted: ibas.emYesNo, approvalStatus: ibas.emApprovalStatus): sap.ui.core.ValueState {
                                 // tslint:disable-next-line: triple-equals
-                                if (activated == ibas.emYesNo.NO) {
+                                if ((typeof activated === "number" && activated === ibas.emYesNo.NO)
+                                    || (typeof activated === "string" && activated === ibas.emYesNo.NO)) {
                                     return sap.ui.core.ValueState.Error;
                                 }
                                 return data.status(ibas.emDocumentStatus.RELEASED, approvalStatus, undefined, deleted);
