@@ -33,6 +33,17 @@ declare namespace sap {
                 bindProperty(sName: string, oBindingInfo: any): this;
             }
             /**
+             * Markdown 预览
+             */
+            class Markdown extends HTML {
+                /** 获取 Markdown 内容 */
+                getMarkdown(): string;
+                /** 设置 Markdown 内容 */
+                setMarkdown(value: string): this;
+                /** 转换为 HTML */
+                toHtml(value: string): string;
+            }
+            /**
              * Frame HTML
              */
             class FrameHTML extends HTML {
