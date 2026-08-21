@@ -499,11 +499,14 @@ namespace ibas {
                     if (caller.boCode === this.boCode
                         || config.applyVariables(caller.boCode) === config.applyVariables(this.boCode)) {
                         // 分析查询条件
-                        let criteria: Criteria | string;
+                        let criteria: Criteria | string | number;
                         if (objects.instanceOf(caller.linkValue, Criteria)) {
                             criteria = <Criteria>caller.linkValue;
                         } else if (typeof caller.linkValue === "string") {
                             criteria = <string>caller.linkValue;
+                        } else if (typeof caller.linkValue === "number") {
+                            // 保留数字链接值，具体 ViewApp 可按主键类型选择 DocEntry 或 ObjectKey。
+                            criteria = <number>caller.linkValue;
                         } else if (caller.linkValue instanceof Array) {
                             criteria = new Criteria();
                             criteria.result = 1;
@@ -549,7 +552,7 @@ namespace ibas {
         // 是否更新地址hash值
         protected changeHashUrl: boolean = true;
         /** 查询数据 */
-        protected abstract fetchData(criteria: ICriteria | string): void;
+        protected abstract fetchData(criteria: ICriteria | string | number): void;
         /** 视图显示前 */
         protected beforeViewShow(): void {
             // 更新当前hash地址
