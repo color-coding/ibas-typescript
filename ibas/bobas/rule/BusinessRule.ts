@@ -16,7 +16,6 @@ namespace ibas {
         constructor(length: number, ...properties: string[]) {
             super();
             this.maxLength = length;
-            this.name = i18n.prop("sys_business_rule_max_length");
             for (let item of properties) {
                 this.inputProperties.add(item);
             }
@@ -44,7 +43,6 @@ namespace ibas {
          */
         constructor(maxValue: T, ...properties: string[]) {
             super();
-            this.name = i18n.prop("sys_business_rule_max_value");
             this.maxValue = maxValue;
             for (let item of properties) {
                 this.inputProperties.add(item);
@@ -79,7 +77,6 @@ namespace ibas {
          */
         constructor(minValue: T, ...properties: string[]) {
             super();
-            this.name = i18n.prop("sys_business_rule_min_value");
             this.minValue = minValue;
             for (let item of properties) {
                 this.inputProperties.add(item);
@@ -113,7 +110,6 @@ namespace ibas {
          */
         constructor(...properties: string[]) {
             super();
-            this.name = i18n.prop("sys_business_rule_required");
             for (let item of properties) {
                 this.inputProperties.add(item);
             }
@@ -137,7 +133,6 @@ namespace ibas {
          */
         constructor(...properties: string[]) {
             super();
-            this.name = i18n.prop("sys_business_rule_trim");
             for (let item of properties) {
                 this.inputProperties.add(item);
                 this.affectedProperties.add(item);
@@ -166,7 +161,6 @@ namespace ibas {
          */
         constructor(result: string, ...addends: string[]) {
             super();
-            this.name = i18n.prop("sys_business_rule_summation");
             this.result = result;
             this.addends = new ArrayList<string>();
             for (let item of addends) {
@@ -202,7 +196,6 @@ namespace ibas {
          */
         constructor(result: string, subtrahend: string, ...subtractors: string[]) {
             super();
-            this.name = i18n.prop("sys_business_rule_subtraction");
             this.result = result;
             this.subtrahend = subtrahend;
             this.subtractors = new ArrayList<string>();
@@ -243,7 +236,6 @@ namespace ibas {
          */
         constructor(result: string, multiplicand: string, multiplier: string, decimalPlaces: number = undefined) {
             super();
-            this.name = i18n.prop("sys_business_rule_multiplication");
             this.result = result;
             this.multiplicand = multiplicand;
             this.multiplier = multiplier;
@@ -279,7 +271,6 @@ namespace ibas {
          */
         constructor(result: string, dividend: string, divisor: string, decimalPlaces: number = undefined) {
             super();
-            this.name = i18n.prop("sys_business_rule_division");
             this.result = result;
             this.dividend = dividend;
             this.divisor = divisor;
@@ -314,7 +305,6 @@ namespace ibas {
          */
         constructor(augend: string, addend: string, result: string) {
             super();
-            this.name = i18n.prop("sys_business_rule_additive_deduction");
             this.result = result;
             this.augend = augend;
             this.addend = addend;
@@ -363,7 +353,6 @@ namespace ibas {
          */
         constructor(multiplicand: string, multiplier: string, result: string, resultPlaces: number = undefined, multiplierPlaces: number = undefined) {
             super();
-            this.name = i18n.prop("sys_business_rule_multiplicative_deduction");
             this.result = result;
             this.multiplicand = multiplicand;
             this.multiplier = multiplier;
@@ -417,7 +406,6 @@ namespace ibas {
          */
         constructor(result: string, collection: string, summing: string, filter?: (data: any) => boolean) {
             super(collection, filter);
-            this.name = i18n.prop("sys_business_rule_sum_elements");
             this.result = result;
             this.summing = summing;
             this.inputProperties.add(this.summing);
