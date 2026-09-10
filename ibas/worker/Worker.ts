@@ -6,6 +6,24 @@
  * that can be found in the LICENSE file at http://www.apache.org/licenses/LICENSE-2.0
  */
 let myWorker: ibas.Worker = undefined;
+/** 判断是否可能是脚本依赖尚未加载导致的错误 */
+function isDependencyError(error: any): boolean {
+    if (error instanceof ReferenceError) {
+        return true;
+    }
+    if (error instanceof TypeError) {
+        let message: string = error.message || "";
+        return /extends value|constructor or null/i.test(message);
+    }
+    return false;
+}
+/** 获取错误文本 */
+function errorMessage(error: any): string {
+    if (error instanceof Error) {
+        return error.stack || error.message;
+    }
+    return String(error);
+}
 // 兼容性处理，globalThis
 declare var __magic__: any;
 (function (): void {
@@ -38,30 +56,75 @@ globalThis.onmessage = function (message: MessageEvent): void {
         // 初始化
         if (data?.libraries instanceof Array) {
             try {
-                for (let item of data?.libraries) {
-                    if ((!globalThis.window || !globalThis.document) && globalThis.jsdom && globalThis.require) {
-                        // jsdom打包：browserify api.js -o jsdom.bundle.js -s jsdom
-                        globalThis.window = new globalThis.jsdom.JSDOM().window;
-                        // 兼容性处理
-                        globalThis.window.XMLHttpRequest = globalThis.XMLHttpRequest;
-                        globalThis.window.fetch = globalThis.fetch;
-                        globalThis.document = globalThis.window.document;
+                // 去重，避免重试或页面中重复引用同一脚本时重复执行。
+                let pending: string[] = [];
+                let queued: { [url: string]: boolean } = {};
+                for (let item of data.libraries) {
+                    if (typeof item !== "string" || queued[item] === true) {
+                        continue;
                     }
-                    try {
-                        globalThis.importScripts(item);
-                        // 基础加载后，即赋值配置，避免时效问题
-                        if (item.indexOf("/shell/index") > 0) {
-                            if (data?.configs instanceof Array) {
-                                for (let item of data?.configs) {
-                                    ibas.config.set(item.key, item.value);
+                    queued[item] = true;
+                    pending.push(item);
+                }
+
+                let loaded: { [url: string]: boolean } = {};
+                let failed: { [url: string]: any } = {};
+                let configApplied: boolean = false;
+                // 最长链路不会超过脚本数量；若一轮没有成功加载任何脚本，说明存在真实错误或循环依赖。
+                let maxRounds: number = pending.length + 1;
+                for (let round: number = 0; pending.length > 0 && round < maxRounds; round++) {
+                    let current: string[] = pending;
+                    pending = [];
+                    let progress: boolean = false;
+
+                    for (let item of current) {
+                        if (loaded[item] === true) {
+                            continue;
+                        }
+                        if ((!globalThis.window || !globalThis.document) && globalThis.jsdom && globalThis.require) {
+                            // jsdom打包：browserify api.js -o jsdom.bundle.js -s jsdom
+                            globalThis.window = new globalThis.jsdom.JSDOM().window;
+                            // 兼容性处理
+                            globalThis.window.XMLHttpRequest = globalThis.XMLHttpRequest;
+                            globalThis.window.fetch = globalThis.fetch;
+                            globalThis.document = globalThis.window.document;
+                        }
+                        try {
+                            // importScripts 是同步调用；同一轮后面的脚本可以使用前面已成功加载的类。
+                            globalThis.importScripts(item);
+                            loaded[item] = true;
+                            delete failed[item];
+                            progress = true;
+                            // shell/index 加载成功后立即赋值配置，保持原有时序。
+                            if (!configApplied && item.indexOf("/shell/index") > 0) {
+                                if (data?.configs instanceof Array) {
+                                    for (let config of data.configs) {
+                                        ibas.config.set(config.key, config.value);
+                                    }
                                 }
+                                configApplied = true;
+                            }
+                        } catch (error) {
+                            failed[item] = error;
+                            if (isDependencyError(error)) {
+                                // 可能只是基类尚未加载，延迟到下一轮重试。
+                                pending.push(item);
+                            } else if (console?.error instanceof Function) {
+                                // 非依赖错误不重复执行，但保留当前兼容行为，继续尝试其他脚本。
+                                console.error("scripts: " + item + "\n" + errorMessage(error));
                             }
                         }
-                    } catch (error) {
-                        // 脚本加载出错，不退出
-                        if (console?.error instanceof Function) {
-                            console.error("scripts: " + item + "\n" + (error instanceof Error && error.stack ? error.stack : error.message));
-                        }
+                    }
+
+                    if (!progress) {
+                        break;
+                    }
+                }
+
+                // 重试后仍未成功的脚本只报告一次；随后继续执行类查找，让最终错误指向目标 Worker 类。
+                for (let item of pending) {
+                    if (console?.error instanceof Function) {
+                        console.error("scripts: " + item + "\n" + errorMessage(failed[item]));
                     }
                 }
             } catch (error) {

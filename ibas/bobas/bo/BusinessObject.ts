@@ -1236,7 +1236,8 @@ namespace ibas {
                                 }
                                 let tValues: string[] = field.split("=");
                                 if (tValues.length !== 2) {
-                                    builder.append(field);
+                                    // 属性引用无值时，使用业务对象语言资源解析属性描述。
+                                    builder.append(resource(boName, field));
                                 } else {
                                     builder.append(resource(boName, tValues[0]));
                                     builder.append("-");
