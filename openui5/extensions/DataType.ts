@@ -589,6 +589,9 @@ namespace sap {
                     return sap.ui.model.type.Date.prototype.formatValue.apply(this, arguments);
                 },
                 parseValue(oValue: any, sInternalType: string): any {
+                    if (ibas.objects.isNull(oValue) || oValue === "") {
+                        return null;
+                    }
                     if (sInternalType === "Date") {
                         return oValue;
                     }
@@ -653,7 +656,7 @@ namespace sap {
                         return oValue;
                     } else if (typeof oValue === "string") {
                         if (ibas.strings.isEmpty(oValue)) {
-                            return undefined;
+                            return null;
                         }
                         let builder: ibas.StringBuilder = new ibas.StringBuilder();
                         for (let item of oValue) {

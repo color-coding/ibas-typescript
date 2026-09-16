@@ -25,13 +25,13 @@ namespace sap {
                 return ibas.config.get(openui5.utils.CONFIG_ITEM_ITEM_TABLE_VISIBLE_ROW_COUNT, count);
             }
             // 表格的选择插件
-            const ID_TABLE_PLUGIN_CHOOSE: string = function (): string {
+            const ID_TABLE_PLUGIN_CHOOSE: string = (function (): string {
                 let version: any = sap.ui.getCore().getConfiguration().getVersion();
                 if (version && version.getMajor() >= 1 && version.getMinor() >= 67) {
                     return "{0}_plg_chs";
                 }
                 return undefined;
-            }();
+            })();
             /**
              * 表格
              */
@@ -41,23 +41,23 @@ namespace sap {
                         /** 行选择 */
                         selectionBehavior: { type: "string", defaultValue: sap.ui.table.SelectionBehavior.Row },
                         /** 选择方式 */
-                        chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE },
+                        chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE }
                     },
                     events: {
-                        "nextDataSet": {
+                        nextDataSet: {
                             parameters: {
                                 data: {
-                                    type: "any",
+                                    type: "any"
                                 }
                             }
                         },
-                        "rowDoubleClick": {
+                        rowDoubleClick: {
                             parameters: {
                                 row: {
-                                    type: sap.ui.table.Row,
-                                },
+                                    type: sap.ui.table.Row
+                                }
                             }
-                        },
+                        }
                     }
                 },
                 renderer: {},
@@ -95,19 +95,20 @@ namespace sap {
                         this.removePlugin(ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()));
                         if (this.getChooseType() === ibas.emChooseType.MULTIPLE) {
                             if (value === false) {
-                                this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
-                                    ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
-                                    showHeaderSelector: true,
-                                    selectionChange(event: sap.ui.base.Event): void {
-                                        let table: any = event.getSource();
-                                        if (table instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
-                                            table = table.getParent();
-                                            if (table instanceof sap.ui.table.Table) {
-                                                (<any>table).fireRowSelectionChange({ rowIndices: event.getParameter("indices") });
+                                this.addPlugin(
+                                    new sap.ui.table.plugins.MultiSelectionPlugin(ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
+                                        showHeaderSelector: true,
+                                        selectionChange(event: sap.ui.base.Event): void {
+                                            let table: any = event.getSource();
+                                            if (table instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                                                table = table.getParent();
+                                                if (table instanceof sap.ui.table.Table) {
+                                                    (<any>table).fireRowSelectionChange({ rowIndices: event.getParameter("indices") });
+                                                }
                                             }
                                         }
-                                    }
-                                }));
+                                    })
+                                );
                                 return this.setProperty("enableSelectAll", value);
                             }
                         }
@@ -218,9 +219,7 @@ namespace sap {
                                 if (ibas.objects.isNull(dtRow.cells[i])) {
                                     dtRow.cells[i] = "";
                                 }
-                            } else if (cell instanceof sap.m.ObjectAttribute
-                                || cell instanceof sap.m.ObjectIdentifier
-                                || cell instanceof sap.m.ObjectStatus) {
+                            } else if (cell instanceof sap.m.ObjectAttribute || cell instanceof sap.m.ObjectIdentifier || cell instanceof sap.m.ObjectStatus) {
                                 let builder: ibas.StringBuilder = new ibas.StringBuilder();
                                 builder.map(undefined, "");
                                 builder.map(null, "");
@@ -287,7 +286,7 @@ namespace sap {
                                 let visibleRow: number = this.getVisibleRowCount();
                                 if (dataCount > 0 && dataCount > visibleRow) {
                                     let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
-                                    if (firstRow === (dataCount - visibleRow)) {
+                                    if (firstRow === dataCount - visibleRow) {
                                         // 调用事件
                                         this.setBusy(true);
                                         this.fireNextDataSet({ data: data[data.length - 1] });
@@ -301,8 +300,7 @@ namespace sap {
                     this.attachEvent("cellClick", undefined, (event: sap.ui.base.Event) => {
                         let source: any = event.getSource();
                         if (source instanceof Table) {
-                            if (source.getChooseType() === ibas.emChooseType.MULTIPLE
-                                && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
+                            if (source.getChooseType() === ibas.emChooseType.MULTIPLE && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
                                 let rowIndex: number = event.getParameter("rowIndex");
                                 if (rowIndex >= 0 && rowIndex < (<any>source)._getTotalRowCount()) {
                                     if (this.isIndexSelected(rowIndex)) {
@@ -355,7 +353,7 @@ namespace sap {
                         if (!ibas.objects.isNull(this.getModel(sName))) {
                             this.clearSelection();
                             // 清除过滤值
-                            this.getColumns().forEach(c => {
+                            this.getColumns().forEach((c) => {
                                 c.setFilterValue();
                                 c.setFiltered(false);
                             });
@@ -374,7 +372,7 @@ namespace sap {
                 },
                 setSelectionMode(this: Table): Table {
                     // tslint:disable-next-line: no-string-literal
-                    if ((this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true)) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectionMode.apply(plugin, arguments);
@@ -461,7 +459,7 @@ namespace sap {
                         }
                     }
                     return sap.ui.table.Table.prototype.isIndexSelected.apply(this, arguments);
-                },
+                }
             });
             /**
              * 表格列
@@ -470,7 +468,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 列宽 */
-                        width: { type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: "10rem" },
+                        width: { type: "sap.ui.core.CSSSize", group: "Dimension", defaultValue: "10rem" }
                     },
                     events: {}
                 },
@@ -493,19 +491,16 @@ namespace sap {
                         if (template instanceof sap.ui.core.Control) {
                             let path: string = managedobjects.bindingPath(template, "bindingValue");
                             if (path) {
-                                if (path === ibas.BO_PROPERTY_NAME_DOCENTRY
-                                    || path === ibas.BO_PROPERTY_NAME_LINEID
-                                    || path === ibas.BO_PROPERTY_NAME_OBJECTKEY) {
+                                if (path === ibas.BO_PROPERTY_NAME_DOCENTRY || path === ibas.BO_PROPERTY_NAME_LINEID || path === ibas.BO_PROPERTY_NAME_OBJECTKEY) {
                                     mSettings.width = "6rem";
-                                } else if (path === ibas.BO_PROPERTY_NAME_APPROVALSTATUS
-                                    || path === ibas.BO_PROPERTY_NAME_DOCUMENTSTATUS
-                                    || path === ibas.BO_PROPERTY_NAME_LINESTATUS
-                                    || path === ibas.BO_PROPERTY_NAME_STATUS) {
+                                } else if (
+                                    path === ibas.BO_PROPERTY_NAME_APPROVALSTATUS ||
+                                    path === ibas.BO_PROPERTY_NAME_DOCUMENTSTATUS ||
+                                    path === ibas.BO_PROPERTY_NAME_LINESTATUS ||
+                                    path === ibas.BO_PROPERTY_NAME_STATUS
+                                ) {
                                     mSettings.width = "8rem";
-                                } else if (path === ibas.BO_PROPERTY_NAME_CANCELED
-                                    || path === ibas.BO_PROPERTY_NAME_DELETED
-                                    || path === "printed"
-                                    || path === "activated") {
+                                } else if (path === ibas.BO_PROPERTY_NAME_CANCELED || path === ibas.BO_PROPERTY_NAME_DELETED || path === "printed" || path === "activated") {
                                     mSettings.width = "7rem";
                                 }
                             }
@@ -529,18 +524,23 @@ namespace sap {
                                 },
                                 {
                                     path: "approvalStatus",
-                                    type: new data.ApprovalStatus(),
+                                    type: new data.ApprovalStatus()
                                 },
                                 {
                                     path: "canceled",
-                                    type: new data.YesNo(),
+                                    type: new data.YesNo()
                                 },
                                 {
                                     path: "deleted",
-                                    type: new data.YesNo(),
+                                    type: new data.YesNo()
                                 }
                             ],
-                            formatter(documentStatus: ibas.emDocumentStatus, approvalStatus: ibas.emApprovalStatus, canceled: ibas.emYesNo, deleted: ibas.emYesNo): sap.ui.core.ValueState {
+                            formatter(
+                                documentStatus: ibas.emDocumentStatus,
+                                approvalStatus: ibas.emApprovalStatus,
+                                canceled: ibas.emYesNo,
+                                deleted: ibas.emYesNo
+                            ): sap.ui.core.ValueState {
                                 return data.status(documentStatus, approvalStatus, canceled, deleted);
                             }
                         }
@@ -555,11 +555,11 @@ namespace sap {
                                 },
                                 {
                                     path: "canceled",
-                                    type: new data.YesNo(),
+                                    type: new data.YesNo()
                                 },
                                 {
                                     path: "deleted",
-                                    type: new data.YesNo(),
+                                    type: new data.YesNo()
                                 }
                             ],
                             formatter(lineStatus: ibas.emDocumentStatus, canceled: ibas.emYesNo, deleted: ibas.emYesNo): sap.ui.core.ValueState {
@@ -573,21 +573,20 @@ namespace sap {
                             parts: [
                                 {
                                     path: "activated",
-                                    type: new data.YesNo(),
+                                    type: new data.YesNo()
                                 },
                                 {
                                     path: "deleted",
-                                    type: new data.YesNo(),
+                                    type: new data.YesNo()
                                 },
                                 {
                                     path: "approvalStatus",
-                                    type: new data.ApprovalStatus(),
-                                },
+                                    type: new data.ApprovalStatus()
+                                }
                             ],
                             formatter(activated: ibas.emYesNo, deleted: ibas.emYesNo, approvalStatus: ibas.emApprovalStatus): sap.ui.core.ValueState {
                                 // tslint:disable-next-line: triple-equals
-                                if ((typeof activated === "number" && activated === ibas.emYesNo.NO)
-                                    || (typeof activated === "string" && activated === ibas.emYesNo.NO)) {
+                                if ((typeof activated === "number" && activated === ibas.emYesNo.NO) || (typeof activated === "string" && activated === ibas.emYesNo.NO)) {
                                     return sap.ui.core.ValueState.Error;
                                 }
                                 return data.status(ibas.emDocumentStatus.RELEASED, approvalStatus, undefined, deleted);
@@ -610,30 +609,30 @@ namespace sap {
                         /** 排序属性 */
                         sortProperty: { type: "string" },
                         /** 排序间隔步长，0:不支持调整 */
-                        sortIntervalStep: { type: "int", defaultValue: 0 },
+                        sortIntervalStep: { type: "int", defaultValue: 0 }
                     },
                     events: {
-                        "updatePropertyColumns": {
+                        updatePropertyColumns: {
                             parameters: {
                                 boInfo: {
-                                    type: "any",
+                                    type: "any"
                                 }
                             }
-                        },
+                        }
                     }
                 },
                 renderer: {},
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(this: DataTable): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
+                getDataInfo(this: DataTable): { code: string; name?: string } | string | Function | shell.bo.IBizObjectInfo {
                     return this.getProperty("dataInfo");
                 },
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setDataInfo(this: DataTable, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTable {
+                setDataInfo(this: DataTable, value: { code: string; name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTable {
                     return this.setProperty("dataInfo", value);
                 },
                 /**
@@ -677,9 +676,7 @@ namespace sap {
                             };
                         }
                         if (typeof mSettings.rows === "object" && !ibas.strings.isEmpty(mSettings.rows.path) && ibas.objects.isNull(mSettings.rows.sorter)) {
-                            mSettings.rows.sorter = [
-                                new sap.ui.model.Sorter(mSettings.sortProperty, false)
-                            ];
+                            mSettings.rows.sorter = [new sap.ui.model.Sorter(mSettings.sortProperty, false)];
                             // 拖动排序，当排序列显示时才激活
                         }
                     }
@@ -701,19 +698,19 @@ namespace sap {
                         let dataInfo: any = this.getDataInfo();
                         if (typeof dataInfo === "string") {
                             dataInfo = {
-                                code: dataInfo,
+                                code: dataInfo
                             };
                         } else if (typeof dataInfo === "function") {
                             dataInfo = {
                                 code: dataInfo.BUSINESS_OBJECT_CODE,
-                                name: ibas.objects.nameOf(dataInfo),
+                                name: ibas.objects.nameOf(dataInfo)
                             };
                         }
                         if (typeof dataInfo === "object") {
                             if (dataInfo.properties instanceof Array) {
                                 this.updatePropertyColumns(dataInfo);
                             } else {
-                                let info: { code: string, name?: string } = dataInfo;
+                                let info: { code: string; name?: string } = dataInfo;
                                 let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
                                 boRepository.fetchBizObjectInfo({
                                     user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
@@ -768,10 +765,10 @@ namespace sap {
                     }
                     if (template instanceof sap.ui.core.Control) {
                         let bindingPath: string = managedobjects.bindingPath(template);
-                        let index: number = boInfo.properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
+                        let index: number = boInfo.properties.findIndex((c) => c && ibas.strings.equalsIgnoreCase(c.name, bindingPath));
                         if (index < 0 && ibas.strings.isWith(bindingPath, "userFields/", undefined)) {
                             if ((<any>column).getPropertyInfo instanceof Function) {
-                                index = boInfo.properties.findIndex(c => c && ibas.strings.equalsIgnoreCase(c.name, (<any>column).getPropertyInfo()?.name));
+                                index = boInfo.properties.findIndex((c) => c && ibas.strings.equalsIgnoreCase(c.name, (<any>column).getPropertyInfo()?.name));
                             }
                         }
                         if (index < 0) {
@@ -811,84 +808,87 @@ namespace sap {
                     let column: DataColumn = new DataColumn("", {
                         propertyInfo: property,
                         label: new sap.m.Label("", {
-                            text: property.systemed !== true ? property.description :
-                                ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
-                            required: readonly ? false : property.required,
+                            text: property.systemed !== true ? property.description : ibas.i18n.prop(ibas.strings.format("bo_{0}_{1}", boInfo.name, property.name).toLowerCase()),
+                            required: readonly ? false : property.required
                         }),
-                        template: factories.newComponent(property, readonly ? "Text" : "Input", readonly ? undefined : (event) => {
-                            let source: any = sap.ui.getCore().byId(event.getParameter("id"));
-                            if (source instanceof sap.m.Input && event.getId() === "changed") {
-                                let chsInfo: string = source.getTooltip_AsString();
-                                if (ibas.strings.isEmpty(chsInfo)) {
-                                    return;
-                                }
-                                let criteria: ibas.ICriteria = ibas.criterias.valueOf(chsInfo);
-                                if (ibas.strings.isEmpty(criteria.remarks)) {
-                                    return;
-                                }
-                                let selecteds: any[] = event.getParameter("selecteds");
-                                if (!(selecteds instanceof Array)) {
-                                    return;
-                                }
-                                let boData: any = source.getBindingContext()?.getObject();
-                                if (!(boData instanceof ibas.BusinessObject)) {
-                                    return;
-                                }
-                                for (let pItem of criteria.remarks.split(";")) {
-                                    if (pItem.indexOf("=") <= 0) {
-                                        continue;
-                                    }
-                                    let value: any;
-                                    let tarName: string = ibas.strings.trim(pItem.split("=")[0]);
-                                    let surName: string = ibas.strings.trim(pItem.split("=")[1]);
-                                    if (selecteds.length === 1) {
-                                        for (let item of selecteds) {
-                                            if (item instanceof ibas.BusinessObject
-                                                && ibas.strings.isWith(surName, "U_", undefined)) {
-                                                let userField: ibas.IUserField = item?.userFields?.get(surName);
-                                                if (!ibas.objects.isNull(userField)) {
-                                                    value = userField.value;
-                                                }
-                                            } else if (item instanceof Object) {
-                                                value = item[surName];
-                                            } else {
-                                                value = item;
-                                            }
-                                        }
-                                    } else {
-                                        let builder: ibas.StringBuilder = new ibas.StringBuilder();
-                                        builder.map(null, "");
-                                        builder.map(undefined, "");
-                                        for (let item of selecteds) {
-                                            if (builder.length > 0) {
-                                                builder.append(ibas.DATA_SEPARATOR);
-                                            }
-                                            if (item instanceof ibas.BusinessObject
-                                                && ibas.strings.isWith(surName, "U_", undefined)) {
-                                                let userField: ibas.IUserField = item?.userFields?.get(surName);
-                                                if (!ibas.objects.isNull(userField)) {
-                                                    builder.append(userField.value);
-                                                }
-                                            } else if (item instanceof Object) {
-                                                builder.append(item[surName]);
-                                            } else {
-                                                builder.append(item);
-                                            }
-                                        }
-                                        value = builder.toString();
-                                    }
-                                    // 通过主对象赋值
-                                    if (ibas.strings.isWith(tarName, "U_", undefined)) {
-                                        let userField: ibas.IUserField = boData?.userFields.get(tarName);
-                                        if (!ibas.objects.isNull(userField)) {
-                                            userField.value = value;
-                                        }
-                                    } else {
-                                        boData[tarName] = value;
-                                    }
-                                }
-                            }
-                        }),
+                        template: factories.newComponent(
+                            property,
+                            readonly ? "Text" : "Input",
+                            readonly
+                                ? undefined
+                                : (event) => {
+                                      let source: any = sap.ui.getCore().byId(event.getParameter("id"));
+                                      if (source instanceof sap.m.Input && event.getId() === "changed") {
+                                          let chsInfo: string = source.getTooltip_AsString();
+                                          if (ibas.strings.isEmpty(chsInfo)) {
+                                              return;
+                                          }
+                                          let criteria: ibas.ICriteria = ibas.criterias.valueOf(chsInfo);
+                                          if (ibas.strings.isEmpty(criteria.remarks)) {
+                                              return;
+                                          }
+                                          let selecteds: any[] = event.getParameter("selecteds");
+                                          if (!(selecteds instanceof Array)) {
+                                              return;
+                                          }
+                                          let boData: any = source.getBindingContext()?.getObject();
+                                          if (!(boData instanceof ibas.BusinessObject)) {
+                                              return;
+                                          }
+                                          for (let pItem of criteria.remarks.split(";")) {
+                                              if (pItem.indexOf("=") <= 0) {
+                                                  continue;
+                                              }
+                                              let value: any;
+                                              let tarName: string = ibas.strings.trim(pItem.split("=")[0]);
+                                              let surName: string = ibas.strings.trim(pItem.split("=")[1]);
+                                              if (selecteds.length === 1) {
+                                                  for (let item of selecteds) {
+                                                      if (item instanceof ibas.BusinessObject && ibas.strings.isWith(surName, "U_", undefined)) {
+                                                          let userField: ibas.IUserField = item?.userFields?.get(surName);
+                                                          if (!ibas.objects.isNull(userField)) {
+                                                              value = userField.value;
+                                                          }
+                                                      } else if (item instanceof Object) {
+                                                          value = item[surName];
+                                                      } else {
+                                                          value = item;
+                                                      }
+                                                  }
+                                              } else {
+                                                  let builder: ibas.StringBuilder = new ibas.StringBuilder();
+                                                  builder.map(null, "");
+                                                  builder.map(undefined, "");
+                                                  for (let item of selecteds) {
+                                                      if (builder.length > 0) {
+                                                          builder.append(ibas.DATA_SEPARATOR);
+                                                      }
+                                                      if (item instanceof ibas.BusinessObject && ibas.strings.isWith(surName, "U_", undefined)) {
+                                                          let userField: ibas.IUserField = item?.userFields?.get(surName);
+                                                          if (!ibas.objects.isNull(userField)) {
+                                                              builder.append(userField.value);
+                                                          }
+                                                      } else if (item instanceof Object) {
+                                                          builder.append(item[surName]);
+                                                      } else {
+                                                          builder.append(item);
+                                                      }
+                                                  }
+                                                  value = builder.toString();
+                                              }
+                                              // 通过主对象赋值
+                                              if (ibas.strings.isWith(tarName, "U_", undefined)) {
+                                                  let userField: ibas.IUserField = boData?.userFields.get(tarName);
+                                                  if (!ibas.objects.isNull(userField)) {
+                                                      userField.value = value;
+                                                  }
+                                              } else {
+                                                  boData[tarName] = value;
+                                              }
+                                          }
+                                      }
+                                  }
+                        )
                     });
                     ptyColumnMap.set(property, column);
                 }
@@ -969,7 +969,7 @@ namespace sap {
                     }
                     if (ibas.objects.isNull(property)) {
                         property = {
-                            position: i,
+                            position: i
                         };
                         ptyColumnMap.set(<any>property, column);
                     }
@@ -987,8 +987,7 @@ namespace sap {
                     }
                 }
                 // 拖动排序，步长为0，不支持拖动
-                if (this.getSortIntervalStep instanceof Function && this.getSortIntervalStep() > 0
-                    && !(this.getDragDropConfig()?.length > 0)) {
+                if (this.getSortIntervalStep instanceof Function && this.getSortIntervalStep() > 0 && !(this.getDragDropConfig()?.length > 0)) {
                     // 可拖拽排序（仅当排序列显示时）
                     let dragable: boolean = false;
                     let sortProperty: string = this.getSortProperty();
@@ -1006,52 +1005,54 @@ namespace sap {
                         }
                     }
                     if (dragable === true) {
-                        this.addDragDropConfig(new sap.ui.core.dnd.DragDropInfo("", {
-                            sourceAggregation: "rows",
-                            targetAggregation: "rows",
-                            dropPosition: sap.ui.core.dnd.DropPosition.Between,
-                            dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
-                            drop(event: sap.ui.base.Event): void {
-                                let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
-                                let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
-                                let dropPosition: string = event.getParameter("dropPosition");
-                                let table: any = (<any>event.getSource())?.getDropTarget();
-                                let sortProperty: string = table.getSortProperty();
-                                if (table instanceof DataTable) {
-                                    let index: number = 1;
-                                    let step: number = table.getSortIntervalStep();
-                                    if (step <= 0) {
-                                        step = 1;
-                                    }
-                                    for (let row of (<any>table).getBinding().getContexts()) {
-                                        if (ibas.objects.isNull(row)) {
-                                            continue;
+                        this.addDragDropConfig(
+                            new sap.ui.core.dnd.DragDropInfo("", {
+                                sourceAggregation: "rows",
+                                targetAggregation: "rows",
+                                dropPosition: sap.ui.core.dnd.DropPosition.Between,
+                                dropLayout: sap.ui.core.dnd.DropLayout.Vertical,
+                                drop(event: sap.ui.base.Event): void {
+                                    let dragged: any = event.getParameter("draggedControl")?.getBindingContext();
+                                    let dropped: any = event.getParameter("droppedControl")?.getBindingContext();
+                                    let dropPosition: string = event.getParameter("dropPosition");
+                                    let table: any = (<any>event.getSource())?.getDropTarget();
+                                    let sortProperty: string = table.getSortProperty();
+                                    if (table instanceof DataTable) {
+                                        let index: number = 1;
+                                        let step: number = table.getSortIntervalStep();
+                                        if (step <= 0) {
+                                            step = 1;
                                         }
-                                        if (dragged === row) {
-                                            continue;
-                                        } else if (dropped === row) {
-                                            if (dropPosition === "Before") {
-                                                dragged.getObject()[sortProperty] = index * step;
-                                                index++;
-                                                dropped.getObject()[sortProperty] = index * step;
-                                                index++;
-                                            } else if (dropPosition === "After") {
-                                                dropped.getObject()[sortProperty] = index * step;
-                                                index++;
-                                                dragged.getObject()[sortProperty] = index * step;
+                                        for (let row of (<any>table).getBinding().getContexts()) {
+                                            if (ibas.objects.isNull(row)) {
+                                                continue;
+                                            }
+                                            if (dragged === row) {
+                                                continue;
+                                            } else if (dropped === row) {
+                                                if (dropPosition === "Before") {
+                                                    dragged.getObject()[sortProperty] = index * step;
+                                                    index++;
+                                                    dropped.getObject()[sortProperty] = index * step;
+                                                    index++;
+                                                } else if (dropPosition === "After") {
+                                                    dropped.getObject()[sortProperty] = index * step;
+                                                    index++;
+                                                    dragged.getObject()[sortProperty] = index * step;
+                                                    index++;
+                                                }
+                                            } else {
+                                                row.getObject()[sortProperty] = index * step;
                                                 index++;
                                             }
-                                        } else {
-                                            row.getObject()[sortProperty] = index * step;
-                                            index++;
+                                        }
+                                        if (index > 1) {
+                                            table.getModel().refresh(true);
                                         }
                                     }
-                                    if (index > 1) {
-                                        table.getModel().refresh(true);
-                                    }
                                 }
-                            },
-                        }));
+                            })
+                        );
                     }
                 }
                 // 触发事件
@@ -1065,7 +1066,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 属性信息 */
-                        propertyInfo: { type: "any" },
+                        propertyInfo: { type: "any" }
                     },
                     events: {}
                 },
@@ -1123,8 +1124,7 @@ namespace sap {
                                 if (oFilter) {
                                     let propertyInfo: shell.bo.IBizPropertyInfo = aCols[i].getPropertyInfo();
                                     if (!ibas.objects.isNull(propertyInfo)) {
-                                        if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains
-                                            || oFilter.getOperator() === sap.ui.model.FilterOperator.EQ) {
+                                        if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains || oFilter.getOperator() === sap.ui.model.FilterOperator.EQ) {
                                             if (propertyInfo.values.length > 0) {
                                                 asyncFilters.set(oFilter, ibas.objects.clone(propertyInfo));
                                             } else if (!ibas.strings.isEmpty(propertyInfo.linkedObject)) {
@@ -1135,19 +1135,19 @@ namespace sap {
                                                     // {"type":"Criteria","BusinessObject":"CC_AC_ACCOUNT.Code:Name"}
                                                     let builder: ibas.StringBuilder = new ibas.StringBuilder();
                                                     builder.append("{");
-                                                    builder.append("\"type\": ");
-                                                    builder.append("\"");
+                                                    builder.append('"type": ');
+                                                    builder.append('"');
                                                     builder.append("Criteria");
-                                                    builder.append("\"");
+                                                    builder.append('"');
                                                     builder.append(",");
-                                                    builder.append("\"BusinessObject\": ");
-                                                    builder.append("\"");
+                                                    builder.append('"BusinessObject": ');
+                                                    builder.append('"');
                                                     builder.append(ibas.businessobjects.code(<any>dataInfo.type));
                                                     builder.append(".");
                                                     builder.append(dataInfo.key);
                                                     builder.append(":");
                                                     builder.append(dataInfo.text);
-                                                    builder.append("\"");
+                                                    builder.append('"');
                                                     builder.append("}");
                                                     propertyInfo = ibas.objects.clone(propertyInfo);
                                                     propertyInfo.linkedObject = builder.toString();
@@ -1161,28 +1161,30 @@ namespace sap {
                             }
                             if (asyncFilters.size > 0) {
                                 // 查询对象的可选值
-                                ibas.queues.execute(ibas.arrays.create(asyncFilters.keys()),
+                                ibas.queues.execute(
+                                    ibas.arrays.create(asyncFilters.keys()),
                                     (oFilter, next) => {
                                         let propertyInfo: shell.bo.IBizPropertyInfo = asyncFilters.get(oFilter);
                                         try {
-                                            let linkedInfo: { property: string, criteria: ibas.ICriteria } = factories.properties.linkedObject(propertyInfo.linkedObject);
-                                            if (linkedInfo && !ibas.strings.isWith(linkedInfo.criteria?.businessObject, undefined, "_RA_RPTRESULT")
-                                                && linkedInfo.property?.indexOf(":") > 0) {
+                                            let linkedInfo: { property: string; criteria: ibas.ICriteria } = factories.properties.linkedObject(propertyInfo.linkedObject);
+                                            if (
+                                                linkedInfo &&
+                                                !ibas.strings.isWith(linkedInfo.criteria?.businessObject, undefined, "_RA_RPTRESULT") &&
+                                                linkedInfo.property?.indexOf(":") > 0
+                                            ) {
                                                 let filterValue: string = oFilter.getValue1();
-                                                factories.properties.fetchLinkedObjects(linkedInfo, filterValue,
-                                                    (results) => {
-                                                        if (results instanceof Array) {
-                                                            for (let item of results) {
-                                                                propertyInfo.values.push({
-                                                                    value: String(item.key),
-                                                                    description: String(item.text),
-                                                                    default: undefined,
-                                                                });
-                                                            }
+                                                factories.properties.fetchLinkedObjects(linkedInfo, filterValue, (results) => {
+                                                    if (results instanceof Array) {
+                                                        for (let item of results) {
+                                                            propertyInfo.values.push({
+                                                                value: String(item.key),
+                                                                description: String(item.text),
+                                                                default: undefined
+                                                            });
                                                         }
-                                                        next();
                                                     }
-                                                );
+                                                    next();
+                                                });
                                             } else {
                                                 next();
                                             }
@@ -1203,9 +1205,10 @@ namespace sap {
                                                             operator: oFilter.getOperator(),
                                                             value1: filterValue,
                                                             test: (sKeyValue: any) => {
-                                                                let ptyValue: shell.bo.IBizPropertyValue = propertyInfo.values.find(c =>
-                                                                    (oFilter.isCaseSensitive() !== false && ibas.strings.equalsIgnoreCase(c.value, sKeyValue))
-                                                                    || (oFilter.isCaseSensitive() === false && ibas.strings.equals(c.value, sKeyValue))
+                                                                let ptyValue: shell.bo.IBizPropertyValue = propertyInfo.values.find(
+                                                                    (c) =>
+                                                                        (oFilter.isCaseSensitive() !== false && ibas.strings.equalsIgnoreCase(c.value, sKeyValue)) ||
+                                                                        (oFilter.isCaseSensitive() === false && ibas.strings.equals(c.value, sKeyValue))
                                                                 );
                                                                 if (!ibas.strings.isEmpty(ptyValue?.description)) {
                                                                     if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains) {
@@ -1217,12 +1220,15 @@ namespace sap {
                                                                 return false;
                                                             }
                                                         });
-                                                    } else if (ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC") && !ibas.strings.isEmpty(propertyInfo.linkedObject)) {
+                                                    } else if (
+                                                        ibas.strings.equalsIgnoreCase(propertyInfo.dataType, "NUMERIC") &&
+                                                        !ibas.strings.isEmpty(propertyInfo.linkedObject)
+                                                    ) {
                                                         if (oFilter.getOperator() === sap.ui.model.FilterOperator.Contains) {
                                                             oFilter = new sap.ui.model.Filter({
                                                                 path: oFilter.getPath(),
                                                                 operator: sap.ui.model.FilterOperator.EQ,
-                                                                value1: filterValue,
+                                                                value1: filterValue
                                                             });
                                                         }
                                                     }
@@ -1248,16 +1254,21 @@ namespace sap {
                 },
                 /** 重构设置 */
                 applySettings(this: DataColumn, mSettings: any): DataColumn {
-                    if (mSettings.template instanceof m.Input
-                        || mSettings.template instanceof m.Select
-                        || mSettings.template instanceof m.DatePicker
-                        || mSettings.template instanceof m.DateTimePicker) {
+                    if (
+                        mSettings.template instanceof m.Input ||
+                        mSettings.template instanceof m.Select ||
+                        mSettings.template instanceof m.DatePicker ||
+                        mSettings.template instanceof m.DateTimePicker
+                    ) {
                         if (mSettings.template.hasListeners("valuePaste") === false) {
                             mSettings.template.attachValuePaste(undefined, function (event: sap.ui.base.Event): void {
                                 let source: any = <any>event.getSource();
                                 let data: any = event.getParameter("data");
-                                if (typeof data === "string" && data?.indexOf("\n") > 0) {
-                                    sap.extension.tables.fillingCellsData(source, data);
+                                if (typeof data === "string" && /[\r\n]/.test(data)) {
+                                    const values = data.replace(/\r\n?/g, "\n").replace(/^\n+|\n+$/g, "");
+                                    if (values) {
+                                        sap.extension.tables.fillingCellsData(source, values);
+                                    }
                                     // 不执行后续事件
                                     event.preventDefault();
                                     event.cancelBubble();
@@ -1278,13 +1289,13 @@ namespace sap {
                         /** 行选择 */
                         selectionBehavior: { type: "string", defaultValue: sap.ui.table.SelectionBehavior.Row },
                         /** 选择方式 */
-                        chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE },
+                        chooseType: { type: "int", defaultValue: ibas.emChooseType.MULTIPLE }
                     },
                     events: {
-                        "nextDataSet": {
+                        nextDataSet: {
                             parameters: {
                                 data: {
-                                    type: "any",
+                                    type: "any"
                                 }
                             }
                         }
@@ -1325,19 +1336,20 @@ namespace sap {
                         this.removePlugin(ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()));
                         if (this.getChooseType() === ibas.emChooseType.MULTIPLE) {
                             if (value === false) {
-                                this.addPlugin(new sap.ui.table.plugins.MultiSelectionPlugin(
-                                    ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
-                                    showHeaderSelector: true,
-                                    selectionChange(event: sap.ui.base.Event): void {
-                                        let table: any = event.getSource();
-                                        if (table instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
-                                            table = table.getParent();
-                                            if (table instanceof sap.ui.table.Table) {
-                                                (<any>table).fireRowSelectionChange({ rowIndices: event.getParameter("indices") });
+                                this.addPlugin(
+                                    new sap.ui.table.plugins.MultiSelectionPlugin(ibas.strings.format(ID_TABLE_PLUGIN_CHOOSE, this.getId()), {
+                                        showHeaderSelector: true,
+                                        selectionChange(event: sap.ui.base.Event): void {
+                                            let table: any = event.getSource();
+                                            if (table instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
+                                                table = table.getParent();
+                                                if (table instanceof sap.ui.table.Table) {
+                                                    (<any>table).fireRowSelectionChange({ rowIndices: event.getParameter("indices") });
+                                                }
                                             }
                                         }
-                                    }
-                                }));
+                                    })
+                                );
                                 return this.setProperty("enableSelectAll", value);
                             }
                         }
@@ -1424,9 +1436,7 @@ namespace sap {
                                 dtRow.cells[i] = cell.getText(true);
                             } else if (cell instanceof sap.m.Link) {
                                 dtRow.cells[i] = cell.getText();
-                            } else if (cell instanceof sap.m.ObjectAttribute
-                                || cell instanceof sap.m.ObjectIdentifier
-                                || cell instanceof sap.m.ObjectStatus) {
+                            } else if (cell instanceof sap.m.ObjectAttribute || cell instanceof sap.m.ObjectIdentifier || cell instanceof sap.m.ObjectStatus) {
                                 let builder: ibas.StringBuilder = new ibas.StringBuilder();
                                 builder.map(undefined, "");
                                 builder.map(null, "");
@@ -1494,7 +1504,7 @@ namespace sap {
                                 let visibleRow: number = this.getVisibleRowCount();
                                 if (dataCount > 0 && dataCount > visibleRow) {
                                     let firstRow: number = this.getFirstVisibleRow(); // 当前页的第一行
-                                    if (firstRow === (dataCount - visibleRow)) {
+                                    if (firstRow === dataCount - visibleRow) {
                                         // 调用事件
                                         this.setBusy(true);
                                         this.fireNextDataSet({ data: data[data.length - 1] });
@@ -1508,8 +1518,7 @@ namespace sap {
                     this.attachEvent("cellClick", undefined, (event: sap.ui.base.Event) => {
                         let source: any = event.getSource();
                         if (source instanceof TreeTable) {
-                            if (source.getChooseType() === ibas.emChooseType.MULTIPLE
-                                && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
+                            if (source.getChooseType() === ibas.emChooseType.MULTIPLE && source.getSelectionBehavior() === sap.ui.table.SelectionBehavior.Row) {
                                 let rowIndex: number = event.getParameter("rowIndex");
                                 if (rowIndex >= 0 && rowIndex < (<any>source)._getTotalRowCount()) {
                                     if (this.isIndexSelected(rowIndex)) {
@@ -1543,7 +1552,7 @@ namespace sap {
                 },
                 setSelectionMode(this: TreeTable): TreeTable {
                     // tslint:disable-next-line: no-string-literal
-                    if ((this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true)) {
+                    if (this["_hasSelectionPlugin"] && this["_hasSelectionPlugin"]() === true) {
                         let plugin: any = this.getPlugins()[0];
                         if (plugin instanceof sap.ui.table.plugins.MultiSelectionPlugin) {
                             return plugin.setSelectionMode.apply(plugin, arguments);
@@ -1630,7 +1639,7 @@ namespace sap {
                         }
                     }
                     return sap.ui.table.TreeTable.prototype.isIndexSelected.apply(this, arguments);
-                },
+                }
             });
 
             /**
@@ -1642,30 +1651,30 @@ namespace sap {
                         /** 数据信息 */
                         dataInfo: { type: "any" },
                         /** 属性过滤器 */
-                        propertyFilter: { type: "function" },
+                        propertyFilter: { type: "function" }
                     },
                     events: {
-                        "updatePropertyColumns": {
+                        updatePropertyColumns: {
                             parameters: {
                                 boInfo: {
-                                    type: "any",
+                                    type: "any"
                                 }
                             }
-                        },
+                        }
                     }
                 },
                 renderer: {},
                 /**
                  * 获取数据信息
                  */
-                getDataInfo(this: DataTreeTable): { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo {
+                getDataInfo(this: DataTreeTable): { code: string; name?: string } | string | Function | shell.bo.IBizObjectInfo {
                     return this.getProperty("dataInfo");
                 },
                 /**
                  * 设置数据信息
                  * @param value 数据信息
                  */
-                setDataInfo(this: DataTreeTable, value: { code: string, name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTreeTable {
+                setDataInfo(this: DataTreeTable, value: { code: string; name?: string } | string | Function | shell.bo.IBizObjectInfo): DataTreeTable {
                     return this.setProperty("dataInfo", value);
                 },
                 /**
@@ -1695,19 +1704,19 @@ namespace sap {
                         let dataInfo: any = this.getDataInfo();
                         if (typeof dataInfo === "string") {
                             dataInfo = {
-                                code: dataInfo,
+                                code: dataInfo
                             };
                         } else if (typeof dataInfo === "function") {
                             dataInfo = {
                                 code: dataInfo.BUSINESS_OBJECT_CODE,
-                                name: ibas.objects.nameOf(dataInfo),
+                                name: ibas.objects.nameOf(dataInfo)
                             };
                         }
                         if (typeof dataInfo === "object") {
                             if (dataInfo.properties instanceof Array) {
                                 this.updatePropertyColumns(dataInfo);
                             } else {
-                                let info: { code: string, name?: string } = dataInfo;
+                                let info: { code: string; name?: string } = dataInfo;
                                 let boRepository: shell.bo.IBORepositoryShell = ibas.boFactory.create(shell.bo.BO_REPOSITORY_SHELL);
                                 boRepository.fetchBizObjectInfo({
                                     user: ibas.variablesManager.getValue(ibas.VARIABLE_NAME_USER_CODE),
@@ -1732,7 +1741,7 @@ namespace sap {
                     } else {
                         propertyColumns.call(this, boInfo);
                     }
-                },
+                }
             });
         }
     }

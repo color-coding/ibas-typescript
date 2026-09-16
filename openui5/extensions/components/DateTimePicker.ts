@@ -72,7 +72,11 @@ namespace sap {
                             if (event.getParameter("valid") === false) {
                                 let value: any = event.getParameter("value");
                                 setTimeout(() => {
-                                    source.setDateValue(ibas.dates.complete(value));
+                                    if (ibas.strings.isEmpty(value)) {
+                                        source.setDateValue(null);
+                                    } else {
+                                        source.setDateValue(ibas.dates.complete(value));
+                                    }
                                 }, 3); return;
                             }
                             let oldValue: any = source.getBindingValue();
@@ -101,7 +105,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 绑定值 */
-                        bindingValue: { type: "int", defaultValue: 0 },
+                        bindingValue: { type: "any", defaultValue: null },
                     },
                     events: {
                         "valuePaste": {
@@ -135,10 +139,10 @@ namespace sap {
                             sap.m.TimePicker.prototype.setValue.apply(this, arguments);
                         }
                     }
-                    let time: number = value;
+                    let time: number = null;
                     if (value instanceof Date) {
                         time = value.getHours() * 100 + value.getMinutes();
-                    } else {
+                    } else if (!ibas.objects.isNull(value)) {
                         time = ibas.numbers.toInt(value);
                     }
                     this.setProperty("bindingValue", time);
@@ -198,7 +202,7 @@ namespace sap {
                 metadata: {
                     properties: {
                         /** 时间 */
-                        timePart: { type: "int", defaultValue: 0 },
+                        timePart: { type: "any", defaultValue: null },
                         /** 日期 */
                         datePart: { type: "object", defaultValue: null },
                         /** 值模板 */
@@ -218,11 +222,34 @@ namespace sap {
                 },
                 renderer: {
                 },
+                /** 初始化 */
+                init(this: DateTimePicker): void {
+                    (<any>sap.m.DateTimePicker.prototype).init.apply(this, arguments);
+                    this.attachChange(undefined, function (event: sap.ui.base.Event): void {
+                        let source: any = event.getSource();
+                        if (source instanceof DateTimePicker) {
+                            let value: any = source.getDateValue();
+                            if (value instanceof Date) {
+                                let date: Date = new Date(value);
+                                (<any>source).setProperty("datePart", date);
+                                (<any>source).setProperty("timePart", date.getHours() * 100 + date.getMinutes());
+                            } else {
+                                (<any>source).setProperty("datePart", null);
+                                (<any>source).setProperty("timePart", null);
+                            }
+                        }
+                    });
+                },
                 /**
                  * 设置时间部分
                  * @param value 值
                  */
                 setTimePart(this: DateTimePicker, value: any): DateTimePicker {
+                    if (ibas.objects.isNull(value)) {
+                        this.setProperty("timePart", null);
+                        this.setDateValue(null);
+                        return this;
+                    }
                     let time: number = value;
                     if (value instanceof Date) {
                         time = value.getHours() * 100 + value.getMinutes();
@@ -245,6 +272,12 @@ namespace sap {
                  * @param value 值
                  */
                 setDatePart(this: DateTimePicker, value: any): DateTimePicker {
+                    if (ibas.objects.isNull(value)) {
+                        this.setProperty("datePart", null);
+                        this.setProperty("timePart", null);
+                        sap.m.DateTimePicker.prototype.setDateValue.call(this, null);
+                        return this;
+                    }
                     if (value instanceof Date) {
                         let date: Date = this.getDateValue();
                         if (!(date instanceof Date)) {
@@ -271,6 +304,9 @@ namespace sap {
                         date.setHours(hour, minute, 0, 0);
                         this.setProperty("datePart", date);
                         this.setProperty("timePart", hour * 100 + minute);
+                    } else {
+                        this.setProperty("datePart", null);
+                        this.setProperty("timePart", null);
                     }
                     sap.m.DateTimePicker.prototype.setDateValue.apply(this, arguments);
                     return this;
