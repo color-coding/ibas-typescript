@@ -7,7 +7,6 @@
  */
 /// <reference path="../common/Data.ts" />
 /// <reference path="./BusinessObjectCore.ts" />
-
 namespace ibas {
     /** 业务对象属性名称-DocEntry */
     export const BO_PROPERTY_NAME_DOCENTRY: string = "docEntry";
@@ -35,10 +34,27 @@ namespace ibas {
     export const BO_PROPERTY_NAME_STATUS: string = "status";
     /** 需要被重置的属性名称 */
     const NEED_BE_RESET_PROPERTIES: string[] = [
-        "CreateDate", "CreateTime", "UpdateDate", "UpdateTime", "LogInst", "CreateUserSign",
-        "UpdateUserSign", "CreateActionId", "UpdateActionId", "Referenced", "Canceled",
-        "Deleted", "ApprovalStatus", "LineStatus", "Status", "DocumentStatus", "DataSource",
-        "Period", "DataOwner", "Organization", "VisOrder"
+        "CreateDate",
+        "CreateTime",
+        "UpdateDate",
+        "UpdateTime",
+        "LogInst",
+        "CreateUserSign",
+        "UpdateUserSign",
+        "CreateActionId",
+        "UpdateActionId",
+        "Referenced",
+        "Canceled",
+        "Deleted",
+        "ApprovalStatus",
+        "LineStatus",
+        "Status",
+        "DocumentStatus",
+        "DataSource",
+        "Period",
+        "DataOwner",
+        "Organization",
+        "VisOrder"
     ];
 
     /**
@@ -114,9 +130,7 @@ namespace ibas {
     /**
      * 业务对象-单据行集合
      */
-    export interface IBODocumentLines<T extends IBODocumentLine> extends IBusinessObjects<T> {
-
-    }
+    export interface IBODocumentLines<T extends IBODocumentLine> extends IBusinessObjects<T> {}
 
     /**
      * 业务对象-主数据
@@ -153,9 +167,7 @@ namespace ibas {
     /**
      * 业务对象-主数据行集合
      */
-    export interface IBOMasterDataLines<T extends IBOMasterDataLine> extends IBusinessObjects<T> {
-
-    }
+    export interface IBOMasterDataLines<T extends IBOMasterDataLine> extends IBusinessObjects<T> {}
     /**
      * 业务对象-简单对象
      */
@@ -183,9 +195,7 @@ namespace ibas {
     /**
      * 业务对象-简单对象行集合
      */
-    export interface IBOSimpleLines<T extends IBOSimpleLine> extends IBusinessObjects<T> {
-
-    }
+    export interface IBOSimpleLines<T extends IBOSimpleLine> extends IBusinessObjects<T> {}
     /**
      * 业务对象存储标记
      */
@@ -416,7 +426,9 @@ namespace ibas {
             return null;
         }
         protected firePropertyChanged(property: string): void {
-            if (this.isLoading) { return; }
+            if (this.isLoading) {
+                return;
+            }
             let myRules: IBusinessRules = businessRulesManager.getRules(objects.typeOf(this));
             if (!objects.isNull(myRules)) {
                 myRules.execute(this, property);
@@ -455,50 +467,51 @@ namespace ibas {
     /**
      * 业务对象集合基类
      */
-    export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusinessObject> extends BusinessObjectsBase<T>
-        implements IBusinessObjects<T> {
+    export abstract class BusinessObjects<T extends IBusinessObject, P extends IBusinessObject> extends BusinessObjectsBase<T> implements IBusinessObjects<T> {
         /**
          * 构造
          * @param parent 父项
          */
         constructor(parent: P) {
             super();
-            this.registerListener(this[PROPERTY_LISTENER] = {
-                caller: this,
-                propertyChanged(this: BusinessObjects<T, P>, name: string): void {
-                    // this指向业务对象集合基类,arguments[1]指向触发事件的BO
-                    let bo: any = arguments[1];
-                    if (objects.isNull(bo)) {
-                        return;
-                    }
-                    if (this.parent === bo) {
-                        this.onParentPropertyChanged(name);
-                    } else {
-                        if (name === "isDeleted") {
-                            this.firePropertyChanged("length");
-                        } else if (name === "length") {
-                            // 集合变化，则父项修改
-                            if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
-                                this.parent.markDirty();
-                                if (this.parent instanceof Bindable) {
-                                    (<any>this.parent).firePropertyChanged("isDirty");
-                                }
-                            }
-                            runRules.call(this, null);
-                        } else {
-                            // 集合变化，则父项修改
-                            if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
-                                this.parent.markDirty();
-                                if (this.parent instanceof Bindable) {
-                                    (<any>this.parent).firePropertyChanged("isDirty");
-                                }
-                            }
-                            runRules.call(this, name);
+            this.registerListener(
+                (this[PROPERTY_LISTENER] = {
+                    caller: this,
+                    propertyChanged(this: BusinessObjects<T, P>, name: string): void {
+                        // this指向业务对象集合基类,arguments[1]指向触发事件的BO
+                        let bo: any = arguments[1];
+                        if (objects.isNull(bo)) {
+                            return;
                         }
-                        this.onItemPropertyChanged(bo, name);
+                        if (this.parent === bo) {
+                            this.onParentPropertyChanged(name);
+                        } else {
+                            if (name === "isDeleted") {
+                                this.firePropertyChanged("length");
+                            } else if (name === "length") {
+                                // 集合变化，则父项修改
+                                if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
+                                    this.parent.markDirty();
+                                    if (this.parent instanceof Bindable) {
+                                        (<any>this.parent).firePropertyChanged("isDirty");
+                                    }
+                                }
+                                runRules.call(this, null);
+                            } else {
+                                // 集合变化，则父项修改
+                                if (this.parent?.isLoading !== true && this.parent?.isDirty === false) {
+                                    this.parent.markDirty();
+                                    if (this.parent instanceof Bindable) {
+                                        (<any>this.parent).firePropertyChanged("isDirty");
+                                    }
+                                }
+                                runRules.call(this, name);
+                            }
+                            this.onItemPropertyChanged(bo, name);
+                        }
                     }
-                }
-            });
+                })
+            );
             if (!objects.isNull(parent)) {
                 this.parent = parent;
             }
@@ -519,34 +532,28 @@ namespace ibas {
         protected onParentPropertyChanged(name: string): void {
             // 父项属性改变时调用，可重载此函数加入业务逻辑
             if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_OBJECTKEY)) {
-                if (objects.instanceOf(this.parent, BOSimple)
-                    || objects.instanceOf(this.parent, BOSimpleLine)) {
+                if (objects.instanceOf(this.parent, BOSimple) || objects.instanceOf(this.parent, BOSimpleLine)) {
                     // 简单对象
                     for (let item of this) {
-                        if (objects.instanceOf(item, BOSimple)
-                            || objects.instanceOf(item, BOSimpleLine)) {
+                        if (objects.instanceOf(item, BOSimple) || objects.instanceOf(item, BOSimpleLine)) {
                             item.setProperty(BO_PROPERTY_NAME_OBJECTKEY, this.parent.getProperty(BO_PROPERTY_NAME_OBJECTKEY));
                         }
                     }
                 }
             } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_CODE)) {
-                if (objects.instanceOf(this.parent, BOMasterData)
-                    || objects.instanceOf(this.parent, BOMasterDataLine)) {
+                if (objects.instanceOf(this.parent, BOMasterData) || objects.instanceOf(this.parent, BOMasterDataLine)) {
                     // 主数据
                     for (let item of this) {
-                        if (objects.instanceOf(item, BOMasterData)
-                            || objects.instanceOf(item, BOMasterDataLine)) {
+                        if (objects.instanceOf(item, BOMasterData) || objects.instanceOf(item, BOMasterDataLine)) {
                             item.setProperty(BO_PROPERTY_NAME_CODE, this.parent.getProperty(BO_PROPERTY_NAME_CODE));
                         }
                     }
                 }
             } else if (strings.equalsIgnoreCase(name, BO_PROPERTY_NAME_DOCENTRY)) {
-                if (objects.instanceOf(this.parent, BODocument)
-                    || objects.instanceOf(this.parent, BODocumentLine)) {
+                if (objects.instanceOf(this.parent, BODocument) || objects.instanceOf(this.parent, BODocumentLine)) {
                     // 单据
                     for (let item of this) {
-                        if (objects.instanceOf(item, BODocument)
-                            || objects.instanceOf(item, BODocumentLine)) {
+                        if (objects.instanceOf(item, BODocument) || objects.instanceOf(item, BODocumentLine)) {
                             item.setProperty(BO_PROPERTY_NAME_DOCENTRY, this.parent.getProperty(BO_PROPERTY_NAME_DOCENTRY));
                         }
                     }
@@ -609,8 +616,7 @@ namespace ibas {
             }
             // 存在行编号，为其自动编号
             if (item.isNew === true) {
-                if (objects.instanceOf(item, BODocumentLine) || objects.instanceOf(item, BOMasterDataLine)
-                    || objects.instanceOf(item, BOSimpleLine)) {
+                if (objects.instanceOf(item, BODocumentLine) || objects.instanceOf(item, BOMasterDataLine) || objects.instanceOf(item, BOSimpleLine)) {
                     let max: number = 0;
                     for (let tmp of this) {
                         if (tmp === item) {
@@ -691,7 +697,8 @@ namespace ibas {
                 let done: boolean = false;
                 for (let item of rule.inputProperties) {
                     if (strings.equalsIgnoreCase(item, property)) {
-                        done = true; break;
+                        done = true;
+                        break;
                     }
                 }
                 if (!done) {
@@ -967,7 +974,7 @@ namespace ibas {
                 infos = new ArrayList<UserFieldInfo>();
                 this.userFieldInfos.set(type, infos);
             }
-            let info: UserFieldInfo = infos.firstOrDefault(c => c.name === name);
+            let info: UserFieldInfo = infos.firstOrDefault((c) => c.name === name);
             if (objects.isNull(info)) {
                 info = new UserFieldInfo();
                 info.name = name;
@@ -1102,12 +1109,22 @@ namespace ibas {
                         if (value === data || (level > 0 && value === globalThis)) {
                             continue;
                         }
-                        if (value === globalThis.document || value === globalThis.indexedDB || value === globalThis.caches
-                            || value === globalThis.applicationCache || value === globalThis.localStorage
-                            || value === globalThis.navigator || value === globalThis.location || value === globalThis.console
-                            || value === globalThis.crypto || value === globalThis.frames || value === globalThis.frameElement
-                            || value === globalThis.history || value === globalThis.clientInformation || value === globalThis.styleMedia
-                            || value === globalThis.event
+                        if (
+                            value === globalThis.document ||
+                            value === globalThis.indexedDB ||
+                            value === globalThis.caches ||
+                            value === globalThis.applicationCache ||
+                            value === globalThis.localStorage ||
+                            value === globalThis.navigator ||
+                            value === globalThis.location ||
+                            value === globalThis.console ||
+                            value === globalThis.crypto ||
+                            value === globalThis.frames ||
+                            value === globalThis.frameElement ||
+                            value === globalThis.history ||
+                            value === globalThis.clientInformation ||
+                            value === globalThis.styleMedia ||
+                            value === globalThis.event
                         ) {
                             continue;
                         }
@@ -1201,11 +1218,24 @@ namespace ibas {
         /**
          * 描述业务对象
          * 如：{[CC_MM_ITEM].[Code = A00001]&[DocEntry = 3]}
+         * 属性引用：{property: GoodsReceiptLine.Warehouse}
+         * 对象类型引用：{object: GoodsReceiptLine}
          * @param boKeys 对象标记
          */
         export function describe(boKeys: string): string {
             if (strings.isEmpty(boKeys)) {
                 return boKeys;
+            }
+            let propertyReference: RegExpMatchArray = boKeys.match(/^\{\s*property\s*:\s*([A-Za-z_$][\w$]*)\.([A-Za-z_$][\w$]*)\s*\}$/);
+            if (propertyReference) {
+                let key: string = strings.format("bo_{0}_{1}", propertyReference[1], propertyReference[2]).toLowerCase();
+                let description: string = i18n.prop(key);
+                return description.startsWith("[") && description.endsWith("]") ? boKeys : description;
+            }
+            let objectReference: RegExpMatchArray = boKeys.match(/^\{\s*object\s*:\s*([A-Za-z_$][\w$]*)\s*\}$/);
+            if (objectReference) {
+                let description: string = i18n.prop(strings.format("bo_{0}", objectReference[1]).toLowerCase());
+                return description.startsWith("[") && description.endsWith("]") ? boKeys : description;
             }
             if (boKeys.startsWith("{[") && boKeys.endsWith("]}")) {
                 boKeys = boKeys.substring(1, boKeys.length - 1);
@@ -1298,34 +1328,33 @@ namespace ibas {
                     if (strings.isEmpty(property)) {
                         continue;
                     }
-                    if (skips.contain((item) => {
-                        let index: number = item.indexOf("*");
-                        if (index > 0) {
-                            let has: boolean = false;
-                            let temps: string[] = item.split("*");
-                            index = -1;
-                            for (let item of temps) {
-                                index = property.indexOf(item, index + 1);
-                                if (index >= 0) {
-                                    has = true;
-                                } else {
-                                    has = false;
-                                    break;
+                    if (
+                        skips.contain((item) => {
+                            let index: number = item.indexOf("*");
+                            if (index > 0) {
+                                let has: boolean = false;
+                                let temps: string[] = item.split("*");
+                                index = -1;
+                                for (let item of temps) {
+                                    index = property.indexOf(item, index + 1);
+                                    if (index >= 0) {
+                                        has = true;
+                                    } else {
+                                        has = false;
+                                        break;
+                                    }
                                 }
+                                return has;
+                            } else if (item === property) {
+                                return true;
                             }
-                            return has;
-                        } else if (item === property) {
-                            return true;
-                        }
-                        return false;
-                    })) {
+                            return false;
+                        })
+                    ) {
                         continue;
                     }
                     let value: any = source[property];
-                    if (typeof value === "number"
-                        || typeof value === "string"
-                        || typeof value === "boolean"
-                        || typeof value === "bigint") {
+                    if (typeof value === "number" || typeof value === "string" || typeof value === "boolean" || typeof value === "bigint") {
                         // 值类型，直接赋值
                         target[property] = value;
                     } else if (value instanceof Date) {
